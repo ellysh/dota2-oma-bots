@@ -1,0 +1,8 @@
+*.ncd
+*.pyc
+*.*#
+*.log
+*.out
+*.index
+*.txt
+*.txt.*
