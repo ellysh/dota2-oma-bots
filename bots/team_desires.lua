@@ -1,5 +1,5 @@
 local units = require(
-  GetScriptDirectory() .."/dota2-api/units")
+  GetScriptDirectory() .."/dota2-api/api/units")
 
 function TeamThink()
   units.UpdateUnitList()
