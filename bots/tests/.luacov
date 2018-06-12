@@ -1,0 +1,21 @@
+return
+{
+  ["configfile"] = ".luacov",
+  ["statsfile"] = "luacov.stats.out",
+  ["reportfile"] = "luacov.report.out",
+  runreport = false,
+  deletestats = false,
+
+  ["include"] =
+  {
+    "../api",
+    "../bots",
+  },
+
+  ["exclude"] =
+  {
+    "..////database",
+    "../database",
+    "..////utility",
+  }
+}

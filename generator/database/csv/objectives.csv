@@ -1,0 +1,5 @@
+Objective;Move;Dependency;"Complete Timeout";;
+start_match;is_beginning_of_match;;-1;;
+prepare_courer;buy_and_use_courier;start_match;-1;;
+buy_starting_items;buy_starting_items;"prepare courer";-1;" ";" "
+move_tier1_mid_lane;move_tier1_mid_lane;buy_starting_items;-1;;
