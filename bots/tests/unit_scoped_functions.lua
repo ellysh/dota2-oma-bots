@@ -1,8 +1,8 @@
-package.path = package.path .. ";../../?.lua"
+package.path = package.path .. ";../?.lua"
 require("global_constants")
 
 function GetScriptDirectory()
-  return "../.."
+  return ".."
 end
 
 -- The real Vector function creates a Vector object.
@@ -12,10 +12,10 @@ function Vector(x, y, z)
 end
 
 local functions = require(
-  GetScriptDirectory() .."/dota2-api/api/functions")
+  GetScriptDirectory() .."/utility/functions")
 
 local constants = require(
-  GetScriptDirectory() .."/dota2-api/api/constants")
+  GetScriptDirectory() .."/utility/constants")
 
 -- This is the fake Vector class for some special tests
 

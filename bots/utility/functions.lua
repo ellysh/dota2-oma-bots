@@ -1,5 +1,5 @@
 local constants = require(
-  GetScriptDirectory() .."/dota2-api/api/constants")
+  GetScriptDirectory() .."/utility/constants")
 
 local M = {}
 

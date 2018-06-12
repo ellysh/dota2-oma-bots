@@ -1,16 +1,16 @@
 local M = {}
 
 local objectives = require(
-  GetScriptDirectory() .."/dota2-api/database/lua/objectives")
+  GetScriptDirectory() .."/database/objectives")
 
 local moves = require(
-  GetScriptDirectory() .."/dota2-api/database/lua/moves")
+  GetScriptDirectory() .."/database/moves")
 
 local code_snippets = require(
-  GetScriptDirectory() .."/dota2-api/database/lua/code_snippets")
+  GetScriptDirectory() .."/database/code_snippets")
 
 local functions = require(
-  GetScriptDirectory() .."/dota2-api/api/functions")
+  GetScriptDirectory() .."/utility/functions")
 
 function M.Process()
   functions.DoWithKeysAndElements(

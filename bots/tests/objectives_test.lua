@@ -1,4 +1,4 @@
-package.path = package.path .. ";../../dota2-api/api/?.lua"
+package.path = package.path .. ";../utility/?.lua"
 
 pcall(require, "luacov")
 require("global_functions")

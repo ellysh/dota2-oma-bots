@@ -1,8 +1,8 @@
-package.path = package.path .. ";../../?.lua"
+package.path = package.path .. ";../?.lua"
 require("unit_scoped_functions")
 
 function GetScriptDirectory()
-  return "../.."
+  return ".."
 end
 
 ITEM_COST = 150
