@@ -22,6 +22,9 @@ local function ApplyCodeSnippets(code)
 end
 
 function M.Process()
+  --TODO: Process one objective per M.Process() call. Remove the executed
+  -- objective from the objectives.OBJECTIVES.
+
   functions.DoWithKeysAndElements(
     objectives.OBJECTIVES,
     function(name, details)
