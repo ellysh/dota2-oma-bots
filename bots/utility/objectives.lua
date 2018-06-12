@@ -12,13 +12,25 @@ local code_snippets = require(
 local functions = require(
   GetScriptDirectory() .."/utility/functions")
 
+local function ApplyCodeSnippets(code)
+  functions.DoWithKeysAndElements(
+    code_snippets.CODE_SNIPPETS,
+    function(name, snippet)
+      code = string.gsub(code, name, snippet)
+    end)
+  return code
+end
+
 function M.Process()
   functions.DoWithKeysAndElements(
     objectives.OBJECTIVES,
     function(name, details)
-      print(name)
-    end
-  )
+      if details["move"] == "nil" then
+        return end
+
+      move = ApplyCodeSnippets(moves.MOVES[details["move"]])
+      load(move)()
+    end)
 end
 
 -- Provide an access to local functions for unit tests only

@@ -476,6 +476,10 @@ function Unit:Action_UseAbility(ability)
   UNIT_ABILITY = ability
 end
 
+function Unit:ActionQueue_UseAbility(ability)
+  UNIT_ABILITY = ability
+end
+
 function Unit:GetPlayerID()
   return 5
 end
@@ -520,6 +524,10 @@ UNIT_MOVE_LOCATION = nil
 function Unit:Action_MoveToLocation(location)
   UNIT_ACTION = UNIT_ACTION_TYPE_MOVE_TO
   UNIT_MOVE_LOCATION = location
+end
+
+function Unit:ActionQueue_MoveToUnit()
+  UNIT_ACTION = UNIT_ACTION_TYPE_MOVE_TO
 end
 
 UNIT_PICKUP_RUNE = nil
