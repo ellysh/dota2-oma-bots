@@ -1,5 +1,5 @@
 local objectives = require(
-  GetScriptDirectory() .."/dota2-api/api/objectives.lua")
+  GetScriptDirectory() .."/utility/objectives")
 
 function Think()
   objectives.Process()
