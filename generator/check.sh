@@ -2,7 +2,7 @@
 
 set -e
 
-CSV_DIR="../database/csv"
+CSV_DIR="database/csv"
 DICTIONARY="dictionary.txt"
 FIRST_RUN=0
 

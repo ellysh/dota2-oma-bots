@@ -2,8 +2,8 @@
 
 set -e
 
-CSV_DIR="../database/csv"
-RESULT_DIR="../database/lua"
+CSV_DIR="database/csv"
+RESULT_DIR="../bots/database"
 
 ./ods2csv.sh
 
