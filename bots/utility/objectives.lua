@@ -29,9 +29,9 @@ local OBJECTIVES = {
 
 local OBJECTIVE_INDEX = 1
 
--- Objective #1 - START
-
 function M.post_buy_and_use_courier()
+  -- TODO: Should we remove the single objectives here?
+
   return IsCourierAvailable()
 end
 
@@ -40,16 +40,35 @@ function M.pre_buy_and_use_courier()
 end
 
 function M.buy_and_use_courier()
-  print("buy_and_use_courier()")
+  print("M.buy_and_use_courier()")
 
   GetBot():ActionImmediate_PurchaseItem('item_courier')
 
   GetBot():ActionQueue_UseAbility(GetBot():GetAbilityByName('item_courier'))
 end
 
--- Objective #1 - END
+---------------------------------
 
-local function buy_starting_items()
+local function IsItemPresent(item_name)
+  local bot = GetBot()
+  return functions.GetItem(bot, item_name, nil) ~= nil
+end
+
+function M.post_buy_starting_items()
+  return IsItemPresent('item_flask')
+         and IsItemPresent('item_tango')
+         and IsItemPresent('item_slippers')
+         and IsItemPresent('item_circlet')
+         and IsItemPresent('item_branches')
+end
+
+function M.pre_buy_starting_items()
+  return DotaTime() < 0 and not M.post_buy_starting_items()
+end
+
+function M.buy_starting_items()
+  print("M.buy_starting_items()")
+
   GetBot():ActionImmediate_PurchaseItem('item_flask')
   GetBot():ActionImmediate_PurchaseItem('item_tango')
   GetBot():ActionImmediate_PurchaseItem('item_slippers')
@@ -57,13 +76,15 @@ local function buy_starting_items()
   GetBot():ActionImmediate_PurchaseItem('item_branches')
 end
 
-local function move_tier1_mid_lane()
+---------------------------------
+
+function M.move_tier1_mid_lane()
   GetBot():ActionQueue_MoveToUnit(GetTower(GetTeam(), TOWER_MID_1))
 end
 
-function M.Process()
-  print("M.Process()")
+---------------------------------
 
+function M.Process()
   local current_objective = OBJECTIVES[OBJECTIVE_INDEX]
 
   if M["pre_" .. current_objective]() then
@@ -73,21 +94,6 @@ function M.Process()
   if M["post_" .. current_objective]() then
     OBJECTIVE_INDEX = OBJECTIVE_INDEX + 1
   end
-
---[[
-  --TODO: Process one objective per M.Process() call. Remove the executed
-  -- objective from the objectives.OBJECTIVES.
-
-  functions.DoWithKeysAndElements(
-    objectives.OBJECTIVES,
-    function(name, details)
-      if details["move"] == "nil" then
-        return end
-
-      move = ApplyCodeSnippets(moves.MOVES[ details["move"] ])
-      load(move)()
-    end)
-]]--
 end
 
 -- Provide an access to local functions for unit tests only
