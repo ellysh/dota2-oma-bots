@@ -12,6 +12,9 @@ local code_snippets = require(
 local functions = require(
   GetScriptDirectory() .."/utility/functions")
 
+local constants = require(
+  GetScriptDirectory() .."/utility/constants")
+
 local function ApplyCodeSnippets(code)
   functions.DoWithKeysAndElements(
     code_snippets.CODE_SNIPPETS,
@@ -78,7 +81,20 @@ end
 
 ---------------------------------
 
+function M.post_move_tier1_mid_lane()
+  local target_distance = GetUnitToUnitDistance(
+                            GetBot(),
+                            GetTower(GetTeam(), TOWER_MID_1))
+
+  return target_distance <= constants.MAP_LOCATION_RADIUS
+end
+
+function M.pre_move_tier1_mid_lane()
+  return not M.post_move_tier1_mid_lane()
+end
+
 function M.move_tier1_mid_lane()
+  print("M.move_tier1_mid_lane()")
   GetBot():ActionQueue_MoveToUnit(GetTower(GetTeam(), TOWER_MID_1))
 end
 
