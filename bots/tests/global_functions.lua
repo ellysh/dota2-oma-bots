@@ -179,6 +179,10 @@ function GetCourier()
   return COURIER
 end
 
+function IsCourierAvailable()
+  return true
+end
+
 function GetNumCouriers()
   if COURIER ~= nil then return 1 end
 
