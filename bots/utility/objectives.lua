@@ -27,7 +27,7 @@ end
 local OBJECTIVES = {
   "buy_and_use_courier",
   "buy_starting_items",
-  "move_tier1_mid_lane",
+  "move_mid_front_lane",
   "wait"
 }
 
@@ -82,7 +82,7 @@ end
 
 ---------------------------------
 
-function M.post_move_tier1_mid_lane()
+function M.post_move_mid_front_lane()
   local target_distance = GetUnitToUnitDistance(
                             GetBot(),
                             GetTower(GetTeam(), TOWER_MID_1))
@@ -90,13 +90,19 @@ function M.post_move_tier1_mid_lane()
   return target_distance <= constants.MAP_LOCATION_RADIUS
 end
 
-function M.pre_move_tier1_mid_lane()
-  return not M.post_move_tier1_mid_lane()
+function M.pre_move_mid_front_lane()
+  return not M.post_move_mid_front_lane()
 end
 
-function M.move_tier1_mid_lane()
-  print("M.move_tier1_mid_lane()")
-  GetBot():Action_MoveToUnit(GetTower(GetTeam(), TOWER_MID_1))
+function M.move_mid_front_lane()
+  print("M.move_mid_front_lane()")
+
+  local target_location = GetLaneFrontLocation(
+                            GetTeam(),
+                            LANE_MID,
+                            constants.MAP_LOCATION_RADIUS)
+
+  GetBot():Action_MoveToLocation(target_location)
 end
 
 ---------------------------------
