@@ -31,15 +31,17 @@ local OBJECTIVE_INDEX = 1
 
 -- Objective #1 - START
 
-local function post_buy_and_use_courier()
+function M.post_buy_and_use_courier()
   return IsCourierAvailable()
 end
 
-local function pre_buy_and_use_courier()
-  return DotaTime() < 0 and not post_buy_and_use_courier()
+function M.pre_buy_and_use_courier()
+  return DotaTime() < 0 and not M.post_buy_and_use_courier()
 end
 
-local function buy_and_use_courier()
+function M.buy_and_use_courier()
+  print("buy_and_use_courier()")
+
   GetBot():ActionImmediate_PurchaseItem('item_courier')
 
   GetBot():ActionQueue_UseAbility(GetBot():GetAbilityByName('item_courier'))
@@ -60,11 +62,15 @@ local function move_tier1_mid_lane()
 end
 
 function M.Process()
-  if pre_buy_and_use_courier() then
-    buy_and_use_courier()
+  print("M.Process()")
+
+  local current_objective = OBJECTIVES[OBJECTIVE_INDEX]
+
+  if M["pre_" .. current_objective]() then
+    M[current_objective]()
   end
 
-  if post_buy_and_use_courier() then
+  if M["post_" .. current_objective]() then
     OBJECTIVE_INDEX = OBJECTIVE_INDEX + 1
   end
 

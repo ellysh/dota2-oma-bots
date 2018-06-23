@@ -7,6 +7,7 @@ local objectives = require("objectives")
 local luaunit = require("luaunit")
 
 function test_Process_succeed()
+  TIME = -1
   objectives.Process()
 end
 

@@ -179,8 +179,10 @@ function GetCourier()
   return COURIER
 end
 
+IS_COURIER_AVAILABLE = false
+
 function IsCourierAvailable()
-  return true
+  return IS_COURIER_AVAILABLE
 end
 
 function GetNumCouriers()
