@@ -28,7 +28,7 @@ local OBJECTIVES = {
   "buy_and_use_courier",
   "buy_starting_items",
   "move_mid_front_lane",
-  "wait"
+  --"wait"
 }
 
 local OBJECTIVE_INDEX = 1
@@ -83,9 +83,14 @@ end
 ---------------------------------
 
 function M.post_move_mid_front_lane()
-  local target_distance = GetUnitToUnitDistance(
+  local target_location = GetLaneFrontLocation(
+                            GetTeam(),
+                            LANE_MID,
+                            0)
+
+  local target_distance = GetUnitToLocationDistance(
                             GetBot(),
-                            GetTower(GetTeam(), TOWER_MID_1))
+                            target_location)
 
   return target_distance <= constants.MAP_LOCATION_RADIUS
 end
@@ -100,7 +105,7 @@ function M.move_mid_front_lane()
   local target_location = GetLaneFrontLocation(
                             GetTeam(),
                             LANE_MID,
-                            constants.MAP_LOCATION_RADIUS)
+                            0)
 
   GetBot():Action_MoveToLocation(target_location)
 end
@@ -116,6 +121,8 @@ function M.pre_wait()
 end
 
 function M.wait()
+  print("M.wait()")
+
   GetBot():Action_Delay(100)
 end
 
@@ -130,6 +137,10 @@ function M.Process()
 
   if M["post_" .. current_objective]() then
     OBJECTIVE_INDEX = OBJECTIVE_INDEX + 1
+    if #OBJECTIVES < OBJECTIVE_INDEX then
+      OBJECTIVE_INDEX = 1
+    end
+    print("OBJECTIVE_INDEX = " .. OBJECTIVE_INDEX)
   end
 end
 
