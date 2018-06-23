@@ -95,7 +95,7 @@ end
 
 function M.move_tier1_mid_lane()
   print("M.move_tier1_mid_lane()")
-  GetBot():ActionQueue_MoveToUnit(GetTower(GetTeam(), TOWER_MID_1))
+  GetBot():Action_MoveToUnit(GetTower(GetTeam(), TOWER_MID_1))
 end
 
 ---------------------------------
