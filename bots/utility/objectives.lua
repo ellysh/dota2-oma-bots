@@ -27,7 +27,8 @@ end
 local OBJECTIVES = {
   "buy_and_use_courier",
   "buy_starting_items",
-  "move_tier1_mid_lane"
+  "move_tier1_mid_lane",
+  "wait"
 }
 
 local OBJECTIVE_INDEX = 1
@@ -96,6 +97,20 @@ end
 function M.move_tier1_mid_lane()
   print("M.move_tier1_mid_lane()")
   GetBot():Action_MoveToUnit(GetTower(GetTeam(), TOWER_MID_1))
+end
+
+---------------------------------
+
+function M.post_wait()
+  return false
+end
+
+function M.pre_wait()
+  return true
+end
+
+function M.wait()
+  GetBot():Action_Delay(100)
 end
 
 ---------------------------------
