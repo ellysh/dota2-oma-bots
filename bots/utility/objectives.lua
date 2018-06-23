@@ -15,14 +15,8 @@ local functions = require(
 local constants = require(
   GetScriptDirectory() .."/utility/constants")
 
-local function ApplyCodeSnippets(code)
-  functions.DoWithKeysAndElements(
-    code_snippets.CODE_SNIPPETS,
-    function(name, snippet)
-      code = string.gsub(code, name, snippet)
-    end)
-  return code
-end
+local logger = require(
+  GetScriptDirectory() .."/utility/logger")
 
 local OBJECTIVES = {
   "buy_and_use_courier",
@@ -44,7 +38,7 @@ function M.pre_buy_and_use_courier()
 end
 
 function M.buy_and_use_courier()
-  print("M.buy_and_use_courier()")
+  logger.Print("M.buy_and_use_courier()")
 
   GetBot():ActionImmediate_PurchaseItem('item_courier')
 
@@ -71,7 +65,7 @@ function M.pre_buy_starting_items()
 end
 
 function M.buy_starting_items()
-  print("M.buy_starting_items()")
+  logger.Print("M.buy_starting_items()")
 
   GetBot():ActionImmediate_PurchaseItem('item_flask')
   GetBot():ActionImmediate_PurchaseItem('item_tango')
@@ -100,7 +94,7 @@ function M.pre_move_mid_front_lane()
 end
 
 function M.move_mid_front_lane()
-  print("M.move_mid_front_lane()")
+  logger.Print("M.move_mid_front_lane()")
 
   local target_location = GetLaneFrontLocation(
                             GetTeam(),
@@ -140,7 +134,8 @@ function M.Process()
     if #OBJECTIVES < OBJECTIVE_INDEX then
       OBJECTIVE_INDEX = 1
     end
-    print("OBJECTIVE_INDEX = " .. OBJECTIVE_INDEX)
+
+    logger.Print("OBJECTIVE_INDEX = " .. OBJECTIVE_INDEX)
   end
 end
 
