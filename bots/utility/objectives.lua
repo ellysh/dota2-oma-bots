@@ -40,24 +40,23 @@ end
 function M.buy_and_use_courier()
   logger.Print("M.buy_and_use_courier()")
 
-  GetBot():ActionImmediate_PurchaseItem('item_courier')
+  local bot = GetBot()
 
-  GetBot():ActionQueue_UseAbility(GetBot():GetAbilityByName('item_courier'))
+  bot:ActionImmediate_PurchaseItem('item_courier')
+
+  bot:Action_UseAbility(functions.GetItem(bot, 'item_courier', nil))
 end
 
 ---------------------------------
 
-local function IsItemPresent(item_name)
-  local bot = GetBot()
-  return functions.GetItem(bot, item_name, nil) ~= nil
-end
-
 function M.post_buy_starting_items()
-  return IsItemPresent('item_flask')
-         and IsItemPresent('item_tango')
-         and IsItemPresent('item_slippers')
-         and IsItemPresent('item_circlet')
-         and IsItemPresent('item_branches')
+  local bot = GetBot()
+
+  return functions.IsItemPresent(bot, 'item_flask')
+         and functions.IsItemPresent(bot, 'item_tango')
+         and functions.IsItemPresent(bot, 'item_slippers')
+         and functions.IsItemPresent(bot, 'item_circlet')
+         and functions.IsItemPresent(bot, 'item_branches')
 end
 
 function M.pre_buy_starting_items()
@@ -67,11 +66,13 @@ end
 function M.buy_starting_items()
   logger.Print("M.buy_starting_items()")
 
-  GetBot():ActionImmediate_PurchaseItem('item_flask')
-  GetBot():ActionImmediate_PurchaseItem('item_tango')
-  GetBot():ActionImmediate_PurchaseItem('item_slippers')
-  GetBot():ActionImmediate_PurchaseItem('item_circlet')
-  GetBot():ActionImmediate_PurchaseItem('item_branches')
+  local bot = GetBot()
+
+  bot:ActionImmediate_PurchaseItem('item_flask')
+  bot:ActionImmediate_PurchaseItem('item_tango')
+  bot:ActionImmediate_PurchaseItem('item_slippers')
+  bot:ActionImmediate_PurchaseItem('item_circlet')
+  bot:ActionImmediate_PurchaseItem('item_branches')
 end
 
 ---------------------------------
@@ -91,6 +92,7 @@ function M.post_move_mid_front_lane()
 end
 
 function M.pre_move_mid_front_lane()
+  print("M.pre_move_mid_front_lane() - result = " .. tostring(not M.post_move_mid_front_lane()))
   return not M.post_move_mid_front_lane()
 end
 

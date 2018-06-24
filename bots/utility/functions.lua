@@ -49,6 +49,10 @@ function M.GetItem(unit, item_name, slot_type)
   return unit:GetItemInSlot(slot)
 end
 
+function M.IsItemPresent(unit, item_name)
+  return M.GetItem(unit, item_name, nil) ~= nil
+end
+
 -- Indexes in resulting array do not match to slot indexes.
 -- You should shift them -1 to match the slot indexes.
 
@@ -155,10 +159,10 @@ function M.ComplementOfLists(list1, list2, is_deep)
   return result
 end
 
-function M.IsBotCasting(bot)
-  return bot:IsChanneling()
-        or bot:IsUsingAbility()
-        or bot:IsCastingAbility()
+function M.IsUnitCasting(unit)
+  return unit:IsChanneling()
+        or unit:IsUsingAbility()
+        or unit:IsCastingAbility()
 end
 
 -- This function was taken from the Ranked Matchmaking AI project:
