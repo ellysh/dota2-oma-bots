@@ -125,16 +125,33 @@ function M.laning()
 
   local bot = GetBot()
 
-  local enemy_creeps = bot:GetNearbyCreeps(
-    1600,
-    true)
+  local enemy_creeps = common_algorithms.GetEnemyCreeps(bot, 1600)
 
-  if enemy_creeps == nil or #enemy_creeps == 0 then
-    return end
+  if enemy_creeps ~= nil and 0 < #enemy_creeps then
+    bot:SetTarget(enemy_creeps[1])
 
-  bot:SetTarget(enemy_creeps[1])
+    bot:Action_AttackUnit(enemy_creeps[1], false)
+    return
+  end
 
-  bot:Action_AttackUnit(enemy_creeps[1], false)
+  local enemy_heroes = common_algorithms.GetEnemyHeroes(bot, 1600)
+
+  if enemy_heroes ~= nil and 0 < #enemy_heroes then
+    bot:SetTarget(enemy_heroes[1])
+
+    bot:Action_AttackUnit(enemy_heroes[1], false)
+    return
+  end
+
+  local enemy_buildings = common_algorithms.GetEnemyBuildings(bot, 1600)
+
+  if enemy_buildings ~= nil and 0 < #enemy_buildings then
+    bot:SetTarget(enemy_buildings[1])
+
+    bot:Action_AttackUnit(enemy_buildings[1], false)
+    return
+  end
+
 end
 
 ---------------------------------
