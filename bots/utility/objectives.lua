@@ -12,6 +12,9 @@ local code_snippets = require(
 local functions = require(
   GetScriptDirectory() .."/utility/functions")
 
+local common_algorithms = require(
+  GetScriptDirectory() .."/utility/common_algorithms")
+
 local constants = require(
   GetScriptDirectory() .."/utility/constants")
 
@@ -127,7 +130,6 @@ function M.laning()
     true)
 
   if enemy_creeps == nil or #enemy_creeps == 0 then
-    print("M.laning() - no enemy")
     return end
 
   bot:SetTarget(enemy_creeps[1])
