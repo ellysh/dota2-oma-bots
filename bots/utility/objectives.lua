@@ -87,12 +87,10 @@ function M.post_move_mid_front_lane()
     GetBot(),
     target_location)
 
-  print("M.post_move_mid_front_lane() - distance = " .. target_distance)
   return target_distance <= constants.MAP_LOCATION_RADIUS
 end
 
 function M.pre_move_mid_front_lane()
-  print("M.pre_move_mid_front_lane() - result = " .. tostring(not M.post_move_mid_front_lane()))
   return not M.post_move_mid_front_lane()
 end
 
@@ -120,7 +118,7 @@ function M.pre_laning()
 end
 
 function M.laning()
-  print("M.laning()")
+  logger.Print("M.laning()")
 
   local bot = GetBot()
 
@@ -139,20 +137,29 @@ end
 
 ---------------------------------
 
+local function FindNextObjective()
+  OBJECTIVE_INDEX = OBJECTIVE_INDEX + 1
+  if #OBJECTIVES < OBJECTIVE_INDEX then
+    OBJECTIVE_INDEX = 1
+  end
+end
+
 function M.Process()
   local current_objective = OBJECTIVES[OBJECTIVE_INDEX]
 
+  logger.Print("current_objective = " .. current_objective ..
+    " OBJECTIVE_INDEX = " .. OBJECTIVE_INDEX)
+
   if M["pre_" .. current_objective]() then
     M[current_objective]()
+  else
+    -- We should find another objective here
+    FindNextObjective()
+    return
   end
 
   if M["post_" .. current_objective]() then
-    OBJECTIVE_INDEX = OBJECTIVE_INDEX + 1
-    if #OBJECTIVES < OBJECTIVE_INDEX then
-      OBJECTIVE_INDEX = 1
-    end
-
-    logger.Print("OBJECTIVE_INDEX = " .. OBJECTIVE_INDEX)
+    FindNextObjective()
   end
 end
 
