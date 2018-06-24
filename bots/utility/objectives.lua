@@ -22,7 +22,7 @@ local OBJECTIVES = {
   "buy_and_use_courier",
   "buy_starting_items",
   "move_mid_front_lane",
-  --"wait"
+  "laning"
 }
 
 local OBJECTIVE_INDEX = 1
@@ -78,14 +78,15 @@ end
 
 function M.post_move_mid_front_lane()
   local target_location = GetLaneFrontLocation(
-                            GetTeam(),
-                            LANE_MID,
-                            0)
+    GetTeam(),
+    LANE_MID,
+    0)
 
   local target_distance = GetUnitToLocationDistance(
-                            GetBot(),
-                            target_location)
+    GetBot(),
+    target_location)
 
+  print("M.post_move_mid_front_lane() - distance = " .. target_distance)
   return target_distance <= constants.MAP_LOCATION_RADIUS
 end
 
@@ -97,27 +98,41 @@ function M.move_mid_front_lane()
   logger.Print("M.move_mid_front_lane()")
 
   local target_location = GetLaneFrontLocation(
-                            GetTeam(),
-                            LANE_MID,
-                            0)
+    GetTeam(),
+    LANE_MID,
+    0)
 
   GetBot():Action_MoveToLocation(target_location)
 end
 
 ---------------------------------
 
-function M.post_wait()
+function M.post_laning()
   return false
 end
 
-function M.pre_wait()
-  return true
+function M.pre_laning()
+  -- This is a objectives Dependency example
+
+  return M.post_move_mid_front_lane()
 end
 
-function M.wait()
-  print("M.wait()")
+function M.laning()
+  print("M.laning()")
 
-  GetBot():Action_Delay(100)
+  local bot = GetBot()
+
+  local enemy_creeps = bot:GetNearbyCreeps(
+    1600,
+    true)
+
+  if enemy_creeps == nil or #enemy_creeps == 0 then
+    print("M.laning() - no enemy")
+    return end
+
+  bot:SetTarget(enemy_creeps[1])
+
+  bot:Action_AttackUnit(enemy_creeps[1], false)
 end
 
 ---------------------------------
