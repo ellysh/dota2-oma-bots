@@ -22,10 +22,34 @@ local logger = require(
   GetScriptDirectory() .."/utility/logger")
 
 local OBJECTIVES = {
-  "buy_and_use_courier",
-  "buy_starting_items",
-  "move_mid_front_lane",
-  "laning"
+  [1] = {
+    objective = "prepare_for_match",
+    moves = {
+      {move = "buy_and_use_courier", desire = 80},
+      {move = "buy_starting_items", desire = 70},
+    },
+    dependencies = {},
+    desire = 100,
+    single = true,
+    done = false,
+  },
+  [2] = {
+    objective = "laning",
+    moves = {
+      {move = "move_mid_front_lane", desire = 80},
+      {move = "lasthit_enemy_creep", desire = 70},
+      {move = "deny_ally_creep", desire = 60},
+      {move = "harras_enemy_herp", desire = 50},
+      {move = "evasion", desire = 90},
+      {move = "tp_out", desire = 100},
+    },
+    dependencies = {
+      {objective = "prepare_for_match"},
+    },
+    desire = 90,
+    single = false,
+    done = false,
+  },
 }
 
 local OBJECTIVE_INDEX = 1
