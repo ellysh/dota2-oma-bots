@@ -161,16 +161,6 @@ end
 function M.laning()
   logger.Print("M.laning()")
 
-  local bot = GetBot()
-
-  local enemy_creeps = common_algorithms.GetEnemyCreeps(bot, 1600)
-
-  if enemy_creeps ~= nil and 0 < #enemy_creeps then
-    bot:SetTarget(enemy_creeps[1])
-
-    bot:Action_AttackUnit(enemy_creeps[1], false)
-    return
-  end
 
   local enemy_heroes = common_algorithms.GetEnemyHeroes(bot, 1600)
 
@@ -202,9 +192,40 @@ function M.pre_evasion()
   return false
 end
 
+local function IsLastHit(unit, bot)
+  return unit:GetHealth() <= bot:GetAttackDamage()
+end
+
+local function GetLastHitCreep(bot)
+  local creeps = common_algorithms.GetEnemyCreeps(bot, 1600)
+
+  return functions.GetElementWith(
+    creeps,
+    common_algorithms.CompareMinHealth,
+    function(unit)
+      return common_algorithms.IsAttackTargetable(unit)
+             and IsLastHit(unit, bot)
+    end)
+end
+
 function M.pre_lasthit_enemy_creep()
-  -- TODO: Implement this
-  return false
+  local bot = GetBot()
+
+  return bot:GetCurrentActionType() ~= BOT_ACTION_TYPE_ATTACK
+         and GetLastHitCreep(bot) ~= nil
+end
+
+function M.post_lasthit_enemy_creep()
+  return not M.pre_lasthit_enemy_creep()
+end
+
+function M.lasthit_enemy_creep()
+  local bot = GetBot()
+  local creep = GetLastHitCreep(bot)
+
+  bot:SetTarget(creep)
+
+  bot:Action_AttackUnit(creep, false)
 end
 
 function M.pre_deny_ally_creep()
@@ -270,7 +291,6 @@ function M.Process()
   if not current_objective.done
      and M["pre_" .. current_objective.objective]() then
 
-     --M[current_objective.objective]()
      executeMove(current_objective)
   else
     -- We should find another objective here
