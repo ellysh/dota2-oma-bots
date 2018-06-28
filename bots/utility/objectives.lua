@@ -37,10 +37,9 @@ local OBJECTIVES = {
     objective = "laning",
     moves = {
       {move = "tp_out", desire = 100},
-      {move = "evasion", desire = 90},
       {move = "move_mid_front_lane", desire = 80},
-      {move = "positioning", desire = 80},
-      {move = "lasthit_enemy_creep", desire = 70},
+      {move = "lasthit_enemy_creep", desire = 75},
+      {move = "positioning", desire = 70},
       {move = "deny_ally_creep", desire = 60},
       {move = "harras_enemy_hero", desire = 50},
     },
@@ -198,21 +197,6 @@ function M.laning()
 end
 --]]
 
-function M.pre_positioning()
-  -- TODO: Implement this
-  return false
-end
-
-function M.pre_tp_out()
-  -- TODO: Implement this
-  return false
-end
-
-function M.pre_evasion()
-  -- TODO: Implement this
-  return false
-end
-
 local function IsLastHit(unit, bot)
   -- TODO: Consider incoming projectiles here
   return unit:GetHealth() <= bot:GetAttackDamage()
@@ -251,6 +235,24 @@ function M.lasthit_enemy_creep()
 end
 
 function M.pre_deny_ally_creep()
+  -- TODO: Implement this
+  return false
+end
+
+function M.pre_positioning()
+  return IsEnemyUnitsInAttackRange()
+         and GetBot():GetCurrentActionType() ~= BOT_ACTION_TYPE_ATTACK
+end
+
+function M.post_positioning()
+  return not M.pre_positioning()
+end
+
+function M.positioning()
+  GetBot():Action_ClearActions(true)
+end
+
+function M.pre_tp_out()
   -- TODO: Implement this
   return false
 end
