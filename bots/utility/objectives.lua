@@ -39,9 +39,10 @@ local OBJECTIVES = {
       {move = "tp_out", desire = 100},
       {move = "evasion", desire = 90},
       {move = "move_mid_front_lane", desire = 80},
+      {move = "positioning", desire = 80},
       {move = "lasthit_enemy_creep", desire = 70},
       {move = "deny_ally_creep", desire = 60},
-      {move = "harras_enemy_herp", desire = 50},
+      {move = "harras_enemy_hero", desire = 50},
     },
     dependencies = {
       {objective = "prepare_for_match"},
@@ -129,6 +130,20 @@ end
 
 ---------------------------------
 
+local function IsEnemyUnitsInAttackRange()
+  local bot = GetBot()
+  local creeps = common_algorithms.GetEnemyCreeps(
+    bot,
+    bot:GetAttackRange())
+
+  local heroes = common_algorithms.GetEnemyHeroes(
+    bot,
+    bot:GetAttackRange())
+
+  return (creeps ~= nil and 0 < #creeps)
+         or (heroes ~= nil and 0 < #heroes)
+end
+
 function M.post_move_mid_front_lane()
   local target_location = GetLaneFrontLocation(
     GetTeam(),
@@ -139,7 +154,8 @@ function M.post_move_mid_front_lane()
     GetBot(),
     target_location)
 
-  return target_distance <= constants.MAP_LOCATION_RADIUS
+  return (target_distance <= constants.MAP_LOCATION_RADIUS)
+         or IsEnemyUnitsInAttackRange()
 end
 
 function M.pre_move_mid_front_lane()
@@ -182,6 +198,11 @@ function M.laning()
 end
 --]]
 
+function M.pre_positioning()
+  -- TODO: Implement this
+  return false
+end
+
 function M.pre_tp_out()
   -- TODO: Implement this
   return false
@@ -193,6 +214,7 @@ function M.pre_evasion()
 end
 
 local function IsLastHit(unit, bot)
+  -- TODO: Consider incoming projectiles here
   return unit:GetHealth() <= bot:GetAttackDamage()
 end
 
@@ -233,7 +255,7 @@ function M.pre_deny_ally_creep()
   return false
 end
 
-function M.pre_harras_enemy_herp()
+function M.pre_harras_enemy_hero()
   -- TODO: Implement this
   return false
 end
