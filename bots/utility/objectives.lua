@@ -55,6 +55,8 @@ local OBJECTIVES = {
 local OBJECTIVE_INDEX = 1
 local MOVE_INDEX = 1
 
+---------------------------------
+
 function M.pre_prepare_for_match()
   return DotaTime() < 0
 end
@@ -115,6 +117,18 @@ end
 
 ---------------------------------
 
+function M.post_laning()
+  return false
+end
+
+function M.pre_laning()
+  -- This is a objectives Dependency example
+
+  return M.post_prepare_for_match()
+end
+
+---------------------------------
+
 function M.post_move_mid_front_lane()
   local target_location = GetLaneFrontLocation(
     GetTeam(),
@@ -143,18 +157,7 @@ function M.move_mid_front_lane()
   GetBot():Action_MoveToLocation(target_location)
 end
 
----------------------------------
-
-function M.post_laning()
-  return false
-end
-
-function M.pre_laning()
-  -- This is a objectives Dependency example
-
-  return M.post_move_mid_front_lane()
-end
-
+--[[
 function M.laning()
   logger.Print("M.laning()")
 
@@ -186,7 +189,32 @@ function M.laning()
     bot:Action_AttackUnit(enemy_buildings[1], false)
     return
   end
+end
+--]]
 
+function M.pre_tp_out()
+  -- TODO: Implement this
+  return false
+end
+
+function M.pre_evasion()
+  -- TODO: Implement this
+  return false
+end
+
+function M.pre_lasthit_enemy_creep()
+  -- TODO: Implement this
+  return false
+end
+
+function M.pre_deny_ally_creep()
+  -- TODO: Implement this
+  return false
+end
+
+function M.pre_harras_enemy_herp()
+  -- TODO: Implement this
+  return false
 end
 
 ---------------------------------
@@ -220,15 +248,17 @@ end
 local function executeMove()
   local current_move = GetCurrentMove()
 
-  if M["pre_" .. current_move.move]() then
-    M[current_move.move]()
-  else
+  logger.Print("current_move = " .. current_move.move ..
+    " MOVE_INDEX = " .. MOVE_INDEX)
+
+  if not M["pre_" .. current_move.move]()
+    or M["post_" .. current_move.move]() then
+
     FindNextMove()
+    return
   end
 
-  if M["post_" .. current_move.move]() then
-    FindNextMove()
-  end
+  M[current_move.move]()
 end
 
 function M.Process()
@@ -236,8 +266,6 @@ function M.Process()
 
   logger.Print("current_objective = " .. current_objective.objective ..
     " OBJECTIVE_INDEX = " .. OBJECTIVE_INDEX)
-
-  print("pre_" .. current_objective.objective)
 
   if not current_objective.done
      and M["pre_" .. current_objective.objective]() then
