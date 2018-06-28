@@ -240,8 +240,11 @@ function M.pre_deny_ally_creep()
 end
 
 function M.pre_positioning()
+  local bot = GetBot()
+
   return IsEnemyUnitsInAttackRange()
-         and GetBot():GetCurrentActionType() ~= BOT_ACTION_TYPE_ATTACK
+         and GetLastHitCreep(bot) == nil
+         and bot:GetCurrentActionType() ~= BOT_ACTION_TYPE_ATTACK
 end
 
 function M.post_positioning()
