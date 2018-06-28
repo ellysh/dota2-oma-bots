@@ -36,12 +36,12 @@ local OBJECTIVES = {
   [2] = {
     objective = "laning",
     moves = {
+      {move = "tp_out", desire = 100},
+      {move = "evasion", desire = 90},
       {move = "move_mid_front_lane", desire = 80},
       {move = "lasthit_enemy_creep", desire = 70},
       {move = "deny_ally_creep", desire = 60},
       {move = "harras_enemy_herp", desire = 50},
-      {move = "evasion", desire = 90},
-      {move = "tp_out", desire = 100},
     },
     dependencies = {
       {objective = "prepare_for_match"},
@@ -53,6 +53,17 @@ local OBJECTIVES = {
 }
 
 local OBJECTIVE_INDEX = 1
+local MOVE_INDEX = 1
+
+function M.pre_prepare_for_match()
+  return DotaTime() < 0
+end
+
+function M.post_prepare_for_match()
+  return M.post_buy_and_use_courier() and M.post_buy_starting_items()
+end
+
+---------------------------------
 
 function M.post_buy_and_use_courier()
   -- TODO: Should we remove the single objectives here?
@@ -180,28 +191,67 @@ end
 
 ---------------------------------
 
+local function GetCurrentObjective()
+  return OBJECTIVES[OBJECTIVE_INDEX]
+end
+
+local function GetCurrentMove()
+  return GetCurrentObjective().moves[MOVE_INDEX]
+end
+
 local function FindNextObjective()
+  -- TODO: Consider desire values here
+
   OBJECTIVE_INDEX = OBJECTIVE_INDEX + 1
   if #OBJECTIVES < OBJECTIVE_INDEX then
     OBJECTIVE_INDEX = 1
   end
 end
 
-function M.Process()
-  local current_objective = OBJECTIVES[OBJECTIVE_INDEX]
+local function FindNextMove()
+  -- TODO: Consider desire values here
 
-  logger.Print("current_objective = " .. current_objective ..
+  MOVE_INDEX = MOVE_INDEX + 1
+  if #GetCurrentObjective().moves < MOVE_INDEX then
+    MOVE_INDEX = 1
+  end
+end
+
+local function executeMove()
+  local current_move = GetCurrentMove()
+
+  if M["pre_" .. current_move.move]() then
+    M[current_move.move]()
+  else
+    FindNextMove()
+  end
+
+  if M["post_" .. current_move.move]() then
+    FindNextMove()
+  end
+end
+
+function M.Process()
+  local current_objective = GetCurrentObjective()
+
+  logger.Print("current_objective = " .. current_objective.objective ..
     " OBJECTIVE_INDEX = " .. OBJECTIVE_INDEX)
 
-  if M["pre_" .. current_objective]() then
-    M[current_objective]()
+  print("pre_" .. current_objective.objective)
+
+  if not current_objective.done
+     and M["pre_" .. current_objective.objective]() then
+
+     --M[current_objective.objective]()
+     executeMove(current_objective)
   else
     -- We should find another objective here
     FindNextObjective()
     return
   end
 
-  if M["post_" .. current_objective]() then
+  if M["post_" .. current_objective.objective]() then
+    current_objective.done = true
     FindNextObjective()
   end
 end
