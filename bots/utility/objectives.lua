@@ -42,6 +42,7 @@ local OBJECTIVES = {
       {move = "positioning", desire = 70},
       {move = "deny_ally_creep", desire = 60},
       {move = "harras_enemy_hero", desire = 50},
+      {move = "attack_enemy_building", desire = 40},
     },
     dependencies = {
       {objective = "prepare_for_match"},
@@ -262,7 +263,6 @@ function M.deny_ally_creep()
   bot:Action_AttackUnit(creep, false)
 end
 
-
 function M.pre_positioning()
   local bot = GetBot()
 
@@ -279,12 +279,44 @@ function M.positioning()
   GetBot():Action_ClearActions(true)
 end
 
-function M.pre_tp_out()
+local function GetEnemyHero(bot)
+  local heroes = common_algorithms.GetEnemyHeroes(bot, 1600)
+
+  return functions.GetElementWith(
+    heroes,
+    common_algorithms.CompareMinHealth,
+    function(unit)
+      return common_algorithms.IsAttackTargetable(unit)
+    end)
+end
+
+function M.pre_harras_enemy_hero()
+  local bot = GetBot()
+
+  return bot:GetCurrentActionType() ~= BOT_ACTION_TYPE_ATTACK
+         and GetEnemyHero(bot) ~= nil
+end
+
+function M.post_harras_enemy_hero()
+  return not M.pre_harras_enemy_hero()
+end
+
+function M.harras_enemy_hero()
+  local bot = GetBot()
+  local hero = GetEnemyHero(bot)
+
+  bot:SetTarget(hero)
+
+  bot:Action_AttackUnit(hero, false)
+end
+
+
+function M.pre_attack_enemy_building()
   -- TODO: Implement this
   return false
 end
 
-function M.pre_harras_enemy_hero()
+function M.pre_tp_out()
   -- TODO: Implement this
   return false
 end
