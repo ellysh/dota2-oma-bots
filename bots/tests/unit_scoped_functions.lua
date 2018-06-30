@@ -462,14 +462,14 @@ UNIT_ABILITY_LOCATION = nil
 
 function Unit:Action_UseAbilityOnLocation(ability, location)
   UNIT_ABILITY = ability
-UNIT_ABILITY_LOCATION = location
+  UNIT_ABILITY_LOCATION = location
 end
 
 UNIT_ABILITY_ENTITY = nil
 
 function Unit:Action_UseAbilityOnEntity(ability, entity)
   UNIT_ABILITY = ability
-UNIT_ABILITY_ENTITY = entity
+  UNIT_ABILITY_ENTITY = entity
 end
 
 function Unit:Action_UseAbility(ability)
@@ -694,9 +694,7 @@ end
 Ability = {}
 
 function Ability:new(n)
-  local newObj = {
-    name = n,
-    cast_range = 600}
+  local newObj = {name = n}
 
   self.__index = self
   return setmetatable(newObj, self)
