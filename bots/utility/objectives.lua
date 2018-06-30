@@ -173,31 +173,6 @@ function M.move_mid_front_lane()
   GetBot():Action_MoveToLocation(target_location)
 end
 
---[[
-function M.laning()
-  logger.Print("M.laning()")
-
-
-  local enemy_heroes = common_algorithms.GetEnemyHeroes(bot, 1600)
-
-  if enemy_heroes ~= nil and 0 < #enemy_heroes then
-    bot:SetTarget(enemy_heroes[1])
-
-    bot:Action_AttackUnit(enemy_heroes[1], false)
-    return
-  end
-
-  local enemy_buildings = common_algorithms.GetEnemyBuildings(bot, 1600)
-
-  if enemy_buildings ~= nil and 0 < #enemy_buildings then
-    bot:SetTarget(enemy_buildings[1])
-
-    bot:Action_AttackUnit(enemy_buildings[1], false)
-    return
-  end
-end
---]]
-
 local function IsLastHit(bot, unit)
   -- TODO: Consider incoming projectiles here
   return unit:GetHealth() <= bot:GetAttackDamage()
