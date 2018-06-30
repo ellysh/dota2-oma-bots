@@ -267,7 +267,8 @@ function M.pre_positioning()
   local bot = GetBot()
 
   return IsEnemyUnitsInAttackRange()
-         and GetLastHitCreep(bot) == nil
+         and GetLastHitCreep(bot, ENEMY) == nil
+         and GetLastHitCreep(bot, ALLY) == nil
          and bot:GetCurrentActionType() ~= BOT_ACTION_TYPE_ATTACK
 end
 
@@ -291,6 +292,7 @@ local function GetEnemyHero(bot)
 end
 
 function M.pre_harras_enemy_hero()
+  -- TODO: Check if enemy creeps and towers are in their range of attack
   local bot = GetBot()
 
   return bot:GetCurrentActionType() ~= BOT_ACTION_TYPE_ATTACK
@@ -310,6 +312,37 @@ function M.harras_enemy_hero()
   bot:Action_AttackUnit(hero, false)
 end
 
+local function GetEnemyBuilding(bot)
+  local units = common_algorithms.GetEnemyBuildings(bot, 1600)
+
+  return functions.GetElementWith(
+    units,
+    common_algorithms.CompareMinHealth,
+    function(unit)
+      return common_algorithms.IsAttackTargetable(unit)
+    end)
+end
+
+function M.pre_attack_enemy_building()
+  -- TODO: Check if it is safe to attack building
+  local bot = GetBot()
+
+  return bot:GetCurrentActionType() ~= BOT_ACTION_TYPE_ATTACK
+         and GetEnemyBuilding(bot) ~= nil
+end
+
+function M.post_attack_enemy_building()
+  return not M.pre_attack_enemy_building()
+end
+
+function M.attack_enemy_building()
+  local bot = GetBot()
+  local unit = GetEnemyBuilding(bot)
+
+  bot:SetTarget(unit)
+
+  bot:Action_AttackUnit(unit, false)
+end
 
 function M.pre_attack_enemy_building()
   -- TODO: Implement this
