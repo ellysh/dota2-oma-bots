@@ -197,20 +197,28 @@ function M.laning()
 end
 --]]
 
-local function IsLastHit(unit, bot)
+local function IsLastHit(bot, unit)
   -- TODO: Consider incoming projectiles here
   return unit:GetHealth() <= bot:GetAttackDamage()
 end
 
-local function GetLastHitCreep(bot)
-  local creeps = common_algorithms.GetEnemyCreeps(bot, 1600)
+local CRREP_TYPE = {
+  ENEMY,
+  ALLY
+}
+
+local function GetLastHitCreep(bot, creep_type)
+  local creeps = functions.ternary(
+    creep_type == ENEMY,
+    common_algorithms.GetEnemyCreeps(bot, 1600),
+    common_algorithms.GetAllyCreeps(bot, 1600))
 
   return functions.GetElementWith(
     creeps,
     common_algorithms.CompareMinHealth,
     function(unit)
       return common_algorithms.IsAttackTargetable(unit)
-             and IsLastHit(unit, bot)
+             and IsLastHit(bot, unit)
     end)
 end
 
@@ -218,7 +226,7 @@ function M.pre_lasthit_enemy_creep()
   local bot = GetBot()
 
   return bot:GetCurrentActionType() ~= BOT_ACTION_TYPE_ATTACK
-         and GetLastHitCreep(bot) ~= nil
+         and GetLastHitCreep(bot, ENEMY) ~= nil
 end
 
 function M.post_lasthit_enemy_creep()
@@ -227,7 +235,7 @@ end
 
 function M.lasthit_enemy_creep()
   local bot = GetBot()
-  local creep = GetLastHitCreep(bot)
+  local creep = GetLastHitCreep(bot, ENEMY)
 
   bot:SetTarget(creep)
 
@@ -235,9 +243,25 @@ function M.lasthit_enemy_creep()
 end
 
 function M.pre_deny_ally_creep()
-  -- TODO: Implement this
-  return false
+  local bot = GetBot()
+
+  return bot:GetCurrentActionType() ~= BOT_ACTION_TYPE_ATTACK
+         and GetLastHitCreep(bot, ALLY) ~= nil
 end
+
+function M.post_deny_ally_creep()
+  return not M.pre_deny_ally_creep()
+end
+
+function M.deny_ally_creep()
+  local bot = GetBot()
+  local creep = GetLastHitCreep(bot, ALLY)
+
+  bot:SetTarget(creep)
+
+  bot:Action_AttackUnit(creep, false)
+end
+
 
 function M.pre_positioning()
   local bot = GetBot()
