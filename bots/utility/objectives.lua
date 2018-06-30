@@ -75,7 +75,7 @@ function M.post_buy_and_use_courier()
 end
 
 function M.pre_buy_and_use_courier()
-  return DotaTime() < 0 and not M.post_buy_and_use_courier()
+  return not M.post_buy_and_use_courier()
 end
 
 function M.buy_and_use_courier()

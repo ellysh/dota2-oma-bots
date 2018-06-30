@@ -21,8 +21,24 @@ function test_Process_second_objective_succeed()
   objectives.Process()
 end
 
-function test_Process_third_objective_succeed()
-  objectives.Process()
+function test_pre_prepare_for_match_succeed()
+  TIME = -1
+  luaunit.assertTrue(objectives.pre_prepare_for_match())
+end
+
+function test_post_prepare_for_match_succeed()
+  TIME = 1
+  luaunit.assertFalse(objectives.pre_prepare_for_match())
+end
+
+function test_pre_buy_and_use_courier_succeed()
+  IS_COURIER_AVAILABLE = false
+  luaunit.assertTrue(objectives.pre_buy_and_use_courier())
+end
+
+function test_post_buy_and_use_courier_succeed()
+  IS_COURIER_AVAILABLE = true
+  luaunit.assertFalse(objectives.pre_buy_and_use_courier())
 end
 
 

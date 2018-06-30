@@ -8,14 +8,13 @@ return
 
   ["include"] =
   {
-    "../api",
-    "../bots",
+    "../utility",
+    "../",
   },
 
   ["exclude"] =
   {
     "..////database",
     "../database",
-    "..////utility",
   }
 }
