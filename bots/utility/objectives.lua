@@ -177,7 +177,7 @@ end
 
 local function IsLastHit(bot, unit)
   -- TODO: Consider incoming projectiles here
-  return unit:GetHealth() <= bot:GetAttackDamage()
+  return unit:GetHealth() <= 2 * bot:GetAttackDamage()
 end
 
 local CREEP_TYPE = {
@@ -200,10 +200,15 @@ local function GetLastHitCreep(bot, creep_type)
     end)
 end
 
+local function IsUnitAttack(unit)
+  local anim = unit:GetAnimActivity()
+  return anim == ACTIVITY_ATTACK or anim == ACTIVITY_ATTACK2
+end
+
 function M.pre_lasthit_enemy_creep()
   local bot = GetBot()
 
-  return bot:GetCurrentActionType() ~= BOT_ACTION_TYPE_ATTACK
+  return not IsUnitAttack(bot)
          and GetLastHitCreep(bot, CREEP_TYPE["ENEMY"]) ~= nil
 end
 
@@ -223,7 +228,7 @@ end
 function M.pre_deny_ally_creep()
   local bot = GetBot()
 
-  return bot:GetCurrentActionType() ~= BOT_ACTION_TYPE_ATTACK
+  return not IsUnitAttack(bot)
          and GetLastHitCreep(bot, CREEP_TYPE["ALLY"]) ~= nil
 end
 
@@ -325,7 +330,7 @@ function M.pre_harras_enemy_hero()
 
   return not AreEnemyCreepsInRadius(constants.CREEP_AGRO_RADIUS)
          and not IsEnemyTowerInRadius(constants.MAX_TOWER_ATTACK_RANGE)
-         and bot:GetCurrentActionType() ~= BOT_ACTION_TYPE_ATTACK
+         and not IsUnitAttack(bot)
          and GetEnemyHero(bot) ~= nil
 end
 
@@ -359,7 +364,7 @@ function M.pre_attack_enemy_building()
   -- TODO: Check if it is safe to attack building
   local bot = GetBot()
 
-  return bot:GetCurrentActionType() ~= BOT_ACTION_TYPE_ATTACK
+  return not IsUnitAttack(bot)
          and GetEnemyBuilding(bot) ~= nil
 end
 
@@ -379,8 +384,7 @@ end
 ---------------------------------
 
 local function IsAttackDone(unit)
-  if unit:GetAnimActivity() ~= ACTIVITY_ATTACK
-     and unit:GetAnimActivity() ~= ACTIVITY_ATTACK2 then
+  if not IsUnitAttack(bot) then
     return end
 
   return unit:GetAttackPoint() <= unit:GetAnimCycle()
