@@ -40,9 +40,9 @@ local OBJECTIVES = {
       {move = "evasion", desire = 90},
       {move = "move_mid_front_lane", desire = 80},
       {move = "lasthit_enemy_creep", desire = 75},
-      {move = "positioning", desire = 70},
       {move = "deny_ally_creep", desire = 60},
       {move = "harras_enemy_hero", desire = 50},
+      {move = "positioning", desire = 45},
       {move = "attack_enemy_building", desire = 40},
     },
     dependencies = {
@@ -141,8 +141,8 @@ local function IsEnemyUnitsInAttackRange()
     bot,
     bot:GetAttackRange())
 
-  return (creeps ~= nil and 0 < #creeps)
-         or (heroes ~= nil and 0 < #heroes)
+  return not functions.IsArrayEmpty(creeps)
+         or not functions.IsArrayEmpty(heroes)
 end
 
 function M.post_move_mid_front_lane()
@@ -241,13 +241,16 @@ end
 
 --------------------------------
 
-function M.pre_positioning()
+local function IsEnemyCreepsClose()
   local bot = GetBot()
 
-  return IsEnemyUnitsInAttackRange()
-         and GetLastHitCreep(bot, ENEMY) == nil
-         and GetLastHitCreep(bot, ALLY) == nil
-         and bot:GetCurrentActionType() ~= BOT_ACTION_TYPE_ATTACK
+  local creeps = common_algorithms.GetEnemyCreeps(bot, 300)
+
+  return not functions.IsArrayEmpty(creeps)
+end
+
+function M.pre_positioning()
+  return IsEnemyCreepsClose()
 end
 
 function M.post_positioning()
@@ -255,7 +258,8 @@ function M.post_positioning()
 end
 
 function M.positioning()
-  GetBot():Action_ClearActions(true)
+  local bot = GetBot()
+  bot:Action_MoveToLocation(GetShopLocation(GetTeam(), SHOP_HOME))
 end
 
 --------------------------------

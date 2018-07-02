@@ -359,6 +359,10 @@ function M.IsEnemy(unit)
   return unit:GetTeam() ~= GetTeam()
 end
 
+function M.IsArrayEmpty(array)
+  return array == nil or #array == 0
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_IsFlagSet = IsFlagSet
 M.test_GetNormalizedDesire = GetNormalizedDesire
