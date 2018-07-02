@@ -44,6 +44,7 @@ local OBJECTIVES = {
       {move = "harras_enemy_hero", desire = 50},
       {move = "positioning", desire = 45},
       {move = "attack_enemy_building", desire = 40},
+      {move = "stop", desire = 1},
     },
     dependencies = {
       {objective = "prepare_for_match"},
@@ -374,6 +375,28 @@ function M.attack_enemy_building()
 
   bot:Action_AttackUnit(unit, false)
 end
+
+---------------------------------
+
+function M.pre_stop()
+  local bot = GetBot()
+  local action = bot:GetCurrentActionType()
+
+  return action == BOT_ACTION_TYPE_ATTACK
+         or action == BOT_ACTION_TYPE_MOVE_TO
+         or action == BOT_ACTION_TYPE_MOVE_TO_DIRECTLY
+end
+
+function M.post_stop()
+  return not M.pre_stop()
+end
+
+function M.stop()
+  local bot = GetBot()
+  bot:Action_ClearActions(true)
+end
+
+---------------------------------
 
 function M.pre_attack_enemy_building()
   -- TODO: Implement this
