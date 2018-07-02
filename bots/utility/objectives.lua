@@ -241,16 +241,16 @@ end
 
 --------------------------------
 
-local function IsEnemyCreepsClose()
+local function AreEnemyCreepsInRadius(radius)
   local bot = GetBot()
 
-  local creeps = common_algorithms.GetEnemyCreeps(bot, 300)
+  local creeps = common_algorithms.GetEnemyCreeps(bot, radius)
 
   return not functions.IsArrayEmpty(creeps)
 end
 
 function M.pre_positioning()
-  return IsEnemyCreepsClose()
+  return AreEnemyCreepsInRadius(constants.MIN_CREEP_DISTANCE)
 end
 
 function M.post_positioning()
@@ -301,6 +301,13 @@ end
 
 --------------------------------
 
+local function IsEnemyTowerInRadius(radius)
+  local bot = GetBot()
+  local units = bot:GetNearbyTowers(radius, true)
+
+  return not functions.IsArrayEmpty(units)
+end
+
 local function GetEnemyHero(bot)
   local heroes = common_algorithms.GetEnemyHeroes(bot, 1600)
 
@@ -313,10 +320,11 @@ local function GetEnemyHero(bot)
 end
 
 function M.pre_harras_enemy_hero()
-  -- TODO: Check if enemy creeps and towers are in their range of attack
   local bot = GetBot()
 
-  return bot:GetCurrentActionType() ~= BOT_ACTION_TYPE_ATTACK
+  return not AreEnemyCreepsInRadius(constants.CREEP_AGRO_RADIUS)
+         and not IsEnemyTowerInRadius(constants.MAX_TOWER_ATTACK_RANGE)
+         and bot:GetCurrentActionType() ~= BOT_ACTION_TYPE_ATTACK
          and GetEnemyHero(bot) ~= nil
 end
 
@@ -332,6 +340,8 @@ function M.harras_enemy_hero()
 
   bot:Action_AttackUnit(hero, false)
 end
+
+--------------------------------
 
 local function GetEnemyBuilding(bot)
   local units = common_algorithms.GetEnemyBuildings(bot, 1600)
