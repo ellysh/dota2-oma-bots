@@ -39,12 +39,12 @@ local OBJECTIVES = {
       {move = "tp_out", desire = 100},
       {move = "evasion", desire = 90},
       {move = "move_mid_front_lane", desire = 80},
-      {move = "turn", desire = 76},
       {move = "lasthit_enemy_creep", desire = 75},
       {move = "deny_ally_creep", desire = 60},
       {move = "harras_enemy_hero", desire = 50},
       {move = "positioning", desire = 45},
       {move = "attack_enemy_building", desire = 40},
+      {move = "turn", desire = 10},
       {move = "stop", desire = 1},
     },
     dependencies = {
@@ -391,13 +391,15 @@ local function IsAttackDone(unit)
   return unit:GetAttackPoint() <= unit:GetAnimCycle()
 end
 
+local function IsUnitMoving(unit)
+  return unit:GetAnimActivity() == ACTIVITY_RUN
+end
+
 function M.pre_stop()
   local bot = GetBot()
   local action = bot:GetCurrentActionType()
 
-  return IsAttackDone(bot)
-         or action == BOT_ACTION_TYPE_MOVE_TO
-         or action == BOT_ACTION_TYPE_MOVE_TO_DIRECTLY
+  return IsAttackDone(bot) or IsUnitMoving(bot)
 end
 
 function M.post_stop()
@@ -427,7 +429,12 @@ end
 
 function M.turn()
   local bot = GetBot()
-  bot:Action_MoveToLocation(GetEnemyCreep():GetLocation())
+
+  if not IsUnitMoving(bot) then
+    bot:Action_MoveToLocation(GetEnemyCreep():GetLocation())
+  else
+    bot:Action_ClearActions(true)
+  end
 end
 
 ---------------------------------
