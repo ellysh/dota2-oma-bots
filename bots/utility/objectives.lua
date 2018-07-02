@@ -177,7 +177,7 @@ end
 
 local function IsLastHit(bot, unit)
   -- TODO: Consider incoming projectiles here
-  return unit:GetHealth() <= 2 * bot:GetAttackDamage()
+  return unit:GetHealth() <= 1.8 * bot:GetAttackDamage()
 end
 
 local CREEP_TYPE = {
@@ -384,7 +384,7 @@ end
 ---------------------------------
 
 local function IsAttackDone(unit)
-  if not IsUnitAttack(bot) then
+  if not IsUnitAttack(unit) then
     return end
 
   return unit:GetAttackPoint() <= unit:GetAnimCycle()
