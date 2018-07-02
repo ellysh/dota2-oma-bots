@@ -378,11 +378,19 @@ end
 
 ---------------------------------
 
+local function IsAttackDone(unit)
+  if unit:GetAnimActivity() ~= ACTIVITY_ATTACK
+     and unit:GetAnimActivity() ~= ACTIVITY_ATTACK2 then
+    return end
+
+  return unit:GetAttackPoint() <= unit:GetAnimCycle()
+end
+
 function M.pre_stop()
   local bot = GetBot()
   local action = bot:GetCurrentActionType()
 
-  return action == BOT_ACTION_TYPE_ATTACK
+  return IsAttackDone(bot)
          or action == BOT_ACTION_TYPE_MOVE_TO
          or action == BOT_ACTION_TYPE_MOVE_TO_DIRECTLY
 end
