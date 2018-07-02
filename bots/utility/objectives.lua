@@ -386,7 +386,8 @@ end
 
 local function IsAttackDone(unit)
   if not IsUnitAttack(unit) then
-    return end
+    return true
+  end
 
   return unit:GetAttackPoint() <= unit:GetAnimCycle()
 end
@@ -399,7 +400,7 @@ function M.pre_stop()
   local bot = GetBot()
   local action = bot:GetCurrentActionType()
 
-  return IsAttackDone(bot) or IsUnitMoving(bot)
+  return (IsUnitAttack(bot) and IsAttackDone(bot)) or IsUnitMoving(bot)
 end
 
 function M.post_stop()
@@ -420,7 +421,9 @@ end
 function M.pre_turn()
   local bot = GetBot()
   return IsEnemyUnitsInAttackRange()
-         and not bot:IsFacingLocation(GetEnemyCreep():GetLocation(), 20)
+         and not IsUnitAttack(bot)
+         and not IsUnitMoving(bot)
+         and not bot:IsFacingLocation(GetEnemyCreep():GetLocation(), 30)
 end
 
 function M.post_turn()
