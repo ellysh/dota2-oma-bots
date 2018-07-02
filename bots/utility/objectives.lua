@@ -39,6 +39,7 @@ local OBJECTIVES = {
       {move = "tp_out", desire = 100},
       {move = "evasion", desire = 90},
       {move = "move_mid_front_lane", desire = 80},
+      {move = "turn", desire = 76},
       {move = "lasthit_enemy_creep", desire = 75},
       {move = "deny_ally_creep", desire = 60},
       {move = "harras_enemy_hero", desire = 50},
@@ -406,6 +407,27 @@ end
 function M.stop()
   local bot = GetBot()
   bot:Action_ClearActions(true)
+end
+
+---------------------------------
+
+local function GetEnemyCreep()
+  return common_algorithms.GetEnemyCreeps(GetBot(), 1600)[1]
+end
+
+function M.pre_turn()
+  local bot = GetBot()
+  return IsEnemyUnitsInAttackRange()
+         and not bot:IsFacingLocation(GetEnemyCreep():GetLocation(), 20)
+end
+
+function M.post_turn()
+  return not M.pre_turn()
+end
+
+function M.turn()
+  local bot = GetBot()
+  bot:Action_MoveToLocation(GetEnemyCreep():GetLocation())
 end
 
 ---------------------------------
