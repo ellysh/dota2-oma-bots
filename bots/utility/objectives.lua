@@ -37,6 +37,7 @@ local OBJECTIVES = {
     objective = "laning",
     moves = {
       {move = "tp_out", desire = 100},
+      {move = "evasion", desire = 90},
       {move = "move_mid_front_lane", desire = 80},
       {move = "lasthit_enemy_creep", desire = 75},
       {move = "positioning", desire = 70},
@@ -238,6 +239,8 @@ function M.deny_ally_creep()
   bot:Action_AttackUnit(creep, false)
 end
 
+--------------------------------
+
 function M.pre_positioning()
   local bot = GetBot()
 
@@ -254,6 +257,45 @@ end
 function M.positioning()
   GetBot():Action_ClearActions(true)
 end
+
+--------------------------------
+
+local function IsFocusedByEnemies()
+  local bot = GetBot()
+  local enemy_towers = bot:GetNearbyTowers(
+    constants.MAX_TOWER_ATTACK_RANGE,
+    true)
+
+  local enemy_creeps = common_algorithms.GetEnemyCreeps(
+    bot,
+    constants.MAX_CREEP_ATTACK_RANGE)
+
+  local enemy_heroes = common_algorithms.GetEnemyHeroes(
+    bot,
+    constants.MAX_HERO_ATTACK_RANGE)
+
+  local total_damage =
+    common_algorithms.GetTotalDamage(enemy_towers, bot) +
+    common_algorithms.GetTotalDamage(enemy_creeps, bot) +
+    common_algorithms.GetTotalDamage(enemy_heroes, bot)
+
+  return 0.2 < functions.GetRate(total_damage, bot:GetHealth())
+end
+
+function M.pre_evasion()
+  return IsFocusedByEnemies()
+end
+
+function M.post_evasion()
+  return not M.pre_evasion()
+end
+
+function M.evasion()
+  local bot = GetBot()
+  bot:Action_MoveToLocation(GetShopLocation(GetTeam(), SHOP_HOME))
+end
+
+--------------------------------
 
 local function GetEnemyHero(bot)
   local heroes = common_algorithms.GetEnemyHeroes(bot, 1600)
