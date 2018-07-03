@@ -486,10 +486,13 @@ local function executeMove()
   logger.Print("current_move = " .. current_move.move ..
     " MOVE_INDEX = " .. MOVE_INDEX)
 
-  if not M["pre_" .. current_move.move]()
-    or M["post_" .. current_move.move]() then
-
+  if not M["pre_" .. current_move.move]() then
     FindNextMove()
+    return
+  end
+
+  if M["post_" .. current_move.move]() then
+    MOVE_INDEX = 1
     return
   end
 
