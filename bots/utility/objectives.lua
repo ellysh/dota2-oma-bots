@@ -208,6 +208,17 @@ local function IsUnitAttack(unit)
   return anim == ACTIVITY_ATTACK or anim == ACTIVITY_ATTACK2
 end
 
+local function AttackUnit(bot, unit)
+  if (IsUnitAttack(bot) and IsAttackDone(bot)) then
+    bot:Action_ClearActions(true)
+    return
+  end
+
+  bot:SetTarget(unit)
+
+  bot:Action_AttackUnit(unit, true)
+end
+
 function M.pre_lasthit_enemy_creep()
   local bot = GetBot()
 
@@ -223,9 +234,7 @@ function M.lasthit_enemy_creep()
   local bot = GetBot()
   local creep = GetLastHitCreep(bot, CREEP_TYPE["ENEMY"])
 
-  bot:SetTarget(creep)
-
-  bot:Action_AttackUnit(creep, false)
+  AttackUnit(bot, creep)
 end
 
 ---------------------------------
@@ -245,9 +254,7 @@ function M.deny_ally_creep()
   local bot = GetBot()
   local creep = GetLastHitCreep(bot, CREEP_TYPE["ALLY"])
 
-  bot:SetTarget(creep)
-
-  bot:Action_AttackUnit(creep, false)
+  AttackUnit(bot, creep)
 end
 
 --------------------------------
@@ -342,9 +349,7 @@ function M.harras_enemy_hero()
   local bot = GetBot()
   local hero = GetEnemyHero(bot)
 
-  bot:SetTarget(hero)
-
-  bot:Action_AttackUnit(hero, false)
+  AttackUnit(bot, hero)
 end
 
 --------------------------------
@@ -381,9 +386,7 @@ function M.attack_enemy_building()
   local bot = GetBot()
   local unit = GetEnemyBuilding(bot)
 
-  bot:SetTarget(unit)
-
-  bot:Action_AttackUnit(unit, false)
+  AttackUnit(bot, unit)
 end
 
 ---------------------------------
