@@ -176,6 +176,8 @@ function M.move_mid_front_lane()
   GetBot():Action_MoveToLocation(target_location)
 end
 
+---------------------------------
+
 local function IsLastHit(bot, unit)
   -- TODO: Consider incoming projectiles here
   return unit:GetHealth() <= 1.6 * bot:GetAttackDamage()
@@ -225,6 +227,8 @@ function M.lasthit_enemy_creep()
 
   bot:Action_AttackUnit(creep, false)
 end
+
+---------------------------------
 
 function M.pre_deny_ally_creep()
   local bot = GetBot()
@@ -281,16 +285,11 @@ local function IsFocusedByEnemies()
     bot,
     constants.MAX_CREEP_ATTACK_RANGE)
 
-  local enemy_heroes = common_algorithms.GetEnemyHeroes(
-    bot,
-    constants.MAX_HERO_ATTACK_RANGE)
-
   local total_damage =
     common_algorithms.GetTotalDamage(enemy_towers, bot) +
-    common_algorithms.GetTotalDamage(enemy_creeps, bot) +
-    common_algorithms.GetTotalDamage(enemy_heroes, bot)
+    common_algorithms.GetTotalDamage(enemy_creeps, bot)
 
-  return 0.2 < functions.GetRate(total_damage, bot:GetHealth())
+  return 0 < total_damage
 end
 
 function M.pre_evasion()
@@ -362,11 +361,16 @@ local function GetEnemyBuilding(bot)
 end
 
 function M.pre_attack_enemy_building()
+  -- TODO: This move should be part of the separate objective
+
+  return false
+  --[[
   -- TODO: Check if it is safe to attack building
   local bot = GetBot()
 
   return not IsUnitAttack(bot)
          and GetEnemyBuilding(bot) ~= nil
+  --]]
 end
 
 function M.post_attack_enemy_building()
@@ -441,11 +445,6 @@ function M.turn()
 end
 
 ---------------------------------
-
-function M.pre_attack_enemy_building()
-  -- TODO: Implement this
-  return false
-end
 
 function M.pre_tp_out()
   -- TODO: Implement this
