@@ -27,7 +27,6 @@ local OBJECTIVES = {
       {move = "deny_ally_creep", desire = 60},
       {move = "harras_enemy_hero", desire = 50},
       {move = "positioning", desire = 45},
-      {move = "attack_enemy_building", desire = 40},
       {move = "turn", desire = 10},
       {move = "stop", desire = 1},
     },
@@ -73,8 +72,8 @@ local function executeMove()
   local current_move = GetCurrentMove()
   local current_objective = GetCurrentObjective()
 
-  logger.Print("current_move = " .. current_move.move ..
-    " MOVE_INDEX = " .. MOVE_INDEX)
+  logger.Print("team = " .. GetTeam() .. " current_move = " ..
+    current_move.move .. " MOVE_INDEX = " .. MOVE_INDEX)
 
   if not current_objective.module["pre_" .. current_move.move]() then
     FindNextMove()
@@ -92,8 +91,9 @@ end
 function M.Process()
   local current_objective = GetCurrentObjective()
 
-  logger.Print("current_objective = " .. current_objective.objective ..
-    " OBJECTIVE_INDEX = " .. OBJECTIVE_INDEX)
+  logger.Print("team = " .. GetTeam() .. " current_objective = " ..
+    current_objective.objective .. " OBJECTIVE_INDEX = " ..
+    OBJECTIVE_INDEX)
 
   if not current_objective.done
      and current_objective.module["pre_" .. current_objective.objective]() then

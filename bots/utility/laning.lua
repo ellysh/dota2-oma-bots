@@ -158,13 +158,22 @@ end
 local function AreEnemyCreepsInRadius(radius)
   local bot = GetBot()
 
-  local creeps = common_algorithms.GetEnemyCreeps(bot, radius)
+  local units = common_algorithms.GetEnemyCreeps(bot, radius)
 
-  return not functions.IsArrayEmpty(creeps)
+  return not functions.IsArrayEmpty(units)
+end
+
+local function IsEnemyTowerInRadius(radius)
+  local bot = GetBot()
+
+  local units = bot:GetNearbyTowers(radius, true)
+
+  return not functions.IsArrayEmpty(units)
 end
 
 function M.pre_positioning()
   return AreEnemyCreepsInRadius(constants.MIN_CREEP_DISTANCE)
+         or IsEnemyTowerInRadius(constants.MAX_TOWER_ATTACK_RANGE)
 end
 
 function M.post_positioning()
