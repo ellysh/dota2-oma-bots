@@ -12,6 +12,9 @@ local constants = require(
 local logger = require(
   GetScriptDirectory() .."/utility/logger")
 
+local prepare_for_match = require(
+  GetScriptDirectory() .."/utility/prepare_for_match")
+
 ---------------------------------
 
 function M.post_laning()
@@ -21,7 +24,7 @@ end
 function M.pre_laning()
   -- This is a objectives Dependency example
 
-  return M.post_prepare_for_match()
+  return prepare_for_match.post_prepare_for_match()
 end
 
 ---------------------------------
