@@ -155,6 +155,14 @@ end
 
 --------------------------------
 
+local function AreAllyCreepsInRadius(radius)
+  local bot = GetBot()
+
+  local units = common_algorithms.GetAllyCreeps(bot, radius)
+
+  return not functions.IsArrayEmpty(units)
+end
+
 local function AreEnemyCreepsInRadius(radius)
   local bot = GetBot()
 
@@ -172,7 +180,12 @@ local function IsEnemyTowerInRadius(radius)
 end
 
 function M.pre_positioning()
-  return AreEnemyCreepsInRadius(constants.MIN_CREEP_DISTANCE)
+  return (AreAllyCreepsInRadius(constants.MIN_CREEP_DISTANCE)
+          and AreEnemyCreepsInRadius(constants.MIN_CREEP_DISTANCE))
+
+         or (not AreAllyCreepsInRadius(constants.MIN_CREEP_DISTANCE)
+             and AreEnemyCreepsInRadius(constants.MAX_CREEP_DISTANCE))
+
          or IsEnemyTowerInRadius(constants.MAX_TOWER_ATTACK_RANGE)
 end
 
