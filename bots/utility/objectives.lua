@@ -71,21 +71,22 @@ end
 
 local function executeMove()
   local current_move = GetCurrentMove()
+  local current_objective = GetCurrentObjective()
 
   logger.Print("current_move = " .. current_move.move ..
     " MOVE_INDEX = " .. MOVE_INDEX)
 
-  if not M["pre_" .. current_move.move]() then
+  if not current_objective.module["pre_" .. current_move.move]() then
     FindNextMove()
     return
   end
 
-  if M["post_" .. current_move.move]() then
+  if current_objective.module["post_" .. current_move.move]() then
     MOVE_INDEX = 1
     return
   end
 
-  M[current_move.move]()
+  current_objective.module[current_move.move]()
 end
 
 function M.Process()
@@ -95,7 +96,7 @@ function M.Process()
     " OBJECTIVE_INDEX = " .. OBJECTIVE_INDEX)
 
   if not current_objective.done
-     and M["pre_" .. current_objective.objective]() then
+     and current_objective.module["pre_" .. current_objective.objective]() then
 
      executeMove(current_objective)
   else
@@ -104,7 +105,7 @@ function M.Process()
     return
   end
 
-  if M["post_" .. current_objective.objective]() then
+  if current_objective.module["post_" .. current_objective.objective]() then
     current_objective.done = true
     FindNextObjective()
   end
