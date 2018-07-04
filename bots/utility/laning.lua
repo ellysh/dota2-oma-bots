@@ -299,30 +299,6 @@ local function GetEnemyBuilding(bot)
     end)
 end
 
-function M.pre_attack_enemy_building()
-  -- TODO: This move should be part of the separate objective
-
-  return false
-  --[[
-  -- TODO: Check if it is safe to attack building
-  local bot = GetBot()
-
-  return not IsUnitAttack(bot)
-         and GetEnemyBuilding(bot) ~= nil
-  --]]
-end
-
-function M.post_attack_enemy_building()
-  return not M.pre_attack_enemy_building()
-end
-
-function M.attack_enemy_building()
-  local bot = GetBot()
-  local unit = GetEnemyBuilding(bot)
-
-  AttackUnit(bot, unit)
-end
-
 ---------------------------------
 
 local function IsAttackDone(unit)
