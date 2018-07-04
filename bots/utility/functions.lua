@@ -39,20 +39,6 @@ function M.GetTableSize(table)
   return count
 end
 
-function M.GetItem(unit, item_name, slot_type)
-  local slot = unit:FindItemSlot(item_name)
-
-  if slot_type ~= nil
-     and unit:GetItemSlotType(slot) ~= slot_type then
-     return nil end
-
-  return unit:GetItemInSlot(slot)
-end
-
-function M.IsItemPresent(unit, item_name)
-  return M.GetItem(unit, item_name, nil) ~= nil
-end
-
 -- This function compares two Lua table objects. It was taken from here:
 -- https://web.archive.org/web/20131225070434/http://snippets.luacode.org/snippets/Deep_Comparison_of_Two_Values_3
 
@@ -129,10 +115,6 @@ function M.ternary(condition, a, b)
   else
     return b
   end
-end
-
-function M.PercentToDesire(percent)
-  return percent / 100
 end
 
 function M.GetElementWith(list, compare_function, validate_function)

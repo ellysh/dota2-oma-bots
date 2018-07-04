@@ -4,7 +4,20 @@ local functions = require(
 local constants = require(
   GetScriptDirectory() .."/utility/constants")
 
+local all_units = require(
+  GetScriptDirectory() .."/utility/all_units")
+
 local M = {}
+
+function M.GetItem(unit, item_name)
+  local slot = unit:FindItemSlot(item_name)
+
+  return unit:GetItemInSlot(slot)
+end
+
+function M.IsItemPresent(unit, item_name)
+  return M.GetItem(unit, item_name) ~= nil
+end
 
 function M.IsAttackTargetable(unit)
   return unit:IsAlive()

@@ -1,7 +1,7 @@
 local M = {}
 
-local functions = require(
-  GetScriptDirectory() .."/utility/functions")
+local common_algorithms = require(
+  GetScriptDirectory() .."/utility/common_algorithms")
 
 local logger = require(
   GetScriptDirectory() .."/utility/logger")
@@ -35,7 +35,7 @@ function M.buy_and_use_courier()
 
   bot:ActionImmediate_PurchaseItem('item_courier')
 
-  bot:Action_UseAbility(functions.GetItem(bot, 'item_courier', nil))
+  bot:Action_UseAbility(common_algorithms.GetItem(bot, 'item_courier'))
 end
 
 ---------------------------------
@@ -43,11 +43,11 @@ end
 function M.post_buy_starting_items()
   local bot = GetBot()
 
-  return functions.IsItemPresent(bot, 'item_flask')
-         and functions.IsItemPresent(bot, 'item_tango')
-         and functions.IsItemPresent(bot, 'item_slippers')
-         and functions.IsItemPresent(bot, 'item_circlet')
-         and functions.IsItemPresent(bot, 'item_branches')
+  return common_algorithms.IsItemPresent(bot, 'item_flask')
+         and common_algorithms.IsItemPresent(bot, 'item_tango')
+         and common_algorithms.IsItemPresent(bot, 'item_slippers')
+         and common_algorithms.IsItemPresent(bot, 'item_circlet')
+         and common_algorithms.IsItemPresent(bot, 'item_branches')
 end
 
 function M.pre_buy_starting_items()

@@ -1,6 +1,6 @@
-local units = require(
-  GetScriptDirectory() .."/utility/units")
+local all_units = require(
+  GetScriptDirectory() .."/utility/all_units")
 
 function TeamThink()
-  units.UpdateUnitList()
+  all_units.UpdateUnitList()
 end
