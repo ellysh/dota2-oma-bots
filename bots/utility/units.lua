@@ -32,6 +32,16 @@ local function GetUnitType(unit)
   return UNIT_TYPE["UNDEFINED"]
 end
 
+local function GetItems(unit)
+  local result = {}
+
+  for i = 0, 16, 1 do
+    table.insert(result, unit:GetItemInSlot(i))
+  end
+
+  return result
+end
+
 local function AddToUnitList(_, unit)
   UNIT_LIST[GetTeam()][tostring(unit)] = {
     name = unit:GetUnitName(),
@@ -41,7 +51,8 @@ local function AddToUnitList(_, unit)
     is_alive = unit:IsAlive(),
     type = GetUnitType(unit),
     attack_target = unit:GetTarget(),
-    team = unit:GetTeam()
+    team = unit:GetTeam(),
+    items = GetItems(unit),
   }
 end
 
