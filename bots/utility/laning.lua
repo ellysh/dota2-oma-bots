@@ -74,14 +74,31 @@ end
 
 ---------------------------------
 
-local function GetTotalDamageByEnemies(unit, is_heroes)
-  local enemy_towers = unit:GetNearbyTowers(
-    constants.MAX_TOWER_ATTACK_RANGE,
-    true)
+local SIDE = {
+  ENEMY = {},
+  ALLY = {},
+}
 
-  local enemy_creeps = common_algorithms.GetEnemyCreeps(
-    unit,
-    constants.MAX_CREEP_ATTACK_RANGE)
+local function GetTotalDamageByEnemies(unit, side, is_heroes)
+  local enemy_towers =
+    functions.ternary(
+      side == SIDE["ENEMY"],
+      unit:GetNearbyTowers(
+        constants.MAX_TOWER_ATTACK_RANGE,
+        true),
+      unit:GetNearbyTowers(
+        constants.MAX_TOWER_ATTACK_RANGE,
+        false))
+
+  local enemy_creeps =
+    functions.ternary(
+      side == SIDE["ENEMY"],
+      common_algorithms.GetEnemyCreeps(
+        unit,
+        constants.MAX_CREEP_ATTACK_RANGE),
+      common_algorithms.GetAllyCreeps(
+        unit,
+        constants.MAX_CREEP_ATTACK_RANGE))
 
   local total_damage =
     common_algorithms.GetTotalDamage(enemy_towers, unit) +
@@ -92,17 +109,22 @@ local function GetTotalDamageByEnemies(unit, is_heroes)
       unit,
       constants.MAX_HERO_ATTACK_RANGE)
 
+    local ally_heroes = common_algorithms.GetAllyHeroes(
+      unit,
+      constants.MAX_HERO_ATTACK_RANGE)
+
     total_damage =
       total_damage +
-      common_algorithms.GetTotalDamage(enemy_heroes, unit)
+      common_algorithms.GetTotalDamage(enemy_heroes, unit) +
+      common_algorithms.GetTotalDamage(ally_heroes, unit)
   end
 
   return total_damage
 end
 
-local function IsLastHit(bot, unit)
+local function IsLastHit(bot, unit, side)
   local bot_damage = bot:GetAttackDamage()
-  local total_damage = GetTotalDamageByEnemies(unit, true)
+  local total_damage = GetTotalDamageByEnemies(unit, side, true)
 
   print("IsLastHit() - hp = " .. unit:GetHealth() ..
     " total_damage = " .. total_damage ..
@@ -111,14 +133,9 @@ local function IsLastHit(bot, unit)
   return unit:GetHealth() <= (total_damage + bot_damage)
 end
 
-local CREEP_TYPE = {
-  ENEMY = {},
-  ALLY = {},
-}
-
-local function GetLastHitCreep(bot, creep_type)
+local function GetLastHitCreep(bot, side)
   local creeps = functions.ternary(
-    creep_type == CREEP_TYPE["ENEMY"],
+    side == SIDE["ENEMY"],
     common_algorithms.GetEnemyCreeps(bot, 1600),
     common_algorithms.GetAllyCreeps(bot, 1600))
 
@@ -127,7 +144,13 @@ local function GetLastHitCreep(bot, creep_type)
     common_algorithms.CompareMinHealth,
     function(unit)
       return common_algorithms.IsAttackTargetable(unit)
-             and IsLastHit(bot, unit)
+             and IsLastHit(
+               bot,
+               unit,
+               functions.ternary(
+                 side == SIDE["ENEMY"],
+                 SIDE["ALLY"],
+                 SIDE["ENEMY"]))
     end)
 end
 
@@ -151,7 +174,7 @@ function M.pre_lasthit_enemy_creep()
   local bot = GetBot()
 
   return not IsUnitAttack(bot)
-         and GetLastHitCreep(bot, CREEP_TYPE["ENEMY"]) ~= nil
+         and GetLastHitCreep(bot, SIDE["ENEMY"]) ~= nil
 end
 
 function M.post_lasthit_enemy_creep()
@@ -160,7 +183,7 @@ end
 
 function M.lasthit_enemy_creep()
   local bot = GetBot()
-  local creep = GetLastHitCreep(bot, CREEP_TYPE["ENEMY"])
+  local creep = GetLastHitCreep(bot, SIDE["ENEMY"])
 
   AttackUnit(bot, creep)
 end
@@ -171,7 +194,7 @@ function M.pre_deny_ally_creep()
   local bot = GetBot()
 
   return not IsUnitAttack(bot)
-         and GetLastHitCreep(bot, CREEP_TYPE["ALLY"]) ~= nil
+         and GetLastHitCreep(bot, SIDE["ALLY"]) ~= nil
 end
 
 function M.post_deny_ally_creep()
@@ -180,7 +203,7 @@ end
 
 function M.deny_ally_creep()
   local bot = GetBot()
-  local creep = GetLastHitCreep(bot, CREEP_TYPE["ALLY"])
+  local creep = GetLastHitCreep(bot, SIDE["ALLY"])
 
   AttackUnit(bot, creep)
 end
@@ -233,7 +256,7 @@ end
 --------------------------------
 
 function M.pre_evasion()
-  return 0 < GetTotalDamageByEnemies(GetBot(), false)
+  return 0 < GetTotalDamageByEnemies(GetBot(), SIDE["ENEMY"], false)
 end
 
 function M.post_evasion()
