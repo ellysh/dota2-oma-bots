@@ -41,6 +41,7 @@ local function AddToUnitList(_, unit)
     is_alive = unit:IsAlive(),
     type = GetUnitType(unit),
     attack_target = unit:GetTarget(),
+    team = unit:GetTeam()
   }
 end
 

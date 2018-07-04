@@ -53,52 +53,6 @@ function M.IsItemPresent(unit, item_name)
   return M.GetItem(unit, item_name, nil) ~= nil
 end
 
--- Indexes in resulting array do not match to slot indexes.
--- You should shift them -1 to match the slot indexes.
-
-function M.GetItems(unit, start_index, end_index, get_function)
-  local item_list = {}
-  local items_number = 0
-
-  for i = start_index, end_index, 1 do
-    local item = unit:GetItemInSlot(i)
-    if item ~= nil and item:GetName() ~= "nil" then
-      items_number = items_number + 1
-      table.insert(item_list, get_function(item))
-    else
-      table.insert(item_list, "nil")
-    end
-  end
-
-  return items_number, item_list
-end
-
-function M.GetItemSlotsCount(unit, start_index, end_index)
-  local result, _ = M.GetItems(
-    unit,
-    start_index,
-    end_index,
-    function(item) return item:GetName() end)
-
-  return result
-end
-
-function M.IsInventoryFull(unit)
-  return constants.INVENTORY_SIZE <=
-           M.GetItemSlotsCount(
-             unit,
-             constants.INVENTORY_START_INDEX,
-             constants.INVENTORY_END_INDEX)
-end
-
-function M.IsStashFull(unit)
-  return constants.STASH_SIZE <=
-           M.GetItemSlotsCount(
-             unit,
-             constants.STASH_START_INDEX,
-             constants.STASH_END_INDEX)
-end
-
 -- This function compares two Lua table objects. It was taken from here:
 -- https://web.archive.org/web/20131225070434/http://snippets.luacode.org/snippets/Deep_Comparison_of_Two_Values_3
 
@@ -159,12 +113,6 @@ function M.ComplementOfLists(list1, list2, is_deep)
   return result
 end
 
-function M.IsUnitCasting(unit)
-  return unit:IsChanneling()
-        or unit:IsUsingAbility()
-        or unit:IsCastingAbility()
-end
-
 -- This function was taken from the Ranked Matchmaking AI project:
 -- https://github.com/adamqqqplay/dota2ai
 
@@ -173,27 +121,6 @@ local function IsFlagSet(mask, flag)
     return false end
 
   return ((mask / flag)) % 2 >= 1
-end
-
-function M.GetAbilityTargetType(ability)
-  -- This function returns the type of target itself:
-  -- ABILITY_NO_TARGET, ABILITY_UNIT_TARGET or ABILITY_LOCATION_TARGET.
-  -- The API GetTargetType funtion returns the type of a target unit.
-
-  if ability == nil then
-    return nil end
-
-  local behavior = ability:GetBehavior()
-
-  if IsFlagSet(behavior, ABILITY_BEHAVIOR_NO_TARGET) then
-    return constants.ABILITY_NO_TARGET
-  end
-
-  if IsFlagSet(behavior, ABILITY_BEHAVIOR_POINT) then
-    return constants.ABILITY_LOCATION_TARGET
-  end
-
-  return constants.ABILITY_UNIT_TARGET
 end
 
 function M.ternary(condition, a, b)
@@ -206,16 +133,6 @@ end
 
 function M.PercentToDesire(percent)
   return percent / 100
-end
-
-function M.GetInventoryItems(bot)
-  local _, result = M.GetItems(
-    bot,
-    constants.INVENTORY_START_INDEX,
-    constants.INVENTORY_END_INDEX,
-    function(item) return item:GetName() end)
-
-  return result
 end
 
 function M.GetElementWith(list, compare_function, validate_function)
@@ -273,71 +190,6 @@ function M.GetRate(a, b)
   return a / b
 end
 
-function M.IsUnitHaveItems(unit, items)
-  local inventory = M.GetInventoryItems(unit)
-
-  return M.IsIntersectionOfLists(inventory, items)
-end
-
-function M.IsBotModeMatch(bot, bot_mode)
-  if bot_mode == "any_mode" or bot_mode == "team_fight" then
-    return true
-  end
-
-  local active_mode = bot:GetActiveMode()
-
-  -- Actual bot modes are the constant digits but the
-  -- shortcuted modes are strings.
-
-  if bot_mode == "BOT_MODE_PUSH_TOWER" then
-    return active_mode == BOT_MODE_PUSH_TOWER_TOP
-           or active_mode == BOT_MODE_PUSH_TOWER_MID
-           or active_mode == BOT_MODE_PUSH_TOWER_BOT
-  end
-
-  if bot_mode == "BOT_MODE_DEFEND_TOWER" then
-    return active_mode == BOT_MODE_DEFEND_TOWER_TOP
-           or active_mode == BOT_MODE_DEFEND_TOWER_MID
-           or active_mode == BOT_MODE_DEFEND_TOWER_BOT
-  end
-
-  return active_mode == constants.BOT_MODES[bot_mode]
-end
-
-function M.IsBotInFightingMode(bot)
-  local mode = bot:GetActiveMode()
-
-  return mode == BOT_MODE_ATTACK
-         or mode == BOT_MODE_PUSH_TOWER_TOP
-         or mode == BOT_MODE_PUSH_TOWER_MID
-         or mode == BOT_MODE_PUSH_TOWER_BOT
-         or mode == BOT_MODE_DEFEND_ALLY
-         or mode == BOT_MODE_RETREAT
-         or mode == BOT_MODE_ROSHAN
-         or mode == BOT_MODE_DEFEND_TOWER_TOP
-         or mode == BOT_MODE_DEFEND_TOWER_MID
-         or mode == BOT_MODE_DEFEND_TOWER_BOT
-         or mode == BOT_MODE_EVASIVE_MANEUVERS
-         or bot:WasRecentlyDamagedByAnyHero(3.0)
-end
-
-function M.DistanceToDesire(distance, max_distance, base_desire)
-  return (1 - (distance / max_distance)) + base_desire
-end
-
-function M.GetNearestLocation(bot, locations_list)
-  return M.GetElementWith(
-    locations_list,
-    function(t, a, b)
-      return GetUnitToLocationDistance(bot, t[a])
-             < GetUnitToLocationDistance(bot, t[b])
-    end)
-end
-
-function M.GetNormalizedDesire(desire, max_desire)
-  return M.ternary(max_desire < desire, max_desire, desire)
-end
-
 -- This function is taken from here:
 -- https://stackoverflow.com/a/15278426
 -- Result will be stored in the t1 table. The return value is
@@ -350,21 +202,11 @@ function M.TableConcat(t1, t2)
   return t1
 end
 
-function M.IsUnitInRoshpit(unit)
-  return GetUnitToLocationDistance(unit, constants.ROSHAN_PIT_LOCATION)
-         <= constants.ROSHAN_PIT_RADIUS
-end
-
-function M.IsEnemy(unit)
-  return unit:GetTeam() ~= GetTeam()
-end
-
 function M.IsArrayEmpty(array)
   return array == nil or #array == 0
 end
 
 -- Provide an access to local functions for unit tests only
 M.test_IsFlagSet = IsFlagSet
-M.test_GetNormalizedDesire = GetNormalizedDesire
 
 return M
