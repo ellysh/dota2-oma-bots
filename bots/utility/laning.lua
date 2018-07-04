@@ -79,26 +79,14 @@ local SIDE = {
   ALLY = {},
 }
 
-local function GetTotalDamageByEnemies(unit, side, is_heroes)
-  local enemy_towers =
-    functions.ternary(
-      side == SIDE["ENEMY"],
-      unit:GetNearbyTowers(
-        constants.MAX_TOWER_ATTACK_RANGE,
-        true),
-      unit:GetNearbyTowers(
-        constants.MAX_TOWER_ATTACK_RANGE,
-        false))
+local function GetTotalDamageByEnemies(unit, is_heroes)
+  local enemy_towers = unit:GetNearbyTowers(
+                         constants.MAX_TOWER_ATTACK_RANGE,
+                         true)
 
-  local enemy_creeps =
-    functions.ternary(
-      side == SIDE["ENEMY"],
-      common_algorithms.GetEnemyCreeps(
-        unit,
-        constants.MAX_CREEP_ATTACK_RANGE),
-      common_algorithms.GetAllyCreeps(
-        unit,
-        constants.MAX_CREEP_ATTACK_RANGE))
+  local enemy_creeps = common_algorithms.GetEnemyCreeps(
+                         unit,
+                         constants.MAX_CREEP_ATTACK_RANGE)
 
   local total_damage =
     common_algorithms.GetTotalDamage(enemy_towers, unit) +
@@ -122,13 +110,9 @@ local function GetTotalDamageByEnemies(unit, side, is_heroes)
   return total_damage
 end
 
-local function IsLastHit(bot, unit, side)
+local function IsLastHit(bot, unit)
   local bot_damage = bot:GetAttackDamage()
-  local total_damage = GetTotalDamageByEnemies(unit, side, true)
-
-  print("IsLastHit() - hp = " .. unit:GetHealth() ..
-    " total_damage = " .. total_damage ..
-    " bot_damage = " .. bot_damage)
+  local total_damage = GetTotalDamageByEnemies(unit, true)
 
   return unit:GetHealth() <= (total_damage + bot_damage)
 end
@@ -144,13 +128,7 @@ local function GetLastHitCreep(bot, side)
     common_algorithms.CompareMinHealth,
     function(unit)
       return common_algorithms.IsAttackTargetable(unit)
-             and IsLastHit(
-               bot,
-               unit,
-               functions.ternary(
-                 side == SIDE["ENEMY"],
-                 SIDE["ALLY"],
-                 SIDE["ENEMY"]))
+             and IsLastHit(bot, unit)
     end)
 end
 
@@ -256,7 +234,7 @@ end
 --------------------------------
 
 function M.pre_evasion()
-  return 0 < GetTotalDamageByEnemies(GetBot(), SIDE["ENEMY"], false)
+  return 0 < GetTotalDamageByEnemies(GetBot(), false)
 end
 
 function M.post_evasion()
