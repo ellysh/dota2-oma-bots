@@ -204,25 +204,34 @@ end
 
 --------------------------------
 
-local function IsFocusedByEnemies()
-  local bot = GetBot()
-  local enemy_towers = bot:GetNearbyTowers(
+local function GetTotalDamageByEnemies(unit, is_heroes)
+  local enemy_towers = unit:GetNearbyTowers(
     constants.MAX_TOWER_ATTACK_RANGE,
     true)
 
   local enemy_creeps = common_algorithms.GetEnemyCreeps(
-    bot,
+    unit,
     constants.MAX_CREEP_ATTACK_RANGE)
 
   local total_damage =
-    common_algorithms.GetTotalDamage(enemy_towers, bot) +
-    common_algorithms.GetTotalDamage(enemy_creeps, bot)
+    common_algorithms.GetTotalDamage(enemy_towers, unit) +
+    common_algorithms.GetTotalDamage(enemy_creeps, unit)
 
-  return 0 < total_damage
+  if is_heroes then
+    local enemy_heroes = common_algorithms.GetEnemyHeroes(
+      unit,
+      constants.MAX_HERO_ATTACK_RANGE)
+
+    total_damage =
+      total_damage +
+      common_algorithms.GetTotalDamage(enemy_heroes, unit)
+  end
+
+  return total_damage
 end
 
 function M.pre_evasion()
-  return IsFocusedByEnemies()
+  return 0 < GetTotalDamageByEnemies(GetBot(), false)
 end
 
 function M.post_evasion()
