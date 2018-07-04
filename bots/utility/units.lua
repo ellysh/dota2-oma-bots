@@ -1,3 +1,6 @@
+local constants = require(
+  GetScriptDirectory() .."/utility/constants")
+
 local M = {}
 
 local UNIT_LIST = {
@@ -35,7 +38,7 @@ end
 local function GetItems(unit)
   local result = {}
 
-  for i = 0, 16, 1 do
+  for i = constants.INVENTORY_START_INDEX, constants.STASH_END_INDEX, 1 do
     table.insert(result, unit:GetItemInSlot(i))
   end
 
