@@ -74,13 +74,41 @@ end
 
 ---------------------------------
 
-local function IsLastHit(bot, unit)
-  if unit:GetHealth() <= bot:GetAttackDamage() then
-    return true
+local function GetTotalDamageByEnemies(unit, is_heroes)
+  local enemy_towers = unit:GetNearbyTowers(
+    constants.MAX_TOWER_ATTACK_RANGE,
+    true)
+
+  local enemy_creeps = common_algorithms.GetEnemyCreeps(
+    unit,
+    constants.MAX_CREEP_ATTACK_RANGE)
+
+  local total_damage =
+    common_algorithms.GetTotalDamage(enemy_towers, unit) +
+    common_algorithms.GetTotalDamage(enemy_creeps, unit)
+
+  if is_heroes then
+    local enemy_heroes = common_algorithms.GetEnemyHeroes(
+      unit,
+      constants.MAX_HERO_ATTACK_RANGE)
+
+    total_damage =
+      total_damage +
+      common_algorithms.GetTotalDamage(enemy_heroes, unit)
   end
 
-  local projectiles = unit:GetIncomingTrackingProjectiles()
-  return unit:GetHealth() <= (1 + #projectiles * 0.3) * bot:GetAttackDamage()
+  return total_damage
+end
+
+local function IsLastHit(bot, unit)
+  local bot_damage = bot:GetAttackDamage()
+  local total_damage = GetTotalDamageByEnemies(unit, true)
+
+  print("IsLastHit() - hp = " .. unit:GetHealth() ..
+    " total_damage = " .. total_damage ..
+    " bot_damage = " .. bot_damage)
+
+  return unit:GetHealth() <= (total_damage + bot_damage)
 end
 
 local CREEP_TYPE = {
@@ -203,32 +231,6 @@ function M.positioning()
 end
 
 --------------------------------
-
-local function GetTotalDamageByEnemies(unit, is_heroes)
-  local enemy_towers = unit:GetNearbyTowers(
-    constants.MAX_TOWER_ATTACK_RANGE,
-    true)
-
-  local enemy_creeps = common_algorithms.GetEnemyCreeps(
-    unit,
-    constants.MAX_CREEP_ATTACK_RANGE)
-
-  local total_damage =
-    common_algorithms.GetTotalDamage(enemy_towers, unit) +
-    common_algorithms.GetTotalDamage(enemy_creeps, unit)
-
-  if is_heroes then
-    local enemy_heroes = common_algorithms.GetEnemyHeroes(
-      unit,
-      constants.MAX_HERO_ATTACK_RANGE)
-
-    total_damage =
-      total_damage +
-      common_algorithms.GetTotalDamage(enemy_heroes, unit)
-  end
-
-  return total_damage
-end
 
 function M.pre_evasion()
   return 0 < GetTotalDamageByEnemies(GetBot(), false)
@@ -376,13 +378,6 @@ function M.turn()
   else
     bot:Action_ClearActions(true)
   end
-end
-
----------------------------------
-
-function M.pre_tp_out()
-  -- TODO: Implement this
-  return false
 end
 
 -- Provide an access to local functions for unit tests only

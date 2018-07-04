@@ -20,7 +20,6 @@ local OBJECTIVES = {
     objective = "laning",
     module = require(GetScriptDirectory() .."/utility/laning"),
     moves = {
-      {move = "tp_out", desire = 100},
       {move = "evasion", desire = 90},
       {move = "move_mid_front_lane", desire = 80},
       {move = "lasthit_enemy_creep", desire = 75},
