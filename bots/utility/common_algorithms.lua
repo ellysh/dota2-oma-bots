@@ -19,7 +19,6 @@ function M.GetItem(unit, item_name)
     unit_data.items,
     nil,
     function(item)
-      print("M.GetItem() - item = " .. item:GetName())
       return item:GetName() == item_name
     end)
 end
