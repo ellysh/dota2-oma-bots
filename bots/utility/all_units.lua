@@ -18,6 +18,10 @@ local UNIT_TYPE = {
   UNDEFINED = {}
 }
 
+-------------------------------
+-- Functions to fill UNIT_LIST
+-------------------------------
+
 local function GetUnitType(unit)
   if (unit:IsCreep()) then
     return UNIT_TYPE["CREEP"]
@@ -30,16 +34,6 @@ local function GetUnitType(unit)
   end
 
   return UNIT_TYPE["UNDEFINED"]
-end
-
-function M.GetUnitData(unit)
-  local result = UNIT_LIST[GetTeam()][tostring(unit)]
-
-  if result == nil then
-    result = UNIT_LIST[GetOpposingTeam()][tostring(unit)]
-  end
-
-  return result
 end
 
 local function GetItems(unit)
@@ -71,6 +65,20 @@ function M.UpdateUnitList()
 
   local units = GetUnitList(UNIT_LIST_ALLIES)
   functions.DoWithKeysAndElements(units, AddToUnitList)
+end
+
+----------------------------------
+-- Functions to retrieve UNIT_LIST
+----------------------------------
+
+function M.GetUnitData(unit)
+  local result = UNIT_LIST[GetTeam()][tostring(unit)]
+
+  if result == nil then
+    result = UNIT_LIST[GetOpposingTeam()][tostring(unit)]
+  end
+
+  return result
 end
 
 -- Provide an access to local functions for unit tests only
