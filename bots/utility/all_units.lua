@@ -11,7 +11,7 @@ local UNIT_LIST = {
   [TEAM_DIRE] = {},
 }
 
-local UNIT_TYPE = {
+M.UNIT_TYPE = {
   CREEP = {},
   HERO = {},
   TOWER = {},
@@ -24,16 +24,16 @@ local UNIT_TYPE = {
 
 local function GetUnitType(unit)
   if (unit:IsCreep()) then
-    return UNIT_TYPE["CREEP"]
+    return M.UNIT_TYPE["CREEP"]
   end
   if (unit:IsHero()) then
-    return UNIT_TYPE["HERO"]
+    return M.UNIT_TYPE["HERO"]
   end
   if (unit:IsTower()) then
-    return UNIT_TYPE["TOWER"]
+    return M.UNIT_TYPE["TOWER"]
   end
 
-  return UNIT_TYPE["UNDEFINED"]
+  return M.UNIT_TYPE["UNDEFINED"]
 end
 
 local function GetItems(unit)

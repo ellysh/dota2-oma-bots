@@ -67,21 +67,18 @@ function M.GetAllyHeroes(bot, radius)
     BOT_MODE_NONE)
 end
 
-function M.GetEnemyCreeps(bot, radius)
-  local enemy_creeps = bot:GetNearbyCreeps(
-    GetNormalizedRadius(radius),
-    true)
+function M.GetEnemyCreeps(unit, radius)
+  local unit_list = all_units.GetEnemyUnitsData(unit)
+  local unit_data = all_units.GetUnitData(unit)
 
-  local neutral_creeps = bot:GetNearbyNeutralCreeps(
-    GetNormalizedRadius(radius))
-
-  if enemy_creeps == nil or #enemy_creeps == 0 then
-    return {} end
-
-  if neutral_creeps == nil or #neutral_creeps == 0 then
-    return enemy_creeps end
-
-  return functions.ComplementOfLists(enemy_creeps, neutral_creeps, true)
+  return functions.GetElementWith(
+    unit_list,
+    nil,
+    function(check_unit_data)
+      return check_unit_data.type == M.UNIT_TYPE["CREEP"]
+             and functions.GetUnitDistance(unit_data, check_unit_data)
+                 <= radius
+    end)
 end
 
 function M.GetAllyCreeps(bot, radius)

@@ -193,6 +193,10 @@ function M.GetDistance(location1, location2)
            math.pow(location1.y - location2.y, 2))
 end
 
+function M.GetUnitDistance(unit1_data, unit2_data)
+  return (M.GetDistance(unit1_data.location, unit2_data.location))
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_IsFlagSet = IsFlagSet
 
