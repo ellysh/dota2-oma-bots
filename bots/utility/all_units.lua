@@ -81,6 +81,23 @@ function M.GetUnitData(unit)
   return result
 end
 
+local function GetOpposingTeam(unit)
+  local OPPOSING_TEAM = {
+    [TEAM_RADIANT] = TEAM_DIRE,
+    [TEAM_DIRE] = TEAM_RADIANT,
+  }
+
+  return OPPOSING_TEAM[unit:GetTeam()]
+end
+
+function M.GetEnemyUnitsData(unit)
+  return UNIT_LIST[GetOpposingTeam(unit)]
+end
+
+function M.GetAllyUnitsData(unit)
+  return UNIT_LIST[unit:GetTeam()]
+end
+
 -- Provide an access to local functions for unit tests only
 
 return M
