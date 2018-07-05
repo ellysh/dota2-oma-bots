@@ -10,9 +10,18 @@ local all_units = require(
 local M = {}
 
 function M.GetItem(unit, item_name)
-  local slot = unit:FindItemSlot(item_name)
+  local unit_data = all_units.GetUnitData(unit)
 
-  return unit:GetItemInSlot(slot)
+  if unit_data == nil then
+    return nil end
+
+  return functions.GetElementWith(
+    unit_data.items,
+    nil,
+    function(item)
+      print("M.GetItem() - item = " .. item:GetName())
+      return item:GetName() == item_name
+    end)
 end
 
 function M.IsItemPresent(unit, item_name)
@@ -99,5 +108,6 @@ end
 
 -- Provide an access to local functions for unit tests only
 M.test_GetNormalizedRadius = GetNormalizedRadius
+M.test_UpdateUnitList = all_units.UpdateUnitList
 
 return M
