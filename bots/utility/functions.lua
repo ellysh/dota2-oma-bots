@@ -188,6 +188,11 @@ function M.IsArrayEmpty(array)
   return array == nil or #array == 0
 end
 
+function M.GetDistance(location1, location2)
+  return math.sqrt(math.pow(location1.x - location2.x, 2) +
+           math.pow(location1.y - location2.y, 2))
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_IsFlagSet = IsFlagSet
 
