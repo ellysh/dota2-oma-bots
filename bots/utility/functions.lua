@@ -128,6 +128,18 @@ function M.GetElementWith(list, compare_function, validate_function)
   return nil
 end
 
+function M.GetListWith(list, compare_function, validate_function)
+  local result = {}
+
+  for _, element in M.spairs(list, compare_function) do
+    if validate_function == nil or validate_function(element) then
+      table.insert(result, element)
+    end
+  end
+
+  return result
+end
+
 function M.GetKeyAndElementWith(list, compare_function, validate_function)
 
   for key, element in M.spairs(list, compare_function) do

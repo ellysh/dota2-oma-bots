@@ -71,7 +71,7 @@ function M.GetEnemyCreeps(unit, radius)
   local unit_list = all_units.GetEnemyUnitsData(unit)
   local unit_data = all_units.GetUnitData(unit)
 
-  return functions.GetElementWith(
+  return functions.GetListWith(
     unit_list,
     nil,
     function(check_unit_data)
