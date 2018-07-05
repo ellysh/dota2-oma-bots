@@ -1,18 +1,15 @@
 local constants = require(
   GetScriptDirectory() .."/utility/constants")
 
+local functions = require(
+  GetScriptDirectory() .."/utility/functions")
+
 local M = {}
 
 local UNIT_LIST = {
   [TEAM_RADIANT] = {},
   [TEAM_DIRE] = {},
 }
-
-local function DoWithKeysAndElements(list, do_function)
-  for key, element in pairs(list) do
-    do_function(key, element)
-  end
-end
 
 local UNIT_TYPE = {
   CREEP = {},
@@ -63,7 +60,7 @@ function M.UpdateUnitList()
   UNIT_LIST[GetTeam()] = {}
 
   local units = GetUnitList(UNIT_LIST_ALLIES)
-  DoWithKeysAndElements(units, AddToUnitList)
+  functions.DoWithKeysAndElements(units, AddToUnitList)
 end
 
 -- Provide an access to local functions for unit tests only
