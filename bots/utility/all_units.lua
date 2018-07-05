@@ -32,12 +32,14 @@ local function GetUnitType(unit)
   return UNIT_TYPE["UNDEFINED"]
 end
 
-function M.GetUnitData(unit, team)
-  if team == nil then
-    return UNIT_LIST[GetTeam()][tostring(unit)]
-  else
-    return UNIT_LIST[team][tostring(unit)]
+function M.GetUnitData(unit)
+  local result = UNIT_LIST[GetTeam()][tostring(unit)]
+
+  if result == nil then
+    result = UNIT_LIST[GetOpposingTeam()][tostring(unit)]
   end
+
+  return result
 end
 
 local function GetItems(unit)
