@@ -34,7 +34,7 @@ function M.IsAttackTargetable(unit_data)
 end
 
 function M.CompareMinHealth(t, a, b)
-  return t[a]:GetHealth() < t[b]:GetHealth()
+  return t[a].health < t[b].health
 end
 
 local function GetNormalizedRadius(radius)
