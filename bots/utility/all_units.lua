@@ -46,13 +46,13 @@ local function GetItems(unit)
   return result
 end
 
-local function GetOpposingTeam(unit)
+local function GetOpposingTeam(team)
   local OPPOSING_TEAM = {
     [TEAM_RADIANT] = TEAM_DIRE,
     [TEAM_DIRE] = TEAM_RADIANT,
   }
 
-  return OPPOSING_TEAM[unit:GetTeam()]
+  return OPPOSING_TEAM[team]
 end
 
 local function AddUnit(unit, team)
@@ -94,17 +94,11 @@ end
 ----------------------------------
 
 function M.GetUnitData(unit)
-  local result = UNIT_LIST[GetTeam()][tostring(unit)]
-
-  if result == nil then
-    result = UNIT_LIST[GetOpposingTeam()][tostring(unit)]
-  end
-
-  return result
+  return UNIT_LIST[unit:GetTeam()][tostring(unit)]
 end
 
 function M.GetEnemyUnitsData(unit)
-  return UNIT_LIST[GetOpposingTeam(unit)]
+  return UNIT_LIST[GetOpposingTeam(unit:GetTeam())]
 end
 
 function M.GetAllyUnitsData(unit)
