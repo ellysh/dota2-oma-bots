@@ -336,7 +336,7 @@ function M.turn()
   local bot = GetBot()
 
   if not IsUnitMoving(bot) then
-    bot:Action_MoveToLocation(GetEnemyCreep():GetLocation())
+    bot:Action_MoveToLocation(GetEnemyCreep().location)
   else
     bot:Action_ClearActions(true)
   end
