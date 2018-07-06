@@ -46,8 +46,18 @@ local function GetItems(unit)
   return result
 end
 
-local function AddToUnitList(_, unit)
-  UNIT_LIST[GetTeam()][tostring(unit)] = {
+local function GetOpposingTeam(unit)
+  local OPPOSING_TEAM = {
+    [TEAM_RADIANT] = TEAM_DIRE,
+    [TEAM_DIRE] = TEAM_RADIANT,
+  }
+
+  return OPPOSING_TEAM[unit:GetTeam()]
+end
+
+local function AddUnit(unit, team)
+  UNIT_LIST[team][tostring(unit)] = {
+    handle = unit,
     name = unit:GetUnitName(),
     location = unit:GetLocation(),
     health = unit:GetHealth(),
@@ -60,12 +70,23 @@ local function AddToUnitList(_, unit)
   }
 end
 
+local function AddAllyUnit(_, unit)
+  AddUnit(unit, GetTeam())
+end
+
+local function AddEnemyUnit(_, unit)
+  AddUnit(unit, GetOpposingTeam(GetTeam()))
+end
+
 function M.UpdateUnitList()
   -- TODO: Track the history of units parameters here
   UNIT_LIST[GetTeam()] = {}
 
   local units = GetUnitList(UNIT_LIST_ALLIES)
-  functions.DoWithKeysAndElements(units, AddToUnitList)
+  functions.DoWithKeysAndElements(units, AddAllyUnit)
+
+  local units = GetUnitList(UNIT_LIST_ENEMIES)
+  functions.DoWithKeysAndElements(units, AddEnemyUnit)
 end
 
 ----------------------------------
@@ -80,15 +101,6 @@ function M.GetUnitData(unit)
   end
 
   return result
-end
-
-local function GetOpposingTeam(unit)
-  local OPPOSING_TEAM = {
-    [TEAM_RADIANT] = TEAM_DIRE,
-    [TEAM_DIRE] = TEAM_RADIANT,
-  }
-
-  return OPPOSING_TEAM[unit:GetTeam()]
 end
 
 function M.GetEnemyUnitsData(unit)
