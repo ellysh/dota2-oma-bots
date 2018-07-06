@@ -142,7 +142,8 @@ local function IsUnitAttack(unit)
   return anim == ACTIVITY_ATTACK or anim == ACTIVITY_ATTACK2
 end
 
-local function AttackUnit(bot, unit)
+local function AttackUnit(bot, unit_data)
+  local unit = all_units.GetUnit(unit_data)
   if (IsUnitAttack(bot) and IsAttackDone(bot)) then
     bot:Action_ClearActions(true)
     return
@@ -324,7 +325,7 @@ function M.pre_turn()
   return IsEnemyUnitsInAttackRange()
          and not IsUnitAttack(bot)
          and not IsUnitMoving(bot)
-         and not bot:IsFacingLocation(GetEnemyCreep():GetLocation(), 30)
+         and not bot:IsFacingLocation(GetEnemyCreep().location, 30)
 end
 
 function M.post_turn()
