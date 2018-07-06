@@ -61,6 +61,7 @@ local function AddToUnitList(_, unit)
 end
 
 function M.UpdateUnitList()
+  -- TODO: Track the history of units parameters here
   UNIT_LIST[GetTeam()] = {}
 
   local units = GetUnitList(UNIT_LIST_ALLIES)
