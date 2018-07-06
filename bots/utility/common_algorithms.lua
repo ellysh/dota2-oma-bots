@@ -64,27 +64,21 @@ local function GetUnitsInRadius(unit, radius, get_function)
     end)
 end
 
-function M.GetEnemyHeroes(bot, radius)
-  return bot:GetNearbyHeroes(
-    GetNormalizedRadius(radius),
-    true,
-    BOT_MODE_NONE)
+function M.GetEnemyHeroes(unit, radius)
+  return GetUnitsInRadius(unit, radius, all_units.GetEnemyHeroesData)
 end
 
--- Result of this fucntion includes the "bot" unit
+function M.GetAllyHeroes(unit, radius)
+  -- Result of this function includes the "bot" unit
 
-function M.GetAllyHeroes(bot, radius)
-  return bot:GetNearbyHeroes(
-    GetNormalizedRadius(radius),
-    false,
-    BOT_MODE_NONE)
+  return GetUnitsInRadius(unit, radius, all_units.GetAllyHeroesData)
 end
 
 function M.GetEnemyCreeps(unit, radius)
   return GetUnitsInRadius(unit, radius, all_units.GetEnemyCreepsData)
 end
 
-function M.GetAllyCreeps(bot, radius)
+function M.GetAllyCreeps(unit, radius)
   return GetUnitsInRadius(unit, radius, all_units.GetAllyCreepsData)
 end
 

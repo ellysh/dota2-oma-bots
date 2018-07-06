@@ -288,19 +288,6 @@ end
 
 --------------------------------
 
-local function GetEnemyBuilding(bot)
-  local units = common_algorithms.GetEnemyBuildings(bot, 1600)
-
-  return functions.GetElementWith(
-    units,
-    common_algorithms.CompareMinHealth,
-    function(unit)
-      return common_algorithms.IsAttackTargetable(unit)
-    end)
-end
-
----------------------------------
-
 local function IsAttackDone(unit)
   if not IsUnitAttack(unit) then
     return true
