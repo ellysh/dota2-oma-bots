@@ -302,7 +302,9 @@ function M.pre_stop()
   local bot = GetBot()
   local action = bot:GetCurrentActionType()
 
-  return (IsUnitAttack(bot) and IsAttackDone(bot)) or IsUnitMoving(bot)
+  return not M.pre_turn()
+         and ((IsUnitAttack(bot) and IsAttackDone(bot))
+              or IsUnitMoving(bot))
 end
 
 function M.post_stop()
@@ -329,7 +331,6 @@ function M.pre_turn()
   local bot = GetBot()
   return IsEnemyUnitsInAttackRange()
          and not IsUnitAttack(bot)
-         and not IsUnitMoving(bot)
          and not bot:IsFacingLocation(GetEnemyCreep().location, 30)
 end
 
@@ -339,9 +340,10 @@ end
 
 function M.turn()
   local bot = GetBot()
+  local target = GetEnemyCreep()
 
-  if not IsUnitMoving(bot) then
-    bot:Action_MoveToLocation(GetEnemyCreep().location)
+  if not bot:IsFacingLocation(target.location, 30) then
+    bot:Action_MoveToLocation(target.location)
   else
     bot:Action_ClearActions(true)
   end
