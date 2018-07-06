@@ -90,17 +90,17 @@ function M.GetAllyBuildings(unit, radius)
   return GetUnitsInRadius(unit, radius, all_units.GetAllyBuildingsData)
 end
 
-function M.GetTotalDamage(units, target)
-  if units == nil or #units == 0 or target == nil then
+function M.GetTotalDamage(unit_list, target)
+  if unit_list == nil or #unit_list == 0 or target == nil then
     return 0 end
 
   local total_damage = 0
 
   functions.DoWithKeysAndElements(
     units,
-    function(_, unit)
-      if unit:IsAlive() and unit:GetAttackTarget() == target then
-        total_damage = total_damage + unit:GetAttackDamage()
+    function(_, unit_data)
+      if unit_data.is_alive and unit_data.attack_target == target then
+        total_damage = total_damage + unit.attack_damage
       end
     end)
 

@@ -58,6 +58,7 @@ local function AddUnit(unit, type, team)
     mana = unit:GetMana(),
     is_alive = unit:IsAlive(),
     attack_target = unit:GetTarget(),
+    attack_damage = unit:GetAttackDamage(),
     team = unit:GetTeam(),
     items = GetItems(unit),
   }
