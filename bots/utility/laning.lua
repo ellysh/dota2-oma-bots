@@ -317,7 +317,12 @@ end
 ---------------------------------
 
 local function GetEnemyCreep()
-  return common_algorithms.GetEnemyCreeps(GetBot(), 1600)[1]
+  local creeps = common_algorithms.GetEnemyCreeps(GetBot(), 1600)
+
+  return functions.GetElementWith(
+    creeps,
+    common_algorithms.CompareMinHealth,
+    nil)
 end
 
 function M.pre_turn()

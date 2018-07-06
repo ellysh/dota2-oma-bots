@@ -92,12 +92,12 @@ function M.Process()
 
   if not current_objective.done
      and current_objective.module["pre_" .. current_objective.objective]() then
-
+    --[[
     logger.Print("team = " .. GetTeam() .. " current_objective = " ..
       current_objective.objective .. " OBJECTIVE_INDEX = " ..
       OBJECTIVE_INDEX)
-
-     executeMove(current_objective)
+    --]]
+    executeMove(current_objective)
   else
     -- We should find another objective here
     FindNextObjective()
