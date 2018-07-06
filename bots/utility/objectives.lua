@@ -71,9 +71,6 @@ local function executeMove()
   local current_move = GetCurrentMove()
   local current_objective = GetCurrentObjective()
 
-  logger.Print("team = " .. GetTeam() .. " current_move = " ..
-    current_move.move .. " MOVE_INDEX = " .. MOVE_INDEX)
-
   if not current_objective.module["pre_" .. current_move.move]() then
     FindNextMove()
     return
@@ -84,18 +81,21 @@ local function executeMove()
     return
   end
 
+  logger.Print("team = " .. GetTeam() .. " current_move = " ..
+    current_move.move .. " MOVE_INDEX = " .. MOVE_INDEX)
+
   current_objective.module[current_move.move]()
 end
 
 function M.Process()
   local current_objective = GetCurrentObjective()
 
-  logger.Print("team = " .. GetTeam() .. " current_objective = " ..
-    current_objective.objective .. " OBJECTIVE_INDEX = " ..
-    OBJECTIVE_INDEX)
-
   if not current_objective.done
      and current_objective.module["pre_" .. current_objective.objective]() then
+
+    logger.Print("team = " .. GetTeam() .. " current_objective = " ..
+      current_objective.objective .. " OBJECTIVE_INDEX = " ..
+      OBJECTIVE_INDEX)
 
      executeMove(current_objective)
   else
