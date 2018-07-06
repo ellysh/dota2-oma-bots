@@ -150,6 +150,10 @@ function M.GetUnitData(unit)
   return UNIT_LIST[unit:GetTeam()][GetUnitType(unit)][tostring(unit)]
 end
 
+function M.GetUnit(unit_data)
+  return unit_data.handle
+end
+
 function M.GetEnemyCreepsData(unit)
   return UNIT_LIST[GetOpposingTeam(unit:GetTeam())][UNIT_TYPE["CREEP"]]
 end

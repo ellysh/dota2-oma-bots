@@ -3,6 +3,9 @@ local M = {}
 local functions = require(
   GetScriptDirectory() .."/utility/functions")
 
+local all_units = require(
+  GetScriptDirectory() .."/utility/all_units")
+
 local common_algorithms = require(
   GetScriptDirectory() .."/utility/common_algorithms")
 
@@ -110,11 +113,13 @@ local function GetTotalDamageByEnemies(unit, is_heroes)
   return total_damage
 end
 
-local function IsLastHit(bot, unit)
+local function IsLastHit(bot, unit_data)
   local bot_damage = bot:GetAttackDamage()
-  local total_damage = GetTotalDamageByEnemies(unit, true)
+  local total_damage = GetTotalDamageByEnemies(
+    all_units.GetUnit(unit_data),
+    true)
 
-  return unit:GetHealth() <= (total_damage + bot_damage)
+  return unit_data.health <= (total_damage + bot_damage)
 end
 
 local function GetLastHitCreep(bot, side)
@@ -126,9 +131,9 @@ local function GetLastHitCreep(bot, side)
   return functions.GetElementWith(
     creeps,
     common_algorithms.CompareMinHealth,
-    function(unit)
-      return common_algorithms.IsAttackTargetable(unit)
-             and IsLastHit(bot, unit)
+    function(unit_data)
+      return common_algorithms.IsAttackTargetable(unit_data)
+             and IsLastHit(bot, unit_data)
     end)
 end
 
