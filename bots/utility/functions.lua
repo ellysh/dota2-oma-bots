@@ -206,7 +206,7 @@ function M.GetDistance(location1, location2)
 end
 
 function M.GetUnitDistance(unit1_data, unit2_data)
-  return (M.GetDistance(unit1_data.location, unit2_data.location))
+  return M.GetDistance(unit1_data.location, unit2_data.location)
 end
 
 -- Provide an access to local functions for unit tests only

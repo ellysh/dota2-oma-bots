@@ -329,7 +329,8 @@ end
 
 function M.pre_turn()
   local bot = GetBot()
-  return IsEnemyUnitsInAttackRange()
+  return AreEnemyCreepsInRadius(constants.TURN_CREEP_DISTANCE)
+         and not M.pre_positioning()
          and not IsUnitAttack(bot)
          and not bot:IsFacingLocation(GetEnemyCreep().location, 30)
 end
@@ -341,6 +342,13 @@ end
 function M.turn()
   local bot = GetBot()
   local target = GetEnemyCreep()
+
+  if functions.GetUnitDistance(all_units.GetUnitData(bot), target)
+     <= constants.TURN_CREEP_DISTANCE then
+
+    bot:Action_MoveToLocation(GetShopLocation(GetTeam(), SHOP_HOME))
+    return
+  end
 
   if not bot:IsFacingLocation(target.location, 30) then
     bot:Action_MoveToLocation(target.location)
