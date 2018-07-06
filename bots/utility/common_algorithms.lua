@@ -28,9 +28,9 @@ function M.IsItemPresent(unit, item_name)
 end
 
 function M.IsAttackTargetable(unit_data)
-  return unit.is_alive
-         and not unit.is_invulnerable
-         and not unit.is_illusion
+  return unit_data.is_alive
+         and not unit_data.is_invulnerable
+         and not unit_data.is_illusion
 end
 
 function M.CompareMinHealth(t, a, b)
