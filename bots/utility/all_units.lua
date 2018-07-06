@@ -6,35 +6,29 @@ local functions = require(
 
 local M = {}
 
-local UNIT_LIST = {
-  [TEAM_RADIANT] = {},
-  [TEAM_DIRE] = {},
-}
-
-M.UNIT_TYPE = {
+local UNIT_TYPE = {
   CREEP = {},
   HERO = {},
-  TOWER = {},
-  UNDEFINED = {}
+  BULDING = {},
 }
+
+local UNIT_LIST = {
+  [TEAM_RADIANT] = {
+    [UNIT_TYPE["CREEP"]] = {},
+    [UNIT_TYPE["HERO"]] = {},
+    [UNIT_TYPE["BULDING"]] = {},
+  },
+  [TEAM_DIRE] = {
+    [UNIT_TYPE["CREEP"]] = {},
+    [UNIT_TYPE["HERO"]] = {},
+    [UNIT_TYPE["BULDING"]] = {},
+  },
+}
+
 
 -------------------------------
 -- Functions to fill UNIT_LIST
 -------------------------------
-
-local function GetUnitType(unit)
-  if (unit:IsCreep()) then
-    return M.UNIT_TYPE["CREEP"]
-  end
-  if (unit:IsHero()) then
-    return M.UNIT_TYPE["HERO"]
-  end
-  if (unit:IsTower()) then
-    return M.UNIT_TYPE["TOWER"]
-  end
-
-  return M.UNIT_TYPE["UNDEFINED"]
-end
 
 local function GetItems(unit)
   local result = {}
@@ -55,38 +49,52 @@ local function GetOpposingTeam(team)
   return OPPOSING_TEAM[team]
 end
 
-local function AddUnit(unit, team)
-  UNIT_LIST[team][tostring(unit)] = {
+local function AddUnit(unit, type, team)
+  UNIT_LIST[team][type][tostring(unit)] = {
     handle = unit,
     name = unit:GetUnitName(),
     location = unit:GetLocation(),
     health = unit:GetHealth(),
     mana = unit:GetMana(),
     is_alive = unit:IsAlive(),
-    type = GetUnitType(unit),
     attack_target = unit:GetTarget(),
     team = unit:GetTeam(),
     items = GetItems(unit),
   }
 end
 
-local function AddAllyUnit(_, unit)
-  AddUnit(unit, GetTeam())
+local function AddAllyCreep(_, unit)
+  AddUnit(unit, UNIT_TYPE["CREEP"], GetTeam())
 end
 
-local function AddEnemyUnit(_, unit)
-  AddUnit(unit, GetOpposingTeam(GetTeam()))
+local function AddEnemyCreep(_, unit)
+  AddUnit(unit, UNIT_TYPE["CREEP"], GetOpposingTeam(GetTeam()))
+end
+
+local function ClearUnitList()
+  -- TODO: Track the history of units parameters here
+  UNIT_LIST = {
+    [TEAM_RADIANT] = {
+      [UNIT_TYPE["CREEP"]] = {},
+      [UNIT_TYPE["HERO"]] = {},
+      [UNIT_TYPE["BULDING"]] = {},
+    },
+    [TEAM_DIRE] = {
+      [UNIT_TYPE["CREEP"]] = {},
+      [UNIT_TYPE["HERO"]] = {},
+      [UNIT_TYPE["BULDING"]] = {},
+    }
+  }
 end
 
 function M.UpdateUnitList()
-  -- TODO: Track the history of units parameters here
-  UNIT_LIST[GetTeam()] = {}
+  ClearUnitList()
 
-  local units = GetUnitList(UNIT_LIST_ALLIES)
-  functions.DoWithKeysAndElements(units, AddAllyUnit)
+  local units = GetUnitList(UNIT_LIST_ALLIED_CREEPS)
+  functions.DoWithKeysAndElements(units, AddAllyCreep)
 
-  local units = GetUnitList(UNIT_LIST_ENEMIES)
-  functions.DoWithKeysAndElements(units, AddEnemyUnit)
+  local units = GetUnitList(UNIT_LIST_ENEMY_CREEPS)
+  functions.DoWithKeysAndElements(units, AddEnemyCreep)
 end
 
 ----------------------------------
