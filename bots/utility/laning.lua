@@ -80,9 +80,9 @@ local SIDE = {
 }
 
 local function GetTotalDamageByEnemies(unit, is_heroes)
-  local enemy_towers = unit:GetNearbyTowers(
-                         constants.MAX_TOWER_ATTACK_RANGE,
-                         true)
+  local enemy_towers = common_algorithms.GetEnemyBuildings(
+                         unit,
+                         constants.MAX_TOWER_ATTACK_RANGE)
 
   local enemy_creeps = common_algorithms.GetEnemyCreeps(
                          unit,
@@ -206,8 +206,7 @@ end
 
 local function IsEnemyTowerInRadius(radius)
   local bot = GetBot()
-
-  local units = bot:GetNearbyTowers(radius, true)
+  local units = common_algorithms.GetEnemyBuildings(bot, radius)
 
   return not functions.IsArrayEmpty(units)
 end
@@ -247,13 +246,6 @@ function M.evasion()
 end
 
 --------------------------------
-
-local function IsEnemyTowerInRadius(radius)
-  local bot = GetBot()
-  local units = bot:GetNearbyTowers(radius, true)
-
-  return not functions.IsArrayEmpty(units)
-end
 
 local function GetEnemyHero(bot)
   local heroes = common_algorithms.GetEnemyHeroes(bot, 1600)

@@ -82,6 +82,14 @@ function M.GetAllyCreeps(unit, radius)
   return GetUnitsInRadius(unit, radius, all_units.GetAllyCreepsData)
 end
 
+function M.GetEnemyBuildings(unit, radius)
+  return GetUnitsInRadius(unit, radius, all_units.GetEnemyBuildingsData)
+end
+
+function M.GetAllyBuildings(unit, radius)
+  return GetUnitsInRadius(unit, radius, all_units.GetAllyBuildingsData)
+end
+
 function M.GetTotalDamage(units, target)
   if units == nil or #units == 0 or target == nil then
     return 0 end
