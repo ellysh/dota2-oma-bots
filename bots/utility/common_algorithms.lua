@@ -97,7 +97,7 @@ function M.GetTotalDamage(unit_list, target)
   local total_damage = 0
 
   functions.DoWithKeysAndElements(
-    units,
+    unit_list,
     function(_, unit_data)
       if unit_data.is_alive and unit_data.attack_target == target then
         total_damage = total_damage + unit.attack_damage
