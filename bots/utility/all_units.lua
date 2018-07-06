@@ -67,8 +67,16 @@ local function AddAllyCreep(_, unit)
   AddUnit(unit, UNIT_TYPE["CREEP"], GetTeam())
 end
 
+local function AddAllyHero(_, unit)
+  AddUnit(unit, UNIT_TYPE["HERO"], GetTeam())
+end
+
 local function AddEnemyCreep(_, unit)
   AddUnit(unit, UNIT_TYPE["CREEP"], GetOpposingTeam(GetTeam()))
+end
+
+local function AddEnemyHero(_, unit)
+  AddUnit(unit, UNIT_TYPE["HERO"], GetOpposingTeam(GetTeam()))
 end
 
 local function ClearUnitList()
@@ -93,24 +101,44 @@ function M.UpdateUnitList()
   local units = GetUnitList(UNIT_LIST_ALLIED_CREEPS)
   functions.DoWithKeysAndElements(units, AddAllyCreep)
 
-  local units = GetUnitList(UNIT_LIST_ENEMY_CREEPS)
+  units = GetUnitList(UNIT_LIST_ALLIED_HEROES)
+  functions.DoWithKeysAndElements(units, AddAllyHero)
+
+  units = GetUnitList(UNIT_LIST_ENEMY_CREEPS)
   functions.DoWithKeysAndElements(units, AddEnemyCreep)
+
+  units = GetUnitList(UNIT_LIST_ENEMY_HEROES)
+  functions.DoWithKeysAndElements(units, AddEnemyHero)
 end
 
 ----------------------------------
 -- Functions to retrieve UNIT_LIST
 ----------------------------------
 
+local function GetUnitType(unit)
+  if (unit:IsCreep()) then
+    return UNIT_TYPE["CREEP"]
+  end
+  if (unit:IsHero()) then
+    return UNIT_TYPE["HERO"]
+  end
+  if (unit:IsTower()) then
+    return UNIT_TYPE["BULDING"]
+  end
+
+  return UNIT_TYPE["CREEP"]
+end
+
 function M.GetUnitData(unit)
-  return UNIT_LIST[unit:GetTeam()][tostring(unit)]
+  return UNIT_LIST[unit:GetTeam()][GetUnitType(unit)][tostring(unit)]
 end
 
-function M.GetEnemyUnitsData(unit)
-  return UNIT_LIST[GetOpposingTeam(unit:GetTeam())]
+function M.GetEnemyCreepsData(unit)
+  return UNIT_LIST[GetOpposingTeam(unit:GetTeam())][UNIT_TYPE["CREEP"]]
 end
 
-function M.GetAllyUnitsData(unit)
-  return UNIT_LIST[unit:GetTeam()]
+function M.GetAllyCreepsData(unit)
+  return UNIT_LIST[unit:GetTeam()][UNIT_TYPE["CREEP"]]
 end
 
 -- Provide an access to local functions for unit tests only
