@@ -51,6 +51,19 @@ local function GetNormalizedRadius(radius)
     radius)
 end
 
+local function GetUnitsInRadius(unit, radius, get_function)
+  local unit_list = get_function(unit)
+  local unit_data = all_units.GetUnitData(unit)
+
+  return functions.GetListWith(
+    unit_list,
+    nil,
+    function(check_unit_data)
+      return functions.GetUnitDistance(unit_data, check_unit_data)
+               <= GetNormalizedRadius(radius)
+    end)
+end
+
 function M.GetEnemyHeroes(bot, radius)
   return bot:GetNearbyHeroes(
     GetNormalizedRadius(radius),
@@ -65,19 +78,6 @@ function M.GetAllyHeroes(bot, radius)
     GetNormalizedRadius(radius),
     false,
     BOT_MODE_NONE)
-end
-
-local function GetUnitsInRadius(unit, radius, get_function)
-  local unit_list = get_function(unit)
-  local unit_data = all_units.GetUnitData(unit)
-
-  return functions.GetListWith(
-    unit_list,
-    nil,
-    function(check_unit_data)
-      return functions.GetUnitDistance(unit_data, check_unit_data)
-               <= GetNormalizedRadius(radius)
-    end)
 end
 
 function M.GetEnemyCreeps(unit, radius)
