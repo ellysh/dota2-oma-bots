@@ -27,10 +27,10 @@ function M.IsItemPresent(unit, item_name)
   return M.GetItem(unit, item_name) ~= nil
 end
 
-function M.IsAttackTargetable(unit)
-  return unit:IsAlive()
-         and not unit:IsInvulnerable()
-         and not unit:IsIllusion()
+function M.IsAttackTargetable(unit_data)
+  return unit.is_alive
+         and not unit.is_invulnerable
+         and not unit.is_illusion
 end
 
 function M.CompareMinHealth(t, a, b)
