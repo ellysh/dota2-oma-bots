@@ -9,19 +9,19 @@ local M = {}
 local UNIT_TYPE = {
   CREEP = {},
   HERO = {},
-  BULDING = {},
+  BUILDING = {},
 }
 
 local UNIT_LIST = {
   [TEAM_RADIANT] = {
     [UNIT_TYPE["CREEP"]] = {},
     [UNIT_TYPE["HERO"]] = {},
-    [UNIT_TYPE["BULDING"]] = {},
+    [UNIT_TYPE["BUILDING"]] = {},
   },
   [TEAM_DIRE] = {
     [UNIT_TYPE["CREEP"]] = {},
     [UNIT_TYPE["HERO"]] = {},
-    [UNIT_TYPE["BULDING"]] = {},
+    [UNIT_TYPE["BUILDING"]] = {},
   },
 }
 
@@ -71,6 +71,10 @@ local function AddAllyHero(_, unit)
   AddUnit(unit, UNIT_TYPE["HERO"], GetTeam())
 end
 
+local function AddAllyBuilding(_, unit)
+  AddUnit(unit, UNIT_TYPE["BUILDING"], GetTeam())
+end
+
 local function AddEnemyCreep(_, unit)
   AddUnit(unit, UNIT_TYPE["CREEP"], GetOpposingTeam(GetTeam()))
 end
@@ -79,18 +83,22 @@ local function AddEnemyHero(_, unit)
   AddUnit(unit, UNIT_TYPE["HERO"], GetOpposingTeam(GetTeam()))
 end
 
+local function AddEnemyBuilding(_, unit)
+  AddUnit(unit, UNIT_TYPE["BUILDING"], GetOpposingTeam(GetTeam()))
+end
+
 local function ClearUnitList()
   -- TODO: Track the history of units parameters here
   UNIT_LIST = {
     [TEAM_RADIANT] = {
       [UNIT_TYPE["CREEP"]] = {},
       [UNIT_TYPE["HERO"]] = {},
-      [UNIT_TYPE["BULDING"]] = {},
+      [UNIT_TYPE["BUILDING"]] = {},
     },
     [TEAM_DIRE] = {
       [UNIT_TYPE["CREEP"]] = {},
       [UNIT_TYPE["HERO"]] = {},
-      [UNIT_TYPE["BULDING"]] = {},
+      [UNIT_TYPE["BUILDING"]] = {},
     }
   }
 end
@@ -104,11 +112,17 @@ function M.UpdateUnitList()
   units = GetUnitList(UNIT_LIST_ALLIED_HEROES)
   functions.DoWithKeysAndElements(units, AddAllyHero)
 
+  units = GetUnitList(UNIT_LIST_ALLIED_BUILDINGS)
+  functions.DoWithKeysAndElements(units, AddAllyBuilding)
+
   units = GetUnitList(UNIT_LIST_ENEMY_CREEPS)
   functions.DoWithKeysAndElements(units, AddEnemyCreep)
 
   units = GetUnitList(UNIT_LIST_ENEMY_HEROES)
   functions.DoWithKeysAndElements(units, AddEnemyHero)
+
+  units = GetUnitList(UNIT_LIST_ENEMY_BUILDINGS)
+  functions.DoWithKeysAndElements(units, AddEnemyBuilding)
 end
 
 ----------------------------------
@@ -123,7 +137,7 @@ local function GetUnitType(unit)
     return UNIT_TYPE["HERO"]
   end
   if (unit:IsTower()) then
-    return UNIT_TYPE["BULDING"]
+    return UNIT_TYPE["BUILDING"]
   end
 
   return UNIT_TYPE["CREEP"]

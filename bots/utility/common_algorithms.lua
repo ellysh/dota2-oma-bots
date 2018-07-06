@@ -68,16 +68,15 @@ function M.GetAllyHeroes(bot, radius)
 end
 
 function M.GetEnemyCreeps(unit, radius)
-  local unit_list = all_units.GetEnemyUnitsData(unit)
+  local unit_list = all_units.GetEnemyCreepsData(unit)
   local unit_data = all_units.GetUnitData(unit)
 
   return functions.GetListWith(
     unit_list,
     nil,
     function(check_unit_data)
-      return check_unit_data.type == all_units.UNIT_TYPE["CREEP"]
-             and functions.GetUnitDistance(unit_data, check_unit_data)
-                 <= radius
+      return functions.GetUnitDistance(unit_data, check_unit_data)
+               <= radius
     end)
 end
 
