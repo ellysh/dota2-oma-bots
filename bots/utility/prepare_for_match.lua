@@ -32,22 +32,24 @@ function M.buy_and_use_courier()
   logger.Print("M.buy_and_use_courier()")
 
   local bot = GetBot()
+  local bot_data = common_algorithms.GetBotData()
 
   bot:ActionImmediate_PurchaseItem('item_courier')
 
-  bot:Action_UseAbility(common_algorithms.GetItem(bot, 'item_courier'))
+  bot:Action_UseAbility(
+    common_algorithms.GetItem(bot_data, 'item_courier'))
 end
 
 ---------------------------------
 
 function M.post_buy_starting_items()
-  local bot = GetBot()
+  local bot_data = common_algorithms.GetBotData()
 
-  return common_algorithms.IsItemPresent(bot, 'item_flask')
-         and common_algorithms.IsItemPresent(bot, 'item_tango')
-         and common_algorithms.IsItemPresent(bot, 'item_slippers')
-         and common_algorithms.IsItemPresent(bot, 'item_circlet')
-         and common_algorithms.IsItemPresent(bot, 'item_branches')
+  return common_algorithms.IsItemPresent(bot_data, 'item_flask')
+         and common_algorithms.IsItemPresent(bot_data, 'item_tango')
+         and common_algorithms.IsItemPresent(bot_data, 'item_slippers')
+         and common_algorithms.IsItemPresent(bot_data, 'item_circlet')
+         and common_algorithms.IsItemPresent(bot_data, 'item_branches')
 end
 
 function M.pre_buy_starting_items()

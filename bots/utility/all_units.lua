@@ -60,6 +60,7 @@ local function AddUnit(unit, type, team)
     is_invulnerable = unit:IsInvulnerable(),
     is_illusion = unit:IsIllusion(),
     attack_damage = unit:GetAttackDamage(),
+    attack_range = unit:GetAttackRange(),
     team = unit:GetTeam(),
     items = GetItems(unit),
   }

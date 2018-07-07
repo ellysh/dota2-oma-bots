@@ -9,9 +9,11 @@ local all_units = require(
 
 local M = {}
 
-function M.GetItem(unit, item_name)
-  local unit_data = all_units.GetUnitData(unit)
+function M.GetBotData()
+  return all_units.GetUnitData(GetBot())
+end
 
+function M.GetItem(unit_data, item_name)
   if unit_data == nil then
     return nil end
 
@@ -23,8 +25,8 @@ function M.GetItem(unit, item_name)
     end)
 end
 
-function M.IsItemPresent(unit, item_name)
-  return M.GetItem(unit, item_name) ~= nil
+function M.IsItemPresent(unit_data, item_name)
+  return M.GetItem(unit_data, item_name) ~= nil
 end
 
 function M.IsAttackTargetable(unit_data)
