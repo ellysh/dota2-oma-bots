@@ -207,6 +207,10 @@ function Unit:GetPlayerID()
   return 0
 end
 
+function Unit:GetIncomingTrackingProjectiles()
+  return {}
+end
+
 function Unit:GetEstimatedDamageToTarget(
   currently_available,
   target,

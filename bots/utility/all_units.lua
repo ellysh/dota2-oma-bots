@@ -66,6 +66,7 @@ local function AddUnit(unit, type, team)
     anim_cycle = unit:GetAnimCycle(),
     team = unit:GetTeam(),
     items = GetItems(unit),
+    incoming_projectiles = unit:GetIncomingTrackingProjectiles(),
   }
 end
 
