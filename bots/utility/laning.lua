@@ -241,11 +241,21 @@ local function IsFocusedByTower(unit)
    return 0 < common_algorithms.GetTotalDamage(unit_list, unit)
 end
 
+local function IsFocusedByHeroes(unit)
+  local unit_list = common_algorithms.GetEnemyHeroes(
+                         unit,
+                         constants.MAX_HERO_ATTACK_RANGE)
+
+   return 0 < common_algorithms.GetTotalDamage(unit_list, unit)
+end
+
 function M.pre_evasion()
   local bot = GetBot()
 
   return IsFocusedByCreeps(bot)
          or IsFocusedByTower(bot)
+         or (IsFocusedByHeroes(bot)
+             and AreEnemyCreepsInRadius(constants.CREEP_AGRO_RADIUS))
 end
 
 function M.post_evasion()
