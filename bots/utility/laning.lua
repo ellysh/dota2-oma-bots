@@ -32,18 +32,23 @@ end
 
 ---------------------------------
 
-local function IsEnemyUnitsInAttackRange()
+local function AreUnitsInRadius(radius, get_function)
   local bot_data = common_algorithms.GetBotData()
-  local creeps = common_algorithms.GetEnemyCreeps(
-    bot_data,
-    bot_data.attack_range)
+  local units = get_function(bot_data, radius)
 
-  local heroes = common_algorithms.GetEnemyHeroes(
-    bot_data,
-    bot_data.attack_range)
+  return not functions.IsArrayEmpty(units)
+end
 
-  return not functions.IsArrayEmpty(creeps)
-         or not functions.IsArrayEmpty(heroes)
+local function AreAllyCreepsInRadius(radius)
+  return AreUnitsInRadius(radius, common_algorithms.GetAllyCreeps)
+end
+
+local function AreEnemyCreepsInRadius(radius)
+  return AreUnitsInRadius(radius, common_algorithms.GetEnemyCreeps)
+end
+
+local function IsEnemyTowerInRadius(radius)
+  return AreUnitsInRadius(radius, common_algorithms.GetEnemyBuildings)
 end
 
 function M.post_move_mid_front_lane()
@@ -57,7 +62,7 @@ function M.post_move_mid_front_lane()
     target_location)
 
   return (target_distance <= constants.MAP_LOCATION_RADIUS)
-         or IsEnemyUnitsInAttackRange()
+         or AreEnemyCreepsInRadius(constants.MIN_CREEP_DISTANCE)
 end
 
 function M.pre_move_mid_front_lane()
@@ -162,25 +167,6 @@ end
 
 --------------------------------
 
-local function AreUnitsInRadius(radius, get_function)
-  local bot_data = common_algorithms.GetBotData()
-  local units = get_function(bot_data, radius)
-
-  return not functions.IsArrayEmpty(units)
-end
-
-local function AreAllyCreepsInRadius(radius)
-  return AreUnitsInRadius(radius, common_algorithms.GetAllyCreeps)
-end
-
-local function AreEnemyCreepsInRadius(radius)
-  return AreUnitsInRadius(radius, common_algorithms.GetEnemyCreeps)
-end
-
-local function IsEnemyTowerInRadius(radius)
-  return AreUnitsInRadius(radius, common_algorithms.GetEnemyBuildings)
-end
-
 function M.pre_positioning()
   local bot_data = common_algorithms.GetBotData()
 
@@ -253,7 +239,9 @@ end
 --------------------------------
 
 local function GetEnemyHero(bot_data)
-  local heroes = common_algorithms.GetEnemyHeroes(bot_data, 1600)
+  local heroes = common_algorithms.GetEnemyHeroes(
+    bot_data,
+    bot_data.attack_range)
 
   return functions.GetElementWith(
     heroes,
@@ -313,7 +301,9 @@ end
 
 local function GetEnemyCreep()
   local bot_data = common_algorithms.GetBotData()
-  local creeps = common_algorithms.GetEnemyCreeps(bot_data, 1600)
+  local creeps = common_algorithms.GetEnemyCreeps(
+    bot_data,
+    bot_data.attack_range)
 
   return functions.GetElementWith(
     creeps,
@@ -323,9 +313,10 @@ end
 
 function M.pre_turn()
   local bot = GetBot()
+  local bot_data = common_algorithms.GetBotData()
   local target = GetEnemyCreep()
 
-  return IsEnemyUnitsInAttackRange()
+  return AreEnemyCreepsInRadius(bot_data.attack_range)
          and target ~= nil
          and not M.pre_positioning()
          and not bot:IsFacingLocation(target.location, 30)
