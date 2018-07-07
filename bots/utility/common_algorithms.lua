@@ -14,6 +14,7 @@ function M.GetBotData()
 end
 
 function M.GetItem(unit_data, item_name)
+  -- TODO: Remove this check
   if unit_data == nil then
     return nil end
 

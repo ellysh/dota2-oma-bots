@@ -82,31 +82,31 @@ local SIDE = {
   ALLY = {},
 }
 
-local function IsLastHit(bot, unit_data)
-  local bot_damage = bot:GetAttackDamage()
-
-  return unit_data.health <= bot_damage
+local function IsLastHit(bot_data, unit_data)
+  return unit_data.health <= bot_data.attack_damage
 end
 
-local function GetLastHitCreep(bot, side)
+local function GetLastHitCreep(bot_data, side)
   local creeps = functions.ternary(
     side == SIDE["ENEMY"],
-    common_algorithms.GetEnemyCreeps(bot, 1600),
-    common_algorithms.GetAllyCreeps(bot, 1600))
+    common_algorithms.GetEnemyCreeps(bot_data, 1600),
+    common_algorithms.GetAllyCreeps(bot_data, 1600))
 
   return functions.GetElementWith(
     creeps,
     common_algorithms.CompareMinHealth,
     function(unit_data)
       return common_algorithms.IsAttackTargetable(unit_data)
-             and IsLastHit(bot, unit_data)
+             and IsLastHit(bot_data, unit_data)
     end)
 end
 
-local function AttackUnit(bot, unit_data)
+local function AttackUnit(bot_data, unit_data)
+  local bot = GetBot()
   local unit = all_units.GetUnit(unit_data)
-  if (common_algorithms.IsUnitAttack(bot)
-      and common_algorithms.IsAttackDone(bot)) then
+
+  if (common_algorithms.IsUnitAttack(bot_data)
+      and common_algorithms.IsAttackDone(bot_data)) then
     bot:Action_ClearActions(true)
     return
   end
@@ -115,14 +115,14 @@ local function AttackUnit(bot, unit_data)
 end
 
 function M.pre_lasthit_enemy_creep()
-  local bot = GetBot()
+  local bot_data = common_algorithms.GetBotData()
 
-  return (not common_algorithms.IsUnitAttack(bot)
+  return (not common_algorithms.IsUnitAttack(bot_data)
 
-          or (common_algorithms.IsUnitAttack(bot)
-              and not common_algorithms.IsAttackDone(bot)))
+          or (common_algorithms.IsUnitAttack(bot_data)
+              and not common_algorithms.IsAttackDone(bot_data)))
 
-         and GetLastHitCreep(bot, SIDE["ENEMY"]) ~= nil
+         and GetLastHitCreep(bot_data, SIDE["ENEMY"]) ~= nil
 end
 
 function M.post_lasthit_enemy_creep()
@@ -130,23 +130,23 @@ function M.post_lasthit_enemy_creep()
 end
 
 function M.lasthit_enemy_creep()
-  local bot = GetBot()
-  local creep = GetLastHitCreep(bot, SIDE["ENEMY"])
+  local bot_data = common_algorithms.GetBotData()
+  local creep = GetLastHitCreep(bot_data, SIDE["ENEMY"])
 
-  AttackUnit(bot, creep)
+  AttackUnit(bot_data, creep)
 end
 
 ---------------------------------
 
 function M.pre_deny_ally_creep()
-  local bot = GetBot()
+  local bot_data = common_algorithms.GetBotData()
 
-  return (not common_algorithms.IsUnitAttack(bot)
+  return (not common_algorithms.IsUnitAttack(bot_data)
 
-          or (common_algorithms.IsUnitAttack(bot)
-              and not common_algorithms.IsAttackDone(bot)))
+          or (common_algorithms.IsUnitAttack(bot_data)
+              and not common_algorithms.IsAttackDone(bot_data)))
 
-         and GetLastHitCreep(bot, SIDE["ALLY"]) ~= nil
+         and GetLastHitCreep(bot_data, SIDE["ALLY"]) ~= nil
 end
 
 function M.post_deny_ally_creep()
@@ -154,42 +154,38 @@ function M.post_deny_ally_creep()
 end
 
 function M.deny_ally_creep()
-  local bot = GetBot()
-  local creep = GetLastHitCreep(bot, SIDE["ALLY"])
+  local bot_data = common_algorithms.GetBotData()
+  local creep = GetLastHitCreep(bot_data, SIDE["ALLY"])
 
-  AttackUnit(bot, creep)
+  AttackUnit(bot_data, creep)
 end
 
 --------------------------------
 
-local function AreAllyCreepsInRadius(radius)
-  local bot = GetBot()
-
-  local units = common_algorithms.GetAllyCreeps(bot, radius)
+local function AreUnitsInRadius(radius, get_function)
+  local bot_data = common_algorithms.GetBotData()
+  local units = get_function(bot_data, radius)
 
   return not functions.IsArrayEmpty(units)
+end
+
+local function AreAllyCreepsInRadius(radius)
+  return AreUnitsInRadius(radius, common_algorithms.GetAllyCreeps)
 end
 
 local function AreEnemyCreepsInRadius(radius)
-  local bot = GetBot()
-
-  local units = common_algorithms.GetEnemyCreeps(bot, radius)
-
-  return not functions.IsArrayEmpty(units)
+  return AreUnitsInRadius(radius, common_algorithms.GetEnemyCreeps)
 end
 
 local function IsEnemyTowerInRadius(radius)
-  local bot = GetBot()
-  local units = common_algorithms.GetEnemyBuildings(bot, radius)
-
-  return not functions.IsArrayEmpty(units)
+  return AreUnitsInRadius(radius, common_algorithms.GetEnemyBuildings)
 end
 
 function M.pre_positioning()
-  local bot = GetBot()
+  local bot_data = common_algorithms.GetBotData()
 
-  if common_algorithms.IsUnitAttack(bot)
-     and not common_algorithms.IsAttackDone(bot) then
+  if common_algorithms.IsUnitAttack(bot_data)
+     and not common_algorithms.IsAttackDone(bot_data) then
     return false end
 
   return (AreAllyCreepsInRadius(constants.MIN_CREEP_DISTANCE)
@@ -212,36 +208,36 @@ end
 
 --------------------------------
 
-local function IsFocusedByCreeps(unit)
+local function IsFocusedByCreeps(unit_data)
   local unit_list = common_algorithms.GetEnemyCreeps(
-                         unit,
+                         unit_data,
                          constants.MAX_CREEP_ATTACK_RANGE)
 
-   return 0 < common_algorithms.GetTotalDamage(unit_list, unit)
+   return 0 < common_algorithms.GetTotalDamage(unit_list, unit_data)
 end
 
-local function IsFocusedByTower(unit)
+local function IsFocusedByTower(unit_data)
   local unit_list = common_algorithms.GetEnemyBuildings(
-                         unit,
+                         unit_data,
                          constants.MAX_TOWER_ATTACK_RANGE)
 
-   return 0 < common_algorithms.GetTotalDamage(unit_list, unit)
+   return 0 < common_algorithms.GetTotalDamage(unit_list, unit_data)
 end
 
-local function IsFocusedByHeroes(unit)
+local function IsFocusedByHeroes(unit_data)
   local unit_list = common_algorithms.GetEnemyHeroes(
-                         unit,
+                         unit_data,
                          constants.MAX_HERO_ATTACK_RANGE)
 
-   return 0 < common_algorithms.GetTotalDamage(unit_list, unit)
+   return 0 < common_algorithms.GetTotalDamage(unit_list, unit_data)
 end
 
 function M.pre_evasion()
-  local bot = GetBot()
+  local bot_data = common_algorithms.GetBotData()
 
-  return IsFocusedByCreeps(bot)
-         or IsFocusedByTower(bot)
-         or (IsFocusedByHeroes(bot)
+  return IsFocusedByCreeps(bot_data)
+         or IsFocusedByTower(bot_data)
+         or (IsFocusedByHeroes(bot_data)
              and AreEnemyCreepsInRadius(constants.CREEP_AGRO_RADIUS))
 end
 
@@ -256,28 +252,28 @@ end
 
 --------------------------------
 
-local function GetEnemyHero(bot)
-  local heroes = common_algorithms.GetEnemyHeroes(bot, 1600)
+local function GetEnemyHero(bot_data)
+  local heroes = common_algorithms.GetEnemyHeroes(bot_data, 1600)
 
   return functions.GetElementWith(
     heroes,
     common_algorithms.CompareMinHealth,
-    function(unit)
-      return common_algorithms.IsAttackTargetable(unit)
+    function(unit_data)
+      return common_algorithms.IsAttackTargetable(unit_data)
     end)
 end
 
 function M.pre_harras_enemy_hero()
-  local bot = GetBot()
+  local bot_data = common_algorithms.GetBotData()
 
   return not AreEnemyCreepsInRadius(constants.CREEP_AGRO_RADIUS)
          and not IsEnemyTowerInRadius(constants.MAX_TOWER_ATTACK_RANGE)
 
-         and (not common_algorithms.IsUnitAttack(bot)
-              or (common_algorithms.IsUnitAttack(bot)
-                  and not common_algorithms.IsAttackDone(bot)))
+         and (not common_algorithms.IsUnitAttack(bot_data)
+              or (common_algorithms.IsUnitAttack(bot_data)
+                  and not common_algorithms.IsAttackDone(bot_data)))
 
-         and GetEnemyHero(bot) ~= nil
+         and GetEnemyHero(bot_data) ~= nil
 end
 
 function M.post_harras_enemy_hero()
@@ -285,10 +281,10 @@ function M.post_harras_enemy_hero()
 end
 
 function M.harras_enemy_hero()
-  local bot = GetBot()
-  local hero = GetEnemyHero(bot)
+  local bot_data = common_algorithms.GetBotData()
+  local hero_data = GetEnemyHero(bot_data)
 
-  AttackUnit(bot, hero)
+  AttackUnit(bot_data, hero_data)
 end
 
 --------------------------------
@@ -298,10 +294,10 @@ local function IsUnitMoving(unit)
 end
 
 function M.pre_stop()
-  local bot = GetBot()
+  local bot_data = common_algorithms.GetBotData()
 
-  return IsUnitMoving(bot)
-         or common_algorithms.IsUnitAttack(bot)
+  return IsUnitMoving(bot_data)
+         or common_algorithms.IsUnitAttack(bot_data)
 end
 
 function M.post_stop()
@@ -316,7 +312,8 @@ end
 ---------------------------------
 
 local function GetEnemyCreep()
-  local creeps = common_algorithms.GetEnemyCreeps(GetBot(), 1600)
+  local bot_data = common_algorithms.GetBotData()
+  local creeps = common_algorithms.GetEnemyCreeps(bot_data, 1600)
 
   return functions.GetElementWith(
     creeps,
