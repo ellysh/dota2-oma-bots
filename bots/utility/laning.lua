@@ -33,14 +33,14 @@ end
 ---------------------------------
 
 local function IsEnemyUnitsInAttackRange()
-  local bot = GetBot()
+  local bot_data = common_algorithms.GetBotData()
   local creeps = common_algorithms.GetEnemyCreeps(
-    bot,
-    bot:GetAttackRange())
+    bot_data,
+    bot_data.attack_range())
 
   local heroes = common_algorithms.GetEnemyHeroes(
-    bot,
-    bot:GetAttackRange())
+    bot_data,
+    bot_data.attack_range())
 
   return not functions.IsArrayEmpty(creeps)
          or not functions.IsArrayEmpty(heroes)

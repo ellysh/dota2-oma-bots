@@ -53,9 +53,8 @@ local function GetNormalizedRadius(radius)
     radius)
 end
 
-local function GetUnitsInRadius(unit, radius, get_function)
+local function GetUnitsInRadius(unit_data, radius, get_function)
   local unit_list = get_function(unit)
-  local unit_data = all_units.GetUnitData(unit)
 
   return functions.GetListWith(
     unit_list,
@@ -66,54 +65,60 @@ local function GetUnitsInRadius(unit, radius, get_function)
     end)
 end
 
-function M.GetEnemyHeroes(unit, radius)
-  return GetUnitsInRadius(unit, radius, all_units.GetEnemyHeroesData)
+function M.GetEnemyHeroes(unit_data, radius)
+  return GetUnitsInRadius(unit_data, radius, all_units.GetEnemyHeroesData)
 end
 
-function M.GetAllyHeroes(unit, radius)
+function M.GetAllyHeroes(unit_data, radius)
   -- Result of this function includes the "bot" unit
 
-  return GetUnitsInRadius(unit, radius, all_units.GetAllyHeroesData)
+  return GetUnitsInRadius(unit_data, radius, all_units.GetAllyHeroesData)
 end
 
-function M.GetEnemyCreeps(unit, radius)
-  return GetUnitsInRadius(unit, radius, all_units.GetEnemyCreepsData)
+function M.GetEnemyCreeps(unit_data, radius)
+  return GetUnitsInRadius(unit_data, radius, all_units.GetEnemyCreepsData)
 end
 
-function M.GetAllyCreeps(unit, radius)
-  return GetUnitsInRadius(unit, radius, all_units.GetAllyCreepsData)
+function M.GetAllyCreeps(unit_data, radius)
+  return GetUnitsInRadius(unit_data, radius, all_units.GetAllyCreepsData)
 end
 
-function M.GetEnemyBuildings(unit, radius)
-  return GetUnitsInRadius(unit, radius, all_units.GetEnemyBuildingsData)
+function M.GetEnemyBuildings(unit_data, radius)
+  return GetUnitsInRadius(
+    unit_data,
+    radius,
+    all_units.GetEnemyBuildingsData)
 end
 
-function M.GetAllyBuildings(unit, radius)
-  return GetUnitsInRadius(unit, radius, all_units.GetAllyBuildingsData)
+function M.GetAllyBuildings(unit_data, radius)
+  return GetUnitsInRadius(
+    unit_data,
+    radius,
+    all_units.GetAllyBuildingsData)
 end
 
-function M.IsUnitAttack(unit)
-  local anim = unit:GetAnimActivity()
-  return anim == ACTIVITY_ATTACK or anim == ACTIVITY_ATTACK2
+function M.IsUnitAttack(unit_data)
+  return unit_data.anim_activity == ACTIVITY_ATTACK
+         or unit_data.anim_activity == ACTIVITY_ATTACK2
 end
 
-function M.IsAttackDone(unit)
-  if not M.IsUnitAttack(unit) then
+function M.IsAttackDone(unit_data)
+  if not M.IsUnitAttack(unit_data) then
     return true
   end
 
-  return unit:GetAttackPoint() <= unit:GetAnimCycle()
+  return unit_data.attack_point <= unit_data.anim_cycle
 end
 
-function M.IsUnitAttackTarget(unit, target_data)
+function M.IsUnitAttackTarget(unit_data, target_data)
   -- TODO: Consider unit's attack range in this functions
 
-  return M.IsUnitAttack(unit)
+  return M.IsUnitAttack(unit_data)
          and unit:IsFacingLocation(target_data.location, 2)
 end
 
-function M.GetTotalDamage(unit_list, target)
-  if unit_list == nil or #unit_list == 0 or target == nil then
+function M.GetTotalDamage(unit_list, target_data)
+  if unit_list == nil or #unit_list == 0 then
     return 0 end
 
   local total_damage = 0
@@ -122,9 +127,7 @@ function M.GetTotalDamage(unit_list, target)
     unit_list,
     function(_, unit_data)
       if unit_data.is_alive
-         and M.IsUnitAttackTarget(
-           all_units.GetUnit(unit_data),
-           all_units.GetUnitData(target)) then
+         and M.IsUnitAttackTarget(unit_data, target_data) then
 
         total_damage = total_damage + unit_data.attack_damage
       end

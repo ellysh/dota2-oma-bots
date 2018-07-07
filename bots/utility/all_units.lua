@@ -61,6 +61,9 @@ local function AddUnit(unit, type, team)
     is_illusion = unit:IsIllusion(),
     attack_damage = unit:GetAttackDamage(),
     attack_range = unit:GetAttackRange(),
+    attack_point = unit:GetAttackPoint(),
+    anim_activity = unit:GetAnimActivity(),
+    anim_cycle = unit:GetAnimCycle(),
     team = unit:GetTeam(),
     items = GetItems(unit),
   }
