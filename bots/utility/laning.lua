@@ -111,8 +111,6 @@ local function AttackUnit(bot, unit_data)
     return
   end
 
-  bot:SetTarget(unit)
-
   bot:Action_AttackUnit(unit, true)
 end
 
