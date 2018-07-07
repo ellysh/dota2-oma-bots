@@ -217,14 +217,27 @@ local function IsEnemyTowerInRadius(radius)
   return not functions.IsArrayEmpty(units)
 end
 
+local function IsAttackDone(unit)
+  if not IsUnitAttack(unit) then
+    return true
+  end
+
+  return unit:GetAttackPoint() <= unit:GetAnimCycle()
+end
+
 function M.pre_positioning()
+  local bot = GetBot()
+
+  if IsUnitAttack(bot) and not IsAttackDone(bot) then
+    return false end
+
   return (AreAllyCreepsInRadius(constants.MIN_CREEP_DISTANCE)
           and AreEnemyCreepsInRadius(constants.MIN_CREEP_DISTANCE))
 
-         or (not AreAllyCreepsInRadius(constants.MIN_CREEP_DISTANCE)
-             and AreEnemyCreepsInRadius(constants.MAX_CREEP_DISTANCE))
+          or (not AreAllyCreepsInRadius(constants.MIN_CREEP_DISTANCE)
+              and AreEnemyCreepsInRadius(constants.MAX_CREEP_DISTANCE))
 
-         or IsEnemyTowerInRadius(constants.MAX_TOWER_ATTACK_RANGE)
+          or IsEnemyTowerInRadius(constants.MAX_TOWER_ATTACK_RANGE)
 end
 
 function M.post_positioning()
@@ -285,14 +298,6 @@ function M.harras_enemy_hero()
 end
 
 --------------------------------
-
-local function IsAttackDone(unit)
-  if not IsUnitAttack(unit) then
-    return true
-  end
-
-  return unit:GetAttackPoint() <= unit:GetAnimCycle()
-end
 
 local function IsUnitMoving(unit)
   return unit:GetAnimActivity() == ACTIVITY_RUN
