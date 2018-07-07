@@ -103,22 +103,10 @@ local function GetLastHitCreep(bot, side)
     end)
 end
 
-local function IsUnitAttack(unit)
-  local anim = unit:GetAnimActivity()
-  return anim == ACTIVITY_ATTACK or anim == ACTIVITY_ATTACK2
-end
-
-local function IsAttackDone(unit)
-  if not IsUnitAttack(unit) then
-    return true
-  end
-
-  return unit:GetAttackPoint() <= unit:GetAnimCycle()
-end
-
 local function AttackUnit(bot, unit_data)
   local unit = all_units.GetUnit(unit_data)
-  if (IsUnitAttack(bot) and IsAttackDone(bot)) then
+  if (common_algorithms.IsUnitAttack(bot)
+      and common_algorithms.IsAttackDone(bot)) then
     bot:Action_ClearActions(true)
     return
   end
@@ -131,10 +119,10 @@ end
 function M.pre_lasthit_enemy_creep()
   local bot = GetBot()
 
-  return (not IsUnitAttack(bot)
+  return (not common_algorithms.IsUnitAttack(bot)
 
-          or (IsUnitAttack(bot)
-              and not IsAttackDone(bot)))
+          or (common_algorithms.IsUnitAttack(bot)
+              and not common_algorithms.IsAttackDone(bot)))
 
          and GetLastHitCreep(bot, SIDE["ENEMY"]) ~= nil
 end
@@ -155,10 +143,10 @@ end
 function M.pre_deny_ally_creep()
   local bot = GetBot()
 
-  return (not IsUnitAttack(bot)
+  return (not common_algorithms.IsUnitAttack(bot)
 
-          or (IsUnitAttack(bot)
-              and not IsAttackDone(bot)))
+          or (common_algorithms.IsUnitAttack(bot)
+              and not common_algorithms.IsAttackDone(bot)))
 
          and GetLastHitCreep(bot, SIDE["ALLY"]) ~= nil
 end
@@ -202,7 +190,8 @@ end
 function M.pre_positioning()
   local bot = GetBot()
 
-  if IsUnitAttack(bot) and not IsAttackDone(bot) then
+  if common_algorithms.IsUnitAttack(bot)
+     and not common_algorithms.IsAttackDone(bot) then
     return false end
 
   return (AreAllyCreepsInRadius(constants.MIN_CREEP_DISTANCE)
@@ -286,9 +275,9 @@ function M.pre_harras_enemy_hero()
   return not AreEnemyCreepsInRadius(constants.CREEP_AGRO_RADIUS)
          and not IsEnemyTowerInRadius(constants.MAX_TOWER_ATTACK_RANGE)
 
-         and (not IsUnitAttack(bot)
-              or (IsUnitAttack(bot)
-                  and not IsAttackDone(bot)))
+         and (not common_algorithms.IsUnitAttack(bot)
+              or (common_algorithms.IsUnitAttack(bot)
+                  and not common_algorithms.IsAttackDone(bot)))
 
          and GetEnemyHero(bot) ~= nil
 end
@@ -314,7 +303,7 @@ function M.pre_stop()
   local bot = GetBot()
 
   return IsUnitMoving(bot)
-         or IsUnitAttack(bot)
+         or common_algorithms.IsUnitAttack(bot)
 end
 
 function M.post_stop()
@@ -339,9 +328,12 @@ end
 
 function M.pre_turn()
   local bot = GetBot()
+  local target = GetEnemyCreep()
+
   return IsEnemyUnitsInAttackRange()
+         and target ~= nil
          and not M.pre_positioning()
-         and not bot:IsFacingLocation(GetEnemyCreep().location, 30)
+         and not bot:IsFacingLocation(target.location, 30)
 end
 
 function M.post_turn()

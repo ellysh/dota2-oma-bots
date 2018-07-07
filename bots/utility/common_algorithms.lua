@@ -90,6 +90,26 @@ function M.GetAllyBuildings(unit, radius)
   return GetUnitsInRadius(unit, radius, all_units.GetAllyBuildingsData)
 end
 
+function M.IsUnitAttack(unit)
+  local anim = unit:GetAnimActivity()
+  return anim == ACTIVITY_ATTACK or anim == ACTIVITY_ATTACK2
+end
+
+function M.IsAttackDone(unit)
+  if not M.IsUnitAttack(unit) then
+    return true
+  end
+
+  return unit:GetAttackPoint() <= unit:GetAnimCycle()
+end
+
+function M.IsUnitAttackTarget(unit, target_data)
+  -- TODO: Consider unit's attack range in this functions
+
+  return M.IsUnitAttack(unit)
+         and unit:IsFacingLocation(target_data.location, 2)
+end
+
 function M.GetTotalDamage(unit_list, target)
   if unit_list == nil or #unit_list == 0 or target == nil then
     return 0 end
@@ -99,7 +119,11 @@ function M.GetTotalDamage(unit_list, target)
   functions.DoWithKeysAndElements(
     unit_list,
     function(_, unit_data)
-      if unit_data.is_alive and unit_data.attack_target == target then
+      if unit_data.is_alive
+         and M.IsUnitAttackTarget(
+           all_units.GetUnit(unit_data),
+           all_units.GetUnitData(target)) then
+
         total_damage = total_damage + unit_data.attack_damage
       end
     end)
