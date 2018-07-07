@@ -142,6 +142,14 @@ local function IsUnitAttack(unit)
   return anim == ACTIVITY_ATTACK or anim == ACTIVITY_ATTACK2
 end
 
+local function IsAttackDone(unit)
+  if not IsUnitAttack(unit) then
+    return true
+  end
+
+  return unit:GetAttackPoint() <= unit:GetAnimCycle()
+end
+
 local function AttackUnit(bot, unit_data)
   local unit = all_units.GetUnit(unit_data)
   if (IsUnitAttack(bot) and IsAttackDone(bot)) then
@@ -157,7 +165,11 @@ end
 function M.pre_lasthit_enemy_creep()
   local bot = GetBot()
 
-  return not IsUnitAttack(bot)
+  return (not IsUnitAttack(bot)
+
+          or (IsUnitAttack(bot)
+              and not IsAttackDone(bot)))
+
          and GetLastHitCreep(bot, SIDE["ENEMY"]) ~= nil
 end
 
@@ -177,7 +189,11 @@ end
 function M.pre_deny_ally_creep()
   local bot = GetBot()
 
-  return not IsUnitAttack(bot)
+  return (not IsUnitAttack(bot)
+
+          or (IsUnitAttack(bot)
+              and not IsAttackDone(bot)))
+
          and GetLastHitCreep(bot, SIDE["ALLY"]) ~= nil
 end
 
@@ -215,14 +231,6 @@ local function IsEnemyTowerInRadius(radius)
   local units = common_algorithms.GetEnemyBuildings(bot, radius)
 
   return not functions.IsArrayEmpty(units)
-end
-
-local function IsAttackDone(unit)
-  if not IsUnitAttack(unit) then
-    return true
-  end
-
-  return unit:GetAttackPoint() <= unit:GetAnimCycle()
 end
 
 function M.pre_positioning()
@@ -305,11 +313,9 @@ end
 
 function M.pre_stop()
   local bot = GetBot()
-  local action = bot:GetCurrentActionType()
 
-  return not M.pre_turn()
-         and ((IsUnitAttack(bot) and IsAttackDone(bot))
-              or IsUnitMoving(bot))
+  return IsUnitMoving(bot)
+         or IsUnitAttack(bot)
 end
 
 function M.post_stop()
@@ -347,13 +353,7 @@ function M.turn()
   local bot = GetBot()
   local target = GetEnemyCreep()
 
-  if not IsUnitAttack(bot) and
-     not bot:IsFacingLocation(target.location, 30) then
-
-    bot:Action_AttackUnit(all_units.GetUnit(target), true)
-  else
-    bot:Action_ClearActions(true)
-  end
+  bot:Action_AttackUnit(all_units.GetUnit(target), true)
 end
 
 -- Provide an access to local functions for unit tests only
