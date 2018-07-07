@@ -82,44 +82,10 @@ local SIDE = {
   ALLY = {},
 }
 
-local function GetTotalDamageByEnemies(unit, is_heroes)
-  local enemy_towers = common_algorithms.GetEnemyBuildings(
-                         unit,
-                         constants.MAX_TOWER_ATTACK_RANGE)
-
-  local enemy_creeps = common_algorithms.GetEnemyCreeps(
-                         unit,
-                         constants.MAX_CREEP_ATTACK_RANGE)
-
-  local total_damage =
-    common_algorithms.GetTotalDamage(enemy_towers, unit) +
-    common_algorithms.GetTotalDamage(enemy_creeps, unit)
-
-  if is_heroes then
-    local enemy_heroes = common_algorithms.GetEnemyHeroes(
-      unit,
-      constants.MAX_HERO_ATTACK_RANGE)
-
-    local ally_heroes = common_algorithms.GetAllyHeroes(
-      unit,
-      constants.MAX_HERO_ATTACK_RANGE)
-
-    total_damage =
-      total_damage +
-      common_algorithms.GetTotalDamage(enemy_heroes, unit) +
-      common_algorithms.GetTotalDamage(ally_heroes, unit)
-  end
-
-  return total_damage
-end
-
 local function IsLastHit(bot, unit_data)
   local bot_damage = bot:GetAttackDamage()
-  local total_damage = GetTotalDamageByEnemies(
-    all_units.GetUnit(unit_data),
-    true)
 
-  return unit_data.health <= (total_damage + bot_damage)
+  return unit_data.health <= bot_damage
 end
 
 local function GetLastHitCreep(bot, side)
@@ -259,8 +225,27 @@ end
 
 --------------------------------
 
+local function IsFocusedByCreeps(unit)
+  local unit_list = common_algorithms.GetEnemyCreeps(
+                         unit,
+                         constants.MAX_CREEP_ATTACK_RANGE)
+
+   return 0 < common_algorithms.GetTotalDamage(unit_list, unit)
+end
+
+local function IsFocusedByTower(unit)
+  local unit_list = common_algorithms.GetEnemyBuildings(
+                         unit,
+                         constants.MAX_TOWER_ATTACK_RANGE)
+
+   return 0 < common_algorithms.GetTotalDamage(unit_list, unit)
+end
+
 function M.pre_evasion()
-  return 0 < GetTotalDamageByEnemies(GetBot(), false)
+  local bot = GetBot()
+
+  return IsFocusedByCreeps(bot)
+         or IsFocusedByTower(bot)
 end
 
 function M.post_evasion()
