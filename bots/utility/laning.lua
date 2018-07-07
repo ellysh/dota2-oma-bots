@@ -334,7 +334,7 @@ end
 
 function M.pre_turn()
   local bot = GetBot()
-  return IsEnemyUnitsInAttackRange
+  return IsEnemyUnitsInAttackRange()
          and not M.pre_positioning()
          and not bot:IsFacingLocation(GetEnemyCreep().location, 30)
 end
