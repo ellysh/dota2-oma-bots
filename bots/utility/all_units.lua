@@ -157,28 +157,28 @@ function M.GetUnit(unit_data)
   return unit_data.handle
 end
 
-function M.GetEnemyCreepsData(unit)
-  return UNIT_LIST[GetOpposingTeam(unit:GetTeam())][UNIT_TYPE["CREEP"]]
+function M.GetEnemyCreepsData(unit_data)
+  return UNIT_LIST[GetOpposingTeam(unit_data.team)][UNIT_TYPE["CREEP"]]
 end
 
-function M.GetEnemyHeroesData(unit)
-  return UNIT_LIST[GetOpposingTeam(unit:GetTeam())][UNIT_TYPE["HERO"]]
+function M.GetEnemyHeroesData(unit_data)
+  return UNIT_LIST[GetOpposingTeam(unit_data.team)][UNIT_TYPE["HERO"]]
 end
 
-function M.GetEnemyBuildingsData(unit)
-  return UNIT_LIST[GetOpposingTeam(unit:GetTeam())][UNIT_TYPE["BUILDING"]]
+function M.GetEnemyBuildingsData(unit_data)
+  return UNIT_LIST[GetOpposingTeam(unit_data.team)][UNIT_TYPE["BUILDING"]]
 end
 
-function M.GetAllyCreepsData(unit)
-  return UNIT_LIST[unit:GetTeam()][UNIT_TYPE["CREEP"]]
+function M.GetAllyCreepsData(unit_data)
+  return UNIT_LIST[unit_data.team][UNIT_TYPE["CREEP"]]
 end
 
-function M.GetAllyHeroesData(unit)
-  return UNIT_LIST[unit:GetTeam()][UNIT_TYPE["HERO"]]
+function M.GetAllyHeroesData(unit_data)
+  return UNIT_LIST[unit_data.team][UNIT_TYPE["HERO"]]
 end
 
-function M.GetAllyBuildingsData(unit)
-  return UNIT_LIST[unit:GetTeam()][UNIT_TYPE["BUILDING"]]
+function M.GetAllyBuildingsData(unit_data)
+  return UNIT_LIST[unit_data.team][UNIT_TYPE["BUILDING"]]
 end
 
 -- Provide an access to local functions for unit tests only
