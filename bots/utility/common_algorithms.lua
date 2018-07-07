@@ -55,7 +55,7 @@ local function GetNormalizedRadius(radius)
 end
 
 local function GetUnitsInRadius(unit_data, radius, get_function)
-  local unit_list = get_function(unit)
+  local unit_list = get_function(unit_data)
 
   return functions.GetListWith(
     unit_list,
@@ -113,6 +113,8 @@ end
 
 function M.IsUnitAttackTarget(unit_data, target_data)
   -- TODO: Consider unit's attack range in this functions
+
+  local unit = all_units.GetUnit(unit_data)
 
   return M.IsUnitAttack(unit_data)
          and unit:IsFacingLocation(target_data.location, 2)
