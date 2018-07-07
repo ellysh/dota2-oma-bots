@@ -111,13 +111,29 @@ function M.IsAttackDone(unit_data)
   return unit_data.attack_point <= unit_data.anim_cycle
 end
 
+function M.IsUnitShootTarget(unit_data, target_data)
+  local unit_projectile = functions.GetElementWith(
+    target_data.incoming_projectiles,
+    nil,
+    function(projectile)
+      return projectile.caster == all_units.GetUnit(unit_data)
+    end
+    )
+
+  return unit_projectile ~= nil
+end
+
 function M.IsUnitAttackTarget(unit_data, target_data)
-  -- TODO: Consider unit's attack range in this functions
+  if functions.GetUnitDistance(unit_data, target_data)
+     <= constants.MAX_MELEE_ATTACK_RANGE then
 
-  local unit = all_units.GetUnit(unit_data)
+    local unit = all_units.GetUnit(unit_data)
 
-  return M.IsUnitAttack(unit_data)
-         and unit:IsFacingLocation(target_data.location, 2)
+    return M.IsUnitAttack(unit_data)
+           and unit:IsFacingLocation(target_data.location, 2)
+  else
+    return M.IsUnitShootTarget(unit_data, target_data)
+  end
 end
 
 function M.GetTotalDamage(unit_list, target_data)
