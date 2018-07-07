@@ -285,7 +285,11 @@ function M.pre_harras_enemy_hero()
 
   return not AreEnemyCreepsInRadius(constants.CREEP_AGRO_RADIUS)
          and not IsEnemyTowerInRadius(constants.MAX_TOWER_ATTACK_RANGE)
-         and not IsUnitAttack(bot)
+
+         and (not IsUnitAttack(bot)
+              or (IsUnitAttack(bot)
+                  and not IsAttackDone(bot)))
+
          and GetEnemyHero(bot) ~= nil
 end
 
