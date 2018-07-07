@@ -601,8 +601,20 @@ function Unit:GetAttackTarget()
   return ATTACK_TARGET
 end
 
+function Unit:GetAttackPoint()
+  return 0
+end
+
 function Unit:GetAttackDamage()
   return self.damage
+end
+
+function Unit:GetAnimActivity()
+  return 0
+end
+
+function Unit:GetAnimCycle()
+  return 0
 end
 
 UNIT_HAS_BUYBACK = true
