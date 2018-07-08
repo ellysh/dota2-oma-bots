@@ -38,7 +38,9 @@ local OBJECTIVES = {
     moves = {
       {move = "heal_flask", desire = 90},
       {move = "heal_tango", desire = 80},
-      {move = "tp_out", desire = 1},
+      {move = "move_shrine", desire = 20},
+      {move = "tp_base", desire = 10},
+      {move = "move_base", desire = 1},
     },
     dependencies = {
       {objective = "prepare_for_match"},
