@@ -55,7 +55,23 @@ end
 ---------------------------------
 
 function M.pre_heal_tango()
-  return false
+  local bot_data = common_algorithms.GetBotData()
+
+  return common_algorithms.IsItemPresent(bot_data, 'item_tango')
+         and bot_data.nearby_trees[1] ~= nil
+end
+
+function M.post_heal_tango()
+  return not M.pre_heal_tango()
+end
+
+function M.heal_tango()
+  local bot = GetBot()
+  local bot_data = common_algorithms.GetBotData()
+
+  bot:Action_UseAbilityOnTree(
+    common_algorithms.GetItem(bot_data, 'item_tango'),
+    trees[1])
 end
 
 ---------------------------------
