@@ -42,9 +42,7 @@ local OBJECTIVES = {
       {move = "tp_base", desire = 10},
       {move = "move_base", desire = 1},
     },
-    dependencies = {
-      {objective = "prepare_for_match"},
-    },
+    dependencies = {},
     desire = 80,
   },
 }

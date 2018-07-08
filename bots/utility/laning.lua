@@ -18,10 +18,13 @@ local logger = require(
 local prepare_for_match = require(
   GetScriptDirectory() .."/utility/prepare_for_match")
 
+local recovery = require(
+  GetScriptDirectory() .."/utility/recovery")
+
 ---------------------------------
 
 function M.post_laning()
-  return false
+  return recovery.pre_recovery()
 end
 
 function M.pre_laning()
