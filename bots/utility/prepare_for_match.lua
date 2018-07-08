@@ -3,9 +3,6 @@ local M = {}
 local common_algorithms = require(
   GetScriptDirectory() .."/utility/common_algorithms")
 
-local logger = require(
-  GetScriptDirectory() .."/utility/logger")
-
 ---------------------------------
 
 function M.pre_prepare_for_match()
@@ -32,8 +29,6 @@ function M.pre_buy_and_use_courier()
 end
 
 function M.buy_and_use_courier()
-  logger.Print("M.buy_and_use_courier()")
-
   local bot = GetBot()
   local bot_data = common_algorithms.GetBotData()
 
@@ -60,8 +55,6 @@ function M.pre_buy_starting_items()
 end
 
 function M.buy_starting_items()
-  logger.Print("M.buy_starting_items()")
-
   local bot = GetBot()
 
   bot:ActionImmediate_PurchaseItem('item_flask')

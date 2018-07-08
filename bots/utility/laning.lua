@@ -12,9 +12,6 @@ local common_algorithms = require(
 local constants = require(
   GetScriptDirectory() .."/utility/constants")
 
-local logger = require(
-  GetScriptDirectory() .."/utility/logger")
-
 local prepare_for_match = require(
   GetScriptDirectory() .."/utility/prepare_for_match")
 
@@ -73,8 +70,6 @@ function M.pre_move_mid_front_lane()
 end
 
 function M.move_mid_front_lane()
-  logger.Print("M.move_mid_front_lane()")
-
   local target_location = GetLaneFrontLocation(
     GetTeam(),
     LANE_MID,

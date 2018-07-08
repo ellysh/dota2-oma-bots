@@ -33,7 +33,22 @@ end
 ---------------------------------
 
 function M.pre_heal_flask()
-  return false
+  local bot_data = common_algorithms.GetBotData()
+
+  return common_algorithms.IsItemPresent(bot_data, 'item_flask')
+end
+
+function M.post_heal_flask()
+  return not M.pre_heal_flask()
+end
+
+function M.heal_flask()
+  local bot = GetBot()
+  local bot_data = common_algorithms.GetBotData()
+
+  bot:Action_UseAbilityOnEntity(
+    common_algorithms.GetItem(bot_data, 'item_flask'),
+    bot)
 end
 
 ---------------------------------
