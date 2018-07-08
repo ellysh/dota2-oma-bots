@@ -13,7 +13,10 @@ function M.pre_prepare_for_match()
 end
 
 function M.post_prepare_for_match()
-  return M.post_buy_and_use_courier() and M.post_buy_starting_items()
+  return (M.post_buy_and_use_courier()
+          and M.post_buy_starting_items())
+
+         or not M.pre_prepare_for_match()
 end
 
 ---------------------------------
