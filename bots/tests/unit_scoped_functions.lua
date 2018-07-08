@@ -455,6 +455,10 @@ function Unit:GetNearbyShrines(radius, enemy)
   return { unit1 }
 end
 
+function Unit:GetNearbyTrees(radius)
+  return {}
+end
+
 FIND_AOE_LOCATION_COUNT = 3
 
 function Unit:FindAoELocation()

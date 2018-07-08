@@ -27,7 +27,10 @@ end
 function M.pre_laning()
   -- This is a objectives Dependency example
 
+  local bot_data = common_algorithms.GetBotData()
+
   return prepare_for_match.post_prepare_for_match()
+         and not bot_data.is_casting
 end
 
 ---------------------------------

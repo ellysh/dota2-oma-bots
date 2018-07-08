@@ -56,6 +56,11 @@ local function IsHealing(unit)
          or unit:HasModifier("modifier_filler_heal") -- shrine heal
 end
 
+local function IsUnitCasting(unit)
+  return unit:IsChanneling()
+         or unit:IsCastingAbility()
+end
+
 local function AddUnit(unit, type, team)
   UNIT_LIST[team][type][tostring(unit)] = {
     handle = unit,
@@ -75,7 +80,8 @@ local function AddUnit(unit, type, team)
     items = GetItems(unit),
     incoming_projectiles = unit:GetIncomingTrackingProjectiles(),
     is_healing = IsHealing(unit),
-    nearby_trees = unit:GetNearbyTrees(1000);
+    nearby_trees = unit:GetNearbyTrees(1000),
+    is_casting = IsUnitCasting(unit),
   }
 end
 

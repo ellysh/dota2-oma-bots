@@ -22,6 +22,7 @@ function M.pre_recovery()
   local enemy_data = common_algorithms.GetEnemyHero(bot_data)
 
   return IsUnitLowHp(bot_data)
+         and not bot_data.is_casting
          and enemy_data ~= nil
          and not bot_data.is_healing
          and bot_data.health < enemy_data.health
@@ -57,6 +58,8 @@ end
 function M.pre_heal_tango()
   local bot_data = common_algorithms.GetBotData()
 
+  -- TODO: If there is no tree, check the branch in the inventory
+
   return common_algorithms.IsItemPresent(bot_data, 'item_tango')
          and bot_data.nearby_trees[1] ~= nil
 end
@@ -68,6 +71,8 @@ end
 function M.heal_tango()
   local bot = GetBot()
   local bot_data = common_algorithms.GetBotData()
+
+  -- TODO: Plant a tree if it presents
 
   bot:Action_UseAbilityOnTree(
     common_algorithms.GetItem(bot_data, 'item_tango'),
@@ -83,7 +88,23 @@ end
 ---------------------------------
 
 function M.pre_tp_base()
-  return false
+  local bot_data = common_algorithms.GetBotData()
+
+  return common_algorithms.IsItemPresent(bot_data, 'item_tpscroll')
+end
+
+function M.post_tp_base()
+  return not M.pre_tp_base()
+end
+
+function M.tp_base()
+  local bot = GetBot()
+  local bot_data = common_algorithms.GetBotData()
+
+
+  bot:Action_UseAbilityOnLocation(
+    common_algorithms.GetItem(bot_data, 'item_tpscroll'),
+    GetShopLocation(GetTeam(), SHOP_HOME))
 end
 
 ---------------------------------
