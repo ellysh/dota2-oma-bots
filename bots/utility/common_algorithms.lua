@@ -155,6 +155,19 @@ function M.GetTotalDamage(unit_list, target_data)
   return total_damage
 end
 
+function M.GetEnemyHero(unit_data)
+  local heroes = M.GetEnemyHeroes(
+    unit_data,
+    unit_data.attack_range)
+
+  return functions.GetElementWith(
+    heroes,
+    m.CompareMinHealth,
+    function(hero_data)
+      return M.IsAttackTargetable(hero_data)
+    end)
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_GetNormalizedRadius = GetNormalizedRadius
 M.test_UpdateUnitList = all_units.UpdateUnitList

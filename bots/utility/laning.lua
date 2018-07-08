@@ -271,19 +271,6 @@ end
 
 --------------------------------
 
-local function GetEnemyHero(bot_data)
-  local heroes = common_algorithms.GetEnemyHeroes(
-    bot_data,
-    bot_data.attack_range)
-
-  return functions.GetElementWith(
-    heroes,
-    common_algorithms.CompareMinHealth,
-    function(unit_data)
-      return common_algorithms.IsAttackTargetable(unit_data)
-    end)
-end
-
 function M.pre_harras_enemy_hero()
   local bot_data = common_algorithms.GetBotData()
 
@@ -294,7 +281,7 @@ function M.pre_harras_enemy_hero()
               or (common_algorithms.IsUnitAttack(bot_data)
                   and not common_algorithms.IsAttackDone(bot_data)))
 
-         and GetEnemyHero(bot_data) ~= nil
+         and common_algorithms.GetEnemyHero(bot_data) ~= nil
 end
 
 function M.post_harras_enemy_hero()
@@ -303,7 +290,7 @@ end
 
 function M.harras_enemy_hero()
   local bot_data = common_algorithms.GetBotData()
-  local hero_data = GetEnemyHero(bot_data)
+  local hero_data = common_algorithms.GetEnemyHero(bot_data)
 
   AttackUnit(bot_data, hero_data)
 end
