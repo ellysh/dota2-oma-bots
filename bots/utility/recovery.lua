@@ -19,8 +19,11 @@ end
 
 function M.pre_recovery()
   local bot_data = common_algorithms.GetBotData()
+  local enemy_data = common_algorithms.GetEnemyHero(bot_data)
 
   return IsUnitLowHp(bot_data)
+         and enemy_data ~= nil
+         and bot_data.health < enemy_data.health
 end
 
 function M.post_recovery()
