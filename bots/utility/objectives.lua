@@ -13,8 +13,6 @@ local OBJECTIVES = {
     },
     dependencies = {},
     desire = 100,
-    single = true,
-    done = false,
   },
   [2] = {
     objective = "laning",
@@ -33,8 +31,19 @@ local OBJECTIVES = {
       {objective = "prepare_for_match"},
     },
     desire = 90,
-    single = false,
-    done = false,
+  },
+  [3] = {
+    objective = "recovery",
+    module = require(GetScriptDirectory() .."/utility/recovery"),
+    moves = {
+      {move = "heal_flask", desire = 90},
+      {move = "heal_tango", desire = 80},
+      {move = "tp_out", desire = 1},
+    },
+    dependencies = {
+      {objective = "prepare_for_match"},
+    },
+    desire = 80,
   },
 }
 
