@@ -49,6 +49,13 @@ local function GetOpposingTeam(team)
   return OPPOSING_TEAM[team]
 end
 
+local function IsHealing(unit)
+  return unit:HasModifier("modifier_flask_healing")
+         or unit:HasModifier("modifier_tango_heal")
+         or unit:HasModifier("modifier_fountain_aura_buff")
+         or unit:HasModifier("modifier_filler_heal") -- shrine heal
+end
+
 local function AddUnit(unit, type, team)
   UNIT_LIST[team][type][tostring(unit)] = {
     handle = unit,
@@ -67,6 +74,7 @@ local function AddUnit(unit, type, team)
     team = unit:GetTeam(),
     items = GetItems(unit),
     incoming_projectiles = unit:GetIncomingTrackingProjectiles(),
+    is_healing = IsHealing(unit),
   }
 end
 

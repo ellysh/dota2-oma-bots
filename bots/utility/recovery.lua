@@ -23,6 +23,7 @@ function M.pre_recovery()
 
   return IsUnitLowHp(bot_data)
          and enemy_data ~= nil
+         and not bot_data.is_healing
          and bot_data.health < enemy_data.health
 end
 
