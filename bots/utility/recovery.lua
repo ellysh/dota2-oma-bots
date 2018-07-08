@@ -32,4 +32,32 @@ end
 
 ---------------------------------
 
+function M.pre_heal_flask()
+  return false
+end
+
+---------------------------------
+
+function M.pre_heal_tango()
+  return false
+end
+
+---------------------------------
+
+function M.pre_move_shrine()
+  return false
+end
+
+---------------------------------
+
+function M.pre_tp_base()
+  return false
+end
+
+---------------------------------
+
+function M.pre_move_base()
+  return false
+end
+
 return M
