@@ -12,8 +12,12 @@ local logger = require(
 ---------------------------------
 
 local function IsUnitLowHp(unit_data)
-  return unit_data.health <= constants.UNIT_LOW_HEALTH
-         or GetUnitHealthLevel(unit_data)
+  local unit_health = unit_data.health
+                      - common_algorithms.GetTotalDamageToUnit(
+                          unit_data)
+
+  return unit_health <= constants.UNIT_LOW_HEALTH
+         or GetUnitHealthLevel(unit_health)
             <= constants.UNIT_LOW_HEALTH_LEVEL
 end
 
