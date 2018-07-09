@@ -114,7 +114,21 @@ end
 ---------------------------------
 
 function M.pre_move_base()
-  return false
+  local bot = GetBot()
+  local bot_data = common_algorithms.GetBotData()
+  local base_location = GetShopLocation(GetTeam(), SHOP_HOME)
+
+  return not IsUnitMoving(bot_data)
+         or not bot:IsFacingLocation(base_location, 30)
+end
+
+function M.pre_move_base()
+  return not M.pre_move_base()
+end
+
+function M.move_base()
+  local bot = GetBot()
+  bot:Action_MoveToLocation(GetShopLocation(GetTeam(), SHOP_HOME))
 end
 
 return M
