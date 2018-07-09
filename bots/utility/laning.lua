@@ -277,14 +277,10 @@ end
 
 --------------------------------
 
-local function IsUnitMoving(unit_data)
-  return unit_data.anim_activity == ACTIVITY_RUN
-end
-
 function M.pre_stop()
   local bot_data = common_algorithms.GetBotData()
 
-  return IsUnitMoving(bot_data)
+  return common_algorithms.IsUnitMoving(bot_data)
          or common_algorithms.IsUnitAttack(bot_data)
 end
 

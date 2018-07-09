@@ -126,8 +126,8 @@ function M.pre_move_base()
   local bot_data = common_algorithms.GetBotData()
   local base_location = GetShopLocation(GetTeam(), SHOP_HOME)
 
-  return not IsUnitMoving(bot_data)
-         or not bot:IsFacingLocation(base_location, 30)
+  return not (common_algorithms.IsUnitMoving(bot_data)
+              and bot:IsFacingLocation(base_location, 30))
 end
 
 function M.post_move_base()

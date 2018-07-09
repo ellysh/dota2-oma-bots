@@ -34,21 +34,4 @@ function test_post_buy_and_use_courier_succeed()
   luaunit.assertFalse(prepare_for_match.pre_buy_and_use_courier())
 end
 
-function test_buy_and_use_courier_success()
-  test_RefreshBot()
-
-  local bot = GetBot()
-  local ability = Ability:new('item_courier')
-
-  prepare_for_match.buy_and_use_courier()
-
-  UNITS = { bot }
-  prepare_for_match.test_UpdateUnitList()
-
-  prepare_for_match.buy_and_use_courier()
-
-  luaunit.assertEquals(bot.inventory[1], 'item_courier')
-  luaunit.assertEquals(UNIT_ABILITY, ability)
-end
-
 os.exit(luaunit.LuaUnit.run())

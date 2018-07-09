@@ -3,6 +3,9 @@ local M = {}
 local logger = require(
   GetScriptDirectory() .."/utility/logger")
 
+local common_algorithms = require(
+  GetScriptDirectory() .."/utility/common_algorithms")
+
 local OBJECTIVES = {
   [1] = {
     objective = "prepare_for_match",
@@ -82,22 +85,29 @@ local function executeMove()
     return
   end
 
+  logger.Print("team = " .. GetTeam() .. " current_objective = " ..
+    current_objective.objective .. " OBJECTIVE_INDEX = " ..
+    OBJECTIVE_INDEX)
+
   logger.Print("team = " .. GetTeam() .. " current_move = " ..
     current_move.move .. " MOVE_INDEX = " .. MOVE_INDEX)
 
   current_objective.module[current_move.move]()
 end
 
+local function IsBotAlive()
+  return common_algorithms.GetBotData() ~= nil
+end
+
 function M.Process()
+  if not IsBotAlive() then
+    return end
+
   local current_objective = GetCurrentObjective()
 
   if not current_objective.done
      and current_objective.module["pre_" .. current_objective.objective]() then
-    --[[
-    logger.Print("team = " .. GetTeam() .. " current_objective = " ..
-      current_objective.objective .. " OBJECTIVE_INDEX = " ..
-      OBJECTIVE_INDEX)
-    --]]
+
     executeMove(current_objective)
   else
     -- We should find another objective here

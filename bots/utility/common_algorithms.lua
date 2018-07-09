@@ -14,10 +14,6 @@ function M.GetBotData()
 end
 
 function M.GetItem(unit_data, item_name)
-  -- TODO: Remove this check
-  if unit_data == nil then
-    return nil end
-
   return functions.GetElementWith(
     unit_data.items,
     nil,
@@ -202,6 +198,10 @@ function M.AreUnitsInRadius(unit_data, radius, get_function)
   local units = get_function(unit_data, radius)
 
   return not functions.IsArrayEmpty(units)
+end
+
+function M.IsUnitMoving(unit_data)
+  return unit_data.anim_activity == ACTIVITY_RUN
 end
 
 -- Provide an access to local functions for unit tests only
