@@ -113,8 +113,7 @@ function M.IsUnitShootTarget(unit_data, target_data)
     nil,
     function(projectile)
       return projectile.caster == all_units.GetUnit(unit_data)
-    end
-    )
+    end)
 
   return unit_projectile ~= nil
 end
@@ -127,6 +126,7 @@ function M.IsUnitAttackTarget(unit_data, target_data)
 
     return M.IsUnitAttack(unit_data)
            and unit:IsFacingLocation(target_data.location, 2)
+           and not M.IsAttackDone(unit_data)
   else
     return M.IsUnitShootTarget(unit_data, target_data)
   end
