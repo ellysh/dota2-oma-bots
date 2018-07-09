@@ -88,39 +88,10 @@ local SIDE = {
   ALLY = {},
 }
 
-local function GetTotalDamageToUnit(unit_data)
-  local result = 0
-
-  local unit_list = common_algorithms.GetEnemyCreeps(
-                         unit_data,
-                         constants.MAX_CREEP_ATTACK_RANGE)
-
-  result = result + common_algorithms.GetTotalDamage(unit_list, unit_data)
-
-  unit_list = common_algorithms.GetEnemyBuildings(
-                         unit_data,
-                         constants.MAX_TOWER_ATTACK_RANGE)
-
-  result = result + common_algorithms.GetTotalDamage(unit_list, unit_data)
-
-  unit_list = common_algorithms.GetEnemyHeroes(
-                         unit_data,
-                         constants.MAX_HERO_ATTACK_RANGE)
-
-  result = result + common_algorithms.GetTotalDamage(unit_list, unit_data)
-
-  unit_list = common_algorithms.GetAllyHeroes(
-                         unit_data,
-                         constants.MAX_HERO_ATTACK_RANGE)
-
-  result = result + common_algorithms.GetTotalDamage(unit_list, unit_data)
-
-  return result
-end
-
 local function IsLastHit(bot_data, unit_data)
   local incoming_damage = bot_data.attack_damage
-                          + GetTotalDamageToUnit(unit_data)
+                          + common_algorithms.GetTotalDamageToUnit(
+                              unit_data)
 
   return unit_data.health <= incoming_damage
 end

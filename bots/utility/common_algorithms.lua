@@ -155,6 +155,36 @@ function M.GetTotalDamage(unit_list, target_data)
   return total_damage
 end
 
+function M.GetTotalDamageToUnit(unit_data)
+  local result = 0
+
+  local unit_list = M.GetEnemyCreeps(
+                         unit_data,
+                         constants.MAX_CREEP_ATTACK_RANGE)
+
+  result = result + M.GetTotalDamage(unit_list, unit_data)
+
+  unit_list = M.GetEnemyBuildings(
+                         unit_data,
+                         constants.MAX_TOWER_ATTACK_RANGE)
+
+  result = result + M.GetTotalDamage(unit_list, unit_data)
+
+  unit_list = M.GetEnemyHeroes(
+                         unit_data,
+                         constants.MAX_HERO_ATTACK_RANGE)
+
+  result = result + M.GetTotalDamage(unit_list, unit_data)
+
+  unit_list = M.GetAllyHeroes(
+                         unit_data,
+                         constants.MAX_HERO_ATTACK_RANGE)
+
+  result = result + M.GetTotalDamage(unit_list, unit_data)
+
+  return result
+end
+
 function M.GetEnemyHero(unit_data)
   local heroes = M.GetEnemyHeroes(
     unit_data,
