@@ -31,6 +31,7 @@ function M.pre_laning()
 
   return prepare_for_match.post_prepare_for_match()
          and not bot_data.is_casting
+         and not recovery.pre_recovery()
 end
 
 ---------------------------------
