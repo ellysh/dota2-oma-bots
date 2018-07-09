@@ -67,6 +67,7 @@ local function AddUnit(unit, type, team)
     name = unit:GetUnitName(),
     location = unit:GetLocation(),
     health = unit:GetHealth(),
+    max_health = unit:GetMaxHealth(),
     mana = unit:GetMana(),
     is_alive = unit:IsAlive(),
     is_invulnerable = unit:IsInvulnerable(),

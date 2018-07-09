@@ -1,5 +1,8 @@
 local M = {}
 
+local functions = require(
+  GetScriptDirectory() .."/utility/functions")
+
 local common_algorithms = require(
   GetScriptDirectory() .."/utility/common_algorithms")
 
@@ -17,7 +20,7 @@ local function IsUnitLowHp(unit_data)
                           unit_data)
 
   return unit_health <= constants.UNIT_LOW_HEALTH
-         or GetUnitHealthLevel(unit_health)
+         or functions.GetRate(unit_health, unit_data.max_health)
             <= constants.UNIT_LOW_HEALTH_LEVEL
 end
 
@@ -127,7 +130,7 @@ function M.pre_move_base()
          or not bot:IsFacingLocation(base_location, 30)
 end
 
-function M.pre_move_base()
+function M.post_move_base()
   return not M.pre_move_base()
 end
 
