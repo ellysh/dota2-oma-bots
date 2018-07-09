@@ -192,10 +192,16 @@ function M.GetEnemyHero(unit_data)
 
   return functions.GetElementWith(
     heroes,
-    m.CompareMinHealth,
+    M.CompareMinHealth,
     function(hero_data)
       return M.IsAttackTargetable(hero_data)
     end)
+end
+
+function M.AreUnitsInRadius(unit_data, radius, get_function)
+  local units = get_function(unit_data, radius)
+
+  return not functions.IsArrayEmpty(units)
 end
 
 -- Provide an access to local functions for unit tests only

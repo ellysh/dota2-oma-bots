@@ -35,23 +35,31 @@ end
 
 ---------------------------------
 
-local function AreUnitsInRadius(radius, get_function)
-  local bot_data = common_algorithms.GetBotData()
-  local units = get_function(bot_data, radius)
-
-  return not functions.IsArrayEmpty(units)
-end
-
 local function AreAllyCreepsInRadius(radius)
-  return AreUnitsInRadius(radius, common_algorithms.GetAllyCreeps)
+  local bot_data = common_algorithms.GetBotData()
+
+  return common_algorithms.AreUnitsInRadius(
+    bot_data,
+    radius,
+    common_algorithms.GetAllyCreeps)
 end
 
 local function AreEnemyCreepsInRadius(radius)
-  return AreUnitsInRadius(radius, common_algorithms.GetEnemyCreeps)
+  local bot_data = common_algorithms.GetBotData()
+
+  return common_algorithms.AreUnitsInRadius(
+    bot_data,
+    radius,
+    common_algorithms.GetEnemyCreeps)
 end
 
 local function IsEnemyTowerInRadius(radius)
-  return AreUnitsInRadius(radius, common_algorithms.GetEnemyBuildings)
+  local bot_data = common_algorithms.GetBotData()
+
+  return common_algorithms.AreUnitsInRadius(
+    bot_data,
+    radius,
+    common_algorithms.GetEnemyBuildings)
 end
 
 function M.post_move_mid_front_lane()

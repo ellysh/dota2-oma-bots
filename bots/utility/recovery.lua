@@ -42,6 +42,11 @@ function M.pre_heal_flask()
   local bot_data = common_algorithms.GetBotData()
 
   return common_algorithms.IsItemPresent(bot_data, 'item_flask')
+         and common_algorithms.GetTotalDamageToUnit(bot_data) == 0
+         and not common_algorithms.AreUnitsInRadius(
+                   bot_data,
+                   constants.MAX_HERO_ATTACK_RANGE,
+                   common_algorithms.GetEnemyHeroes)
 end
 
 function M.post_heal_flask()
