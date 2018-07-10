@@ -83,8 +83,6 @@ function M.plant_tree()
   bot:Action_UseAbilityOnLocation(
     common_algorithms.GetItem(bot_data, 'item_branches'),
     bot_data.location)
-
-  bot_data.nearby_trees = bot:GetNearbyTrees(1000)
 end
 
 ---------------------------------
@@ -121,6 +119,9 @@ function M.pre_tp_base()
   local bot_data = common_algorithms.GetBotData()
 
   return common_algorithms.IsItemPresent(bot_data, 'item_tpscroll')
+         and common_algorithms.GetItem(
+              bot_data,
+              'item_tpscroll'):IsFullyCastable()
 end
 
 function M.post_tp_base()
@@ -130,7 +131,6 @@ end
 function M.tp_base()
   local bot = GetBot()
   local bot_data = common_algorithms.GetBotData()
-
 
   bot:Action_UseAbilityOnLocation(
     common_algorithms.GetItem(bot_data, 'item_tpscroll'),
