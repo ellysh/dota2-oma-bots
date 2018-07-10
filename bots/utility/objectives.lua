@@ -76,6 +76,13 @@ local function executeMove()
   local current_move = GetCurrentMove()
   local current_objective = GetCurrentObjective()
 
+  local move_time = current_objective.module.GetNextMoveTime()
+
+  if move_time ~= 0 and GameTime() < move_time then
+    current_objective.module.SetNextMoveTime(0)
+    return
+  end
+
   if not current_objective.module["pre_" .. current_move.move]() then
     FindNextMove()
     return

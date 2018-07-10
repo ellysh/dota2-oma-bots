@@ -12,6 +12,16 @@ local constants = require(
 local logger = require(
   GetScriptDirectory() .."/utility/logger")
 
+local NEXT_MOVE_TIME = 0 -- seconds
+
+function M.SetNextMoveTime(time)
+  NEXT_MOVE_TIME = delay
+end
+
+function M.GetNextMoveTime()
+  return NEXT_MOVE_TIME
+end
+
 ---------------------------------
 
 local function IsUnitLowHp(unit_data)
@@ -83,6 +93,8 @@ function M.plant_tree()
   bot:Action_UseAbilityOnLocation(
     common_algorithms.GetItem(bot_data, 'item_branches'),
     bot_data.location)
+
+  SetNextMoveDelay(GameTime() + 1)
 end
 
 ---------------------------------

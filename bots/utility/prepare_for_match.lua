@@ -3,6 +3,16 @@ local M = {}
 local common_algorithms = require(
   GetScriptDirectory() .."/utility/common_algorithms")
 
+local NEXT_MOVE_TIME = 0 -- seconds
+
+function M.SetNextMoveTime(time)
+  NEXT_MOVE_TIME = delay
+end
+
+function M.GetNextMoveTime()
+  return NEXT_MOVE_TIME
+end
+
 ---------------------------------
 
 function M.pre_prepare_for_match()

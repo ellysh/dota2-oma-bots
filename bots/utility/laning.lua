@@ -18,6 +18,16 @@ local prepare_for_match = require(
 local recovery = require(
   GetScriptDirectory() .."/utility/recovery")
 
+local NEXT_MOVE_TIME = 0 -- seconds
+
+function M.SetNextMoveTime(time)
+  NEXT_MOVE_TIME = delay
+end
+
+function M.GetNextMoveTime()
+  return NEXT_MOVE_TIME
+end
+
 ---------------------------------
 
 function M.post_laning()
