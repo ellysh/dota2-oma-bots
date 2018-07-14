@@ -78,7 +78,7 @@ local function executeMove()
 
   local move_time = current_objective.module.GetNextMoveTime()
 
-  if move_time ~= 0 and GameTime() < move_time then
+  if move_time ~= nil and move_time ~= 0 and GameTime() < move_time then
     current_objective.module.SetNextMoveTime(0)
     return
   end

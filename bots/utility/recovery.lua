@@ -15,7 +15,7 @@ local logger = require(
 local NEXT_MOVE_TIME = 0 -- seconds
 
 function M.SetNextMoveTime(time)
-  NEXT_MOVE_TIME = delay
+  NEXT_MOVE_TIME = time
 end
 
 function M.GetNextMoveTime()
@@ -94,7 +94,7 @@ function M.plant_tree()
     common_algorithms.GetItem(bot_data, 'item_branches'),
     bot_data.location)
 
-  SetNextMoveDelay(GameTime() + 1)
+  M.SetNextMoveTime(GameTime() + 1)
 end
 
 ---------------------------------

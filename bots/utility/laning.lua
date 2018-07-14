@@ -21,7 +21,7 @@ local recovery = require(
 local NEXT_MOVE_TIME = 0 -- seconds
 
 function M.SetNextMoveTime(time)
-  NEXT_MOVE_TIME = delay
+  NEXT_MOVE_TIME = time
 end
 
 function M.GetNextMoveTime()
