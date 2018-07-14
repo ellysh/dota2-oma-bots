@@ -34,7 +34,6 @@ local OBJECTIVES = {
     module = require(GetScriptDirectory() .."/utility/recovery"),
     moves = {
       {move = "move_base"},
-      {move = "plant_tree"},
       {move = "heal_tango"},
       {move = "heal_flask"},
       {move = "move_shrine"},

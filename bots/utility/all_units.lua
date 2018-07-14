@@ -81,7 +81,7 @@ local function AddUnit(unit, type, team)
     items = GetItems(unit),
     incoming_projectiles = unit:GetIncomingTrackingProjectiles(),
     is_healing = IsHealing(unit),
-    nearby_trees = unit:GetNearbyTrees(1000),
+    nearby_trees = unit:GetNearbyTrees(constants.TREE_SEARCH_RADIUS),
     is_casting = IsUnitCasting(unit),
   }
 end

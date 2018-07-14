@@ -74,31 +74,6 @@ end
 
 ---------------------------------
 
-function M.pre_plant_tree()
-  local bot_data = common_algorithms.GetBotData()
-
-  return common_algorithms.IsItemPresent(bot_data, 'item_tango')
-         and bot_data.nearby_trees[1] == nil
-         and common_algorithms.IsItemPresent(bot_data, 'item_branches')
-end
-
-function M.post_plant_tree()
-  return not M.pre_plant_tree()
-end
-
-function M.plant_tree()
-  local bot = GetBot()
-  local bot_data = common_algorithms.GetBotData()
-
-  bot:Action_UseAbilityOnLocation(
-    common_algorithms.GetItem(bot_data, 'item_branches'),
-    bot_data.location)
-
-  M.SetNextMoveTime(GameTime() + 1)
-end
-
----------------------------------
-
 function M.pre_heal_tango()
   local bot_data = common_algorithms.GetBotData()
 
