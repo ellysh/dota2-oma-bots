@@ -82,7 +82,8 @@ local function executeMove()
     return
   end
 
-  if not current_objective.module["pre_" .. current_move.move]() then
+  if current_move == nil or
+     not current_objective.module["pre_" .. current_move.move]() then
     FindNextMove()
     return
   end
