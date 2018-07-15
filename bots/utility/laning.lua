@@ -115,11 +115,7 @@ local function IsLastHit(bot_data, unit_data)
                                 bot_data,
                                 unit_data))
 
-  local effective_health = functions.GetEffectiveHealth(
-                             unit_data.health,
-                             unit_data.armor)
-
-  return effective_health <= incoming_damage
+  return unit_data.health <= incoming_damage
 end
 
 local function GetLastHitCreep(bot_data, side)
