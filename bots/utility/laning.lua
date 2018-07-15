@@ -18,6 +18,9 @@ local prepare_for_match = require(
 local recovery = require(
   GetScriptDirectory() .."/utility/recovery")
 
+local kill_enemy_hero = require(
+  GetScriptDirectory() .."/utility/kill_enemy_hero")
+
 ---------------------------------
 
 function M.post_laning()
@@ -32,6 +35,7 @@ function M.pre_laning()
   return prepare_for_match.post_prepare_for_match()
          and not bot_data.is_casting
          and not recovery.pre_recovery()
+         and not kill_enemy_hero.pre_kill_enemy_hero()
 end
 
 ---------------------------------
