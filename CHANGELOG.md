@@ -1,3 +1,6 @@
+* version 0.3
+  - Implement recovery features
+
 * version 0.2
   - Improve laning features
 
