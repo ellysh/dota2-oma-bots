@@ -3,15 +3,8 @@ local M = {}
 local common_algorithms = require(
   GetScriptDirectory() .."/utility/common_algorithms")
 
-local NEXT_ACTION_TIME = 0 -- seconds
-
-function M.SetNextActionDelay(delay)
-  NEXT_ACTION_TIME = GameTime() + delay
-end
-
-function M.GetNextActionTime()
-  return NEXT_ACTION_TIME
-end
+local action_timing = require(
+  GetScriptDirectory() .."/utility/action_timing")
 
 ---------------------------------
 
@@ -41,7 +34,7 @@ function M.buy_courier()
 
   bot:ActionImmediate_PurchaseItem('item_courier')
 
-  M.SetNextActionDelay(0.3)
+  action_timing.SetNextActionDelay(0.3)
 end
 
 function M.use_courier()
@@ -51,7 +44,7 @@ function M.use_courier()
   bot:Action_UseAbility(
     common_algorithms.GetItem(bot_data, 'item_courier'))
 
-  M.SetNextActionDelay(0.5)
+  action_timing.SetNextActionDelay(0.5)
 end
 
 ---------------------------------
@@ -79,7 +72,7 @@ function M.buy_starting_items()
   bot:ActionImmediate_PurchaseItem('item_circlet')
   bot:ActionImmediate_PurchaseItem('item_branches')
 
-  M.SetNextActionDelay(0.5)
+  action_timing.SetNextActionDelay(0.5)
 end
 
 -- Provide an access to local functions for unit tests only

@@ -6,6 +6,9 @@ local logger = require(
 local common_algorithms = require(
   GetScriptDirectory() .."/utility/common_algorithms")
 
+local action_timing = require(
+  GetScriptDirectory() .."/utility/action_timing")
+
 local OBJECTIVES = {
   [1] = {
     objective = "prepare_for_match",
@@ -155,7 +158,7 @@ local function executeMove()
   local current_move = GetCurrentMove()
   local current_objective = GetCurrentObjective()
 
-  local action_time = current_objective.module.GetNextActionTime()
+  local action_time = action_timing.GetNextActionTime()
 
   if action_time ~= 0 and GameTime() < action_time then
     return end

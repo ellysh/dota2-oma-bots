@@ -18,15 +18,8 @@ local prepare_for_match = require(
 local recovery = require(
   GetScriptDirectory() .."/utility/recovery")
 
-local NEXT_ACTION_TIME = 0 -- seconds
-
-function M.SetNextActionDelay(delay)
-  NEXT_ACTION_TIME = GameTime() + delay
-end
-
-function M.GetNextActionTime()
-  return NEXT_ACTION_TIME
-end
+local action_timing = require(
+  GetScriptDirectory() .."/utility/action_timing")
 
 ---------------------------------
 
@@ -141,7 +134,7 @@ local function AttackUnit(bot_data, unit_data)
 
   local attack_point = constants.DROW_RANGER_ATTACK_POINT / bot_data.attack_speed
 
-  M.SetNextActionDelay(attack_point)
+  action_timing.SetNextActionDelay(attack_point)
 end
 
 function M.pre_lasthit_enemy_creep()

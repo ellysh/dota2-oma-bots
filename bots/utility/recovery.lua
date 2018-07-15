@@ -12,16 +12,6 @@ local constants = require(
 local logger = require(
   GetScriptDirectory() .."/utility/logger")
 
-local NEXT_ACTION_TIME = 0 -- seconds
-
-function M.SetNextActionDelay(delay)
-  NEXT_ACTION_TIME = GameTime() + delay
-end
-
-function M.GetNextActionTime()
-  return NEXT_ACTION_TIME
-end
-
 ---------------------------------
 
 function M.pre_recovery()
