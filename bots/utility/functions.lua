@@ -209,6 +209,14 @@ function M.GetUnitDistance(unit1_data, unit2_data)
   return M.GetDistance(unit1_data.location, unit2_data.location)
 end
 
+function M.GetEffectiveHealth(health, armor)
+  if 0 < armor then
+    return health * (1 + 0.05 * armor)
+  else
+    return health * (1 - 0.05 * armor) / (1 - 2 * 0.05 * armor)
+  end
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_IsFlagSet = IsFlagSet
 
