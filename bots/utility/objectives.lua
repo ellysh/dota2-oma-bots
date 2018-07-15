@@ -24,33 +24,83 @@ local OBJECTIVES = {
       },
     },
   },
-  --[[
   [2] = {
     objective = "laning",
     module = require(GetScriptDirectory() .."/utility/laning"),
     moves = {
-      {move = "lasthit_enemy_creep", actions = {}},
-      {move = "deny_ally_creep", actions = {}},
-      {move = "harras_enemy_hero", actions = {}},
-      {move = "evasion", actions = {}},
-      {move = "move_mid_front_lane", actions = {}},
-      {move = "positioning", actions = {}},
-      {move = "turn", actions = {}},
-      {move = "stop", actions = {}},
+      {move = "lasthit_enemy_creep",
+       actions = {
+         {action = "lasthit_enemy_creep"},
+       }
+      },
+      {move = "deny_ally_creep",
+       actions = {
+         {action = "deny_ally_creep"},
+       }
+      },
+      {move = "harras_enemy_hero",
+       actions = {
+         {action = "harras_enemy_hero"},
+       }
+      },
+      {move = "evasion",
+       actions = {
+         {action = "evasion"},
+       }
+      },
+      {move = "move_mid_front_lane",
+       actions = {
+         {action = "move_mid_front_lane"},
+       }
+      },
+      {move = "positioning",
+       actions = {
+         {action = "positioning"},
+       }
+      },
+      {move = "turn",
+       actions = {
+         {action = "turn"},
+       }
+      },
+      {move = "stop",
+       actions = {
+         {action = "stop"},
+       }
+      },
     },
   },
   [3] = {
     objective = "recovery",
     module = require(GetScriptDirectory() .."/utility/recovery"),
     moves = {
-      {move = "move_base", actions = {}},
-      {move = "heal_tango", actions = {}},
-      {move = "heal_flask", actions = {}},
-      {move = "move_shrine", actions = {}},
-      {move = "tp_base", actions = {}},
+      {move = "move_base",
+       actions = {
+         {action = "move_base"},
+       }
+      },
+      {move = "heal_tango",
+       actions = {
+         {action = "heal_tango"},
+       }
+      },
+      {move = "heal_flask",
+       actions = {
+         {action = "heal_flask"},
+       }
+      },
+      {move = "move_shrine",
+       actions = {
+         {action = "move_shrine"},
+       }
+      },
+      {move = "tp_base",
+       actions = {
+         {action = "tp_base"},
+       }
+      },
     },
   },
-  --]]
 }
 
 local OBJECTIVE_INDEX = 1
