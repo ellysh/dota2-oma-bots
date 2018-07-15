@@ -113,9 +113,10 @@ function M.IsUnitShootTarget(unit_data, target_data, target_distance)
     nil,
     function(projectile)
       return projectile.caster == all_units.GetUnit(unit_data)
-             and functions.GetDistance(
-                   projectile.location,
-                   target_data.location) <= target_distance
+             and (target_distance == nil
+                  or functions.GetDistance(
+                       projectile.location,
+                       target_data.location) <= target_distance)
     end)
 
   return unit_projectile ~= nil

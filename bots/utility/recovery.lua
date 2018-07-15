@@ -27,7 +27,8 @@ end
 local function IsUnitLowHp(unit_data)
   local unit_health = unit_data.health
                       - common_algorithms.GetTotalDamageToUnit(
-                          unit_data)
+                          unit_data,
+                          nil)
 
   return unit_health <= constants.UNIT_LOW_HEALTH
          or functions.GetRate(unit_health, unit_data.max_health)
@@ -52,7 +53,7 @@ function M.pre_heal_flask()
   local bot_data = common_algorithms.GetBotData()
 
   return common_algorithms.IsItemPresent(bot_data, 'item_flask')
-         and common_algorithms.GetTotalDamageToUnit(bot_data) == 0
+         and common_algorithms.GetTotalDamageToUnit(bot_data, nil) == 0
          and not common_algorithms.AreUnitsInRadius(
                    bot_data,
                    constants.MAX_HERO_ATTACK_RANGE,
