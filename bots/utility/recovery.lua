@@ -80,14 +80,18 @@ function M.pre_heal_tango()
 
   local tower_data = common_algorithms.GetEnemyBuildings(
                            bot_data,
-                           constants.MAX_UNIT_SEARCH_RADIUS)
+                           constants.MAX_UNIT_SEARCH_RADIUS)[1]
 
   local tree = bot_data.nearby_trees[1]
 
   return common_algorithms.IsItemPresent(bot_data, 'item_tango')
          and tree ~= nil
-         and constants.MAX_TOWER_ATTACK_RANGE
-             < functions.GetDistance(GetTreeLocation(tree), tower_data.location)
+         and (tower_data == nil
+              or constants.MAX_TOWER_ATTACK_RANGE
+                 < functions.GetDistance(
+                     GetTreeLocation(tree),
+                     tower_data.location))
+
 end
 
 function M.post_heal_tango()
