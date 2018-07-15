@@ -17,17 +17,11 @@ local OBJECTIVES = {
          {action = "use_courier"},
        },
       },
-      --[[
       {move = "buy_starting_items",
        actions = {
-         {action = "buy_flask"},
-         {action = "buy_tango"},
-         {action = "buy_slippers"},
-         {action = "buy_circlet"},
-         {action = "buy_branches"},
+         {action = "buy_starting_items"},
        }
       },
-      --]]
     },
   },
   --[[

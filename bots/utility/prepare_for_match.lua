@@ -29,8 +29,6 @@ end
 ---------------------------------
 
 function M.post_buy_and_use_courier()
-  -- TODO: Should we remove the single objectives here?
-
   return IsCourierAvailable()
 end
 
@@ -80,6 +78,8 @@ function M.buy_starting_items()
   bot:ActionImmediate_PurchaseItem('item_slippers')
   bot:ActionImmediate_PurchaseItem('item_circlet')
   bot:ActionImmediate_PurchaseItem('item_branches')
+
+  M.SetNextActionDelay(0.5)
 end
 
 -- Provide an access to local functions for unit tests only
