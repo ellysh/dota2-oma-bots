@@ -45,7 +45,7 @@ function M.pre_attack_enemy_hero()
 end
 
 function M.post_attack_enemy_hero()
-  return not M.pre_lasthit_enemy_creep()
+  return not M.pre_attack_enemy_hero()
 end
 
 function M.attack_enemy_hero()
