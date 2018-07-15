@@ -24,21 +24,10 @@ end
 
 ---------------------------------
 
-local function IsUnitLowHp(unit_data)
-  local unit_health = unit_data.health
-                      - common_algorithms.GetTotalDamageToUnit(
-                          unit_data,
-                          nil)
-
-  return unit_health <= constants.UNIT_LOW_HEALTH
-         or functions.GetRate(unit_health, unit_data.max_health)
-            <= constants.UNIT_LOW_HEALTH_LEVEL
-end
-
 function M.pre_recovery()
   local bot_data = common_algorithms.GetBotData()
 
-  return IsUnitLowHp(bot_data)
+  return common_algorithms.IsUnitLowHp(bot_data)
          and not bot_data.is_casting
          and not bot_data.is_healing
 end

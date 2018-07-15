@@ -220,6 +220,15 @@ function M.IsUnitMoving(unit_data)
   return unit_data.anim_activity == ACTIVITY_RUN
 end
 
+ function M.IsUnitLowHp(unit_data)
+  local unit_health = unit_data.health
+                      - M.GetTotalDamageToUnit(unit_data, nil)
+
+  return unit_health <= constants.UNIT_LOW_HEALTH
+         or functions.GetRate(unit_health, unit_data.max_health)
+            <= constants.UNIT_LOW_HEALTH_LEVEL
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_GetNormalizedRadius = GetNormalizedRadius
 M.test_UpdateUnitList = all_units.UpdateUnitList
