@@ -3,14 +3,14 @@ local M = {}
 local common_algorithms = require(
   GetScriptDirectory() .."/utility/common_algorithms")
 
-local NEXT_MOVE_TIME = 0 -- seconds
+local NEXT_ACTION_TIME = 0 -- seconds
 
-function M.SetNextMoveTime(time)
-  NEXT_MOVE_TIME = time
+function M.SetNextActionDelay(delay)
+  NEXT_ACTION_TIME = GameTime() + delay
 end
 
-function M.GetNextMoveTime()
-  return NEXT_MOVE_TIME
+function M.GetNextActionTime()
+  return NEXT_ACTION_TIME
 end
 
 ---------------------------------
@@ -38,14 +38,22 @@ function M.pre_buy_and_use_courier()
   return not M.post_buy_and_use_courier()
 end
 
-function M.buy_and_use_courier()
+function M.buy_courier()
   local bot = GetBot()
-  local bot_data = common_algorithms.GetBotData()
 
   bot:ActionImmediate_PurchaseItem('item_courier')
 
+  M.SetNextActionDelay(0.3)
+end
+
+function M.use_courier()
+  local bot = GetBot()
+  local bot_data = common_algorithms.GetBotData()
+
   bot:Action_UseAbility(
     common_algorithms.GetItem(bot_data, 'item_courier'))
+
+  M.SetNextActionDelay(0.5)
 end
 
 ---------------------------------
