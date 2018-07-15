@@ -12,14 +12,14 @@ local constants = require(
 local logger = require(
   GetScriptDirectory() .."/utility/logger")
 
-local NEXT_MOVE_TIME = 0 -- seconds
+local NEXT_ACTION_TIME = 0 -- seconds
 
-function M.SetNextMoveTime(time)
-  NEXT_MOVE_TIME = time
+function M.SetNextActionDelay(delay)
+  NEXT_ACTION_TIME = GameTime() + delay
 end
 
-function M.GetNextMoveTime()
-  return NEXT_MOVE_TIME
+function M.GetNextActionTime()
+  return NEXT_ACTION_TIME
 end
 
 ---------------------------------
