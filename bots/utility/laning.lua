@@ -18,9 +18,6 @@ local prepare_for_match = require(
 local recovery = require(
   GetScriptDirectory() .."/utility/recovery")
 
-local action_timing = require(
-  GetScriptDirectory() .."/utility/action_timing")
-
 ---------------------------------
 
 function M.post_laning()
@@ -126,17 +123,6 @@ local function GetLastHitCreep(bot_data, side)
     end)
 end
 
-local function AttackUnit(bot_data, unit_data)
-  local bot = GetBot()
-  local unit = all_units.GetUnit(unit_data)
-
-  bot:Action_AttackUnit(unit, true)
-
-  local attack_point = constants.DROW_RANGER_ATTACK_POINT / bot_data.attack_speed
-
-  action_timing.SetNextActionDelay(attack_point)
-end
-
 function M.pre_lasthit_enemy_creep()
   local bot_data = common_algorithms.GetBotData()
 
@@ -151,7 +137,7 @@ function M.lasthit_enemy_creep()
   local bot_data = common_algorithms.GetBotData()
   local creep = GetLastHitCreep(bot_data, SIDE["ENEMY"])
 
-  AttackUnit(bot_data, creep)
+  common_algorithms.AttackUnit(bot_data, creep)
 end
 
 ---------------------------------
@@ -170,7 +156,7 @@ function M.deny_ally_creep()
   local bot_data = common_algorithms.GetBotData()
   local creep = GetLastHitCreep(bot_data, SIDE["ALLY"])
 
-  AttackUnit(bot_data, creep)
+  common_algorithms.AttackUnit(bot_data, creep)
 end
 
 --------------------------------
@@ -261,7 +247,7 @@ function M.harras_enemy_hero()
                       bot_data,
                       bot_data.attack_range)
 
-  AttackUnit(bot_data, hero_data)
+  common_algorithms.AttackUnit(bot_data, hero_data)
 end
 
 --------------------------------

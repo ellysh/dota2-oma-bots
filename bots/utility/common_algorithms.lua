@@ -7,6 +7,9 @@ local constants = require(
 local all_units = require(
   GetScriptDirectory() .."/utility/all_units")
 
+local action_timing = require(
+  GetScriptDirectory() .."/utility/action_timing")
+
 local M = {}
 
 function M.GetBotData()
@@ -223,13 +226,24 @@ function M.IsUnitMoving(unit_data)
   return unit_data.anim_activity == ACTIVITY_RUN
 end
 
- function M.IsUnitLowHp(unit_data)
+function M.IsUnitLowHp(unit_data)
   local unit_health = unit_data.health
                       - M.GetTotalDamageToUnit(unit_data, nil)
 
   return unit_health <= constants.UNIT_LOW_HEALTH
          or functions.GetRate(unit_health, unit_data.max_health)
             <= constants.UNIT_LOW_HEALTH_LEVEL
+end
+
+function M.AttackUnit(bot_data, unit_data)
+  local bot = GetBot()
+  local unit = all_units.GetUnit(unit_data)
+
+  bot:Action_AttackUnit(unit, true)
+
+  local attack_point = constants.DROW_RANGER_ATTACK_POINT / bot_data.attack_speed
+
+  action_timing.SetNextActionDelay(attack_point)
 end
 
 -- Provide an access to local functions for unit tests only

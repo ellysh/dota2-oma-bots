@@ -12,9 +12,6 @@ local constants = require(
 local logger = require(
   GetScriptDirectory() .."/utility/logger")
 
-local action_timing = require(
-  GetScriptDirectory() .."/utility/action_timing")
-
 ---------------------------------
 
 function M.pre_kill_enemy_hero()
@@ -34,20 +31,6 @@ end
 
 ---------------------------------
 
--- TODO: Move this function to the common_algorithms because it
--- has the duplicate in the laning.lua module
-
-local function AttackUnit(bot_data, unit_data)
-  local bot = GetBot()
-  local unit = all_units.GetUnit(unit_data)
-
-  bot:Action_AttackUnit(unit, true)
-
-  local attack_point = constants.DROW_RANGER_ATTACK_POINT / bot_data.attack_speed
-
-  action_timing.SetNextActionDelay(attack_point)
-end
-
 function M.pre_attack_enemy_hero()
   local bot_data = common_algorithms.GetBotData()
   local target_data = common_algorithms.GetEnemyHero(
@@ -65,7 +48,7 @@ function M.attack_enemy_hero()
   local bot_data = common_algorithms.GetBotData()
   local target_data = common_algorithms.GetEnemyHero(bot_data)
 
-  AttackUnit(bot_data, target_data)
+  common_algorithms.AttackUnit(bot_data, target_data)
 end
 
 ---------------------------------
