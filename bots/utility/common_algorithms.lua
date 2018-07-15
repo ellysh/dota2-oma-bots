@@ -107,18 +107,21 @@ function M.IsAttackDone(unit_data)
   return unit_data.attack_point <= unit_data.anim_cycle
 end
 
-function M.IsUnitShootTarget(unit_data, target_data)
+function M.IsUnitShootTarget(unit_data, target_data, target_distance)
   local unit_projectile = functions.GetElementWith(
     target_data.incoming_projectiles,
     nil,
     function(projectile)
       return projectile.caster == all_units.GetUnit(unit_data)
+             and functions.GetDistance(
+                   projectile.location,
+                   target_data.location) <= target_distance
     end)
 
   return unit_projectile ~= nil
 end
 
-function M.IsUnitAttackTarget(unit_data, target_data)
+function M.IsUnitAttackTarget(unit_data, target_data, target_distance)
   if functions.GetUnitDistance(unit_data, target_data)
      <= constants.MAX_MELEE_ATTACK_RANGE then
 
@@ -128,11 +131,11 @@ function M.IsUnitAttackTarget(unit_data, target_data)
            and unit:IsFacingLocation(target_data.location, 2)
            and not M.IsAttackDone(unit_data)
   else
-    return M.IsUnitShootTarget(unit_data, target_data)
+    return M.IsUnitShootTarget(unit_data, target_data, target_distance)
   end
 end
 
-function M.GetTotalDamage(unit_list, target_data)
+function M.GetTotalDamage(unit_list, target_data, target_distance)
   if unit_list == nil or #unit_list == 0 then
     return 0 end
 
@@ -142,7 +145,10 @@ function M.GetTotalDamage(unit_list, target_data)
     unit_list,
     function(_, unit_data)
       if unit_data.is_alive
-         and M.IsUnitAttackTarget(unit_data, target_data) then
+         and M.IsUnitAttackTarget(
+               unit_data,
+               target_data,
+               target_distance) then
 
         total_damage = total_damage + unit_data.attack_damage
       end
@@ -151,32 +157,44 @@ function M.GetTotalDamage(unit_list, target_data)
   return total_damage
 end
 
-function M.GetTotalDamageToUnit(unit_data)
+function M.GetTotalDamageToUnit(unit_data, target_distance)
   local result = 0
 
   local unit_list = M.GetEnemyCreeps(
                          unit_data,
                          constants.MAX_CREEP_ATTACK_RANGE)
 
-  result = result + M.GetTotalDamage(unit_list, unit_data)
+  result = result + M.GetTotalDamage(
+                      unit_list,
+                      unit_data,
+                      target_distance)
 
   unit_list = M.GetEnemyBuildings(
                          unit_data,
                          constants.MAX_TOWER_ATTACK_RANGE)
 
-  result = result + M.GetTotalDamage(unit_list, unit_data)
+  result = result + M.GetTotalDamage(
+                      unit_list,
+                      unit_data,
+                      target_distance)
 
   unit_list = M.GetEnemyHeroes(
                          unit_data,
                          constants.MAX_HERO_ATTACK_RANGE)
 
-  result = result + M.GetTotalDamage(unit_list, unit_data)
+  result = result + M.GetTotalDamage(
+                      unit_list,
+                      unit_data,
+                      target_distance)
 
   unit_list = M.GetAllyHeroes(
                          unit_data,
                          constants.MAX_HERO_ATTACK_RANGE)
 
-  result = result + M.GetTotalDamage(unit_list, unit_data)
+  result = result + M.GetTotalDamage(
+                      unit_list,
+                      unit_data,
+                      target_distance)
 
   return result
 end

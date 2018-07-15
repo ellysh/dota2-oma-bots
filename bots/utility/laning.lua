@@ -110,7 +110,10 @@ local SIDE = {
 local function IsLastHit(bot_data, unit_data)
   local incoming_damage = bot_data.attack_damage
                           + common_algorithms.GetTotalDamageToUnit(
-                              unit_data)
+                              unit_data,
+                              functions.GetUnitDistance(
+                                bot_data,
+                                unit_data))
 
   return unit_data.health <= incoming_damage
 end
