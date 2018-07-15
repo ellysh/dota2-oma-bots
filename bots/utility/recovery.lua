@@ -12,14 +12,38 @@ local constants = require(
 local logger = require(
   GetScriptDirectory() .."/utility/logger")
 
+local action_timing = require(
+  GetScriptDirectory() .."/utility/action_timing")
+
+function M.pre_restore_hp_on_base()
+  local bot = GetBot()
+  local bot_data = common_algorithms.GetBotData()
+
+  return bot:HasModifier("modifier_fountain_aura_buff")
+         and (bot_data.health < bot_data.max_health
+              or bot_data.mana < bot_data.max_mana)
+end
+
+function M.post_restore_hp_on_base()
+  return not M.pre_restore_hp_on_base()
+end
+
+function M.restore_hp_on_base()
+  local bot = GetBot()
+  bot:Action_ClearActions(true)
+end
+
 ---------------------------------
 
 function M.pre_recovery()
   local bot_data = common_algorithms.GetBotData()
 
-  return common_algorithms.IsUnitLowHp(bot_data)
+  return ((common_algorithms.IsUnitLowHp(bot_data)
+           and not bot_data.is_healing)
+
+          or M.pre_restore_hp_on_base())
+
          and not bot_data.is_casting
-         and not bot_data.is_healing
 end
 
 function M.post_recovery()
@@ -110,10 +134,13 @@ end
 function M.tp_base()
   local bot = GetBot()
   local bot_data = common_algorithms.GetBotData()
+  local item = common_algorithms.GetItem(bot_data, 'item_tpscroll')
 
   bot:Action_UseAbilityOnLocation(
-    common_algorithms.GetItem(bot_data, 'item_tpscroll'),
+    item,
     GetShopLocation(GetTeam(), SHOP_HOME))
+
+  action_timing.SetNextActionDelay(item:GetChannelTime())
 end
 
 ---------------------------------
@@ -135,5 +162,7 @@ function M.move_base()
   local bot = GetBot()
   bot:Action_MoveToLocation(GetShopLocation(GetTeam(), SHOP_HOME))
 end
+
+---------------------------------
 
 return M

@@ -80,6 +80,7 @@ local OBJECTIVES = {
       {move = "move_base",
        actions = {
          {action = "move_base"},
+         {action = "restore_hp_on_base"},
        }
       },
       {move = "heal_tango",
@@ -100,6 +101,7 @@ local OBJECTIVES = {
       {move = "tp_base",
        actions = {
          {action = "tp_base"},
+         {action = "restore_hp_on_base"},
        }
       },
     },
@@ -182,6 +184,11 @@ local function executeMove()
     current_move.move .. " MOVE_INDEX = " .. MOVE_INDEX)
 
   local current_action = GetCurrentAction()
+
+  if current_action == nil then
+    FindNextAction()
+    return
+  end
 
   logger.Print("\tcurrent_action = " ..
     current_action.action .. " ACTION_INDEX = " .. ACTION_INDEX)
