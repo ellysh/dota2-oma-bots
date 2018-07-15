@@ -104,7 +104,7 @@ function M.IsAttackDone(unit_data)
     return true
   end
 
-  return unit_data.attack_point <= unit_data.anim_cycle
+  return unit_data.anim_attack_point <= unit_data.anim_cycle
 end
 
 function M.IsUnitShootTarget(unit_data, target_data, target_distance)

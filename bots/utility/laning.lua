@@ -139,8 +139,9 @@ local function AttackUnit(bot_data, unit_data)
 
   bot:Action_AttackUnit(unit, true)
 
-  -- Consider point attack time here
-  M.SetNextActionDelay(bot_data.seconds_per_attack)
+  local attack_point = constants.DROW_RANGER_ATTACK_POINT / bot_data.attack_speed
+
+  M.SetNextActionDelay(attack_point)
 end
 
 function M.pre_lasthit_enemy_creep()
