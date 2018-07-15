@@ -101,6 +101,17 @@ local OBJECTIVES = {
       },
     },
   },
+  [4] = {
+    objective = "kill_enemy_hero",
+    module = require(GetScriptDirectory() .."/utility/kill_enemy_hero"),
+    moves = {
+      {move = "attack_enemy_hero",
+       actions = {
+         {action = "attack_enemy_hero"},
+       }
+      },
+    }
+  }
 }
 
 local OBJECTIVE_INDEX = 1
