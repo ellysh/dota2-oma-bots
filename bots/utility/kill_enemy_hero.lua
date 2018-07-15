@@ -26,7 +26,9 @@ end
 
 function M.pre_kill_enemy_hero()
   local bot_data = common_algorithms.GetBotData()
-  local target_data = common_algorithms.GetEnemyHero(bot_data)
+  local target_data = common_algorithms.GetEnemyHero(
+                        bot_data,
+                        constants.MAX_UNIT_SEARCH_RADIUS)
 
   return target_data ~= nil
          and common_algorithms.IsUnitLowHp(target_data)
@@ -55,7 +57,9 @@ end
 
 function M.pre_attack_enemy_hero()
   local bot_data = common_algorithms.GetBotData()
-  local target_data = common_algorithms.GetEnemyHero(bot_data)
+  local target_data = common_algorithms.GetEnemyHero(
+                        bot_data,
+                        constants.MAX_UNIT_SEARCH_RADIUS)
 
   return target_data ~= nil
 end

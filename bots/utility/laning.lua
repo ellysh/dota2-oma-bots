@@ -254,7 +254,8 @@ function M.pre_harras_enemy_hero()
 
   return not AreEnemyCreepsInRadius(constants.CREEP_AGRO_RADIUS)
          and not IsEnemyTowerInRadius(constants.MAX_TOWER_ATTACK_RANGE)
-         and common_algorithms.GetEnemyHero(bot_data) ~= nil
+         and common_algorithms.GetEnemyHero(bot_data, bot_data.attack_range)
+             ~= nil
 end
 
 function M.post_harras_enemy_hero()
@@ -263,7 +264,9 @@ end
 
 function M.harras_enemy_hero()
   local bot_data = common_algorithms.GetBotData()
-  local hero_data = common_algorithms.GetEnemyHero(bot_data)
+  local hero_data = common_algorithms.GetEnemyHero(
+                      bot_data,
+                      bot_data.attack_range)
 
   AttackUnit(bot_data, hero_data)
 end

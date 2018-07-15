@@ -36,6 +36,9 @@ function M.CompareMinHealth(t, a, b)
   return t[a].health < t[b].health
 end
 
+-- TODO: Remove this function because we are searching units in
+-- the UNIT_LIST now.
+
 local function GetNormalizedRadius(radius)
   if radius == nil or radius == 0 then
     return constants.MAX_UNIT_SEARCH_RADIUS
@@ -197,10 +200,10 @@ function M.GetTotalDamageToUnit(unit_data, target_distance)
   return result
 end
 
-function M.GetEnemyHero(unit_data)
+function M.GetEnemyHero(unit_data, radius)
   local heroes = M.GetEnemyHeroes(
     unit_data,
-    unit_data.attack_range)
+    radius)
 
   return functions.GetElementWith(
     heroes,
