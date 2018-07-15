@@ -137,24 +137,16 @@ local function AttackUnit(bot_data, unit_data)
   local bot = GetBot()
   local unit = all_units.GetUnit(unit_data)
 
-  if (common_algorithms.IsUnitAttack(bot_data)
-      and common_algorithms.IsAttackDone(bot_data)) then
-    bot:Action_ClearActions(true)
-    return
-  end
-
   bot:Action_AttackUnit(unit, true)
+
+  -- Consider point attack time here
+  M.SetNextActionDelay(bot_data.seconds_per_attack)
 end
 
 function M.pre_lasthit_enemy_creep()
   local bot_data = common_algorithms.GetBotData()
 
-  return (not common_algorithms.IsUnitAttack(bot_data)
-
-          or (common_algorithms.IsUnitAttack(bot_data)
-              and not common_algorithms.IsAttackDone(bot_data)))
-
-         and GetLastHitCreep(bot_data, SIDE["ENEMY"]) ~= nil
+  return GetLastHitCreep(bot_data, SIDE["ENEMY"]) ~= nil
 end
 
 function M.post_lasthit_enemy_creep()
@@ -173,12 +165,7 @@ end
 function M.pre_deny_ally_creep()
   local bot_data = common_algorithms.GetBotData()
 
-  return (not common_algorithms.IsUnitAttack(bot_data)
-
-          or (common_algorithms.IsUnitAttack(bot_data)
-              and not common_algorithms.IsAttackDone(bot_data)))
-
-         and GetLastHitCreep(bot_data, SIDE["ALLY"]) ~= nil
+  return GetLastHitCreep(bot_data, SIDE["ALLY"]) ~= nil
 end
 
 function M.post_deny_ally_creep()
@@ -196,10 +183,6 @@ end
 
 function M.pre_positioning()
   local bot_data = common_algorithms.GetBotData()
-
-  if common_algorithms.IsUnitAttack(bot_data)
-     and not common_algorithms.IsAttackDone(bot_data) then
-    return false end
 
   return (AreAllyCreepsInRadius(constants.MIN_CREEP_DISTANCE)
           and AreEnemyCreepsInRadius(constants.MIN_CREEP_DISTANCE))
@@ -270,11 +253,6 @@ function M.pre_harras_enemy_hero()
 
   return not AreEnemyCreepsInRadius(constants.CREEP_AGRO_RADIUS)
          and not IsEnemyTowerInRadius(constants.MAX_TOWER_ATTACK_RANGE)
-
-         and (not common_algorithms.IsUnitAttack(bot_data)
-              or (common_algorithms.IsUnitAttack(bot_data)
-                  and not common_algorithms.IsAttackDone(bot_data)))
-
          and common_algorithms.GetEnemyHero(bot_data) ~= nil
 end
 

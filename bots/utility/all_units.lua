@@ -76,6 +76,7 @@ local function AddUnit(unit, type, team)
     attack_damage = unit:GetAttackDamage(),
     attack_range = unit:GetAttackRange(),
     attack_point = unit:GetAttackPoint(),
+    seconds_per_attack = unit:GetSecondsPerAttack(),
     anim_activity = unit:GetAnimActivity(),
     anim_cycle = unit:GetAnimCycle(),
     team = unit:GetTeam(),
