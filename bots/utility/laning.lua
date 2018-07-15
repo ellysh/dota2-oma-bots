@@ -73,7 +73,7 @@ local function IsEnemyTowerInRadius(radius)
     common_algorithms.GetEnemyBuildings)
 end
 
-function M.post_move_mid_front_lane()
+function M.pre_move_mid_front_lane()
   local target_location = GetLaneFrontLocation(
     GetTeam(),
     LANE_MID,
@@ -83,12 +83,12 @@ function M.post_move_mid_front_lane()
     GetBot(),
     target_location)
 
-  return (target_distance <= constants.MAP_LOCATION_RADIUS)
-         or AreEnemyCreepsInRadius(constants.MIN_CREEP_DISTANCE)
+  return not AreEnemyCreepsInRadius(constants.BASE_CREEP_DISTANCE)
+         and (constants.MAP_LOCATION_RADIUS < target_distance)
 end
 
-function M.pre_move_mid_front_lane()
-  return not M.post_move_mid_front_lane()
+function M.post_move_mid_front_lane()
+  return not M.pre_move_mid_front_lane()
 end
 
 function M.move_mid_front_lane()
