@@ -246,6 +246,24 @@ function M.AttackUnit(bot_data, unit_data)
   action_timing.SetNextActionDelay(attack_point)
 end
 
+function M.DoesTowerProtectEnemyUnit(unit_data)
+  local bot_data = M.GetBotData()
+  local tower_data = M.GetEnemyBuildings(
+                           bot_data,
+                           constants.MAX_UNIT_SEARCH_RADIUS)[1]
+
+  if tower_data == nil then
+    return false end
+
+  local bot_tower_distance = functions.GetUnitDistance(
+                               bot_data,
+                               tower_data)
+
+  return bot_tower_distance < constants.MAX_TOWER_ATTACK_RANGE
+         or bot_tower_distance
+              < functions.GetUnitDistance(bot_data, unit_data)
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_GetNormalizedRadius = GetNormalizedRadius
 M.test_UpdateUnitList = all_units.UpdateUnitList

@@ -27,6 +27,7 @@ function M.pre_kill_enemy_hero()
          and common_algorithms.IsUnitLowHp(target_data)
          and target_data.health < bot_data.health
          and not recovery.pre_recovery()
+         and not common_algorithms.DoesTowerProtectEnemyUnit(target_data)
 end
 
 function M.post_kill_enemy_hero()

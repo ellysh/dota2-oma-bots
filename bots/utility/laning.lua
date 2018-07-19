@@ -95,8 +95,6 @@ function M.move_mid_front_lane()
     0)
 
   GetBot():Action_MoveToLocation(target_location)
-
-  action_timing.SetNextActionDelay(0.5)
 end
 
 ---------------------------------
@@ -190,8 +188,6 @@ function M.positioning()
   local bot = GetBot()
 
   bot:Action_MoveToLocation(GetShopLocation(GetTeam(), SHOP_HOME))
-
-  action_timing.SetNextActionDelay(0.5)
 end
 
 --------------------------------
@@ -238,18 +234,20 @@ function M.evasion()
 
   bot:Action_MoveToLocation(GetShopLocation(GetTeam(), SHOP_HOME))
 
-  action_timing.SetNextActionDelay(4)
+  action_timing.SetNextActionDelay(1)
 end
 
 --------------------------------
 
 function M.pre_harras_enemy_hero()
   local bot_data = common_algorithms.GetBotData()
+  local target_data = common_algorithms.GetEnemyHero(
+                        bot_data,
+                        constants.MAX_UNIT_SEARCH_RADIUS)
 
-  return not AreEnemyCreepsInRadius(constants.CREEP_AGRO_RADIUS)
-         and not IsEnemyTowerInRadius(constants.MAX_TOWER_ATTACK_RANGE)
-         and common_algorithms.GetEnemyHero(bot_data, bot_data.attack_range)
-             ~= nil
+  return target_data ~= nil
+         and not AreEnemyCreepsInRadius(constants.CREEP_AGRO_RADIUS)
+         and not common_algorithms.DoesTowerProtectEnemyUnit(target_data)
 end
 
 function M.post_harras_enemy_hero()
@@ -260,7 +258,7 @@ function M.harras_enemy_hero()
   local bot_data = common_algorithms.GetBotData()
   local hero_data = common_algorithms.GetEnemyHero(
                       bot_data,
-                      bot_data.attack_range)
+                      constants.MAX_UNIT_SEARCH_RADIUS)
 
   common_algorithms.AttackUnit(bot_data, hero_data)
 end
