@@ -168,6 +168,36 @@ end
 
 --------------------------------
 
+local function IsEnemyHeroNearCreeps()
+  local bot_data = common_algorithms.GetBotData()
+  local hero_data = common_algorithms.GetEnemyHero(
+                        bot_data,
+                        constants.MAX_UNIT_SEARCH_RADIUS)
+
+  if hero_data == nil then
+    return end
+
+  local creeps = common_algorithms.GetEnemyCreeps(
+                       bot_data,
+                       constants.MAX_UNIT_SEARCH_RADIUS)
+
+  if functions.IsArrayEmpty(creeps) then
+    return end
+
+  local creep_data = functions.GetElementWith(
+                       creeps,
+                       nil,
+                       function(unit_data)
+                         return constants.BASE_CREEP_DISTANCE
+                          < functions.GetUnitDistance(
+                              hero_data,
+                              unit_data)
+                       end)
+
+
+  return creep_data == nil
+end
+
 function M.pre_positioning()
   local bot_data = common_algorithms.GetBotData()
 
@@ -178,6 +208,12 @@ function M.pre_positioning()
               and AreEnemyCreepsInRadius(constants.MAX_CREEP_DISTANCE))
 
           or IsEnemyTowerInRadius(constants.MAX_TOWER_ATTACK_RANGE)
+
+          or (IsEnemyHeroNearCreeps()
+              and common_algorithms.AreUnitsInRadius(
+                bot_data,
+                bot_data.attack_range,
+                common_algorithms.GetEnemyHeroes))
 end
 
 function M.post_positioning()
