@@ -21,6 +21,9 @@ local recovery = require(
 local kill_enemy_hero = require(
   GetScriptDirectory() .."/utility/kill_enemy_hero")
 
+local action_timing = require(
+  GetScriptDirectory() .."/utility/action_timing")
+
 ---------------------------------
 
 function M.post_laning()
@@ -92,6 +95,8 @@ function M.move_mid_front_lane()
     0)
 
   GetBot():Action_MoveToLocation(target_location)
+
+  action_timing.SetNextActionDelay(0.5)
 end
 
 ---------------------------------
@@ -183,7 +188,10 @@ end
 
 function M.positioning()
   local bot = GetBot()
+
   bot:Action_MoveToLocation(GetShopLocation(GetTeam(), SHOP_HOME))
+
+  action_timing.SetNextActionDelay(0.5)
 end
 
 --------------------------------
@@ -227,7 +235,10 @@ end
 
 function M.evasion()
   local bot = GetBot()
+
   bot:Action_MoveToLocation(GetShopLocation(GetTeam(), SHOP_HOME))
+
+  action_timing.SetNextActionDelay(4)
 end
 
 --------------------------------
