@@ -44,10 +44,27 @@ end
 local function AreAllyCreepsInRadius(radius)
   local bot_data = common_algorithms.GetBotData()
 
-  return common_algorithms.AreUnitsInRadius(
-    bot_data,
-    radius,
-    common_algorithms.GetAllyCreeps)
+  local creeps = common_algorithms.GetAllyCreeps(
+                   bot_data,
+                   radius)
+
+  if functions.IsArrayEmpty(creeps) then
+    return false end
+
+  local creep_data = functions.GetElementWith(
+                       creeps,
+                       nil,
+                       function(unit_data)
+                         return constants.UNIT_LOW_HEALTH
+                                  < unit_data.health
+                                and constants.UNIT_LOW_HEALTH_LEVEL
+                                    < functions.GetRate(
+                                        unit_data.health,
+                                        unit_data.max_health)
+                       end)
+
+
+  return creep_data ~= nil
 end
 
 local function AreEnemyCreepsInRadius(radius)
@@ -69,16 +86,19 @@ local function IsEnemyTowerInRadius(radius)
 end
 
 function M.pre_move_mid_front_lane()
+  local bot_data = common_algorithms.GetBotData()
   local target_location = GetLaneFrontLocation(
     GetTeam(),
     LANE_MID,
     0)
 
-  local target_distance = GetUnitToLocationDistance(
-    GetBot(),
-    target_location)
+  local target_distance = functions.GetDistance(
+                            bot_data.location,
+                            target_location)
 
   return not AreEnemyCreepsInRadius(constants.BASE_CREEP_DISTANCE)
+         and (AreAllyCreepsInRadius(constants.FRONT_LANE_RADIUS)
+              or constants.FRONT_LANE_RADIUS < target_distance)
          and (constants.MAP_LOCATION_RADIUS < target_distance)
 end
 
@@ -173,14 +193,14 @@ local function IsEnemyHeroNearCreeps()
                         constants.MAX_UNIT_SEARCH_RADIUS)
 
   if hero_data == nil then
-    return end
+    return false end
 
   local creeps = common_algorithms.GetEnemyCreeps(
                        bot_data,
                        constants.MAX_UNIT_SEARCH_RADIUS)
 
   if functions.IsArrayEmpty(creeps) then
-    return end
+    return false end
 
   local creep_data = functions.GetElementWith(
                        creeps,
@@ -267,8 +287,6 @@ function M.evasion()
   local bot = GetBot()
 
   bot:Action_MoveToLocation(GetShopLocation(GetTeam(), SHOP_HOME))
-
-  action_timing.SetNextActionDelay(1)
 end
 
 --------------------------------
