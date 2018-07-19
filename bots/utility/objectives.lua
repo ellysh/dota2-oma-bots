@@ -41,6 +41,11 @@ local OBJECTIVES = {
          {action = "deny_ally_creep"},
        }
       },
+      {move = "positioning",
+       actions = {
+         {action = "positioning"},
+       }
+      },
       {move = "harras_enemy_hero",
        actions = {
          {action = "harras_enemy_hero"},
@@ -54,11 +59,6 @@ local OBJECTIVES = {
       {move = "move_mid_front_lane",
        actions = {
          {action = "move_mid_front_lane"},
-       }
-      },
-      {move = "positioning",
-       actions = {
-         {action = "positioning"},
        }
       },
       {move = "turn",
