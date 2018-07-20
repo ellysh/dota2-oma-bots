@@ -75,7 +75,7 @@ M.OBJECTIVES = {
          {action = "move_mid_tower"},
        }
       },
-      {move = "increas_creeps_distance",
+      {move = "increase_creeps_distance",
        actions = {
          {action = "increase_creeps_distance"},
        }

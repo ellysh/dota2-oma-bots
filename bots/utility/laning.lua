@@ -160,9 +160,9 @@ end
 
 ---------------------------------
 
-local function GetEnemyCreep(radius)
+local function GetCreep(radius, get_function)
   local bot_data = common_algorithms.GetBotData()
-  local creeps = common_algorithms.GetEnemyCreeps(
+  local creeps = get_function(
     bot_data,
     radius)
 
@@ -172,11 +172,20 @@ local function GetEnemyCreep(radius)
     nil)
 end
 
+local function GetEnemyCreep(radius)
+  return GetCreep(radius, common_algorithms.GetEnemyCreeps)
+end
+
+local function GetAllyCreep(radius)
+  return GetCreep(radius, common_algorithms.GetAllyCreeps)
+end
+
 function M.pre_decrease_creeps_distance()
   local bot_data = common_algorithms.GetBotData()
 
   return not AreEnemyCreepsInRadius(constants.BASE_CREEP_DISTANCE)
-         and GetEnemyCreep(constants.MAX_UNIT_SEARCH_RADIUS) ~= nil
+         and (GetEnemyCreep(constants.MAX_UNIT_SEARCH_RADIUS) ~= nil
+              or GetAllyCreep(constants.MAX_UNIT_SEARCH_RADIUS) ~= nil)
          and not M.pre_increase_creeps_distance
 end
 
@@ -187,6 +196,10 @@ end
 function M.decrease_creeps_distance()
   local bot_data = common_algorithms.GetBotData()
   local target_data = GetEnemyCreep(constants.MAX_UNIT_SEARCH_RADIUS)
+
+  if target_data == nil then
+    target_data = GetAllyCreep(constants.MAX_UNIT_SEARCH_RADIUS)
+  end
 
   GetBot():Action_MoveToLocation(target_data.location)
 end
@@ -358,8 +371,8 @@ function M.pre_turn()
 
   return AreEnemyCreepsInRadius(bot_data.attack_range)
          and target ~= nil
-         and not M.pre_increas_creeps_distance()
-         and not M.pre_decreas_creeps_distance()
+         and not M.pre_increase_creeps_distance()
+         and not M.pre_decrease_creeps_distance()
          and not bot:IsFacingLocation(target.location, 30)
 end
 
