@@ -70,6 +70,11 @@ M.OBJECTIVES = {
     objective = "laning",
     module = require(GetScriptDirectory() .."/utility/laning"),
     moves = {
+      {move = "move_mid_tower",
+       actions = {
+         {action = "move_mid_tower"},
+       }
+      },
       {move = "lasthit_enemy_creep",
        actions = {
          {action = "lasthit_enemy_creep"},
@@ -93,11 +98,6 @@ M.OBJECTIVES = {
       {move = "evasion",
        actions = {
          {action = "evasion"},
-       }
-      },
-      {move = "move_mid_front_lane",
-       actions = {
-         {action = "move_mid_front_lane"},
        }
       },
       {move = "turn",

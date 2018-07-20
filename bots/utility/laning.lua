@@ -79,32 +79,21 @@ local function AreEnemyCreepsInRadius(radius)
     common_algorithms.GetEnemyCreeps)
 end
 
-function M.pre_move_mid_front_lane()
+function M.pre_move_mid_tower()
   local bot_data = common_algorithms.GetBotData()
-  local target_location = GetLaneFrontLocation(
-    GetTeam(),
-    LANE_MID,
-    0)
+  local target_location = map.GetAllyTowerAttackSpot(bot_data)
 
-  local target_distance = functions.GetDistance(
-                            bot_data.location,
-                            target_location)
-
-  return not AreEnemyCreepsInRadius(constants.BASE_CREEP_DISTANCE)
-         and (AreAllyCreepsInRadius(constants.FRONT_LANE_RADIUS)
-              or constants.FRONT_LANE_RADIUS < target_distance)
-         and (constants.MAP_LOCATION_RADIUS < target_distance)
+  return not AreAllyCreepsInRadius(constants.MAX_UNIT_SEARCH_RADIUS)
+         and not map.IsUnitInAllyTowerAttackRange(bot_data)
 end
 
-function M.post_move_mid_front_lane()
-  return not M.pre_move_mid_front_lane()
+function M.post_move_mid_tower()
+  return not M.pre_move_mid_tower()
 end
 
-function M.move_mid_front_lane()
-  local target_location = GetLaneFrontLocation(
-    GetTeam(),
-    LANE_MID,
-    0)
+function M.move_mid_tower()
+  local bot_data = common_algorithms.GetBotData()
+  local target_location = map.GetAllyTowerAttackSpot(bot_data)
 
   GetBot():Action_MoveToLocation(target_location)
 end
