@@ -1,118 +1,82 @@
 
 local M = {}
 
-M.OBJECTIVES = {
-  [1] = {
-    objective = "prepare_for_match",
-    module = require(GetScriptDirectory() .."/utility/prepare_for_match"),
-    moves = {
-      {move = "buy_and_use_courier",
-       actions = {
-         {action = "buy_courier"},
-         {action = "use_courier"},
-       },
-      },
-      {move = "buy_starting_items",
-       actions = {
-         {action = "buy_starting_items"},
-       }
-      },
-    },
+M.MAP = {
+  {
+    spot = "tower_tier_1",
+    location = Vector(-1563, -1408, 144),
+    team = TEAM_RADIANT,
   },
-
-  [2] = {
-    objective = "recovery",
-    module = require(GetScriptDirectory() .."/utility/recovery"),
-    moves = {
-      {move = "move_base",
-       actions = {
-         {action = "move_base"},
-         {action = "restore_hp_on_base"},
-       }
-      },
-      {move = "heal_tango",
-       actions = {
-         {action = "heal_tango"},
-       }
-      },
-      {move = "heal_flask",
-       actions = {
-         {action = "heal_flask"},
-       }
-      },
-      {move = "move_shrine",
-       actions = {
-         {action = "move_shrine"},
-       }
-      },
-      {move = "tp_base",
-       actions = {
-         {action = "tp_base"},
-         {action = "restore_hp_on_base"},
-       }
-      },
-    },
+  {
+    spot = "tower_tier_1_attack",
+    location = Vector(-1563, -1408, 700),
+    team = TEAM_RADIANT,
   },
-
-  [3] = {
-    objective = "kill_enemy_hero",
-    module = require(GetScriptDirectory() .."/utility/kill_enemy_hero"),
-    moves = {
-      {move = "attack_enemy_hero",
-       actions = {
-         {action = "attack_enemy_hero"},
-       }
-      },
-    }
+  {
+    spot = "tower_tier_1_day_vision",
+    location = Vector(-1563, -1408, 1900),
+    team = TEAM_RADIANT,
   },
-
-  [4] = {
-    objective = "laning",
-    module = require(GetScriptDirectory() .."/utility/laning"),
-    moves = {
-      {move = "lasthit_enemy_creep",
-       actions = {
-         {action = "lasthit_enemy_creep"},
-       }
-      },
-      {move = "deny_ally_creep",
-       actions = {
-         {action = "deny_ally_creep"},
-       }
-      },
-      {move = "positioning",
-       actions = {
-         {action = "positioning"},
-       }
-      },
-      {move = "harras_enemy_hero",
-       actions = {
-         {action = "harras_enemy_hero"},
-       }
-      },
-      {move = "evasion",
-       actions = {
-         {action = "evasion"},
-       }
-      },
-      {move = "move_mid_front_lane",
-       actions = {
-         {action = "move_mid_front_lane"},
-       }
-      },
-      {move = "turn",
-       actions = {
-         {action = "turn"},
-       }
-      },
-      {move = "stop",
-       actions = {
-         {action = "stop"},
-       }
-      },
-    },
+  {
+    spot = "tower_tier_1_night_vision",
+    location = Vector(-1563, -1408, 800),
+    team = TEAM_RADIANT,
   },
-
+  {
+    spot = "tower_tier_1",
+    location = Vector(531, 653, 144),
+    team = TEAM_DIRE,
+  },
+  {
+    spot = "tower_tier_1_attack",
+    location = Vector(531, 653, 700),
+    team = TEAM_DIRE,
+  },
+  {
+    spot = "tower_tier_1_day_vision",
+    location = Vector(531, 653, 1900),
+    team = TEAM_DIRE,
+  },
+  {
+    spot = "tower_tier_1_night_vision",
+    location = Vector(531, 653, 800),
+    team = TEAM_DIRE,
+  },
+  {
+    spot = "high_ground",
+    location = Vector(-1073, 952, 350),
+    team = TEAM_RADIANT,
+  },
+  {
+    spot = "high_ground",
+    location = Vector(46, 155, 350),
+    team = TEAM_DIRE,
+  },
+  {
+    spot = "river",
+    location = Vector(-521, -375, 280),
+    team = TEAM_NEUTRAL,
+  },
+  {
+    spot = "forest_bot",
+    location = Vector(-908, -1541, 140),
+    team = TEAM_RADIANT,
+  },
+  {
+    spot = "forest_top",
+    location = Vector(-2045, -1000, 100),
+    team = TEAM_RADIANT,
+  },
+  {
+    spot = "forest_bot",
+    location = Vector(1024, 124, 70),
+    team = TEAM_DIRE,
+  },
+  {
+    spot = "forest_top",
+    location = Vector(550, 1165, 100),
+    team = TEAM_DIRE,
+  },
 }
 
 return M

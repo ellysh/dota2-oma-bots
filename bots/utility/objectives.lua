@@ -1,5 +1,8 @@
 local M = {}
 
+local objectives = require(
+  GetScriptDirectory() .."/database/objectives")
+
 local logger = require(
   GetScriptDirectory() .."/utility/logger")
 
@@ -8,9 +11,6 @@ local common_algorithms = require(
 
 local action_timing = require(
   GetScriptDirectory() .."/utility/action_timing")
-
-local objectives = require(
-  GetScriptDirectory() .."/database/objectives")
 
 local OBJECTIVE_INDEX = 1
 local MOVE_INDEX = 1

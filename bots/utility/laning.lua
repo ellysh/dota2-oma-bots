@@ -1,5 +1,8 @@
 local M = {}
 
+local map = require(
+  GetScriptDirectory() .."/database/map")
+
 local functions = require(
   GetScriptDirectory() .."/utility/functions")
 
