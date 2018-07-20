@@ -217,6 +217,15 @@ function M.GetEffectiveHealth(health, armor)
   end
 end
 
+function M.GetOpposingTeam(team)
+  local OPPOSING_TEAM = {
+    [TEAM_RADIANT] = TEAM_DIRE,
+    [TEAM_DIRE] = TEAM_RADIANT,
+  }
+
+  return OPPOSING_TEAM[team]
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_IsFlagSet = IsFlagSet
 

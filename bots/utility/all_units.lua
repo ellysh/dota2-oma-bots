@@ -40,15 +40,6 @@ local function GetItems(unit)
   return result
 end
 
-local function GetOpposingTeam(team)
-  local OPPOSING_TEAM = {
-    [TEAM_RADIANT] = TEAM_DIRE,
-    [TEAM_DIRE] = TEAM_RADIANT,
-  }
-
-  return OPPOSING_TEAM[team]
-end
-
 local function IsHealing(unit)
   return unit:HasModifier("modifier_flask_healing")
          or unit:HasModifier("modifier_tango_heal")
@@ -103,15 +94,15 @@ local function AddAllyBuilding(_, unit)
 end
 
 local function AddEnemyCreep(_, unit)
-  AddUnit(unit, UNIT_TYPE["CREEP"], GetOpposingTeam(GetTeam()))
+  AddUnit(unit, UNIT_TYPE["CREEP"], functions.GetOpposingTeam(GetTeam()))
 end
 
 local function AddEnemyHero(_, unit)
-  AddUnit(unit, UNIT_TYPE["HERO"], GetOpposingTeam(GetTeam()))
+  AddUnit(unit, UNIT_TYPE["HERO"], functions.GetOpposingTeam(GetTeam()))
 end
 
 local function AddEnemyBuilding(_, unit)
-  AddUnit(unit, UNIT_TYPE["BUILDING"], GetOpposingTeam(GetTeam()))
+  AddUnit(unit, UNIT_TYPE["BUILDING"], functions.GetOpposingTeam(GetTeam()))
 end
 
 local function ClearUnitList()
@@ -179,15 +170,15 @@ function M.GetUnit(unit_data)
 end
 
 function M.GetEnemyCreepsData(unit_data)
-  return UNIT_LIST[GetOpposingTeam(unit_data.team)][UNIT_TYPE["CREEP"]]
+  return UNIT_LIST[functions.GetOpposingTeam(unit_data.team)][UNIT_TYPE["CREEP"]]
 end
 
 function M.GetEnemyHeroesData(unit_data)
-  return UNIT_LIST[GetOpposingTeam(unit_data.team)][UNIT_TYPE["HERO"]]
+  return UNIT_LIST[functions.GetOpposingTeam(unit_data.team)][UNIT_TYPE["HERO"]]
 end
 
 function M.GetEnemyBuildingsData(unit_data)
-  return UNIT_LIST[GetOpposingTeam(unit_data.team)][UNIT_TYPE["BUILDING"]]
+  return UNIT_LIST[functions.GetOpposingTeam(unit_data.team)][UNIT_TYPE["BUILDING"]]
 end
 
 function M.GetAllyCreepsData(unit_data)

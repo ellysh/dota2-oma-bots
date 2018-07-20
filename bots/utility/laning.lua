@@ -1,7 +1,7 @@
 local M = {}
 
 local map = require(
-  GetScriptDirectory() .."/database/map")
+  GetScriptDirectory() .."/utility/map")
 
 local functions = require(
   GetScriptDirectory() .."/utility/functions")
@@ -77,15 +77,6 @@ local function AreEnemyCreepsInRadius(radius)
     bot_data,
     radius,
     common_algorithms.GetEnemyCreeps)
-end
-
-local function IsEnemyTowerInRadius(radius)
-  local bot_data = common_algorithms.GetBotData()
-
-  return common_algorithms.AreUnitsInRadius(
-    bot_data,
-    radius,
-    common_algorithms.GetEnemyBuildings)
 end
 
 function M.pre_move_mid_front_lane()
@@ -228,7 +219,7 @@ function M.pre_positioning()
           or (not AreAllyCreepsInRadius(constants.MIN_CREEP_DISTANCE)
               and AreEnemyCreepsInRadius(constants.MAX_CREEP_DISTANCE))
 
-          or IsEnemyTowerInRadius(constants.MAX_TOWER_ATTACK_RANGE)
+          or map.IsUnitInEnemyTowerAttackRange(bot_data)
 
           or (IsEnemyHeroNearCreeps()
               and common_algorithms.AreUnitsInRadius(
