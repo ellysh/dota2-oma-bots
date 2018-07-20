@@ -9,8 +9,4 @@ RESULT_DIR="../bots/database"
 
 ./generator.py OBJECTIVES 4 $CSV_DIR/objectives.csv > $RESULT_DIR/objectives.lua
 
-./generator.py MOVES 2 $CSV_DIR/moves.csv > $RESULT_DIR/moves.lua
-
-./generator.py CODE_SNIPPETS 2 $CSV_DIR/code_snippets.csv > $RESULT_DIR/code_snippets.lua
-
 ./check.sh

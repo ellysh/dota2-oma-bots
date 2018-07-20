@@ -1,5 +1,20 @@
-Objective;Move;Dependency;"Complete Timeout";;
-start_match;is_beginning_of_match;;-1;;
-prepare_courer;buy_and_use_courier;start_match;-1;;
-buy_starting_items;buy_starting_items;"prepare courer";-1;" ";" "
-move_tier1_mid_lane;move_tier1_mid_lane;buy_starting_items;-1;;
+Objective;Move;Actions;;;
+prepare_for_match;buy_and_use_courier;"buy_courier
+use_courier";;;
+;buy_starting_items;buy_starting_items;;;
+laning;lasthit_enemy_creep;lasthit_enemy_creep;;" ";" "
+;deny_ally_creep;deny_ally_creep;;;
+;positioning;positioning;;;
+;harras_enemy_hero;harras_enemy_hero;;;
+;evasion;evasion;;;
+;move_mid_front_lane;move_mid_front_lane;;;
+;turn;turn;;;
+;stop;stop;;;
+recovery;move_base;"move_base
+restore_hp_on_base";;;
+;heal_tango;heal_tango;;;
+;heal_flask;heal_flask;;;
+;move_shrine;move_shrine;;;
+;tp_base;"tp_base
+restore_hp_on_base";;;
+kill_enemy_hero;attack_enemy_hero;attack_enemy_hero;;;
