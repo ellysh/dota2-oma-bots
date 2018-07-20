@@ -75,6 +75,11 @@ M.OBJECTIVES = {
          {action = "move_mid_tower"},
        }
       },
+      {move = "increas_creeps_distance",
+       actions = {
+         {action = "increase_creeps_distance"},
+       }
+      },
       {move = "decrease_creeps_distance",
        actions = {
          {action = "decrease_creeps_distance"},
@@ -88,11 +93,6 @@ M.OBJECTIVES = {
       {move = "deny_ally_creep",
        actions = {
          {action = "deny_ally_creep"},
-       }
-      },
-      {move = "positioning",
-       actions = {
-         {action = "positioning"},
        }
       },
       {move = "harras_enemy_hero",
