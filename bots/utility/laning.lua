@@ -185,7 +185,7 @@ function M.pre_decrease_creeps_distance()
   return not AreEnemyCreepsInRadius(constants.BASE_CREEP_DISTANCE)
          and (GetEnemyCreep(constants.MAX_UNIT_SEARCH_RADIUS) ~= nil
               or GetAllyCreep(constants.MAX_UNIT_SEARCH_RADIUS) ~= nil)
-         and not M.pre_increase_creeps_distance
+         and not M.pre_increase_creeps_distance()
 end
 
 function M.post_decrease_creeps_distance()
