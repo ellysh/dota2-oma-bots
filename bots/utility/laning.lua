@@ -100,6 +100,26 @@ end
 
 ---------------------------------
 
+local function GetCreep(radius, get_function)
+  local bot_data = common_algorithms.GetBotData()
+  local creeps = get_function(
+    bot_data,
+    radius)
+
+  return functions.GetElementWith(
+    creeps,
+    common_algorithms.CompareMinHealth,
+    nil)
+end
+
+local function GetEnemyCreep(radius)
+  return GetCreep(radius, common_algorithms.GetEnemyCreeps)
+end
+
+local function GetAllyCreep(radius)
+  return GetCreep(radius, common_algorithms.GetAllyCreeps)
+end
+
 local function IsEnemyHeroNearCreeps()
   local bot_data = common_algorithms.GetBotData()
   local hero_data = common_algorithms.GetEnemyHero(
@@ -152,33 +172,12 @@ function M.post_increase_creeps_distance()
 end
 
 function M.increase_creeps_distance()
-  local bot_data = common_algorithms.GetBotData()
-  local target_data = GetEnemyCreep(constants.MAX_UNIT_SEARCH_RADIUS)
+  local bot = GetBot()
 
-  GetBot():Action_MoveToLocation(target_data.location)
+  bot:Action_MoveToLocation(GetShopLocation(GetTeam(), SHOP_HOME))
 end
 
 ---------------------------------
-
-local function GetCreep(radius, get_function)
-  local bot_data = common_algorithms.GetBotData()
-  local creeps = get_function(
-    bot_data,
-    radius)
-
-  return functions.GetElementWith(
-    creeps,
-    common_algorithms.CompareMinHealth,
-    nil)
-end
-
-local function GetEnemyCreep(radius)
-  return GetCreep(radius, common_algorithms.GetEnemyCreeps)
-end
-
-local function GetAllyCreep(radius)
-  return GetCreep(radius, common_algorithms.GetAllyCreeps)
-end
 
 function M.pre_decrease_creeps_distance()
   local bot_data = common_algorithms.GetBotData()
