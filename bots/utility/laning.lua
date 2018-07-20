@@ -100,6 +100,38 @@ end
 
 ---------------------------------
 
+local function GetEnemyCreep(radius)
+  local bot_data = common_algorithms.GetBotData()
+  local creeps = common_algorithms.GetEnemyCreeps(
+    bot_data,
+    radius)
+
+  return functions.GetElementWith(
+    creeps,
+    common_algorithms.CompareMinHealth,
+    nil)
+end
+
+function M.pre_decrease_creeps_distance()
+  local bot_data = common_algorithms.GetBotData()
+
+  return not AreEnemyCreepsInRadius(constants.BASE_CREEP_DISTANCE)
+         and GetEnemyCreep(constants.MAX_UNIT_SEARCH_RADIUS) ~= nil
+end
+
+function M.post_decrease_creeps_distance()
+  return not M.pre_decrease_creeps_distance()
+end
+
+function M.decrease_creeps_distance()
+  local bot_data = common_algorithms.GetBotData()
+  local target_data = GetEnemyCreep(constants.MAX_UNIT_SEARCH_RADIUS)
+
+  GetBot():Action_MoveToLocation(target_data.location)
+end
+
+---------------------------------
+
 local SIDE = {
   ENEMY = {},
   ALLY = {},
@@ -318,22 +350,10 @@ end
 
 ---------------------------------
 
-local function GetEnemyCreep()
-  local bot_data = common_algorithms.GetBotData()
-  local creeps = common_algorithms.GetEnemyCreeps(
-    bot_data,
-    bot_data.attack_range)
-
-  return functions.GetElementWith(
-    creeps,
-    common_algorithms.CompareMinHealth,
-    nil)
-end
-
 function M.pre_turn()
   local bot = GetBot()
   local bot_data = common_algorithms.GetBotData()
-  local target = GetEnemyCreep()
+  local target = GetEnemyCreep(bot_data.attack_range)
 
   return AreEnemyCreepsInRadius(bot_data.attack_range)
          and target ~= nil
@@ -347,7 +367,8 @@ end
 
 function M.turn()
   local bot = GetBot()
-  local target = GetEnemyCreep()
+  local bot_data = common_algorithms.GetBotData()
+  local target = GetEnemyCreep(bot_data.attack_range)
 
   bot:Action_AttackUnit(all_units.GetUnit(target), true)
 end
