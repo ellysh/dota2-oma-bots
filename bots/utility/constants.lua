@@ -8,6 +8,7 @@ M.STASH_START_INDEX = 9
 M.STASH_END_INDEX = 14
 M.STASH_SIZE = 6
 
+-- TODO: We can increase this radius because of the UNITS table
 M.MAX_UNIT_SEARCH_RADIUS = 1600
 
 M.FRONT_LANE_RADIUS = 1000

@@ -6,14 +6,14 @@ local functions = require(
 
 local M = {}
 
-local function GetEnemyTowerAttackSpot(unit_data)
+function M.GetEnemyTowerAttackSpot(unit_data)
   return map.MAP
           [functions.GetOpposingTeam(unit_data.team)]
           ["tower_tier_1_attack"]
 end
 
 function M.IsUnitInEnemyTowerAttackRange(unit_data)
-  local tower_attack_spot = GetEnemyTowerAttackSpot(unit_data)
+  local tower_attack_spot = M.GetEnemyTowerAttackSpot(unit_data)
 
   return functions.GetDistance(unit_data.location, tower_attack_spot)
            <= tower_attack_spot.z

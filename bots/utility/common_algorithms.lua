@@ -10,6 +10,9 @@ local all_units = require(
 local action_timing = require(
   GetScriptDirectory() .."/utility/action_timing")
 
+local map = require(
+  GetScriptDirectory() .."/utility/map")
+
 local M = {}
 
 function M.GetBotData()
@@ -248,16 +251,11 @@ end
 
 function M.DoesTowerProtectEnemyUnit(unit_data)
   local bot_data = M.GetBotData()
-  local tower_data = M.GetEnemyBuildings(
-                           bot_data,
-                           constants.MAX_UNIT_SEARCH_RADIUS)[1]
+  local tower_spot = map.GetEnemyTowerAttackSpot(bot_data)
 
-  if tower_data == nil then
-    return false end
-
-  local bot_tower_distance = functions.GetUnitDistance(
-                               bot_data,
-                               tower_data)
+  local bot_tower_distance = functions.GetDistance(
+                               bot_data.location,
+                               tower_spot)
 
   return bot_tower_distance < constants.MAX_TOWER_ATTACK_RANGE
          or bot_tower_distance
