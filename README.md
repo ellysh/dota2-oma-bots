@@ -6,6 +6,16 @@ These are Objective-Moves-Actions (OMA) bots for Dota 2 and a toolkit to configu
 
 A current development state is available in the [`CHANGELOG.md`](CHANGELOG.md) file.
 
+## Limitation
+
+Now you should follow the following limitations when playing with the bot:
+
+1. Pick only Drow Ranger hero.
+2. No wards.
+3. No shrines.
+4. No neutral camps.
+5. No Roshan.
+
 ## Contacts
 
 You can ask any questions about usage of OMA Bots via email petrsum@gmail.com.
