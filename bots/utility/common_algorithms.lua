@@ -15,6 +15,10 @@ local map = require(
 
 local M = {}
 
+function M.GetCourierData()
+  return all_units.GetUnitData(GetCourier(0))
+end
+
 function M.GetBotData()
   return all_units.GetUnitData(GetBot())
 end
