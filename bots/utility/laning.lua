@@ -64,10 +64,10 @@ end
 
 function M.pre_move_mid_tower()
   local bot_data = common_algorithms.GetBotData()
-  local target_location = map.GetAllyTowerAttackSpot(bot_data)
+  local target_location = map.GetAllyHgSpot(bot_data)
 
   return not AreAllyCreepsInRadius(constants.MAX_UNIT_SEARCH_RADIUS)
-         and not map.IsUnitInAllyTowerAttackRange(bot_data)
+         and not map.IsUnitInSpot(bot_data, target_location)
 end
 
 function M.post_move_mid_tower()
@@ -221,7 +221,7 @@ local function IsLastHit(bot_data, unit_data)
                                 bot_data,
                                 unit_data))
 
-  return unit_data.health < incoming_damage
+  return unit_data.health <= incoming_damage
 end
 
 local function GetLastHitCreep(bot_data, side)
