@@ -11,6 +11,7 @@ A current development state is available in the [`CHANGELOG.md`](CHANGELOG.md) f
 There are steps to start playing with the bot:
 
 1. Create a lobby.
+2. Choose the "1v1 Solo Mid" game mode.
 2. Choose the OMA bots for both sides.
 3. Start a game.
 
