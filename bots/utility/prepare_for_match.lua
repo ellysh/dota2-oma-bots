@@ -52,10 +52,8 @@ end
 function M.post_buy_starting_items()
   local bot_data = common_algorithms.GetBotData()
 
-  return common_algorithms.IsItemPresent(bot_data, 'item_flask')
-         and common_algorithms.IsItemPresent(bot_data, 'item_tango')
-         and common_algorithms.IsItemPresent(bot_data, 'item_slippers')
-         and common_algorithms.IsItemPresent(bot_data, 'item_circlet')
+  return common_algorithms.IsItemPresent(bot_data, 'item_faerie_fire')
+         and common_algorithms.IsItemPresent(bot_data, 'item_wraith_band')
          and common_algorithms.IsItemPresent(bot_data, 'item_branches')
 end
 
@@ -66,8 +64,8 @@ end
 function M.buy_starting_items()
   local bot = GetBot()
 
-  bot:ActionImmediate_PurchaseItem('item_flask')
-  bot:ActionImmediate_PurchaseItem('item_tango')
+  bot:ActionImmediate_PurchaseItem('item_faerie_fire')
+  bot:ActionImmediate_PurchaseItem('item_recipe_wraith_band')
   bot:ActionImmediate_PurchaseItem('item_slippers')
   bot:ActionImmediate_PurchaseItem('item_circlet')
   bot:ActionImmediate_PurchaseItem('item_branches')
