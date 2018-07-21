@@ -66,13 +66,11 @@ M.OBJECTIVES = {
       {move = "buy_flask",
        actions = {
          {action = "buy_flask"},
-         {action = "deliver_item"},
        }
       },
       {move = "buy_faerie_fire",
        actions = {
          {action = "buy_faerie_fire"},
-         {action = "deliver_item"},
        },
       },
     },
