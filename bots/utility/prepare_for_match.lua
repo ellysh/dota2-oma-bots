@@ -75,7 +75,4 @@ end
 
 -- Provide an access to local functions for unit tests only
 
--- The trick with UpdateUnitList is required to keep the UNIT_LIST global
-M.test_UpdateUnitList = common_algorithms.test_UpdateUnitList
-
 return M
