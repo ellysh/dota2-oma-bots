@@ -79,6 +79,7 @@ local function AddUnit(unit, type, team)
     nearby_trees = unit:GetNearbyTrees(constants.TREE_SEARCH_RADIUS),
     is_casting = IsUnitCasting(unit),
     gold = unit:GetGold(),
+    stash_value = unit:GetStashValue(),
   }
 end
 

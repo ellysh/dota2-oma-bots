@@ -83,6 +83,12 @@ M.OBJECTIVES = {
           {action = "buy_faerie_fire"},
         },
       },
+      {
+        move = "deliver_items",
+        actions = {
+          {action = "deliver_items"},
+        }
+      },
     },
   },
 

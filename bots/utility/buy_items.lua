@@ -8,6 +8,7 @@ local M = {}
 function M.pre_buy_items()
   return M.pre_buy_flask()
          or M.pre_buy_faerie_fire()
+         or M.pre_deliver_items()
 end
 
 function M.post_buy_items()
@@ -37,13 +38,8 @@ end
 
 function M.buy_flask()
   local bot = GetBot()
-  local courier = GetCourier(0)
 
   bot:ActionImmediate_PurchaseItem("item_flask")
-
-  bot:ActionImmediate_Courier(
-    courier,
-    COURIER_ACTION_TAKE_AND_TRANSFER_ITEMS)
 end
 
 ---------------------------------
@@ -65,9 +61,29 @@ end
 
 function M.buy_faerie_fire()
   local bot = GetBot()
-  local courier = GetCourier(0)
 
   bot:ActionImmediate_PurchaseItem("item_faerie_fire")
+end
+
+---------------------------------
+
+function M.pre_deliver_items()
+  local bot_data = common_algorithms.GetBotData()
+  local courier_data = common_algorithms.GetCourierData()
+
+  return 0 < bot_data.stash_value
+         and map.IsUnitInSpot(
+               courier_data,
+               map.GetAllySpot(bot_data, "fountain"))
+end
+
+function M.post_deliver_items()
+  return not M.pre_deliver_items()
+end
+
+function M.deliver_items()
+  local bot = GetBot()
+  local courier = GetCourier(0)
 
   bot:ActionImmediate_Courier(
     courier,
