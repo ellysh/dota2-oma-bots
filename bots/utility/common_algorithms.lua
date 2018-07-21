@@ -262,7 +262,7 @@ end
 
 function M.DoesTowerProtectEnemyUnit(unit_data)
   local bot_data = M.GetBotData()
-  local tower_spot = map.GetEnemyTowerAttackSpot(bot_data)
+  local tower_spot = map.GetEnemySpot(unit_data, "tower_tier_1_attack")
 
   local bot_tower_distance = functions.GetDistance(
                                bot_data.location,

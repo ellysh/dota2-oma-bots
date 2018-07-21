@@ -64,7 +64,7 @@ end
 
 function M.pre_move_mid_tower()
   local bot_data = common_algorithms.GetBotData()
-  local target_location = map.GetAllyHgSpot(bot_data)
+  local target_location = map.GetAllySpot(bot_data, "high_ground")
 
   return (not AreAllyCreepsInRadius(constants.MAX_UNIT_SEARCH_RADIUS)
           or functions.GetDistance(
@@ -80,7 +80,7 @@ end
 
 function M.move_mid_tower()
   local bot_data = common_algorithms.GetBotData()
-  local target_location = map.GetAllyHgSpot(bot_data)
+  local target_location = map.GetAllySpot(bot_data, "high_ground")
 
   GetBot():Action_MoveToLocation(target_location)
 end

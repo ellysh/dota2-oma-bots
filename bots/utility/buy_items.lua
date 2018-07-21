@@ -48,6 +48,8 @@ end
 
 ---------------------------------
 
+-- TODO: This code duplicates the buy_flask move. Generalize it.
+
 function M.pre_buy_faerie_fire()
   local bot_data = common_algorithms.GetBotData()
   local courier_data = common_algorithms.GetCourierData()
