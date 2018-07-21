@@ -17,6 +17,12 @@ end
 
 ---------------------------------
 
+local function IsEnoughGoldToBuy(item_name)
+  local bot_data = common_algorithms.GetBotData()
+
+  return GetItemCost(item_name) <= bot_data.gold
+end
+
 local function pre_buy_consumable_item(item_name)
   local bot_data = common_algorithms.GetBotData()
   local courier_data = common_algorithms.GetCourierData()
@@ -26,14 +32,6 @@ local function pre_buy_consumable_item(item_name)
                    courier_data,
                    item_name)
          and IsEnoughGoldToBuy(item_name)
-end
-
----------------------------------
-
-local function IsEnoughGoldToBuy(item_name)
-  local bot_data = common_algorithms.GetBotData()
-
-  return GetItemCost(item_name) <= bot_data.gold
 end
 
 function M.pre_buy_flask()

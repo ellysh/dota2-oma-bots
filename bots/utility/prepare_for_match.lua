@@ -30,9 +30,7 @@ function M.pre_buy_and_use_courier()
 end
 
 function M.buy_courier()
-  local bot = GetBot()
-
-  bot:ActionImmediate_PurchaseItem("item_courier")
+  common_algorithms.BuyItem("item_courier")
 
   action_timing.SetNextActionDelay(0.3)
 end
@@ -62,13 +60,11 @@ function M.pre_buy_starting_items()
 end
 
 function M.buy_starting_items()
-  local bot = GetBot()
-
-  bot:ActionImmediate_PurchaseItem("item_faerie_fire")
-  bot:ActionImmediate_PurchaseItem("item_recipe_wraith_band")
-  bot:ActionImmediate_PurchaseItem("item_slippers")
-  bot:ActionImmediate_PurchaseItem("item_circlet")
-  bot:ActionImmediate_PurchaseItem("item_branches")
+  common_algorithms.BuyItem("item_faerie_fire")
+  common_algorithms.BuyItem("item_recipe_wraith_band")
+  common_algorithms.BuyItem("item_slippers")
+  common_algorithms.BuyItem("item_circlet")
+  common_algorithms.BuyItem("item_branches")
 
   action_timing.SetNextActionDelay(0.5)
 end
