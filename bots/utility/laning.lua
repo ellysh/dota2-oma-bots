@@ -184,7 +184,8 @@ function M.pre_decrease_creeps_distance()
   end
 
   local creep_distance = functions.ternary(
-                         common_algorithms.IsUnitLowHp(bot_data),
+                         common_algorithms.IsUnitLowHp(bot_data)
+                         or bot_data.is_healing,
                          bot_data.attack_range,
                          constants.BASE_CREEP_DISTANCE)
 
