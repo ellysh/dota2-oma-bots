@@ -1,3 +1,6 @@
+local map = require(
+  GetScriptDirectory() .."/utility/map")
+
 local common_algorithms = require(
   GetScriptDirectory() .."/utility/common_algorithms")
 
