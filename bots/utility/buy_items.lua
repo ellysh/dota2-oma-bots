@@ -26,9 +26,9 @@ function M.pre_buy_flask()
   local bot_data = common_algorithms.GetBotData()
   local courier_data = common_algorithms.GetCourierData()
 
-  return not common_algorithms.IsItemPresent(bot_data, 'item_flask')
-         and not common_algorithms.IsItemPresent(courier_data, 'item_flask')
-         and IsEnoughGoldToBuy('item_flask')
+  return not common_algorithms.IsItemPresent(bot_data, "item_flask")
+         and not common_algorithms.IsItemPresent(courier_data, "item_flask")
+         and IsEnoughGoldToBuy("item_flask")
 end
 
 function M.post_buy_flask()
@@ -39,7 +39,7 @@ function M.buy_flask()
   local bot = GetBot()
   local courier = GetCourier(0)
 
-  bot:ActionImmediate_PurchaseItem('item_flask')
+  bot:ActionImmediate_PurchaseItem("item_flask")
 
   bot:ActionImmediate_Courier(
     courier,
@@ -54,9 +54,9 @@ function M.pre_buy_faerie_fire()
   local bot_data = common_algorithms.GetBotData()
   local courier_data = common_algorithms.GetCourierData()
 
-  return not common_algorithms.IsItemPresent(bot_data, 'item_faerie_fire')
-         and not common_algorithms.IsItemPresent(courier_data, 'item_faerie_fire')
-         and IsEnoughGoldToBuy('item_faerie_fire')
+  return not common_algorithms.IsItemPresent(bot_data, "item_faerie_fire")
+         and not common_algorithms.IsItemPresent(courier_data, "item_faerie_fire")
+         and IsEnoughGoldToBuy("item_faerie_fire")
 end
 
 function M.post_buy_faerie_fire()
@@ -67,7 +67,7 @@ function M.buy_faerie_fire()
   local bot = GetBot()
   local courier = GetCourier(0)
 
-  bot:ActionImmediate_PurchaseItem('item_faerie_fire')
+  bot:ActionImmediate_PurchaseItem("item_faerie_fire")
 
   bot:ActionImmediate_Courier(
     courier,

@@ -58,7 +58,7 @@ end
 function M.pre_heal_faerie_fire()
   local bot_data = common_algorithms.GetBotData()
 
-  return common_algorithms.IsItemPresent(bot_data, 'item_faerie_fire')
+  return common_algorithms.IsItemPresent(bot_data, "item_faerie_fire")
 end
 
 function M.post_heal_faerie_fire()
@@ -70,14 +70,14 @@ function M.heal_faerie_fire()
   local bot_data = common_algorithms.GetBotData()
 
   bot:Action_UseAbility(
-    common_algorithms.GetItem(bot_data, 'item_faerie_fire'))
+    common_algorithms.GetItem(bot_data, "item_faerie_fire"))
 end
 ---------------------------------
 
 function M.pre_heal_flask()
   local bot_data = common_algorithms.GetBotData()
 
-  return common_algorithms.IsItemPresent(bot_data, 'item_flask')
+  return common_algorithms.IsItemPresent(bot_data, "item_flask")
          and common_algorithms.GetTotalDamageToUnit(bot_data, nil) == 0
          and not common_algorithms.AreUnitsInRadius(
                    bot_data,
@@ -94,7 +94,7 @@ function M.heal_flask()
   local bot_data = common_algorithms.GetBotData()
 
   bot:Action_UseAbilityOnEntity(
-    common_algorithms.GetItem(bot_data, 'item_flask'),
+    common_algorithms.GetItem(bot_data, "item_flask"),
     bot)
 end
 
@@ -109,7 +109,7 @@ function M.pre_heal_tango()
 
   local tree = bot_data.nearby_trees[1]
 
-  return common_algorithms.IsItemPresent(bot_data, 'item_tango')
+  return common_algorithms.IsItemPresent(bot_data, "item_tango")
          and tree ~= nil
          and (tower_data == nil
               or constants.MAX_TOWER_ATTACK_RANGE
@@ -128,7 +128,7 @@ function M.heal_tango()
   local bot_data = common_algorithms.GetBotData()
 
   bot:Action_UseAbilityOnTree(
-    common_algorithms.GetItem(bot_data, 'item_tango'),
+    common_algorithms.GetItem(bot_data, "item_tango"),
     bot_data.nearby_trees[1])
 end
 
@@ -143,19 +143,19 @@ end
 function M.pre_tp_base()
   local bot_data = common_algorithms.GetBotData()
 
-  return common_algorithms.IsItemPresent(bot_data, 'item_tpscroll')
+  return common_algorithms.IsItemPresent(bot_data, "item_tpscroll")
          and not common_algorithms.IsItemPresent(
                    bot_data,
-                   'item_faerie_fire')
+                   "item_faerie_fire")
          and not common_algorithms.IsItemPresent(
                    bot_data,
-                   'item_flask')
+                   "item_flask")
          and not common_algorithms.IsItemPresent(
                    bot_data,
-                   'item_tango')
+                   "item_tango")
          and common_algorithms.GetItem(
               bot_data,
-              'item_tpscroll'):IsFullyCastable()
+              "item_tpscroll"):IsFullyCastable()
 end
 
 function M.post_tp_base()
@@ -165,7 +165,7 @@ end
 function M.tp_base()
   local bot = GetBot()
   local bot_data = common_algorithms.GetBotData()
-  local item = common_algorithms.GetItem(bot_data, 'item_tpscroll')
+  local item = common_algorithms.GetItem(bot_data, "item_tpscroll")
 
   bot:Action_UseAbilityOnLocation(
     item,

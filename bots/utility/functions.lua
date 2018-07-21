@@ -47,7 +47,7 @@ local function deepcompare(t1, t2, ignore_mt)
   local ty2 = type(t2)
   if ty1 ~= ty2 then return false end
   -- non-table types can be directly compared
-  if ty1 ~= 'table' and ty2 ~= 'table' then return t1 == t2 end
+  if ty1 ~= "table" and ty2 ~= "table" then return t1 == t2 end
   -- as well as tables which have the metamethod __eq
   local mt = getmetatable(t1)
   if not ignore_mt and mt and mt.__eq then return t1 == t2 end
