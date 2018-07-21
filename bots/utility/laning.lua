@@ -76,7 +76,7 @@ end
 
 function M.move_mid_tower()
   local bot_data = common_algorithms.GetBotData()
-  local target_location = map.GetAllyTowerAttackSpot(bot_data)
+  local target_location = map.GetAllyHgSpot(bot_data)
 
   GetBot():Action_MoveToLocation(target_location)
 end
