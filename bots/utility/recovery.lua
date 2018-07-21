@@ -166,7 +166,7 @@ function M.tp_base()
 
   bot:Action_UseAbilityOnLocation(
     item,
-    GetShopLocation(GetTeam(), SHOP_HOME))
+    map.GetAllySpot(bot_data, "fountain"))
 
   action_timing.SetNextActionDelay(item:GetChannelTime())
 end
@@ -176,7 +176,7 @@ end
 function M.pre_move_base()
   local bot = GetBot()
   local bot_data = common_algorithms.GetBotData()
-  local base_location = GetShopLocation(GetTeam(), SHOP_HOME)
+  local base_location = map.GetAllySpot(bot_data, "fountain")
 
   return not (common_algorithms.IsUnitMoving(bot_data)
               and bot:IsFacingLocation(base_location, 30))
@@ -188,7 +188,9 @@ end
 
 function M.move_base()
   local bot = GetBot()
-  bot:Action_MoveToLocation(GetShopLocation(GetTeam(), SHOP_HOME))
+  local bot_data = common_algorithms.GetBotData()
+
+  bot:Action_MoveToLocation(map.GetAllySpot(bot_data, "fountain"))
 end
 
 ---------------------------------

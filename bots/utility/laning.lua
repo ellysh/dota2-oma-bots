@@ -72,7 +72,7 @@ function M.pre_move_mid_tower()
 
   return (not AreAllyCreepsInRadius(constants.MAX_UNIT_SEARCH_RADIUS)
           or functions.GetDistance(
-               map.GetAllySpot(bot_data, 'fountain'),
+               map.GetAllySpot(bot_data, "fountain"),
                bot_data.location)
              < 3000)
          and not map.IsUnitInSpot(bot_data, target_location)
@@ -170,8 +170,9 @@ end
 
 function M.increase_creeps_distance()
   local bot = GetBot()
+  local bot_data = common_algorithms.GetBotData()
 
-  bot:Action_MoveToLocation(GetShopLocation(GetTeam(), SHOP_HOME))
+  bot:Action_MoveToLocation(map.GetAllySpot(bot_data, "fountain"))
 end
 
 ---------------------------------
@@ -330,8 +331,9 @@ end
 
 function M.evasion()
   local bot = GetBot()
+  local bot_data = common_algorithms.GetBotData()
 
-  bot:Action_MoveToLocation(GetShopLocation(GetTeam(), SHOP_HOME))
+  bot:Action_MoveToLocation(map.GetAllySpot(bot_data, "fountain"))
 end
 
 --------------------------------
