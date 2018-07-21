@@ -1,5 +1,3 @@
-local M = {}
-
 local map = require(
   GetScriptDirectory() .."/utility/map")
 
@@ -26,6 +24,8 @@ local kill_enemy_hero = require(
 
 local action_timing = require(
   GetScriptDirectory() .."/utility/action_timing")
+
+local M = {}
 
 ---------------------------------
 

@@ -1,5 +1,3 @@
-local M = {}
-
 local functions = require(
   GetScriptDirectory() .."/utility/functions")
 
@@ -14,6 +12,8 @@ local logger = require(
 
 local recovery = require(
   GetScriptDirectory() .."/utility/recovery")
+
+local M = {}
 
 ---------------------------------
 

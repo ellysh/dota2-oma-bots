@@ -1,10 +1,10 @@
-local M = {}
-
 local common_algorithms = require(
   GetScriptDirectory() .."/utility/common_algorithms")
 
 local action_timing = require(
   GetScriptDirectory() .."/utility/action_timing")
+
+local M = {}
 
 ---------------------------------
 
