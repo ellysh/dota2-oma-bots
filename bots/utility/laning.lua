@@ -138,7 +138,7 @@ end
 function M.pre_increase_creeps_distance()
   local bot_data = common_algorithms.GetBotData()
 
-  return AreEnemyCreepsInRadius(constants.MIN_CREEP_DISTANCE)
+  return (AreEnemyCreepsInRadius(constants.MIN_CREEP_DISTANCE)
 
          or (not AreAllyCreepsInRadius(constants.MIN_CREEP_DISTANCE)
              and AreEnemyCreepsInRadius(constants.MAX_CREEP_DISTANCE))
@@ -149,7 +149,11 @@ function M.pre_increase_creeps_distance()
              and common_algorithms.AreUnitsInRadius(
                    bot_data,
                    bot_data.attack_range,
-                   common_algorithms.GetEnemyHeroes))
+                   common_algorithms.GetEnemyHeroes)))
+
+         and not M.pre_lasthit_enemy_creep()
+         and not M.pre_deny_ally_creep()
+         and not M.pre_harras_enemy_hero()
 end
 
 function M.post_increase_creeps_distance()
@@ -169,10 +173,22 @@ function M.pre_decrease_creeps_distance()
   local ally_creep = GetAllyCreep(constants.MAX_UNIT_SEARCH_RADIUS)
   local enemy_creep = GetEnemyCreep(constants.MAX_UNIT_SEARCH_RADIUS)
 
+  if enemy_creep ~= nil
+     and ally_creep ~= nil
+     and not functions.IsTargetBetweenUnits(
+               ally_creep,
+               bot_data,
+               enemy_creep) then
+
+    return false
+  end
+
   return not AreEnemyCreepsInRadius(constants.BASE_CREEP_DISTANCE)
          and (enemy_creep ~= nil or ally_creep ~= nil)
-         and functions.IsTargetBetweenUnits(ally_creep, bot_data, enemy_creep)
          and not M.pre_increase_creeps_distance()
+         and not M.pre_lasthit_enemy_creep()
+         and not M.pre_deny_ally_creep()
+         and not M.pre_harras_enemy_hero()
 end
 
 function M.post_decrease_creeps_distance()
