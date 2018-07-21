@@ -78,6 +78,7 @@ local function AddUnit(unit, type, team)
     is_healing = IsHealing(unit),
     nearby_trees = unit:GetNearbyTrees(constants.TREE_SEARCH_RADIUS),
     is_casting = IsUnitCasting(unit),
+    gold = unit:GetGold(),
   }
 end
 
