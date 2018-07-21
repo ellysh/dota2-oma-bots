@@ -47,27 +47,10 @@ end
 local function AreAllyCreepsInRadius(radius)
   local bot_data = common_algorithms.GetBotData()
 
-  local creeps = common_algorithms.GetAllyCreeps(
-                   bot_data,
-                   radius)
-
-  if functions.IsArrayEmpty(creeps) then
-    return false end
-
-  local creep_data = functions.GetElementWith(
-                       creeps,
-                       nil,
-                       function(unit_data)
-                         return constants.UNIT_LOW_HEALTH
-                                  < unit_data.health
-                                and constants.UNIT_LOW_HEALTH_LEVEL
-                                    < functions.GetRate(
-                                        unit_data.health,
-                                        unit_data.max_health)
-                       end)
-
-
-  return creep_data ~= nil
+  return common_algorithms.AreUnitsInRadius(
+    bot_data,
+    radius,
+    common_algorithms.GetAllyCreeps)
 end
 
 local function AreEnemyCreepsInRadius(radius)
