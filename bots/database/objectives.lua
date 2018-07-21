@@ -84,6 +84,18 @@ M.OBJECTIVES = {
         },
       },
       {
+        move = "buy_ring_of_protection",
+        actions = {
+          {action = "buy_ring_of_protection"},
+        },
+      },
+      {
+        move = "buy_sobi_mask",
+        actions = {
+          {action = "buy_sobi_mask"},
+        },
+      },
+      {
         move = "deliver_items",
         actions = {
           {action = "deliver_items"},
