@@ -55,10 +55,17 @@ end
 
 ---------------------------------
 
-function M.pre_heal_faerie_fire()
+local function IsItemCastable(item_name)
   local bot_data = common_algorithms.GetBotData()
 
-  return common_algorithms.IsItemPresent(bot_data, "item_faerie_fire")
+  return common_algorithms.IsItemPresent(bot_data, item_name)
+         and common_algorithms.GetItem(
+               bot_data,
+               item_name):IsFullyCastable()
+end
+
+function M.pre_heal_faerie_fire()
+  return IsItemCastable("item_faerie_fire")
 end
 
 function M.post_heal_faerie_fire()
@@ -77,7 +84,7 @@ end
 function M.pre_heal_flask()
   local bot_data = common_algorithms.GetBotData()
 
-  return common_algorithms.IsItemPresent(bot_data, "item_flask")
+  return IsItemCastable("item_flask")
          and common_algorithms.GetTotalDamageToUnit(bot_data, nil) == 0
          and not common_algorithms.AreUnitsInRadius(
                    bot_data,
@@ -109,7 +116,7 @@ function M.pre_heal_tango()
 
   local tree = bot_data.nearby_trees[1]
 
-  return common_algorithms.IsItemPresent(bot_data, "item_tango")
+  return IsItemCastable("item_tango")
          and tree ~= nil
          and (tower_data == nil
               or constants.MAX_TOWER_ATTACK_RANGE
@@ -143,7 +150,7 @@ end
 function M.pre_tp_base()
   local bot_data = common_algorithms.GetBotData()
 
-  return common_algorithms.IsItemPresent(bot_data, "item_tpscroll")
+  return IsItemCastable("item_tpscroll")
          and not common_algorithms.IsItemPresent(
                    bot_data,
                    "item_faerie_fire")
@@ -153,9 +160,6 @@ function M.pre_tp_base()
          and not common_algorithms.IsItemPresent(
                    bot_data,
                    "item_tango")
-         and common_algorithms.GetItem(
-              bot_data,
-              "item_tpscroll"):IsFullyCastable()
 end
 
 function M.post_tp_base()
