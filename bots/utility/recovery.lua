@@ -141,6 +141,15 @@ function M.pre_tp_base()
   local bot_data = common_algorithms.GetBotData()
 
   return common_algorithms.IsItemPresent(bot_data, 'item_tpscroll')
+         and not common_algorithms.IsItemPresent(
+                   bot_data,
+                   'item_faerie_fire')
+         and not common_algorithms.IsItemPresent(
+                   bot_data,
+                   'item_flask')
+         and not common_algorithms.IsItemPresent(
+                   bot_data,
+                   'item_tango')
          and common_algorithms.GetItem(
               bot_data,
               'item_tpscroll'):IsFullyCastable()
