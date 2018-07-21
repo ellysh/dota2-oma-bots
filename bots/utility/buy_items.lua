@@ -49,7 +49,27 @@ end
 ---------------------------------
 
 function M.pre_buy_faerie_fire()
-  return false
+  local bot_data = common_algorithms.GetBotData()
+  local courier_data = common_algorithms.GetCourierData()
+
+  return not common_algorithms.IsItemPresent(bot_data, 'item_faerie_fire')
+         and not common_algorithms.IsItemPresent(courier_data, 'item_faerie_fire')
+         and IsEnoughGoldToBuy('item_faerie_fire')
+end
+
+function M.post_buy_faerie_fire()
+  return not M.pre_buy_faerie_fire()
+end
+
+function M.buy_faerie_fire()
+  local bot = GetBot()
+  local courier = GetCourier(0)
+
+  bot:ActionImmediate_PurchaseItem('item_faerie_fire')
+
+  bot:ActionImmediate_Courier(
+    courier,
+    COURIER_ACTION_TAKE_AND_TRANSFER_ITEMS)
 end
 
 -- Provide an access to local functions for unit tests only
