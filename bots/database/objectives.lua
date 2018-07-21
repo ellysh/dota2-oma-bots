@@ -40,6 +40,11 @@ M.OBJECTIVES = {
          {action = "heal_flask"},
        }
       },
+      {move = "heal_faerie_fire",
+       actions = {
+         {action = "heal_faerie_fire"},
+       }
+      },
       {move = "move_shrine",
        actions = {
          {action = "move_shrine"},

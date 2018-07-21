@@ -52,6 +52,25 @@ end
 
 ---------------------------------
 
+function M.pre_heal_faerie_fire()
+  local bot_data = common_algorithms.GetBotData()
+
+  return common_algorithms.IsItemPresent(bot_data, 'item_faerie_fire')
+end
+
+function M.post_heal_faerie_fire()
+  return not M.pre_heal_faerie_fire()
+end
+
+function M.heal_faerie_fire()
+  local bot = GetBot()
+  local bot_data = common_algorithms.GetBotData()
+
+  bot:Action_UseAbility(
+    common_algorithms.GetItem(bot_data, 'item_faerie_fire'))
+end
+---------------------------------
+
 function M.pre_heal_flask()
   local bot_data = common_algorithms.GetBotData()
 
