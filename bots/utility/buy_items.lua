@@ -17,6 +17,19 @@ end
 
 ---------------------------------
 
+local function pre_buy_consumable_item(item_name)
+  local bot_data = common_algorithms.GetBotData()
+  local courier_data = common_algorithms.GetCourierData()
+
+  return not common_algorithms.IsItemPresent(bot_data, item_name)
+         and not common_algorithms.IsItemPresent(
+                   courier_data,
+                   item_name)
+         and IsEnoughGoldToBuy(item_name)
+end
+
+---------------------------------
+
 local function IsEnoughGoldToBuy(item_name)
   local bot_data = common_algorithms.GetBotData()
 
@@ -24,12 +37,7 @@ local function IsEnoughGoldToBuy(item_name)
 end
 
 function M.pre_buy_flask()
-  local bot_data = common_algorithms.GetBotData()
-  local courier_data = common_algorithms.GetCourierData()
-
-  return not common_algorithms.IsItemPresent(bot_data, "item_flask")
-         and not common_algorithms.IsItemPresent(courier_data, "item_flask")
-         and IsEnoughGoldToBuy("item_flask")
+  return pre_buy_consumable_item("item_flask")
 end
 
 function M.post_buy_flask()
@@ -37,22 +45,13 @@ function M.post_buy_flask()
 end
 
 function M.buy_flask()
-  local bot = GetBot()
-
-  bot:ActionImmediate_PurchaseItem("item_flask")
+  common_algorithms.BuyItem("item_flask")
 end
 
 ---------------------------------
 
--- TODO: This code duplicates the buy_flask move. Generalize it.
-
 function M.pre_buy_faerie_fire()
-  local bot_data = common_algorithms.GetBotData()
-  local courier_data = common_algorithms.GetCourierData()
-
-  return not common_algorithms.IsItemPresent(bot_data, "item_faerie_fire")
-         and not common_algorithms.IsItemPresent(courier_data, "item_faerie_fire")
-         and IsEnoughGoldToBuy("item_faerie_fire")
+  return pre_buy_consumable_item("item_faerie_fire")
 end
 
 function M.post_buy_faerie_fire()
@@ -60,9 +59,7 @@ function M.post_buy_faerie_fire()
 end
 
 function M.buy_faerie_fire()
-  local bot = GetBot()
-
-  bot:ActionImmediate_PurchaseItem("item_faerie_fire")
+  common_algorithms.BuyItem("item_faerie_fire")
 end
 
 ---------------------------------

@@ -260,6 +260,12 @@ function M.AttackUnit(bot_data, unit_data)
   action_timing.SetNextActionDelay(attack_point)
 end
 
+function M.BuyItem(item_name)
+  local bot = GetBot()
+
+  bot:ActionImmediate_PurchaseItem(item_name)
+end
+
 function M.DoesTowerProtectEnemyUnit(unit_data)
   local bot_data = M.GetBotData()
   local tower_spot = map.GetEnemySpot(unit_data, "tower_tier_1_attack")
