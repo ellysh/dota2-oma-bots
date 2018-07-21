@@ -13,6 +13,9 @@ local logger = require(
 local action_timing = require(
   GetScriptDirectory() .."/utility/action_timing")
 
+local map = require(
+  GetScriptDirectory() .."/utility/map")
+
 local M = {}
 
 function M.pre_restore_hp_on_base()
