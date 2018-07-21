@@ -60,6 +60,25 @@ M.OBJECTIVES = {
   },
 
   [3] = {
+    objective = "buy_items",
+    module = require(GetScriptDirectory() .."/utility/buy_items"),
+    moves = {
+      {move = "buy_flask",
+       actions = {
+         {action = "buy_flask"},
+         {action = "deliver_item"},
+       }
+      },
+      {move = "buy_faerie_fire",
+       actions = {
+         {action = "buy_faerie_fire"},
+         {action = "deliver_item"},
+       },
+      },
+    },
+  },
+
+  [4] = {
     objective = "kill_enemy_hero",
     module = require(GetScriptDirectory() .."/utility/kill_enemy_hero"),
     moves = {
@@ -71,7 +90,7 @@ M.OBJECTIVES = {
     }
   },
 
-  [4] = {
+  [5] = {
     objective = "laning",
     module = require(GetScriptDirectory() .."/utility/laning"),
     moves = {
