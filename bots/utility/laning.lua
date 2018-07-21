@@ -183,7 +183,12 @@ function M.pre_decrease_creeps_distance()
     return false
   end
 
-  return not AreEnemyCreepsInRadius(constants.BASE_CREEP_DISTANCE)
+  local creep_distance = functions.ternary(
+                         common_algorithms.IsUnitLowHp(bot_data),
+                         bot_data.attack_range,
+                         constants.BASE_CREEP_DISTANCE)
+
+  return not AreEnemyCreepsInRadius(creep_distance)
          and (enemy_creep ~= nil or ally_creep ~= nil)
          and not M.pre_increase_creeps_distance()
          and not M.pre_lasthit_enemy_creep()
