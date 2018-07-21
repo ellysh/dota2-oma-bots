@@ -141,6 +141,12 @@ function M.UpdateUnitList()
 
   units = GetUnitList(UNIT_LIST_ENEMY_BUILDINGS)
   functions.DoWithKeysAndElements(units, AddEnemyBuilding)
+
+  units = { GetCourier(0) }
+  if units[1] == nil then
+    return end
+
+  functions.DoWithKeysAndElements(units, AddAllyCreep)
 end
 
 ----------------------------------

@@ -155,6 +155,18 @@ function Unit:GetLocation()
   return self.location
 end
 
+function Unit:GetArmor()
+  return 0
+end
+
+function Unit:GetAttackSpeed()
+  return 0
+end
+
+function Unit:GetSecondsPerAttack()
+  return 0
+end
+
 UNIT_EXTRAPOLATED_LOCATION = {10, 10}
 
 function Unit:GetExtrapolatedLocation()
