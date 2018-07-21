@@ -20,6 +20,10 @@ function M.GetAllyHgSpot(unit_data)
   return map.MAP[unit_data.team]["high_ground"]
 end
 
+function M.GetAllySpot(unit_data, spot_name)
+  return map.MAP[unit_data.team][spot_name]
+end
+
 function M.IsUnitInSpot(unit_data, spot)
   return functions.GetDistance(unit_data.location, spot) <= spot.z
 end

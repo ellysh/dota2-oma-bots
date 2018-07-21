@@ -66,7 +66,11 @@ function M.pre_move_mid_tower()
   local bot_data = common_algorithms.GetBotData()
   local target_location = map.GetAllyHgSpot(bot_data)
 
-  return not AreAllyCreepsInRadius(constants.MAX_UNIT_SEARCH_RADIUS)
+  return (not AreAllyCreepsInRadius(constants.MAX_UNIT_SEARCH_RADIUS)
+          or functions.GetDistance(
+               map.GetAllySpot(bot_data, 'fountain'),
+               bot_data.location)
+             < 3000)
          and not map.IsUnitInSpot(bot_data, target_location)
 end
 
