@@ -43,10 +43,10 @@ function M.CompareMinHealth(t, a, b)
 end
 
 function M.CompareMinDistance(t, a, b)
-  local bot_data = common_algorithms.GetBotData()
+  local bot_data = M.GetBotData()
 
   return functions.GetUnitDistance(bot_data, t[a])
-         < functions.GetUnitDistance(GetBot(), t[b])
+         < functions.GetUnitDistance(bot_data, t[b])
 end
 
 -- TODO: Remove this function because we are searching units in

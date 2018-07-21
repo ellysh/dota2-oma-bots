@@ -229,7 +229,8 @@ end
 function M.IsTargetBetweenLocations(target_data, location1, location2)
   local locations_distance = M.GetDistance(location1, location2)
 
-  return M.GetDistance(target_data.location, location1) < locations_distance
+  return M.GetDistance(target_data.location, location1)
+           < locations_distance
          and M.GetDistance(target_data.location, location2)
                < locations_distance
 end
