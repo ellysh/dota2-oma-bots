@@ -83,7 +83,7 @@ end
 
 ---------------------------------
 
-local function GetCreep(radius, get_function)
+local function GetClosestCreep(radius, get_function)
   local bot_data = common_algorithms.GetBotData()
   local creeps = get_function(
     bot_data,
@@ -91,16 +91,18 @@ local function GetCreep(radius, get_function)
 
   return functions.GetElementWith(
     creeps,
-    common_algorithms.CompareMinHealth,
-    nil)
+    common_algorithms.CompareMinDistance,
+    function(unit_data)
+      return not common_algorithms.IsUnitLowHp(unit_data)
+    end)
 end
 
 local function GetEnemyCreep(radius)
-  return GetCreep(radius, common_algorithms.GetEnemyCreeps)
+  return GetClosestCreep(radius, common_algorithms.GetEnemyCreeps)
 end
 
 local function GetAllyCreep(radius)
-  return GetCreep(radius, common_algorithms.GetAllyCreeps)
+  return GetClosestCreep(radius, common_algorithms.GetAllyCreeps)
 end
 
 local function IsEnemyHeroNearCreeps()
@@ -164,10 +166,12 @@ end
 
 function M.pre_decrease_creeps_distance()
   local bot_data = common_algorithms.GetBotData()
+  local ally_creep = GetAllyCreep(constants.MAX_UNIT_SEARCH_RADIUS)
+  local enemy_creep = GetEnemyCreep(constants.MAX_UNIT_SEARCH_RADIUS)
 
   return not AreEnemyCreepsInRadius(constants.BASE_CREEP_DISTANCE)
-         and (GetEnemyCreep(constants.MAX_UNIT_SEARCH_RADIUS) ~= nil
-              or GetAllyCreep(constants.MAX_UNIT_SEARCH_RADIUS) ~= nil)
+         and (enemy_creep ~= nil or ally_creep ~= nil)
+         and functions.IsTargetBetweenUnits(ally_creep, bot_data, enemy_creep)
          and not M.pre_increase_creeps_distance()
 end
 
