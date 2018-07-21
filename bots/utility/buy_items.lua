@@ -101,6 +101,20 @@ end
 
 ---------------------------------
 
+function M.pre_buy_boots()
+  return pre_buy_item("item_boots")
+end
+
+function M.post_buy_boots()
+  return not M.pre_buy_faerie_fire()
+end
+
+function M.buy_boots()
+  common_algorithms.BuyItem("item_boots")
+end
+
+---------------------------------
+
 function M.pre_deliver_items()
   local bot_data = common_algorithms.GetBotData()
   local courier_data = common_algorithms.GetCourierData()

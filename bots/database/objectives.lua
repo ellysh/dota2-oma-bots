@@ -96,6 +96,12 @@ M.OBJECTIVES = {
         },
       },
       {
+        move = "buy_boots",
+        actions = {
+          {action = "buy_boots"},
+        },
+      },
+      {
         move = "deliver_items",
         actions = {
           {action = "deliver_items"},
