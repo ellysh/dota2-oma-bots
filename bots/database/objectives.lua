@@ -140,9 +140,21 @@ M.OBJECTIVES = {
         }
       },
       {
+        move = "stop",
+        actions = {
+          {action = "stop"},
+        }
+      },
+      {
         move = "decrease_creeps_distance",
         actions = {
           {action = "decrease_creeps_distance"},
+        }
+      },
+      {
+        move = "stop",
+        actions = {
+          {action = "stop"},
         }
       },
       {
