@@ -6,7 +6,10 @@ local action_timing = require(
 
 local M = {}
 
+local BOT_DATA = {}
+
 function M.UpdateVariables()
+  BOT_DATA = common_algorithms.GetBotData()
 end
 
 ---------------------------------
@@ -40,10 +43,9 @@ end
 
 function M.use_courier()
   local bot = GetBot()
-  local bot_data = common_algorithms.GetBotData()
 
   bot:Action_UseAbility(
-    common_algorithms.GetItem(bot_data, "item_courier"))
+    common_algorithms.GetItem(BOT_DATA, "item_courier"))
 
   action_timing.SetNextActionDelay(0.5)
 end
@@ -51,11 +53,9 @@ end
 ---------------------------------
 
 function M.post_buy_starting_items()
-  local bot_data = common_algorithms.GetBotData()
-
-  return common_algorithms.IsItemPresent(bot_data, "item_faerie_fire")
-         and common_algorithms.IsItemPresent(bot_data, "item_wraith_band")
-         and common_algorithms.IsItemPresent(bot_data, "item_branches")
+  return common_algorithms.IsItemPresent(BOT_DATA, "item_faerie_fire")
+         and common_algorithms.IsItemPresent(BOT_DATA, "item_wraith_band")
+         and common_algorithms.IsItemPresent(BOT_DATA, "item_branches")
 end
 
 function M.pre_buy_starting_items()
