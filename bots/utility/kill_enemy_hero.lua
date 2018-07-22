@@ -15,19 +15,28 @@ local recovery = require(
 
 local M = {}
 
+local ENEMY_HERO_DATA = {}
+local DOES_TOWER_PROTECT_ENEMY = false
+
+function M.UpdateVariables()
+  ENEMY_HERO_DATA = common_algorithms.GetEnemyHero(
+                      bot_data,
+                      constants.MAX_PURSUE_DISTANCE)
+
+  DOES_TOWER_PROTECT_ENEMY = common_algorithms.DoesTowerProtectEnemyUnit(
+                               ENEMY_HERO_DATA)
+end
+
 ---------------------------------
 
 function M.pre_kill_enemy_hero()
   local bot_data = common_algorithms.GetBotData()
-  local target_data = common_algorithms.GetEnemyHero(
-                        bot_data,
-                        constants.MAX_UNIT_SEARCH_RADIUS)
 
-  return target_data ~= nil
-         and common_algorithms.IsUnitLowHp(target_data)
-         and target_data.health < bot_data.health
+  return ENEMY_HERO_DATA ~= nil
+         and common_algorithms.IsUnitLowHp(ENEMY_HERO_DATA)
+         and ENEMY_HERO_DATA.health < bot_data.health
          and not recovery.pre_recovery()
-         and not common_algorithms.DoesTowerProtectEnemyUnit(target_data)
+         and not DOES_TOWER_PROTECT_ENEMY
 end
 
 function M.post_kill_enemy_hero()
@@ -38,11 +47,9 @@ end
 
 function M.pre_attack_enemy_hero()
   local bot_data = common_algorithms.GetBotData()
-  local target_data = common_algorithms.GetEnemyHero(
-                        bot_data,
-                        constants.MAX_UNIT_SEARCH_RADIUS)
 
-  return target_data ~= nil
+  return ENEMY_HERO_DATA ~= nil
+         and not DOES_TOWER_PROTECT_ENEMY
 end
 
 function M.post_attack_enemy_hero()
@@ -51,11 +58,8 @@ end
 
 function M.attack_enemy_hero()
   local bot_data = common_algorithms.GetBotData()
-  local target_data = common_algorithms.GetEnemyHero(
-                        bot_data,
-                        constants.MAX_UNIT_SEARCH_RADIUS)
 
-  common_algorithms.AttackUnit(bot_data, target_data, true)
+  common_algorithms.AttackUnit(bot_data, ENEMY_HERO_DATA, true)
 end
 
 ---------------------------------
@@ -63,17 +67,15 @@ end
 function M.pre_use_silence()
   local bot = GetBot()
   local bot_data = common_algorithms.GetBotData()
-  local target_data = common_algorithms.GetEnemyHero(
-                        bot_data,
-                        constants.MAX_UNIT_SEARCH_RADIUS)
 
   local ability = bot:GetAbilityByName("drow_ranger_wave_of_silence")
 
-  return target_data ~= nil
-         and not target_data.is_silenced
+  return ENEMY_HERO_DATA ~= nil
+         and not ENEMY_HERO_DATA.is_silenced
          and ability:IsFullyCastable()
-         and functions.GetUnitDistance(bot_data, target_data)
+         and functions.GetUnitDistance(bot_data, ENEMY_HERO_DATA)
                <= ability:GetCastRange()
+         and not DOES_TOWER_PROTECT_ENEMY
 end
 
 function M.post_use_silence()
@@ -83,13 +85,9 @@ end
 function M.use_silence()
   local bot = GetBot()
   local bot_data = common_algorithms.GetBotData()
-  local target_data = common_algorithms.GetEnemyHero(
-                        bot_data,
-                        constants.MAX_UNIT_SEARCH_RADIUS)
-
   local ability = bot:GetAbilityByName("drow_ranger_wave_of_silence")
 
-  bot:Action_UseAbilityOnLocation(ability, target_data.location)
+  bot:Action_UseAbilityOnLocation(ability, ENEMY_HERO_DATA.location)
 end
 
 ---------------------------------
