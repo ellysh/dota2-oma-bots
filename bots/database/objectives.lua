@@ -146,6 +146,12 @@ M.OBJECTIVES = {
     module = require(GetScriptDirectory() .."/utility/kill_enemy_hero"),
     moves = {
       {
+        move = "use_silence",
+        actions = {
+          {action = "use_silence"},
+        }
+      },
+      {
         move = "attack_enemy_hero",
         actions = {
           {action = "attack_enemy_hero"},
