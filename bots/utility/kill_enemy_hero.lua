@@ -53,7 +53,7 @@ function M.attack_enemy_hero()
   local bot_data = common_algorithms.GetBotData()
   local target_data = common_algorithms.GetEnemyHero(bot_data)
 
-  common_algorithms.AttackUnit(bot_data, target_data)
+  common_algorithms.AttackUnit(bot_data, target_data, true)
 end
 
 ---------------------------------

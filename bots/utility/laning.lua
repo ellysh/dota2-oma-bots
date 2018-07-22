@@ -278,7 +278,7 @@ function M.lasthit_enemy_creep()
   local bot_data = common_algorithms.GetBotData()
   local creep = GetLastHitCreep(bot_data, SIDE["ENEMY"])
 
-  common_algorithms.AttackUnit(bot_data, creep)
+  common_algorithms.AttackUnit(bot_data, creep, false)
 end
 
 ---------------------------------
@@ -300,7 +300,7 @@ function M.deny_ally_creep()
   local bot_data = common_algorithms.GetBotData()
   local target_data = GetLastHitCreep(bot_data, SIDE["ALLY"])
 
-  common_algorithms.AttackUnit(bot_data, target_data)
+  common_algorithms.AttackUnit(bot_data, target_data, false)
 end
 
 --------------------------------
@@ -373,7 +373,7 @@ function M.harras_enemy_hero()
                       bot_data,
                       constants.MAX_UNIT_SEARCH_RADIUS)
 
-  common_algorithms.AttackUnit(bot_data, hero_data)
+  common_algorithms.AttackUnit(bot_data, hero_data, true)
 end
 
 --------------------------------

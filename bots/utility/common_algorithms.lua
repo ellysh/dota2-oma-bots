@@ -256,11 +256,16 @@ function M.IsUnitLowHp(unit_data)
             <= constants.UNIT_LOW_HEALTH_LEVEL
 end
 
-function M.AttackUnit(bot_data, unit_data)
+function M.AttackUnit(bot_data, unit_data, is_modifier)
   local bot = GetBot()
   local unit = all_units.GetUnit(unit_data)
+  local ability = bot:GetAbilityByName("drow_ranger_frost_arrows")
 
-  bot:Action_AttackUnit(unit, true)
+  if is_modifier and ability:IsFullyCastable() then
+    bot:Action_UseAbilityOnEntity(ability, unit)
+  else
+    bot:Action_AttackUnit(unit, true)
+  end
 
   local attack_point = constants.DROW_RANGER_ATTACK_POINT / bot_data.attack_speed
 
