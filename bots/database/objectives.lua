@@ -84,6 +84,12 @@ M.OBJECTIVES = {
         },
       },
       {
+        move = "buy_tpscroll",
+        actions = {
+          {action = "buy_tpscroll"},
+        },
+      },
+      {
         move = "buy_ring_of_protection",
         actions = {
           {action = "buy_ring_of_protection"},

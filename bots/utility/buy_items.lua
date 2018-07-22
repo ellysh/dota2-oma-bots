@@ -72,6 +72,20 @@ end
 
 ---------------------------------
 
+function M.pre_buy_tpscroll()
+  return pre_buy_item("item_tpscroll")
+end
+
+function M.post_buy_tpscroll()
+  return not M.pre_buy_tpscroll()
+end
+
+function M.buy_tpscroll()
+  common_algorithms.BuyItem("item_tpscroll")
+end
+
+---------------------------------
+
 function M.pre_buy_ring_of_protection()
   return pre_buy_item("item_ring_of_protection")
          and not IsItemPresent("item_ring_of_basilius")
