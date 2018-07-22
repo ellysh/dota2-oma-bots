@@ -36,6 +36,7 @@ local M = {}
 local BOT = {}
 local BOT_DATA = {}
 local ENEMY_CREEP_DATA = {}
+local ENEMY_HERO_DATA = {}
 local ALLY_CREEP_DATA = {}
 
 local function GetClosestCreep(radius, get_function)
@@ -54,6 +55,10 @@ end
 function M.UpdateVariables()
   BOT = GetBot()
   BOT_DATA = common_algorithms.GetBotData()
+
+  ENEMY_HERO_DATA = common_algorithms.GetEnemyHero(
+                      BOT_DATA,
+                      constants.MAX_UNIT_SEARCH_RADIUS)
 
   ENEMY_CREEP_DATA = GetClosestCreep(
                        constants.MAX_UNIT_SEARCH_RADIUS,
@@ -119,11 +124,7 @@ end
 ---------------------------------
 
 local function IsEnemyHeroNearCreeps()
-  local hero_data = common_algorithms.GetEnemyHero(
-                        BOT_DATA,
-                        constants.MAX_UNIT_SEARCH_RADIUS)
-
-  if hero_data == nil then
+  if ENEMY_HERO_DATA == nil then
     return false end
 
   local creeps = common_algorithms.GetEnemyCreeps(
@@ -137,9 +138,9 @@ local function IsEnemyHeroNearCreeps()
                        creeps,
                        nil,
                        function(unit_data)
-                         return constants.BASE_CREEP_DISTANCE
+                         return constants.CREEP_AGRO_RADIUS
                           < functions.GetUnitDistance(
-                              hero_data,
+                              ENEMY_HERO_DATA,
                               unit_data)
                        end)
 
@@ -156,10 +157,8 @@ function M.pre_increase_creeps_distance()
          or map.IsUnitInEnemyTowerAttackRange(BOT_DATA)
 
          or (IsEnemyHeroNearCreeps()
-             and common_algorithms.AreUnitsInRadius(
-                   BOT_DATA,
-                   BOT_DATA.attack_range,
-                   common_algorithms.GetEnemyHeroes)))
+             and functions.GetUnitDistance(BOT_DATA, ENEMY_HERO_DATA)
+                   <= BOT_DATA.attack_range))
 
          and not M.pre_lasthit_enemy_creep()
 end
@@ -306,11 +305,11 @@ local function IsFocusedByTower(unit_data)
 end
 
 local function IsFocusedByHeroes(unit_data)
-  local unit_list = common_algorithms.GetEnemyHeroes(
-                         unit_data,
-                         constants.MAX_HERO_ATTACK_RANGE)
-
-   return 0 < common_algorithms.GetTotalDamage(unit_list, unit_data)
+   return functions.GetUnitDistance(BOT_DATA, ENEMY_HERO_DATA)
+            <= ENEMY_HERO_DATA.attack_range
+          and 0 < common_algorithms.GetTotalDamage(
+                    {ENEMY_HERO_DATA},
+                    unit_data)
 end
 
 function M.pre_evasion()
@@ -331,13 +330,10 @@ end
 --------------------------------
 
 function M.pre_harras_enemy_hero()
-  local target_data = common_algorithms.GetEnemyHero(
-                        BOT_DATA,
-                        constants.MAX_UNIT_SEARCH_RADIUS)
-
-  return target_data ~= nil
+  return ENEMY_HERO_DATA ~= nil
          and not AreEnemyCreepsInRadius(constants.CREEP_AGRO_RADIUS)
-         and not common_algorithms.DoesTowerProtectEnemyUnit(target_data)
+         and not common_algorithms.DoesTowerProtectEnemyUnit(
+                   ENEMY_HERO_DATA)
          and not EnemyCreepAttacks()
 end
 
@@ -346,11 +342,7 @@ function M.post_harras_enemy_hero()
 end
 
 function M.harras_enemy_hero()
-  local hero_data = common_algorithms.GetEnemyHero(
-                      BOT_DATA,
-                      constants.MAX_UNIT_SEARCH_RADIUS)
-
-  common_algorithms.AttackUnit(BOT_DATA, hero_data, true)
+  common_algorithms.AttackUnit(BOT_DATA, ENEMY_HERO_DATA, true)
 end
 
 --------------------------------
