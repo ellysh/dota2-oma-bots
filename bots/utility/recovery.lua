@@ -105,7 +105,7 @@ end
 function M.heal_flask()
   BOT:Action_UseAbilityOnEntity(
     common_algorithms.GetItem(BOT_DATA, "item_flask"),
-    bot)
+    BOT)
 end
 
 ---------------------------------
