@@ -28,7 +28,8 @@ function M.GetItem(unit_data, item_name)
     unit_data.items,
     nil,
     function(item)
-      return item:GetName() == item_name
+      return not item:IsNull()
+             and item:GetName() == item_name
     end)
 end
 
