@@ -29,7 +29,6 @@ local BOT_DATA = {}
 
 function M.UpdateVariables()
   BOT = GetBot()
-
   BOT_DATA = common_algorithms.GetBotData()
 end
 

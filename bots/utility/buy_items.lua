@@ -6,7 +6,12 @@ local common_algorithms = require(
 
 local M = {}
 
+local BOT = {}
+local BOT_DATA = {}
+
 function M.UpdateVariables()
+  BOT = GetBot()
+  BOT_DATA = common_algorithms.GetBotData()
 end
 
 ---------------------------------
@@ -30,16 +35,13 @@ end
 ---------------------------------
 
 local function IsEnoughGoldToBuy(item_name)
-  local bot_data = common_algorithms.GetBotData()
-
-  return GetItemCost(item_name) <= bot_data.gold
+  return GetItemCost(item_name) <= BOT_DATA.gold
 end
 
 local function IsItemPresent(item_name)
-  local bot_data = common_algorithms.GetBotData()
   local courier_data = common_algorithms.GetCourierData()
 
-  return common_algorithms.IsItemPresent(bot_data, item_name)
+  return common_algorithms.IsItemPresent(BOT_DATA, item_name)
          or common_algorithms.IsItemPresent(
               courier_data,
               item_name)
@@ -65,10 +67,8 @@ end
 ---------------------------------
 
 function M.pre_buy_faerie_fire()
-  local bot_data = common_algorithms.GetBotData()
-
   return pre_buy_item("item_faerie_fire")
-         and bot_data.level < 6
+         and BOT_DATA.level < 6
 end
 
 function M.post_buy_faerie_fire()
@@ -173,13 +173,12 @@ end
 ---------------------------------
 
 function M.pre_deliver_items()
-  local bot_data = common_algorithms.GetBotData()
   local courier_data = common_algorithms.GetCourierData()
 
-  return 0 < bot_data.stash_value
+  return 0 < BOT_DATA.stash_value
          and map.IsUnitInSpot(
                courier_data,
-               map.GetAllySpot(bot_data, "fountain"))
+               map.GetAllySpot(BOT_DATA, "fountain"))
 end
 
 function M.post_deliver_items()
@@ -187,10 +186,9 @@ function M.post_deliver_items()
 end
 
 function M.deliver_items()
-  local bot = GetBot()
   local courier = GetCourier(0)
 
-  bot:ActionImmediate_Courier(
+  BOT:ActionImmediate_Courier(
     courier,
     COURIER_ACTION_TAKE_AND_TRANSFER_ITEMS)
 end
