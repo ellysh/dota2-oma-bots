@@ -1,3 +1,6 @@
+* version 0.4
+  - Implement buying items
+
 * version 0.3
   - Implement recovery features
 
