@@ -101,6 +101,8 @@ function M.Process()
 
   local current_objective = GetCurrentObjective()
 
+  current_objective.UpdateVariables()
+
   if not current_objective.done
      and current_objective.module["pre_" .. current_objective.objective]() then
 
