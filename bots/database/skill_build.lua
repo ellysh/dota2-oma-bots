@@ -19,8 +19,8 @@ M.SKILL_BUILD = {
   [15] = "special_bonus_attack_speed_25",
   [16] = "drow_ranger_wave_of_silence",
   [18] = "drow_ranger_marksmanship",
-  [20] = "special_bonus_unique_drow_ranger_1",
-  [25] = "special_bonus_unique_drow_ranger_3",
+  [20] = "special_bonus_unique_drow_ranger_3",
+  [25] = "special_bonus_unique_drow_ranger_1",
 }
 
 return M
