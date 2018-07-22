@@ -14,6 +14,7 @@ function M.pre_buy_items()
          or M.pre_buy_ring_of_protection()
          or M.pre_buy_sobi_mask()
          or M.pre_buy_boots()
+         or M.pre_buy_tpscroll()
          or M.pre_deliver_items()
 end
 
