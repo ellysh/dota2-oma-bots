@@ -68,6 +68,19 @@ M.OBJECTIVES = {
   },
 
   {
+    objective = "upgrade_skills",
+    module = require(GetScriptDirectory() .."/utility/upgrade_skills"),
+    moves = {
+      {
+        move = "upgrade",
+        actions = {
+          {action = "upgrade"},
+        }
+      },
+    }
+  },
+
+  {
     objective = "buy_items",
     module = require(GetScriptDirectory() .."/utility/buy_items"),
     moves = {

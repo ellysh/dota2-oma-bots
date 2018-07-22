@@ -81,6 +81,7 @@ local function AddUnit(unit, type, team)
     gold = unit:GetGold(),
     stash_value = unit:GetStashValue(),
     level = unit:GetLevel(),
+    ability_points = unit:GetAbilityPoints(),
   }
 end
 
