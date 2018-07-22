@@ -1,3 +1,6 @@
+local skill_build = require(
+  GetScriptDirectory() .."/database/skill_build")
+
 local map = require(
   GetScriptDirectory() .."/utility/map")
 
@@ -27,7 +30,11 @@ function M.post_upgrade()
 end
 
 function M.upgrade()
-  -- TODO: Implement this method
+  local bot = GetBot()
+  local bot_data = common_algorithms.GetBotData()
+
+  bot:ActionImmediate_LevelAbility(
+    skill_build.SKILL_BUILD[bot_data.level])
 end
 
 ---------------------------------
