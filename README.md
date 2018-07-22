@@ -24,6 +24,7 @@ Now you should follow the following limitations when playing with the bot:
 3. No shrines.
 4. No neutral camps.
 5. No Roshan.
+6. Bot difficulty is Hard and above.
 
 ## Contacts
 
