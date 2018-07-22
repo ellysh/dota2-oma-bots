@@ -95,13 +95,19 @@ local function IsBotAlive()
   return common_algorithms.GetBotData() ~= nil
 end
 
+local function UpdateVariablesOfAllModules()
+  for _, objective in pairs(objectives.OBJECTIVES) do
+    objective.module.UpdateVariables()
+  end
+end
+
 function M.Process()
   if not IsBotAlive() then
     return end
 
   local current_objective = GetCurrentObjective()
 
-  current_objective.module.UpdateVariables()
+  UpdateVariablesOfAllModules()
 
   if not current_objective.done
      and current_objective.module["pre_" .. current_objective.objective]() then
