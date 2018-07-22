@@ -61,6 +61,7 @@ end
 ---------------------------------
 
 function M.pre_use_silence()
+  local bot = GetBot()
   local bot_data = common_algorithms.GetBotData()
   local target_data = common_algorithms.GetEnemyHero(
                         bot_data,
@@ -71,6 +72,8 @@ function M.pre_use_silence()
   return target_data ~= nil
          and not target_data.is_silenced
          and ability:IsFullyCastable()
+         and functions.GetUnitDistance(bot_data, target_data)
+               <= ability:GetCastRange()
 end
 
 function M.post_use_silence()
@@ -83,11 +86,10 @@ function M.use_silence()
   local target_data = common_algorithms.GetEnemyHero(
                         bot_data,
                         constants.MAX_UNIT_SEARCH_RADIUS)
-  local target = all_units.GetUnit(target_data)
 
   local ability = bot:GetAbilityByName("drow_ranger_wave_of_silence")
 
-  bot:Action_UseAbilityOnEntity(ability, target)
+  bot:Action_UseAbilityOnLocation(ability, target_data.location)
 end
 
 ---------------------------------
