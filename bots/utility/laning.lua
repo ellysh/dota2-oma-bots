@@ -288,8 +288,11 @@ end
 
 function M.pre_deny_ally_creep()
   local bot_data = common_algorithms.GetBotData()
+  local target_data = GetLastHitCreep(bot_data, SIDE["ALLY"])
 
-  return GetLastHitCreep(bot_data, SIDE["ALLY"]) ~= nil
+  return target_data ~= nil
+         and functions.GetRate(target_data.health, target_data.max_health)
+               < constants.UNIT_HALF_HEALTH_LEVEL
 end
 
 function M.post_deny_ally_creep()
@@ -298,9 +301,9 @@ end
 
 function M.deny_ally_creep()
   local bot_data = common_algorithms.GetBotData()
-  local creep = GetLastHitCreep(bot_data, SIDE["ALLY"])
+  local target_data = GetLastHitCreep(bot_data, SIDE["ALLY"])
 
-  common_algorithms.AttackUnit(bot_data, creep)
+  common_algorithms.AttackUnit(bot_data, target_data)
 end
 
 --------------------------------
