@@ -60,7 +60,10 @@ end
 ---------------------------------
 
 function M.pre_buy_faerie_fire()
+  local bot_data = common_algorithms.GetBotData()
+
   return pre_buy_item("item_faerie_fire")
+         and bot_data.level < 6
 end
 
 function M.post_buy_faerie_fire()

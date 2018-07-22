@@ -80,6 +80,7 @@ local function AddUnit(unit, type, team)
     is_casting = IsUnitCasting(unit),
     gold = unit:GetGold(),
     stash_value = unit:GetStashValue(),
+    level = unit:GetLevel(),
   }
 end
 
