@@ -16,6 +16,9 @@ local action_timing = require(
 local map = require(
   GetScriptDirectory() .."/utility/map")
 
+local buy_items = require(
+  GetScriptDirectory() .."/utility/buy_items")
+
 local M = {}
 
 function M.pre_restore_hp_on_base()
@@ -47,6 +50,7 @@ function M.pre_recovery()
           or M.pre_restore_hp_on_base())
 
          and not bot_data.is_casting
+         and not buy_items.pre_buy_items()
 end
 
 function M.post_recovery()
