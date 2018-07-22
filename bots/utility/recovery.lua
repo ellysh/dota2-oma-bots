@@ -24,18 +24,21 @@ local upgrade_skills = require(
 
 local M = {}
 
+local BOT = {}
+local BOT_DATA = {}
+
 function M.UpdateVariables()
+  BOT = GetBot()
+
+  BOT_DATA = common_algorithms.GetBotData()
 end
 
 ---------------------------------
 
 function M.pre_restore_hp_on_base()
-  local bot = GetBot()
-  local bot_data = common_algorithms.GetBotData()
-
-  return bot:HasModifier("modifier_fountain_aura_buff")
-         and (bot_data.health < bot_data.max_health
-              or bot_data.mana < bot_data.max_mana)
+  return BOT:HasModifier("modifier_fountain_aura_buff")
+         and (BOT_DATA.health < BOT_DATA.max_health
+              or BOT_DATA.mana < BOT_DATA.max_mana)
 end
 
 function M.post_restore_hp_on_base()
@@ -43,21 +46,18 @@ function M.post_restore_hp_on_base()
 end
 
 function M.restore_hp_on_base()
-  local bot = GetBot()
-  bot:Action_ClearActions(true)
+  BOT:Action_ClearActions(true)
 end
 
 ---------------------------------
 
 function M.pre_recovery()
-  local bot_data = common_algorithms.GetBotData()
-
-  return ((common_algorithms.IsUnitLowHp(bot_data)
-           and not bot_data.is_healing)
+  return ((common_algorithms.IsUnitLowHp(BOT_DATA)
+           and not BOT_DATA.is_healing)
 
           or M.pre_restore_hp_on_base())
 
-         and not bot_data.is_casting
+         and not BOT_DATA.is_casting
          and not buy_items.pre_buy_items()
          and not upgrade_skills.pre_upgrade_skills()
 end
@@ -69,12 +69,10 @@ end
 ---------------------------------
 
 local function IsItemCastable(item_name)
-  local bot_data = common_algorithms.GetBotData()
-
-  return common_algorithms.IsItemPresent(bot_data, item_name)
-         and common_algorithms.IsItemInInventory(bot_data, item_name)
+  return common_algorithms.IsItemPresent(BOT_DATA, item_name)
+         and common_algorithms.IsItemInInventory(BOT_DATA, item_name)
          and common_algorithms.GetItem(
-               bot_data,
+               BOT_DATA,
                item_name):IsFullyCastable()
 end
 
@@ -87,21 +85,16 @@ function M.post_heal_faerie_fire()
 end
 
 function M.heal_faerie_fire()
-  local bot = GetBot()
-  local bot_data = common_algorithms.GetBotData()
-
-  bot:Action_UseAbility(
-    common_algorithms.GetItem(bot_data, "item_faerie_fire"))
+  BOT:Action_UseAbility(
+    common_algorithms.GetItem(BOT_DATA, "item_faerie_fire"))
 end
 ---------------------------------
 
 function M.pre_heal_flask()
-  local bot_data = common_algorithms.GetBotData()
-
   return IsItemCastable("item_flask")
-         and common_algorithms.GetTotalDamageToUnit(bot_data, nil) == 0
+         and common_algorithms.GetTotalDamageToUnit(BOT_DATA, nil) == 0
          and not common_algorithms.AreUnitsInRadius(
-                   bot_data,
+                   BOT_DATA,
                    constants.MAX_HERO_ATTACK_RANGE,
                    common_algorithms.GetEnemyHeroes)
 end
@@ -111,24 +104,19 @@ function M.post_heal_flask()
 end
 
 function M.heal_flask()
-  local bot = GetBot()
-  local bot_data = common_algorithms.GetBotData()
-
-  bot:Action_UseAbilityOnEntity(
-    common_algorithms.GetItem(bot_data, "item_flask"),
+  BOT:Action_UseAbilityOnEntity(
+    common_algorithms.GetItem(BOT_DATA, "item_flask"),
     bot)
 end
 
 ---------------------------------
 
 function M.pre_heal_tango()
-  local bot_data = common_algorithms.GetBotData()
-
   local tower_data = common_algorithms.GetEnemyBuildings(
-                           bot_data,
+                           BOT_DATA,
                            constants.MAX_UNIT_SEARCH_RADIUS)[1]
 
-  local tree = bot_data.nearby_trees[1]
+  local tree = BOT_DATA.nearby_trees[1]
 
   return IsItemCastable("item_tango")
          and tree ~= nil
@@ -145,12 +133,9 @@ function M.post_heal_tango()
 end
 
 function M.heal_tango()
-  local bot = GetBot()
-  local bot_data = common_algorithms.GetBotData()
-
-  bot:Action_UseAbilityOnTree(
-    common_algorithms.GetItem(bot_data, "item_tango"),
-    bot_data.nearby_trees[1])
+  BOT:Action_UseAbilityOnTree(
+    common_algorithms.GetItem(BOT_DATA, "item_tango"),
+    BOT_DATA.nearby_trees[1])
 end
 
 ---------------------------------
@@ -162,17 +147,15 @@ end
 ---------------------------------
 
 function M.pre_tp_base()
-  local bot_data = common_algorithms.GetBotData()
-
   return IsItemCastable("item_tpscroll")
          and not common_algorithms.IsItemPresent(
-                   bot_data,
+                   BOT_DATA,
                    "item_faerie_fire")
          and not common_algorithms.IsItemPresent(
-                   bot_data,
+                   BOT_DATA,
                    "item_flask")
          and not common_algorithms.IsItemPresent(
-                   bot_data,
+                   BOT_DATA,
                    "item_tango")
 end
 
@@ -181,13 +164,11 @@ function M.post_tp_base()
 end
 
 function M.tp_base()
-  local bot = GetBot()
-  local bot_data = common_algorithms.GetBotData()
-  local item = common_algorithms.GetItem(bot_data, "item_tpscroll")
+  local item = common_algorithms.GetItem(BOT_DATA, "item_tpscroll")
 
-  bot:Action_UseAbilityOnLocation(
+  BOT:Action_UseAbilityOnLocation(
     item,
-    map.GetAllySpot(bot_data, "fountain"))
+    map.GetAllySpot(BOT_DATA, "fountain"))
 
   action_timing.SetNextActionDelay(item:GetChannelTime())
 end
@@ -195,12 +176,10 @@ end
 ---------------------------------
 
 function M.pre_move_base()
-  local bot = GetBot()
-  local bot_data = common_algorithms.GetBotData()
-  local base_location = map.GetAllySpot(bot_data, "fountain")
+  local base_location = map.GetAllySpot(BOT_DATA, "fountain")
 
-  return not (common_algorithms.IsUnitMoving(bot_data)
-              and bot:IsFacingLocation(base_location, 30))
+  return not (common_algorithms.IsUnitMoving(BOT_DATA)
+              and BOT:IsFacingLocation(base_location, 30))
 end
 
 function M.post_move_base()
@@ -208,10 +187,7 @@ function M.post_move_base()
 end
 
 function M.move_base()
-  local bot = GetBot()
-  local bot_data = common_algorithms.GetBotData()
-
-  bot:Action_MoveToLocation(map.GetAllySpot(bot_data, "fountain"))
+  BOT:Action_MoveToLocation(map.GetAllySpot(BOT_DATA, "fountain"))
 end
 
 ---------------------------------
