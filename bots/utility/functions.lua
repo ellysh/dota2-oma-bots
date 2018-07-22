@@ -196,8 +196,14 @@ function M.TableConcat(t1, t2)
   return t1
 end
 
-function M.IsArrayEmpty(array)
-  return array == nil or #array == 0
+function M.IsTableEmpty(table)
+  return table == nil or #table == 0
+end
+
+function M.ClearTable(table)
+  for i = 1, #table do
+    table.remove(table, i)
+  end
 end
 
 function M.GetDistance(location1, location2)

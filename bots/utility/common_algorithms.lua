@@ -241,7 +241,7 @@ end
 function M.AreUnitsInRadius(unit_data, radius, get_function)
   local units = get_function(unit_data, radius)
 
-  return not functions.IsArrayEmpty(units)
+  return not functions.IsTableEmpty(units)
 end
 
 function M.IsUnitMoving(unit_data)

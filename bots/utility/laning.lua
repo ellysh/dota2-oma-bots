@@ -131,7 +131,7 @@ local function IsEnemyHeroNearCreeps()
                        BOT_DATA,
                        constants.MAX_UNIT_SEARCH_RADIUS)
 
-  if functions.IsArrayEmpty(creeps) then
+  if functions.IsTableEmpty(creeps) then
     return false end
 
   local creep_data = functions.GetElementWith(
