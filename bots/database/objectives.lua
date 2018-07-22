@@ -108,6 +108,18 @@ M.OBJECTIVES = {
         },
       },
       {
+        move = "buy_gloves",
+        actions = {
+          {action = "buy_gloves"},
+        },
+      },
+      {
+        move = "buy_boots_of_elves",
+        actions = {
+          {action = "buy_boots_of_elves"},
+        },
+      },
+      {
         move = "deliver_items",
         actions = {
           {action = "deliver_items"},

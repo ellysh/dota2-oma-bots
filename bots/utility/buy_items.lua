@@ -14,6 +14,8 @@ function M.pre_buy_items()
          or M.pre_buy_ring_of_protection()
          or M.pre_buy_sobi_mask()
          or M.pre_buy_boots()
+         or M.pre_buy_gloves()
+         or M.pre_buy_boots_of_elves()
          or M.pre_buy_tpscroll()
          or M.pre_deliver_items()
 end
@@ -124,6 +126,7 @@ end
 
 function M.pre_buy_boots()
   return pre_buy_item("item_boots")
+         and not IsItemPresent("item_power_treads")
 end
 
 function M.post_buy_boots()
@@ -132,6 +135,36 @@ end
 
 function M.buy_boots()
   common_algorithms.BuyItem("item_boots")
+end
+
+---------------------------------
+
+function M.pre_buy_gloves()
+  return pre_buy_item("item_gloves")
+         and not IsItemPresent("item_power_treads")
+end
+
+function M.post_buy_gloves()
+  return not M.pre_buy_gloves()
+end
+
+function M.buy_gloves()
+  common_algorithms.BuyItem("item_gloves")
+end
+
+---------------------------------
+
+function M.pre_buy_boots_of_elves()
+  return pre_buy_item("item_boots_of_elves")
+         and not IsItemPresent("item_power_treads")
+end
+
+function M.post_buy_boots_of_elves()
+  return not M.pre_buy_boots_of_elves()
+end
+
+function M.buy_boots_of_elves()
+  common_algorithms.BuyItem("item_boots_of_elves")
 end
 
 ---------------------------------
