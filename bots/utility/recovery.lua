@@ -59,6 +59,7 @@ local function IsItemCastable(item_name)
   local bot_data = common_algorithms.GetBotData()
 
   return common_algorithms.IsItemPresent(bot_data, item_name)
+         and common_algorithms.IsItemInInventory(bot_data, item_name)
          and common_algorithms.GetItem(
                bot_data,
                item_name):IsFullyCastable()

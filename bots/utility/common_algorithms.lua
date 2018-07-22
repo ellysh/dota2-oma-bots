@@ -36,6 +36,13 @@ function M.IsItemPresent(unit_data, item_name)
   return M.GetItem(unit_data, item_name) ~= nil
 end
 
+function M.IsItemInInventory(unit_data, item_name)
+  local unit = all_units.GetUnit(unit_data)
+  local slot = unit:FindItemSlot(item_name)
+
+  return unit:GetItemSlotType(slot) == ITEM_SLOT_TYPE_MAIN
+end
+
 function M.IsAttackTargetable(unit_data)
   return unit_data.is_alive
          and not unit_data.is_invulnerable
