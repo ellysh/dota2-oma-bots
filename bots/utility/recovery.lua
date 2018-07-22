@@ -24,6 +24,11 @@ local upgrade_skills = require(
 
 local M = {}
 
+function M.UpdateVariables()
+end
+
+---------------------------------
+
 function M.pre_restore_hp_on_base()
   local bot = GetBot()
   local bot_data = common_algorithms.GetBotData()

@@ -33,6 +33,9 @@ local action_timing = require(
 
 local M = {}
 
+function M.UpdateVariables()
+end
+
 ---------------------------------
 
 function M.post_laning()

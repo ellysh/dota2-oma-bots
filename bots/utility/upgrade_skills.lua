@@ -9,6 +9,9 @@ local common_algorithms = require(
 
 local M = {}
 
+function M.UpdateVariables()
+end
+
 ---------------------------------
 
 function M.pre_upgrade_skills()

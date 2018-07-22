@@ -6,6 +6,9 @@ local common_algorithms = require(
 
 local M = {}
 
+function M.UpdateVariables()
+end
+
 ---------------------------------
 
 function M.pre_buy_items()

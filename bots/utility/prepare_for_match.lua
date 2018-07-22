@@ -6,6 +6,9 @@ local action_timing = require(
 
 local M = {}
 
+function M.UpdateVariables()
+end
+
 ---------------------------------
 
 function M.pre_prepare_for_match()
