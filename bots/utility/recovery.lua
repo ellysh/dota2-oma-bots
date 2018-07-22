@@ -19,6 +19,9 @@ local map = require(
 local buy_items = require(
   GetScriptDirectory() .."/utility/buy_items")
 
+local upgrade_skills = require(
+  GetScriptDirectory() .."/utility/upgrade_skills")
+
 local M = {}
 
 function M.pre_restore_hp_on_base()
@@ -51,6 +54,7 @@ function M.pre_recovery()
 
          and not bot_data.is_casting
          and not buy_items.pre_buy_items()
+         and not upgrade_skills.pre_upgrade_skills()
 end
 
 function M.post_recovery()

@@ -25,6 +25,9 @@ local buy_items = require(
 local kill_enemy_hero = require(
   GetScriptDirectory() .."/utility/kill_enemy_hero")
 
+local upgrade_skills = require(
+  GetScriptDirectory() .."/utility/upgrade_skills")
+
 local action_timing = require(
   GetScriptDirectory() .."/utility/action_timing")
 
@@ -44,6 +47,7 @@ function M.pre_laning()
          and not recovery.pre_recovery()
          and not buy_items.pre_buy_items()
          and not kill_enemy_hero.pre_kill_enemy_hero()
+         and not upgrade_skills.pre_upgrade_skills()
 end
 
 ---------------------------------
