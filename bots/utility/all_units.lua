@@ -112,6 +112,15 @@ end
 
 local function ClearUnitList()
   -- TODO: Track the history of units parameters here
+
+  functions.ClearTable(UNIT_LIST[TEAM_RADIANT][UNIT_TYPE["CREEP"]])
+  functions.ClearTable(UNIT_LIST[TEAM_RADIANT][UNIT_TYPE["HERO"]])
+  functions.ClearTable(UNIT_LIST[TEAM_RADIANT][UNIT_TYPE["BUILDING"]])
+
+  functions.ClearTable(UNIT_LIST[TEAM_DIRE][UNIT_TYPE["CREEP"]])
+  functions.ClearTable(UNIT_LIST[TEAM_DIRE][UNIT_TYPE["HERO"]])
+  functions.ClearTable(UNIT_LIST[TEAM_DIRE][UNIT_TYPE["BUILDING"]])
+
   UNIT_LIST = {
     [TEAM_RADIANT] = {
       [UNIT_TYPE["CREEP"]] = {},
