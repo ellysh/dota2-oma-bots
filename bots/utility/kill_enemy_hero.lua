@@ -15,16 +15,22 @@ local recovery = require(
 
 local M = {}
 
+local BOT_DATA = {}
 local ENEMY_HERO_DATA = {}
 local DOES_TOWER_PROTECT_ENEMY = false
 
 function M.UpdateVariables()
+  BOT_DATA = common_algorithms.GetBotData()
+
   ENEMY_HERO_DATA = common_algorithms.GetEnemyHero(
-                      bot_data,
+                      BOT_DATA,
                       constants.MAX_PURSUE_DISTANCE)
 
-  DOES_TOWER_PROTECT_ENEMY = common_algorithms.DoesTowerProtectEnemyUnit(
-                               ENEMY_HERO_DATA)
+  if ENEMY_HERO_DATA ~= nil then
+    DOES_TOWER_PROTECT_ENEMY =
+      common_algorithms.DoesTowerProtectEnemyUnit(
+        ENEMY_HERO_DATA)
+  end
 end
 
 ---------------------------------
