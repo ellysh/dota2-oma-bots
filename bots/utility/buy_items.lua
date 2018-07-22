@@ -123,7 +123,7 @@ function M.pre_buy_boots()
 end
 
 function M.post_buy_boots()
-  return not M.pre_buy_faerie_fire()
+  return not M.pre_buy_boots()
 end
 
 function M.buy_boots()
