@@ -165,30 +165,6 @@ M.OBJECTIVES = {
         }
       },
       {
-        move = "increase_creeps_distance",
-        actions = {
-          {action = "increase_creeps_distance"},
-        }
-      },
-      {
-        move = "stop",
-        actions = {
-          {action = "stop"},
-        }
-      },
-      {
-        move = "decrease_creeps_distance",
-        actions = {
-          {action = "decrease_creeps_distance"},
-        }
-      },
-      {
-        move = "stop",
-        actions = {
-          {action = "stop"},
-        }
-      },
-      {
         move = "lasthit_enemy_creep",
         actions = {
           {action = "lasthit_enemy_creep"},
@@ -210,6 +186,30 @@ M.OBJECTIVES = {
         move = "evasion",
         actions = {
           {action = "evasion"},
+        }
+      },
+      {
+        move = "increase_creeps_distance",
+        actions = {
+          {action = "increase_creeps_distance"},
+        }
+      },
+      {
+        move = "stop",
+        actions = {
+          {action = "stop"},
+        }
+      },
+      {
+        move = "decrease_creeps_distance",
+        actions = {
+          {action = "decrease_creeps_distance"},
+        }
+      },
+      {
+        move = "stop",
+        actions = {
+          {action = "stop"},
         }
       },
       {

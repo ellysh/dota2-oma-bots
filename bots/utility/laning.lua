@@ -164,8 +164,6 @@ function M.pre_increase_creeps_distance()
                    common_algorithms.GetEnemyHeroes)))
 
          and not M.pre_lasthit_enemy_creep()
-         and not M.pre_deny_ally_creep()
-         and not M.pre_harras_enemy_hero()
 end
 
 function M.post_increase_creeps_distance()
@@ -213,7 +211,6 @@ function M.pre_decrease_creeps_distance()
   return not AreEnemyCreepsInRadius(creep_distance)
          and not EnemyCreepAttacks()
          and (enemy_creep ~= nil or ally_creep ~= nil)
-         and not M.pre_increase_creeps_distance()
          and not M.pre_lasthit_enemy_creep()
          and not M.pre_deny_ally_creep()
          and not M.pre_harras_enemy_hero()
@@ -406,9 +403,9 @@ function M.pre_turn()
 
   return AreEnemyCreepsInRadius(bot_data.attack_range)
          and target ~= nil
+         and not bot:IsFacingLocation(target.location, 30)
          and not M.pre_increase_creeps_distance()
          and not M.pre_decrease_creeps_distance()
-         and not bot:IsFacingLocation(target.location, 30)
 end
 
 function M.post_turn()
