@@ -157,6 +157,7 @@ function M.pre_increase_creeps_distance()
          or map.IsUnitInEnemyTowerAttackRange(BOT_DATA)
 
          or (IsEnemyHeroNearCreeps()
+             and ENEMY_HERO_DATA ~= nil
              and functions.GetUnitDistance(BOT_DATA, ENEMY_HERO_DATA)
                    <= BOT_DATA.attack_range))
 
@@ -305,8 +306,9 @@ local function IsFocusedByTower(unit_data)
 end
 
 local function IsFocusedByHeroes(unit_data)
-   return functions.GetUnitDistance(BOT_DATA, ENEMY_HERO_DATA)
-            <= ENEMY_HERO_DATA.attack_range
+   return ENEMY_HERO_DATA ~= nil
+          and functions.GetUnitDistance(BOT_DATA, ENEMY_HERO_DATA)
+                <= ENEMY_HERO_DATA.attack_range
           and 0 < common_algorithms.GetTotalDamage(
                     {ENEMY_HERO_DATA},
                     unit_data)
