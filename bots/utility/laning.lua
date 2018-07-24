@@ -300,7 +300,7 @@ end
 local function IsFocusedByTower(unit_data)
   local unit_list = common_algorithms.GetEnemyBuildings(
                          unit_data,
-                         constants.MAX_TOWER_ATTACK_RANGE)
+                         constants.MAX_UNIT_SEARCH_RADIUS)
 
    return 0 < common_algorithms.GetTotalDamage(unit_list, unit_data)
 end
