@@ -186,6 +186,10 @@ function M.post_buy_two_boots_of_elves()
 end
 
 function M.buy_two_boots_of_elves()
+  BOT:Action_DropItem(
+    common_algorithms.GetItem(BOT_DATA, "item_branches"),
+    BOT_DATA.location)
+
   common_algorithms.BuyItem("item_boots_of_elves")
   common_algorithms.BuyItem("item_boots_of_elves")
 end
