@@ -26,6 +26,8 @@ function M.pre_buy_items()
          or M.pre_buy_boots_of_elves()
          or M.pre_buy_tpscroll()
          or M.pre_deliver_items()
+         or M.pre_buy_two_boots_of_elves()
+         or M.pre_buy_ogre_axe()
 end
 
 function M.post_buy_items()
@@ -166,6 +168,42 @@ end
 
 function M.buy_boots_of_elves()
   common_algorithms.BuyItem("item_boots_of_elves")
+end
+
+---------------------------------
+
+function M.pre_buy_two_boots_of_elves()
+  return common_algorithms.DoesBotOrCourierHaveItem("item_power_treads")
+         and (2 * GetItemCost("item_boots_of_elves")) <= BOT_DATA.gold
+         and not common_algorithms.DoesBotOrCourierHaveItem(
+                   "item_boots_of_elves")
+         and not common_algorithms.DoesBotOrCourierHaveItem(
+                   "item_dragon_lance")
+end
+
+function M.post_buy_two_boots_of_elves()
+  return not M.pre_buy_two_boots_of_elves()
+end
+
+function M.buy_two_boots_of_elves()
+  common_algorithms.BuyItem("item_boots_of_elves")
+  common_algorithms.BuyItem("item_boots_of_elves")
+end
+
+---------------------------------
+
+function M.pre_buy_ogre_axe()
+  return pre_buy_item("item_ogre_axe")
+         and not common_algorithms.DoesBotOrCourierHaveItem(
+                   "item_dragon_lance")
+end
+
+function M.post_buy_ogre_axe()
+  return not M.pre_buy_ogre_axe()
+end
+
+function M.buy_ogre_axe()
+  common_algorithms.BuyItem("item_ogre_axe")
 end
 
 ---------------------------------
