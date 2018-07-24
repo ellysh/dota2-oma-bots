@@ -314,11 +314,19 @@ local function IsFocusedByHeroes(unit_data)
                     unit_data)
 end
 
+local function IsFocusedByUnknownUnit(unit_data)
+  return common_algorithms.IsUnitShootTarget(
+           nil,
+           unit_data,
+           constants.MAX_HERO_ATTACK_RANGE)
+end
+
 function M.pre_evasion()
   return IsFocusedByCreeps(BOT_DATA)
          or IsFocusedByTower(BOT_DATA)
          or (IsFocusedByHeroes(BOT_DATA)
              and AreEnemyCreepsInRadius(constants.CREEP_AGRO_RADIUS))
+         or IsFocusedByUnknownUnit(BOT_DATA)
 end
 
 function M.post_evasion()

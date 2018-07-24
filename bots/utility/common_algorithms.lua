@@ -132,12 +132,13 @@ function M.IsAttackDone(unit_data)
   return unit_data.anim_attack_point <= unit_data.anim_cycle
 end
 
-function M.IsUnitShootTarget(unit_data, target_data, target_distance)
+-- We should pass unit handle to this function for detecting a "nil" caster
+function M.IsUnitShootTarget(unit, target_data, target_distance)
   local unit_projectile = functions.GetElementWith(
     target_data.incoming_projectiles,
     nil,
     function(projectile)
-      return projectile.caster == all_units.GetUnit(unit_data)
+      return projectile.caster == unit
              and (target_distance == nil
                   or functions.GetDistance(
                        projectile.location,
@@ -157,7 +158,10 @@ function M.IsUnitAttackTarget(unit_data, target_data, target_distance)
            and unit:IsFacingLocation(target_data.location, 2)
            and not M.IsAttackDone(unit_data)
   else
-    return M.IsUnitShootTarget(unit_data, target_data, target_distance)
+    return M.IsUnitShootTarget(
+             all_units.GetUnit(unit_data),
+             target_data,
+             target_distance)
   end
 end
 
