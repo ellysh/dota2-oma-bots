@@ -147,14 +147,11 @@ end
 
 function M.pre_tp_base()
   return IsItemCastable("item_tpscroll")
-         and not common_algorithms.IsItemPresent(
-                   BOT_DATA,
+         and not common_algorithms.DoesBotOrCourierHaveItem(
                    "item_faerie_fire")
-         and not common_algorithms.IsItemPresent(
-                   BOT_DATA,
+         and not common_algorithms.DoesBotOrCourierHaveItem(
                    "item_flask")
-         and not common_algorithms.IsItemPresent(
-                   BOT_DATA,
+         and not common_algorithms.DoesBotOrCourierHaveItem(
                    "item_tango")
 end
 
