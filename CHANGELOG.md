@@ -1,3 +1,7 @@
+* version 0.5
+  - Implement upgrading skills and talents.
+  - Implement skills usage.
+
 * version 0.4
   - Implement buying items
 
