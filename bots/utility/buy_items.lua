@@ -38,17 +38,8 @@ local function IsEnoughGoldToBuy(item_name)
   return GetItemCost(item_name) <= BOT_DATA.gold
 end
 
-local function IsItemPresent(item_name)
-  local courier_data = common_algorithms.GetCourierData()
-
-  return common_algorithms.IsItemPresent(BOT_DATA, item_name)
-         or common_algorithms.IsItemPresent(
-              courier_data,
-              item_name)
-end
-
 local function pre_buy_item(item_name)
-  return not IsItemPresent(item_name)
+  return not common_algorithms.DoesBotOrCourierHaveItem(item_name)
          and IsEnoughGoldToBuy(item_name)
 end
 
@@ -97,8 +88,10 @@ end
 
 function M.pre_buy_ring_of_protection()
   return pre_buy_item("item_ring_of_protection")
-         and not IsItemPresent("item_ring_of_basilius")
-         and not IsItemPresent("item_ring_of_aquila")
+         and not common_algorithms.DoesBotOrCourierHaveItem(
+                   "item_ring_of_basilius")
+         and not common_algorithms.DoesBotOrCourierHaveItem(
+                   "item_ring_of_aquila")
 end
 
 function M.post_buy_ring_of_protection()
@@ -113,8 +106,10 @@ end
 
 function M.pre_buy_sobi_mask()
   return pre_buy_item("item_sobi_mask")
-         and not IsItemPresent("item_ring_of_basilius")
-         and not IsItemPresent("item_ring_of_aquila")
+         and not common_algorithms.DoesBotOrCourierHaveItem(
+                   "item_ring_of_basilius")
+         and not common_algorithms.DoesBotOrCourierHaveItem(
+                   "item_ring_of_aquila")
 end
 
 function M.post_buy_sobi_mask()
@@ -129,7 +124,8 @@ end
 
 function M.pre_buy_boots()
   return pre_buy_item("item_boots")
-         and not IsItemPresent("item_power_treads")
+         and not common_algorithms.DoesBotOrCourierHaveItem(
+                   "item_power_treads")
 end
 
 function M.post_buy_boots()
@@ -144,7 +140,8 @@ end
 
 function M.pre_buy_gloves()
   return pre_buy_item("item_gloves")
-         and not IsItemPresent("item_power_treads")
+         and not common_algorithms.DoesBotOrCourierHaveItem(
+                   "item_power_treads")
 end
 
 function M.post_buy_gloves()
@@ -159,7 +156,8 @@ end
 
 function M.pre_buy_boots_of_elves()
   return pre_buy_item("item_boots_of_elves")
-         and not IsItemPresent("item_power_treads")
+         and not common_algorithms.DoesBotOrCourierHaveItem(
+                   "item_power_treads")
 end
 
 function M.post_buy_boots_of_elves()

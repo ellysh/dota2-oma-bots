@@ -292,6 +292,16 @@ function M.DoesTowerProtectEnemyUnit(unit_data)
               < functions.GetUnitDistance(bot_data, unit_data)
 end
 
+function M.DoesBotOrCourierHaveItem(item_name)
+  local courier_data = M.GetCourierData()
+  local bot_data = M.GetBotData()
+
+  return M.IsItemPresent(bot_data, item_name)
+         or M.IsItemPresent(
+              courier_data,
+              item_name)
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_GetNormalizedRadius = GetNormalizedRadius
 M.test_UpdateUnitList = all_units.UpdateUnitList
