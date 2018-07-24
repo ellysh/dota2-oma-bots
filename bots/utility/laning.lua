@@ -298,20 +298,21 @@ local function IsFocusedByCreeps(unit_data)
 end
 
 local function IsFocusedByTower(unit_data)
-  local unit_list = common_algorithms.GetEnemyBuildings(
+  local tower_data = common_algorithms.GetEnemyBuildings(
                          unit_data,
-                         constants.MAX_UNIT_SEARCH_RADIUS)
+                         constants.MAX_UNIT_SEARCH_RADIUS)[1]
 
-   return 0 < common_algorithms.GetTotalDamage(unit_list, unit_data)
+   return tower_data ~= nil
+          and common_algorithms.IsUnitAttackTarget(
+                tower_data,
+                unit_data)
 end
 
-local function IsFocusedByHeroes(unit_data)
+local function IsFocusedByHero(unit_data)
    return ENEMY_HERO_DATA ~= nil
-          and functions.GetUnitDistance(BOT_DATA, ENEMY_HERO_DATA)
-                <= ENEMY_HERO_DATA.attack_range
-          and 0 < common_algorithms.GetTotalDamage(
-                    {ENEMY_HERO_DATA},
-                    unit_data)
+          and common_algorithms.IsUnitAttackTarget(
+                ENEMY_HERO_DATA,
+                unit_data)
 end
 
 local function IsFocusedByUnknownUnit(unit_data)
@@ -324,7 +325,7 @@ end
 function M.pre_evasion()
   return IsFocusedByCreeps(BOT_DATA)
          or IsFocusedByTower(BOT_DATA)
-         or (IsFocusedByHeroes(BOT_DATA)
+         or (IsFocusedByHero(BOT_DATA)
              and AreEnemyCreepsInRadius(constants.CREEP_AGRO_RADIUS))
          or IsFocusedByUnknownUnit(BOT_DATA)
 end
