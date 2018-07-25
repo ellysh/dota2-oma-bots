@@ -290,11 +290,18 @@ end
 --------------------------------
 
 local function IsFocusedByCreeps(unit_data)
-  local unit_list = common_algorithms.GetEnemyCreeps(
+  local creeps = common_algorithms.GetEnemyCreeps(
                          unit_data,
                          constants.MAX_CREEP_ATTACK_RANGE)
 
-   return 0 < common_algorithms.GetTotalDamage(unit_list, unit_data)
+  return nil ~= functions.GetElementWith(
+                  creeps,
+                  nil,
+                  function(creep_data)
+                    return common_algorithms.IsUnitAttackTarget(
+                             creep_data,
+                             unit_data)
+                  end)
 end
 
 local function IsFocusedByTower(unit_data)
@@ -308,26 +315,12 @@ local function IsFocusedByTower(unit_data)
                 unit_data)
 end
 
-local function IsFocusedByHero(unit_data)
-   return ENEMY_HERO_DATA ~= nil
-          and common_algorithms.IsUnitAttackTarget(
-                ENEMY_HERO_DATA,
-                unit_data)
-end
-
-local function IsFocusedByUnknownUnit(unit_data)
-  return common_algorithms.IsUnitShootTarget(
-           nil,
-           unit_data,
-           constants.MAX_HERO_ATTACK_RANGE)
-end
-
 function M.pre_evasion()
   return IsFocusedByCreeps(BOT_DATA)
          or IsFocusedByTower(BOT_DATA)
-         or (IsFocusedByHero(BOT_DATA)
+         or (common_algorithms.IsFocusedByEnemyHero(BOT_DATA)
              and AreEnemyCreepsInRadius(constants.CREEP_AGRO_RADIUS))
-         or IsFocusedByUnknownUnit(BOT_DATA)
+         or common_algorithms.IsFocusedByUnknownUnit(BOT_DATA)
 end
 
 function M.post_evasion()

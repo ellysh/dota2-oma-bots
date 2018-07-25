@@ -91,7 +91,8 @@ end
 
 function M.pre_heal_flask()
   return IsItemCastable("item_flask")
-         and common_algorithms.GetTotalDamageToUnit(BOT_DATA, nil) == 0
+         and not common_algorithms.IsFocusedByEnemyHero(BOT_DATA)
+         and not common_algorithms.IsFocusedByUnknownUnit(BOT_DATA)
          and not common_algorithms.AreUnitsInRadius(
                    BOT_DATA,
                    constants.MAX_HERO_ATTACK_RANGE,

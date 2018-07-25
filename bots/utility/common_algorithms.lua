@@ -306,6 +306,22 @@ function M.DoesBotOrCourierHaveItem(item_name)
               item_name)
 end
 
+function M.IsFocusedByEnemyHero(unit_data)
+  local hero_data = M.GetEnemyHero(
+                      unit_data,
+                      constants.MAX_UNIT_SEARCH_RADIUS)
+
+   return hero_data ~= nil
+          and M.IsUnitAttackTarget(hero_data, unit_data)
+end
+
+function M.IsFocusedByUnknownUnit(unit_data)
+  return M.IsUnitShootTarget(
+           nil,
+           unit_data,
+           constants.MAX_HERO_ATTACK_RANGE)
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_GetNormalizedRadius = GetNormalizedRadius
 M.test_UpdateUnitList = all_units.UpdateUnitList
