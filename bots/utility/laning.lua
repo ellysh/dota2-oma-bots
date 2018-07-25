@@ -38,6 +38,7 @@ local BOT_DATA = {}
 local ENEMY_CREEP_DATA = {}
 local ENEMY_HERO_DATA = {}
 local ALLY_CREEP_DATA = {}
+local ENEMY_TOWER_DATA = {}
 
 local function GetClosestCreep(radius, get_function)
   local creeps = get_function(
@@ -67,6 +68,10 @@ function M.UpdateVariables()
   ALLY_CREEP_DATA = GetClosestCreep(
                       constants.MAX_UNIT_SEARCH_RADIUS,
                       common_algorithms.GetAllyCreeps)
+
+  ENEMY_TOWER_DATA = common_algorithms.GetEnemyBuildings(
+                         BOT_DATA,
+                         constants.MAX_UNIT_SEARCH_RADIUS)[1]
 end
 
 ---------------------------------
@@ -204,6 +209,7 @@ function M.pre_decrease_creeps_distance()
          and not M.pre_lasthit_enemy_creep()
          and not M.pre_deny_ally_creep()
          and not M.pre_harras_enemy_hero()
+         and not M.pre_attack_enemy_tower()
 end
 
 function M.post_decrease_creeps_distance()
@@ -305,13 +311,9 @@ local function IsFocusedByCreeps(unit_data)
 end
 
 local function IsFocusedByTower(unit_data)
-  local tower_data = common_algorithms.GetEnemyBuildings(
-                         unit_data,
-                         constants.MAX_UNIT_SEARCH_RADIUS)[1]
-
-   return tower_data ~= nil
+   return ENEMY_TOWER_DATA ~= nil
           and common_algorithms.IsUnitAttackTarget(
-                tower_data,
+                ENEMY_TOWER_DATA,
                 unit_data)
 end
 
@@ -349,6 +351,24 @@ end
 
 function M.harras_enemy_hero()
   common_algorithms.AttackUnit(BOT_DATA, ENEMY_HERO_DATA, true)
+end
+
+--------------------------------
+
+function M.pre_attack_enemy_tower()
+  return ENEMY_TOWER_DATA ~= nil
+         and IsFocusedByCreeps(ENEMY_TOWER_DATA)
+         and not IsFocusedByTower(BOT_DATA)
+         and not common_algorithms.IsFocusedByEnemyHero(BOT_DATA)
+         and not IsFocusedByCreeps(BOT_DATA)
+end
+
+function M.post_attack_enemy_tower()
+  return not M.pre_attack_enemy_tower()
+end
+
+function M.attack_enemy_tower()
+  common_algorithms.AttackUnit(BOT_DATA, ENEMY_TOWER_DATA, false)
 end
 
 --------------------------------
