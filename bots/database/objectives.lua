@@ -85,6 +85,18 @@ M.OBJECTIVES = {
     module = require(GetScriptDirectory() .."/utility/buy_items"),
     moves = {
       {
+        move = "put_item_in_inventory",
+        actions = {
+          {action = "put_item_in_inventory"},
+        }
+      },
+      {
+        move = "swap_items",
+        actions = {
+          {action = "swap_items"},
+        }
+      },
+      {
         move = "buy_flask",
         actions = {
           {action = "buy_flask"},

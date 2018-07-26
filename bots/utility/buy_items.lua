@@ -28,6 +28,8 @@ function M.pre_buy_items()
          or M.pre_deliver_items()
          or M.pre_buy_two_boots_of_elves()
          or M.pre_buy_ogre_axe()
+         or M.pre_swap_items()
+         or M.pre_put_item_in_inventory()
 end
 
 function M.post_buy_items()
@@ -36,6 +38,59 @@ end
 
 ---------------------------------
 
+local function GetFullSlotInBackpack(unit_data)
+  for i = 6, 8 do
+    if nil ~= BOT:GetItemInSlot(i) then
+      return i
+    end
+  end
+
+  return nil
+end
+
+local function GetEmptySlotInInventory(unit_data)
+  for i = 0, 5 do
+    if nil == BOT:GetItemInSlot(i) then
+      return i
+    end
+  end
+
+  return nil
+end
+
+function M.pre_put_item_in_inventory()
+  return ((nil ~= GetFullSlotInBackpack(BOT_DATA))
+          and (nil ~= GetEmptySlotInInventory(BOT_DATA)))
+end
+
+function M.post_put_item_in_inventory()
+  return not M.pre_put_item_in_inventory()
+end
+
+function M.put_item_in_inventory()
+  BOT:ActionImmediate_SwapItems(
+    GetFullSlotInBackpack(BOT_DATA),
+    GetEmptySlotInInventory(BOT_DATA))
+end
+
+---------------------------------
+
+function M.pre_swap_items()
+  return BOT:FindItemSlot("item_branches") < 6
+         and nil ~= GetFullSlotInBackpack(BOT_DATA)
+end
+
+function M.post_swap_items()
+  return not M.pre_swap_items()
+end
+
+function M.swap_items()
+  BOT:ActionImmediate_SwapItems(
+    BOT:FindItemSlot("item_branches"),
+    GetFullSlotInBackpack(BOT_DATA))
+end
+
+---------------------------------
 local function IsEnoughGoldToBuy(item_name)
   return GetItemCost(item_name) <= BOT_DATA.gold
 end
