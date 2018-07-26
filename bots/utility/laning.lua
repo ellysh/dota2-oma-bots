@@ -210,6 +210,7 @@ function M.pre_decrease_creeps_distance()
          and not M.pre_deny_ally_creep()
          and not M.pre_harras_enemy_hero()
          and not M.pre_attack_enemy_tower()
+         and not BOT:WasRecentlyDamagedByAnyHero(1)
 end
 
 function M.post_decrease_creeps_distance()
