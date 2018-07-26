@@ -266,7 +266,9 @@ function M.AttackUnit(bot_data, unit_data, is_modifier)
   local unit = all_units.GetUnit(unit_data)
   local ability = bot:GetAbilityByName("drow_ranger_frost_arrows")
 
-  if is_modifier and ability:IsFullyCastable() then
+  if is_modifier
+     and ability:IsFullyCastable()
+     and not bot_data.is_silenced then
     bot:Action_UseAbilityOnEntity(ability, unit)
   else
     bot:Action_AttackUnit(unit, true)

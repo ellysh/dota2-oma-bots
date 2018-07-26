@@ -70,6 +70,7 @@ function M.pre_use_silence()
 
   return ENEMY_HERO_DATA ~= nil
          and not ENEMY_HERO_DATA.is_silenced
+         and not BOT_DATA.is_silenced
          and ability:IsFullyCastable()
          and functions.GetUnitDistance(BOT_DATA, ENEMY_HERO_DATA)
                <= ability:GetCastRange()
