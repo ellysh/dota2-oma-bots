@@ -331,12 +331,20 @@ local function GetMaxHealthCreep(side)
     creeps,
     common_algorithms.CompareMaxHealth,
     function(unit_data)
-      return true
+      return (side == SIDE["ENEMY"])
+             or (side == SIDE["ALLY"]
+                 and functions.GetRate(
+                       unit_data.health,
+                       unit_data.max_health) < 0.5)
     end)
 end
 
 function M.pre_attack_enemy_creep()
-  return (ALLY_CREEPS_HP + BOT.attack_damage) < ENEMY_CREEPS_HP
+  local creep = GetMaxHealthCreep(SIDE["ENEMY"])
+
+  return (ALLY_CREEPS_HP + BOT_DATA.attack_damage) < ENEMY_CREEPS_HP
+         and creep ~= nil
+         and 0.5 < functions.GetRate(creep.health, creep.max_health)
 end
 
 function M.post_attack_enemy_creep()
@@ -345,6 +353,25 @@ end
 
 function M.attack_enemy_creep()
   local creep = GetMaxHealthCreep(SIDE["ENEMY"])
+
+  common_algorithms.AttackUnit(BOT_DATA, creep, false)
+end
+
+--------------------------------
+
+function M.pre_attack_ally_creep()
+  local creep = GetMaxHealthCreep(SIDE["ALLY"])
+
+  return (ENEMY_CREEPS_HP + BOT_DATA.attack_damage) < ALLY_CREEPS_HP
+         and creep ~= nil
+end
+
+function M.post_attack_ally_creep()
+  return not M.pre_attack_ally_creep()
+end
+
+function M.attack_ally_creep()
+  local creep = GetMaxHealthCreep(SIDE["ALLY"])
 
   common_algorithms.AttackUnit(BOT_DATA, creep, false)
 end
