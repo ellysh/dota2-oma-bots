@@ -322,10 +322,10 @@ local function GetMaxHealthCreep(side)
     side == SIDE["ENEMY"],
     common_algorithms.GetEnemyCreeps(
       BOT_DATA,
-      constants.MAX_UNIT_TARGET_RADIUS),
+      BOT_DATA.attack_range),
     common_algorithms.GetAllyCreeps(
       BOT_DATA,
-      constants.MAX_UNIT_TARGET_RADIUS))
+      BOT_DATA.attack_range))
 
   return functions.GetElementWith(
     creeps,
