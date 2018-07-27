@@ -68,7 +68,8 @@ end
 ---------------------------------
 
 local function IsItemCastable(item_name)
-  return common_algorithms.IsItemPresent(BOT_DATA, item_name)
+  return not BOT_DATA.is_silenced
+         and common_algorithms.IsItemPresent(BOT_DATA, item_name)
          and common_algorithms.IsItemInInventory(BOT_DATA, item_name)
          and common_algorithms.GetItem(
                BOT_DATA,
