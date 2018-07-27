@@ -213,6 +213,12 @@ M.OBJECTIVES = {
         }
       },
       {
+        move = "attack_enemy_creep",
+        actions = {
+          {action = "attack_enemy_creep"},
+        }
+      },
+      {
         move = "attack_enemy_tower",
         actions = {
           {action = "attack_enemy_tower"},

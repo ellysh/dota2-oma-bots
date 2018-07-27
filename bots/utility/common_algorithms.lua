@@ -54,6 +54,10 @@ function M.CompareMinHealth(t, a, b)
   return t[a].health < t[b].health
 end
 
+function M.CompareMaxHealth(t, a, b)
+  return t[b].health < t[a].health
+end
+
 function M.CompareMinDistance(t, a, b)
   local bot_data = M.GetBotData()
 
@@ -163,6 +167,23 @@ function M.IsUnitAttackTarget(unit_data, target_data, target_distance)
              target_data,
              target_distance)
   end
+end
+
+function M.GetTotalHealth(unit_list)
+  if unit_list == nil or #unit_list == 0 then
+    return 0 end
+
+  local total_health = 0
+
+  functions.DoWithKeysAndElements(
+    unit_list,
+    function(_, unit_data)
+      if unit_data.is_alive then
+        total_health = total_health + unit_data.health
+      end
+    end)
+
+  return total_health
 end
 
 function M.GetTotalDamage(unit_list, target_data, target_distance)
