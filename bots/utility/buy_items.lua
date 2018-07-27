@@ -75,7 +75,7 @@ function M.put_item_in_inventory()
     GetFullSlotInBackpack(BOT_DATA),
     GetEmptySlotInInventory(BOT_DATA))
 
-  action_timing.SetNextActionDelay(0.2)
+  action_timing.SetNextActionDelay(0.1)
 end
 
 ---------------------------------
@@ -94,7 +94,7 @@ function M.swap_items()
     BOT:FindItemSlot("item_branches"),
     GetFullSlotInBackpack(BOT_DATA))
 
-  action_timing.SetNextActionDelay(0.2)
+  action_timing.SetNextActionDelay(0.1)
 end
 
 ---------------------------------
