@@ -333,7 +333,7 @@ end
 function M.evasion()
   BOT:Action_MoveToLocation(map.GetAllySpot(BOT_DATA, "fountain"))
 
-  action_timing.SetNextActionDelay(0.8)
+  action_timing.SetNextActionDelay(1.6)
 end
 
 --------------------------------
