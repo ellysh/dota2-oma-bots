@@ -242,7 +242,12 @@ local function IsLastHit(BOT_DATA, unit_data)
                                 BOT_DATA,
                                 unit_data))
 
-  return unit_data.health <= incoming_damage
+  if (100 < BOT_DATA.attack_damage or 2 < unit_data.armor) then
+    incoming_damage = incoming_damage
+                      * functions.GetDamageMultiplier(unit_data.armor)
+  end
+
+  return unit_data.health < incoming_damage
 end
 
 local function GetLastHitCreep(BOT_DATA, side)

@@ -215,12 +215,16 @@ function M.GetUnitDistance(unit1_data, unit2_data)
   return M.GetDistance(unit1_data.location, unit2_data.location)
 end
 
-function M.GetEffectiveHealth(health, armor)
-  if 0 <= armor then
-    return math.floor(health * (1 + 0.05 * armor))
-  else
-    return math.floor(health * (1 - 0.05 * armor) / (1 - 2 * 0.05 * armor))
-  end
+function M.GetDamageMultiplier(armor)
+  local result = 1 - (0.05 * armor / (1 + 0.05 * math.abs(armor)))
+
+  if result < 0 then
+    return 0 end
+
+  if 2 < result then
+    return 2 end
+
+  return result
 end
 
 function M.GetOpposingTeam(team)
