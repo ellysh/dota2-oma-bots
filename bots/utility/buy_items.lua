@@ -4,6 +4,9 @@ local map = require(
 local common_algorithms = require(
   GetScriptDirectory() .."/utility/common_algorithms")
 
+local action_timing = require(
+  GetScriptDirectory() .."/utility/action_timing")
+
 local M = {}
 
 local BOT = {}
@@ -71,6 +74,8 @@ function M.put_item_in_inventory()
   BOT:ActionImmediate_SwapItems(
     GetFullSlotInBackpack(BOT_DATA),
     GetEmptySlotInInventory(BOT_DATA))
+
+  action_timing.SetNextActionDelay(0.2)
 end
 
 ---------------------------------
@@ -88,6 +93,8 @@ function M.swap_items()
   BOT:ActionImmediate_SwapItems(
     BOT:FindItemSlot("item_branches"),
     GetFullSlotInBackpack(BOT_DATA))
+
+  action_timing.SetNextActionDelay(0.2)
 end
 
 ---------------------------------
