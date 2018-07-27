@@ -81,8 +81,11 @@ end
 ---------------------------------
 
 function M.pre_swap_items()
+  local backpack_slot = GetFullSlotInBackpack(BOT_DATA)
+
   return BOT:FindItemSlot("item_branches") < 6
-         and nil ~= GetFullSlotInBackpack(BOT_DATA)
+         and nil ~= backpack_slot
+         and BOT:GetItemInSlot(backpack_slot):GetName() ~= "item_branches"
 end
 
 function M.post_swap_items()
