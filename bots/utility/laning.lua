@@ -160,8 +160,6 @@ function M.pre_increase_creeps_distance()
              and ENEMY_HERO_DATA ~= nil
              and functions.GetUnitDistance(BOT_DATA, ENEMY_HERO_DATA)
                    <= BOT_DATA.attack_range))
-
-         and not M.pre_lasthit_enemy_creep()
 end
 
 function M.post_increase_creeps_distance()
@@ -201,10 +199,6 @@ function M.pre_decrease_creeps_distance()
   return not AreEnemyCreepsInRadius(creep_distance)
          and not EnemyCreepAttacks()
          and (ENEMY_CREEP_DATA ~= nil or ALLY_CREEP_DATA ~= nil)
-         and not M.pre_lasthit_enemy_creep()
-         and not M.pre_deny_ally_creep()
-         and not M.pre_harras_enemy_hero()
-         and not M.pre_attack_enemy_tower()
          and not BOT:WasRecentlyDamagedByAnyHero(1)
          and (not BOT_DATA.is_healing
               or BOT_DATA.health == BOT_DATA.max_health)
@@ -463,8 +457,6 @@ function M.pre_turn()
   return AreEnemyCreepsInRadius(BOT_DATA.attack_range)
          and ENEMY_CREEP_DATA ~= nil
          and not BOT:IsFacingLocation(ENEMY_CREEP_DATA.location, 30)
-         and not M.pre_increase_creeps_distance()
-         and not M.pre_decrease_creeps_distance()
 end
 
 function M.post_turn()
