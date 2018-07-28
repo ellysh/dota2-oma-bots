@@ -1,3 +1,7 @@
+* version 0.6
+  - Rework the algorithm of choosing objectives and moves.
+  - Support equilibrium on the line.
+
 * version 0.5
   - Implement upgrading skills and talents.
   - Implement skills usage.
