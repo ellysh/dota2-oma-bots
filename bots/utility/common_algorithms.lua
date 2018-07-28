@@ -159,7 +159,9 @@ function M.IsUnitAttackTarget(unit_data, target_data, target_distance)
     local unit = all_units.GetUnit(unit_data)
 
     return M.IsUnitAttack(unit_data)
-           and unit:IsFacingLocation(target_data.location, 2)
+           and unit:IsFacingLocation(
+                 target_data.location,
+                 constants.TURN_TARGET_MAX_DEGREE)
            and not M.IsAttackDone(unit_data)
   else
     return M.IsUnitShootTarget(

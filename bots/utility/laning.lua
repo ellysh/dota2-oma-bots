@@ -186,7 +186,7 @@ local function EnemyCreepAttacks()
 
          and all_units.GetUnit(ENEMY_CREEP_DATA):IsFacingLocation(
                BOT_DATA.location,
-               4)
+               constants.TURN_TARGET_MAX_DEGREE)
 end
 
 ---------------------------------
@@ -471,7 +471,9 @@ end
 function M.pre_turn()
   return AreEnemyCreepsInRadius(BOT_DATA.attack_range)
          and ENEMY_CREEP_DATA ~= nil
-         and not BOT:IsFacingLocation(ENEMY_CREEP_DATA.location, 30)
+         and not BOT:IsFacingLocation(
+                   ENEMY_CREEP_DATA.location,
+                   constants.TURN_TARGET_MAX_DEGREE)
 end
 
 function M.post_turn()
