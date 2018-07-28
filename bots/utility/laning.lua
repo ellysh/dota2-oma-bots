@@ -16,18 +16,6 @@ local constants = require(
 local prepare_for_match = require(
   GetScriptDirectory() .."/utility/prepare_for_match")
 
-local recovery = require(
-  GetScriptDirectory() .."/utility/recovery")
-
-local buy_items = require(
-  GetScriptDirectory() .."/utility/buy_items")
-
-local kill_enemy_hero = require(
-  GetScriptDirectory() .."/utility/kill_enemy_hero")
-
-local upgrade_skills = require(
-  GetScriptDirectory() .."/utility/upgrade_skills")
-
 local action_timing = require(
   GetScriptDirectory() .."/utility/action_timing")
 
@@ -88,17 +76,12 @@ end
 
 ---------------------------------
 
-function M.post_laning()
-  return recovery.pre_recovery()
+function M.pre_laning()
+  return not BOT_DATA.is_casting
 end
 
-function M.pre_laning()
-  return prepare_for_match.post_prepare_for_match()
-         and not BOT_DATA.is_casting
-         and not recovery.pre_recovery()
-         and not buy_items.pre_buy_items()
-         and not kill_enemy_hero.pre_kill_enemy_hero()
-         and not upgrade_skills.pre_upgrade_skills()
+function M.post_laning()
+  return not M.pre_laning()
 end
 
 ---------------------------------
