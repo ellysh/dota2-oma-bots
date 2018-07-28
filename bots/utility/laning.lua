@@ -439,6 +439,20 @@ end
 
 --------------------------------
 
+function M.pre_stop_attack()
+  return common_algorithms.IsUnitAttack(BOT_DATA)
+end
+
+function M.post_stop_attack()
+  return not M.pre_stop_attack()
+end
+
+function M.stop_attack()
+  BOT:Action_ClearActions(true)
+end
+
+--------------------------------
+
 function M.pre_stop_attack_and_move()
   return common_algorithms.IsUnitMoving(BOT_DATA)
          or common_algorithms.IsUnitAttack(BOT_DATA)

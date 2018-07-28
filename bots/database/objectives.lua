@@ -226,6 +226,13 @@ M.OBJECTIVES = {
         }
       },
       {
+        move = "stop_attack",
+        is_interruptible = true,
+        actions = {
+          {action = "stop_attack"},
+        }
+      },
+      {
         move = "lasthit_enemy_creep",
         is_interruptible = false,
         actions = {
