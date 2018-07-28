@@ -10,9 +10,6 @@ local constants = require(
 local logger = require(
   GetScriptDirectory() .."/utility/logger")
 
-local recovery = require(
-  GetScriptDirectory() .."/utility/recovery")
-
 local M = {}
 
 local BOT_DATA = {}
@@ -39,7 +36,6 @@ function M.pre_kill_enemy_hero()
   return ENEMY_HERO_DATA ~= nil
          and common_algorithms.IsUnitLowHp(ENEMY_HERO_DATA)
          and ENEMY_HERO_DATA.health < BOT_DATA.health
-         and not recovery.pre_recovery()
          and not DOES_TOWER_PROTECT_ENEMY
 end
 
