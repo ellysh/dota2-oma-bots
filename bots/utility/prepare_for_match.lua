@@ -16,13 +16,12 @@ end
 
 function M.pre_prepare_for_match()
   return DotaTime() < 0
+         and (M.pre_buy_and_use_courier()
+              or M.pre_buy_starting_items())
 end
 
 function M.post_prepare_for_match()
-  return (M.post_buy_and_use_courier()
-          and M.post_buy_starting_items())
-
-         or not M.pre_prepare_for_match()
+  return not M.pre_prepare_for_match()
 end
 
 ---------------------------------
