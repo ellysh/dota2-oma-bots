@@ -16,12 +16,6 @@ local action_timing = require(
 local map = require(
   GetScriptDirectory() .."/utility/map")
 
-local buy_items = require(
-  GetScriptDirectory() .."/utility/buy_items")
-
-local upgrade_skills = require(
-  GetScriptDirectory() .."/utility/upgrade_skills")
-
 local M = {}
 
 local BOT = {}
@@ -57,8 +51,6 @@ function M.pre_recovery()
           or M.pre_restore_hp_on_base())
 
          and not BOT_DATA.is_casting
-         and not buy_items.pre_buy_items()
-         and not upgrade_skills.pre_upgrade_skills()
 end
 
 function M.post_recovery()
@@ -141,6 +133,7 @@ end
 ---------------------------------
 
 function M.pre_move_shrine()
+  -- TODO: Implement this move
   return false
 end
 
