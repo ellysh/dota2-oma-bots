@@ -429,6 +429,8 @@ function M.pre_harras_enemy_hero()
          and not common_algorithms.DoesTowerProtectEnemyUnit(
                    ENEMY_HERO_DATA)
          and not EnemyCreepAttacks()
+         and (not BOT_DATA.is_healing
+              or BOT_DATA.health == BOT_DATA.max_health)
 end
 
 function M.post_harras_enemy_hero()
