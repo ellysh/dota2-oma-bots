@@ -12,34 +12,52 @@ local action_timing = require(
 
 local M = {}
 
-local OBJECTIVE_INDEX = 1
-local MOVE_INDEX = 1
+local CURRENT_OBJECTIVE = nil
+local CURRENT_MOVE = nil
 local ACTION_INDEX = 1
 
-local function GetCurrentObjective()
-  return objectives.OBJECTIVES[OBJECTIVE_INDEX]
+local function IsBotAlive()
+  return common_algorithms.GetBotData() ~= nil
 end
 
-local function GetCurrentMove()
-  return GetCurrentObjective().moves[MOVE_INDEX]
+local function UpdateVariablesOfAllModules()
+  for _, objective in pairs(objectives.OBJECTIVES) do
+    objective.module.UpdateVariables()
+  end
+end
+
+local function FindObjectiveToExecute()
+  return functions.GetElementWith(
+           objectives.OBJECTIVES,
+           nil,
+           function(objective)
+             return objective.module[
+                      "pre_" .. objective.objective]()
+           end)
+end
+
+local function FindMoveToExecute()
+  return functions.GetElementWith(
+           CURRENT_OBJECTIVE.moves,
+           nil,
+           function(move)
+             return CURRENT_OBJECTIVE.module["pre_" .. move.move]()
+           end)
+end
+
+local function ExecuteMove()
+  if CURRENT_MOVE == nil
+     or CURRENT_MOVE.is_interruptible
+     or (not CURRENT_MOVE.is_interruptible
+         and CURRENT_OBJECTIVE.module["post_" .. CURRENT_MOVE.move]()) then
+    CURRENT_MOVE = FindMoveToExecute()
+  end
+
+  ExecuteAction()
 end
 
 local function GetCurrentAction()
-  return GetCurrentObjective().moves[MOVE_INDEX].actions[ACTION_INDEX]
-end
-
-local function FindNextObjective()
-  OBJECTIVE_INDEX = OBJECTIVE_INDEX + 1
-  if #objectives.OBJECTIVES < OBJECTIVE_INDEX then
-    OBJECTIVE_INDEX = 1
-  end
-end
-
-local function FindNextMove()
-  MOVE_INDEX = MOVE_INDEX + 1
-  if #GetCurrentObjective().moves < MOVE_INDEX then
-    MOVE_INDEX = 1
-  end
+  return CURRENT_MOVE.actions[ACTION_INDEX]
 end
 
 local function FindNextAction()
@@ -49,34 +67,13 @@ local function FindNextAction()
   end
 end
 
-local function executeMove()
-  local current_move = GetCurrentMove()
-  local current_objective = GetCurrentObjective()
-
-  local action_time = action_timing.GetNextActionTime()
-
-  if action_time ~= 0 and GameTime() < action_time then
-    return end
-
-  if current_move == nil or
-     not current_objective.module["pre_" .. current_move.move]() then
-    FindNextMove()
-    return
-  end
-
-  if current_objective.module["post_" .. current_move.move]() then
-    MOVE_INDEX = 1
-    return
-  end
+local function ExecuteAction()
+  local current_action = GetCurrentAction()
 
   logger.Print("team = " .. GetTeam() .. " current_objective = " ..
-    current_objective.objective .. " OBJECTIVE_INDEX = " ..
-    OBJECTIVE_INDEX)
+    CURRENT_OBJECTIVE.objective)
 
-  logger.Print("\tcurrent_move = " ..
-    current_move.move .. " MOVE_INDEX = " .. MOVE_INDEX)
-
-  local current_action = GetCurrentAction()
+  logger.Print("\tcurrent_move = " .. CURRENT_MOVE.move)
 
   if current_action == nil then
     FindNextAction()
@@ -91,36 +88,26 @@ local function executeMove()
   FindNextAction()
 end
 
-local function IsBotAlive()
-  return common_algorithms.GetBotData() ~= nil
-end
+local function IsActionTimingDelay()
+  local action_time = action_timing.GetNextActionTime()
 
-local function UpdateVariablesOfAllModules()
-  for _, objective in pairs(objectives.OBJECTIVES) do
-    objective.module.UpdateVariables()
-  end
+  return action_time ~= 0 and GameTime() < action_time
 end
 
 function M.Process()
-  if not IsBotAlive() then
+  if not IsBotAlive() or IsActionTimingDelay() then
     return end
-
-  local current_objective = GetCurrentObjective()
 
   UpdateVariablesOfAllModules()
 
-  if current_objective.module["pre_" .. current_objective.objective]() then
-
-    executeMove(current_objective)
-  else
-    -- We should find another objective here
-    FindNextObjective()
-    return
+  if CURRENT_OBJECTIVE == nil
+     or CURRENT_OBJECTIVE.is_interruptible
+     or (not CURRENT_OBJECTIVE.is_interruptible
+         and CURRENT_OBJECTIVE.module["post_" .. CURRENT_OBJECTIVE.objective]()) then
+    CURRENT_OBJECTIVE = FindObjectiveToExecute()
   end
 
-  if current_objective.module["post_" .. current_objective.objective]() then
-    FindNextObjective()
-  end
+  ExecuteMove()
 end
 
 -- Provide an access to local functions for unit tests only
