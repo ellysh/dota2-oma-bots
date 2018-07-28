@@ -223,6 +223,9 @@ function M.pre_decrease_creeps_distance()
          and not M.pre_harras_enemy_hero()
          and not M.pre_attack_enemy_tower()
          and not BOT:WasRecentlyDamagedByAnyHero(1)
+         and (not BOT_DATA.is_healing
+              or BOT_DATA.health == BOT_DATA.max_health)
+         and ENEMY_CREEPS_HP < ALLY_CREEPS_HP * 3
 end
 
 function M.post_decrease_creeps_distance()
