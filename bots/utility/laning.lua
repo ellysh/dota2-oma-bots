@@ -159,7 +159,9 @@ function M.pre_increase_creeps_distance()
          or (ENEMY_HERO_DATA ~= nil
              and IsEnemyHeroNearCreeps()
              and functions.GetUnitDistance(BOT_DATA, ENEMY_HERO_DATA)
-                   <= BOT_DATA.attack_range))
+                   <= BOT_DATA.attack_range - 50))
+
+         or (ALLY_CREEPS_HP * 3) < ENEMY_CREEPS_HP
 end
 
 function M.post_increase_creeps_distance()
@@ -201,7 +203,7 @@ function M.pre_decrease_creeps_distance()
          and (ENEMY_CREEP_DATA ~= nil or ALLY_CREEP_DATA ~= nil)
          and (not BOT_DATA.is_healing
               or BOT_DATA.health == BOT_DATA.max_health)
-         and ENEMY_CREEPS_HP < ALLY_CREEPS_HP * 3
+         and ENEMY_CREEPS_HP < (ALLY_CREEPS_HP * 3)
 end
 
 function M.post_decrease_creeps_distance()
