@@ -109,8 +109,7 @@ function M.Process()
 
   UpdateVariablesOfAllModules()
 
-  if not current_objective.done
-     and current_objective.module["pre_" .. current_objective.objective]() then
+  if current_objective.module["pre_" .. current_objective.objective]() then
 
     executeMove(current_objective)
   else
@@ -120,7 +119,6 @@ function M.Process()
   end
 
   if current_objective.module["post_" .. current_objective.objective]() then
-    current_objective.done = true
     FindNextObjective()
   end
 end
