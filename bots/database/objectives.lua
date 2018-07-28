@@ -296,10 +296,10 @@ M.OBJECTIVES = {
         }
       },
       {
-        move = "stop",
+        move = "stop_attack_and_move",
         is_interruptible = true,
         actions = {
-          {action = "stop"},
+          {action = "stop_attack_and_move"},
         }
       },
     },

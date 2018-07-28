@@ -439,16 +439,16 @@ end
 
 --------------------------------
 
-function M.pre_stop()
+function M.pre_stop_attack_and_move()
   return common_algorithms.IsUnitMoving(BOT_DATA)
          or common_algorithms.IsUnitAttack(BOT_DATA)
 end
 
-function M.post_stop()
-  return not M.pre_stop()
+function M.post_stop_attack_and_move()
+  return not M.pre_stop_attack_and_move()
 end
 
-function M.stop()
+function M.stop_attack_and_move()
   BOT:Action_ClearActions(true)
 end
 
