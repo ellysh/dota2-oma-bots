@@ -230,6 +230,7 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "lasthit_enemy_creep"},
+          {action = "stop"},
         }
       },
       {
@@ -237,6 +238,7 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "deny_ally_creep"},
+          {action = "stop"},
         }
       },
       {
@@ -244,6 +246,7 @@ M.OBJECTIVES = {
         is_interruptible = true,
         actions = {
           {action = "harras_enemy_hero"},
+          {action = "stop"},
         }
       },
       {
@@ -265,6 +268,7 @@ M.OBJECTIVES = {
         is_interruptible = true,
         actions = {
           {action = "attack_enemy_creep"},
+          {action = "stop"},
         }
       },
       {
@@ -272,6 +276,7 @@ M.OBJECTIVES = {
         is_interruptible = true,
         actions = {
           {action = "attack_ally_creep"},
+          {action = "stop"},
         }
       },
       {
@@ -279,6 +284,7 @@ M.OBJECTIVES = {
         is_interruptible = true,
         actions = {
           {action = "attack_enemy_tower"},
+          {action = "stop"},
         }
       },
       {
