@@ -721,6 +721,10 @@ function Unit:ActionImmediate_SwapItems(index1, index2)
   self.inventory[index2+1] = tmp
 end
 
+function Unit:GetAttributeValue(attribute)
+  return 0
+end
+
 ------------------------------------------
 
 Ability = {}

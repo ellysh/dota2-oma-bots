@@ -297,7 +297,14 @@ function M.AttackUnit(bot_data, unit_data, is_modifier)
     bot:Action_AttackUnit(unit, true)
   end
 
-  local attack_point = constants.DROW_RANGER_ATTACK_POINT / bot_data.attack_speed
+  local attack_point = (constants.DROW_RANGER_ATTACK_POINT)
+                         * bot_data.seconds_per_attack
+
+  if not bot:IsFacingLocation(
+           unit_data.location,
+           constants.TURN_TARGET_MAX_DEGREE) then
+    attack_point = attack_point + constants.DROW_RANGER_TURN_TIME
+  end
 
   action_timing.SetNextActionDelay(attack_point)
 end
