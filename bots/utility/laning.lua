@@ -156,8 +156,8 @@ function M.pre_increase_creeps_distance()
 
          or map.IsUnitInEnemyTowerAttackRange(BOT_DATA)
 
-         or (IsEnemyHeroNearCreeps()
-             and ENEMY_HERO_DATA ~= nil
+         or (ENEMY_HERO_DATA ~= nil
+             and IsEnemyHeroNearCreeps()
              and functions.GetUnitDistance(BOT_DATA, ENEMY_HERO_DATA)
                    <= BOT_DATA.attack_range))
 end
@@ -199,7 +199,6 @@ function M.pre_decrease_creeps_distance()
   return not AreEnemyCreepsInRadius(creep_distance)
          and not EnemyCreepAttacks()
          and (ENEMY_CREEP_DATA ~= nil or ALLY_CREEP_DATA ~= nil)
-         and not BOT:WasRecentlyDamagedByAnyHero(1)
          and (not BOT_DATA.is_healing
               or BOT_DATA.health == BOT_DATA.max_health)
          and ENEMY_CREEPS_HP < ALLY_CREEPS_HP * 3
