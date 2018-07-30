@@ -18,7 +18,6 @@ local action_timing = require(
 
 local M = {}
 
-local BOT = {}
 local BOT_DATA = {}
 local ENEMY_CREEP_DATA = {}
 local ENEMY_HERO_DATA = {}
@@ -294,7 +293,8 @@ function M.post_stop_attack()
 end
 
 function M.stop_attack()
-  BOT:Action_ClearActions(true)
+  local bot = GetBot()
+  bot:Action_ClearActions(true)
 end
 
 ---------------------------------
