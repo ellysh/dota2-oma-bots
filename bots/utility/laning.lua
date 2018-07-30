@@ -482,6 +482,8 @@ end
 
 function M.turn()
   BOT:Action_AttackUnit(all_units.GetUnit(ENEMY_CREEP_DATA), true)
+
+  action_timing.SetNextActionDelay(constants.DROW_RANGER_TURN_TIME)
 end
 
 -- Provide an access to local functions for unit tests only

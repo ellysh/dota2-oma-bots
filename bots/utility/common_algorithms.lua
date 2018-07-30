@@ -273,6 +273,7 @@ end
 
 function M.IsUnitMoving(unit_data)
   return unit_data.anim_activity == ACTIVITY_RUN
+         or unit_data.anim_activity == ACTIVITY_FLAIL
 end
 
 function M.IsUnitLowHp(unit_data)
