@@ -13,9 +13,6 @@ local common_algorithms = require(
 local constants = require(
   GetScriptDirectory() .."/utility/constants")
 
-local prepare_for_match = require(
-  GetScriptDirectory() .."/utility/prepare_for_match")
-
 local action_timing = require(
   GetScriptDirectory() .."/utility/action_timing")
 
@@ -247,7 +244,10 @@ end
 
 function M.pre_harras_enemy_hero()
   return ENEMY_HERO_DATA ~= nil
-         and not AreEnemyCreepsInRadius(constants.CREEP_AGRO_RADIUS)
+         and not common_algorithms.AreUnitsInRadius(
+                   BOT_DATA,
+                   constants.CREEP_AGRO_RADIUS,
+                   common_algorithms.GetEnemyCreeps)
          and not common_algorithms.DoesTowerProtectEnemyUnit(
                    ENEMY_HERO_DATA)
          and not EnemyCreepAttacks()
@@ -267,10 +267,12 @@ end
 
 function M.pre_attack_enemy_tower()
   return ENEMY_TOWER_DATA ~= nil
-         and IsFocusedByCreeps(ENEMY_TOWER_DATA)
-         and not IsFocusedByTower(BOT_DATA)
+         and common_algorithms.IsFocusedByCreeps(ENEMY_TOWER_DATA)
+         and not common_algorithms.IsFocusedByTower(
+                   BOT_DATA,
+                   ENEMY_TOWER_DATA)
          and not common_algorithms.IsFocusedByEnemyHero(BOT_DATA)
-         and not IsFocusedByCreeps(BOT_DATA)
+         and not common_algorithms.IsFocusedByCreeps(BOT_DATA)
 end
 
 function M.post_attack_enemy_tower()

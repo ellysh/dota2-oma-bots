@@ -13,9 +13,6 @@ local common_algorithms = require(
 local constants = require(
   GetScriptDirectory() .."/utility/constants")
 
-local prepare_for_match = require(
-  GetScriptDirectory() .."/utility/prepare_for_match")
-
 local action_timing = require(
   GetScriptDirectory() .."/utility/action_timing")
 
@@ -226,31 +223,9 @@ end
 
 ---------------------------------
 
-local function IsFocusedByCreeps(unit_data)
-  local creeps = common_algorithms.GetEnemyCreeps(
-                         unit_data,
-                         constants.MAX_CREEP_ATTACK_RANGE)
-
-  return nil ~= functions.GetElementWith(
-                  creeps,
-                  nil,
-                  function(creep_data)
-                    return common_algorithms.IsUnitAttackTarget(
-                             creep_data,
-                             unit_data)
-                  end)
-end
-
-local function IsFocusedByTower(unit_data)
-   return ENEMY_TOWER_DATA ~= nil
-          and common_algorithms.IsUnitAttackTarget(
-                ENEMY_TOWER_DATA,
-                unit_data)
-end
-
 function M.pre_evasion()
-  return IsFocusedByCreeps(BOT_DATA)
-         or IsFocusedByTower(BOT_DATA)
+  return common_algorithms.IsFocusedByCreeps(BOT_DATA)
+         or common_algorithms.IsFocusedByTower(BOT_DATA, ENEMY_TOWER_DATA)
          or (common_algorithms.IsFocusedByEnemyHero(BOT_DATA)
              and AreEnemyCreepsInRadius(constants.CREEP_AGRO_RADIUS))
          or common_algorithms.IsFocusedByUnknownUnit(BOT_DATA)

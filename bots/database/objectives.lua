@@ -214,56 +214,6 @@ M.OBJECTIVES = {
   },
 
   {
-    objective = "positioning",
-    module = require(GetScriptDirectory() .."/utility/positioning"),
-    is_interruptible = true,
-    moves = {
-      {
-        move = "move_mid_tower",
-        is_interruptible = true,
-        actions = {
-          {action = "move_mid_tower"},
-        }
-      },
-      {
-        move = "evasion",
-        is_interruptible = false,
-        actions = {
-          {action = "evasion"},
-        }
-      },
-      {
-        move = "increase_creeps_distance",
-        is_interruptible = true,
-        actions = {
-          {action = "increase_creeps_distance"},
-        }
-      },
-      {
-        move = "decrease_creeps_distance",
-        is_interruptible = true,
-        actions = {
-          {action = "decrease_creeps_distance"},
-        }
-      },
-      {
-        move = "turn",
-        is_interruptible = true,
-        actions = {
-          {action = "turn"},
-        }
-      },
-      {
-        move = "stop_attack_and_move",
-        is_interruptible = true,
-        actions = {
-          {action = "stop_attack_and_move"},
-        }
-      },
-    }
-  },
-
-  {
     objective = "laning",
     module = require(GetScriptDirectory() .."/utility/laning"),
     is_interruptible = true,
@@ -318,6 +268,56 @@ M.OBJECTIVES = {
         }
       },
     },
+  },
+
+  {
+    objective = "positioning",
+    module = require(GetScriptDirectory() .."/utility/positioning"),
+    is_interruptible = true,
+    moves = {
+      {
+        move = "move_mid_tower",
+        is_interruptible = true,
+        actions = {
+          {action = "move_mid_tower"},
+        }
+      },
+      {
+        move = "evasion",
+        is_interruptible = false,
+        actions = {
+          {action = "evasion"},
+        }
+      },
+      {
+        move = "increase_creeps_distance",
+        is_interruptible = true,
+        actions = {
+          {action = "increase_creeps_distance"},
+        }
+      },
+      {
+        move = "decrease_creeps_distance",
+        is_interruptible = true,
+        actions = {
+          {action = "decrease_creeps_distance"},
+        }
+      },
+      {
+        move = "turn",
+        is_interruptible = true,
+        actions = {
+          {action = "turn"},
+        }
+      },
+      {
+        move = "stop_attack_and_move",
+        is_interruptible = true,
+        actions = {
+          {action = "stop_attack_and_move"},
+        }
+      },
+    }
   },
 
 }

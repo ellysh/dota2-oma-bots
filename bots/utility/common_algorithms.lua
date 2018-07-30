@@ -357,6 +357,28 @@ function M.IsFocusedByUnknownUnit(unit_data)
            constants.MAX_HERO_ATTACK_RANGE)
 end
 
+function M.IsFocusedByCreeps(unit_data)
+  local creeps = M.GetEnemyCreeps(
+                   unit_data,
+                   constants.MAX_CREEP_ATTACK_RANGE)
+
+  return nil ~= functions.GetElementWith(
+                  creeps,
+                  nil,
+                  function(creep_data)
+                    return M.IsUnitAttackTarget(
+                             creep_data,
+                             unit_data)
+                  end)
+end
+
+function M.IsFocusedByTower(unit_data, tower_data)
+   return tower_data ~= nil
+          and M.IsUnitAttackTarget(
+                tower_data,
+                unit_data)
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_GetNormalizedRadius = GetNormalizedRadius
 M.test_UpdateUnitList = all_units.UpdateUnitList
