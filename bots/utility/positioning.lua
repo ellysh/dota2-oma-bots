@@ -175,23 +175,6 @@ end
 
 ---------------------------------
 
-local function EnemyCreepAttacks()
-  return ENEMY_CREEP_DATA ~= nil
-
-         and ((ALLY_CREEP_DATA ~= nil
-               and not functions.IsTargetBetweenUnits(
-                         ALLY_CREEP_DATA,
-                         BOT_DATA,
-                         ENEMY_CREEP_DATA))
-              or ALLY_CREEP_DATA == nil)
-
-         and all_units.GetUnit(ENEMY_CREEP_DATA):IsFacingLocation(
-               BOT_DATA.location,
-               constants.TURN_TARGET_MAX_DEGREE)
-end
-
----------------------------------
-
 function M.pre_decrease_creeps_distance()
   local creep_distance = functions.ternary(
                          common_algorithms.IsUnitLowHp(BOT_DATA)
@@ -200,7 +183,10 @@ function M.pre_decrease_creeps_distance()
                          constants.BASE_CREEP_DISTANCE)
 
   return not AreEnemyCreepsInRadius(creep_distance)
-         and not EnemyCreepAttacks()
+         and not common_algorithms.DoesEnemyCreepAttack(
+                   BOT_DATA,
+                   ENEMY_CREEP_DATA,
+                   ALLY_CREEP_DATA)
          and (ENEMY_CREEP_DATA ~= nil or ALLY_CREEP_DATA ~= nil)
          and (not BOT_DATA.is_healing
               or BOT_DATA.health == BOT_DATA.max_health)

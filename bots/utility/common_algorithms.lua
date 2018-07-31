@@ -379,6 +379,25 @@ function M.IsFocusedByTower(unit_data, tower_data)
                 unit_data)
 end
 
+function M.DoesEnemyCreepAttack(
+  unit_data,
+  enemy_creep_data,
+  ally_creep_data)
+
+  return enemy_creep_data ~= nil
+
+         and ((ally_creep_data ~= nil
+               and not functions.IsTargetBetweenUnits(
+                         ally_creep_data,
+                         unit_data,
+                         enemy_creep_data))
+              or ally_creep_data == nil)
+
+         and all_units.GetUnit(enemy_creep_data):IsFacingLocation(
+               unit_data.location,
+               constants.TURN_TARGET_MAX_DEGREE)
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_GetNormalizedRadius = GetNormalizedRadius
 M.test_UpdateUnitList = all_units.UpdateUnitList
