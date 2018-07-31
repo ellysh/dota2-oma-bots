@@ -272,6 +272,7 @@ end
 
 function M.pre_stop_attack()
   return common_algorithms.IsUnitAttack(BOT_DATA)
+         and common_algorithms.IsAttackDone(BOT_DATA)
 end
 
 function M.post_stop_attack()
