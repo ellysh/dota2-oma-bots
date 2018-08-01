@@ -190,7 +190,6 @@ function M.pre_decrease_creeps_distance()
          and (ENEMY_CREEP_DATA ~= nil or ALLY_CREEP_DATA ~= nil)
          and (not BOT_DATA.is_healing
               or BOT_DATA.health == BOT_DATA.max_health)
-         and ENEMY_CREEPS_HP < (ALLY_CREEPS_HP * 3)
 end
 
 function M.post_decrease_creeps_distance()
@@ -229,21 +228,6 @@ end
 
 --------------------------------
 
-function M.pre_stop_attack_and_move()
-  return common_algorithms.IsUnitMoving(BOT_DATA)
-         or common_algorithms.IsUnitAttack(BOT_DATA)
-end
-
-function M.post_stop_attack_and_move()
-  return not M.pre_stop_attack_and_move()
-end
-
-function M.stop_attack_and_move()
-  BOT:Action_ClearActions(true)
-end
-
----------------------------------
-
 function M.pre_turn()
   return AreEnemyCreepsInRadius(BOT_DATA.attack_range)
          and ENEMY_CREEP_DATA ~= nil
@@ -258,9 +242,13 @@ end
 
 function M.turn()
   BOT:Action_AttackUnit(all_units.GetUnit(ENEMY_CREEP_DATA), true)
-
-  action_timing.SetNextActionDelay(constants.DROW_RANGER_TURN_TIME)
 end
+
+function M.stop_attack_and_move()
+  BOT:Action_ClearActions(true)
+end
+
+---------------------------------
 
 -- Provide an access to local functions for unit tests only
 

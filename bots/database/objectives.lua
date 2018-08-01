@@ -305,15 +305,9 @@ M.OBJECTIVES = {
       },
       {
         move = "turn",
-        is_interruptible = true,
+        is_interruptible = false,
         actions = {
           {action = "turn"},
-        }
-      },
-      {
-        move = "stop_attack_and_move",
-        is_interruptible = true,
-        actions = {
           {action = "stop_attack_and_move"},
         }
       },

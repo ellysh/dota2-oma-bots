@@ -84,7 +84,8 @@ local function ExecuteMove()
   if CURRENT_MOVE == nil
      or CURRENT_MOVE.is_interruptible
      or (not CURRENT_MOVE.is_interruptible
-         and CURRENT_OBJECTIVE.module["post_" .. CURRENT_MOVE.move]()) then
+         and CURRENT_OBJECTIVE.module["post_" .. CURRENT_MOVE.move]()
+         and ACTION_INDEX == #CURRENT_MOVE.actions) then
     CURRENT_MOVE = FindMoveToExecute()
     ACTION_INDEX = 1
   end
@@ -107,8 +108,12 @@ function M.Process()
   UpdateVariablesOfAllModules()
 
   if CURRENT_OBJECTIVE == nil
-     or CURRENT_OBJECTIVE.is_interruptible
+     or (CURRENT_OBJECTIVE.is_interruptible
+         and (CURRENT_MOVE == nil
+              or CURRENT_MOVE.is_interruptible))
      or (not CURRENT_OBJECTIVE.is_interruptible
+         and (CURRENT_MOVE == nil
+              or not CURRENT_MOVE.is_interruptible)
          and CURRENT_OBJECTIVE.module["post_" .. CURRENT_OBJECTIVE.objective]()) then
     CURRENT_OBJECTIVE = FindObjectiveToExecute()
     CURRENT_MOVE = nil
