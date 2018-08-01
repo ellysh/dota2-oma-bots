@@ -204,10 +204,18 @@ M.OBJECTIVES = {
         }
       },
       {
-        move = "attack_enemy_hero",
+        move = "move_enemy_hero",
         is_interruptible = true,
         actions = {
+          {action = "move_enemy_hero"},
+        }
+      },
+      {
+        move = "attack_enemy_hero",
+        is_interruptible = false,
+        actions = {
           {action = "attack_enemy_hero"},
+          {action = "stop_attack"},
         }
       },
     }

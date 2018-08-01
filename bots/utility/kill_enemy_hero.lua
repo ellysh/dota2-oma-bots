@@ -48,6 +48,8 @@ end
 function M.pre_attack_enemy_hero()
   return ENEMY_HERO_DATA ~= nil
          and not DOES_TOWER_PROTECT_ENEMY
+         and functions.GetUnitDistance(BOT_DATA, ENEMY_HERO_DATA)
+             <= BOT_DATA.attack_range
 end
 
 function M.post_attack_enemy_hero()
@@ -56,6 +58,33 @@ end
 
 function M.attack_enemy_hero()
   common_algorithms.AttackUnit(BOT_DATA, ENEMY_HERO_DATA, true)
+end
+
+function M.stop_attack()
+  if not common_algorithms.IsUnitAttack(BOT_DATA)
+     or not common_algorithms.IsAttackDone(BOT_DATA) then
+    return end
+
+  local bot = GetBot()
+  bot:Action_ClearActions(true)
+end
+
+---------------------------------
+
+function M.pre_move_enemy_hero()
+  return ENEMY_HERO_DATA ~= nil
+         and not DOES_TOWER_PROTECT_ENEMY
+         and not common_algorithms.IsUnitMoving(BOT_DATA)
+end
+
+function M.post_move_enemy_hero()
+  return not M.pre_move_enemy_hero()
+end
+
+function M.move_enemy_hero()
+  local bot = GetBot()
+
+  bot:Action_MoveToLocation(ENEMY_HERO_DATA.location)
 end
 
 ---------------------------------
