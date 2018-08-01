@@ -265,21 +265,16 @@ function M.post_attack_enemy_tower()
 end
 
 function M.attack_enemy_tower()
-  common_algorithms.AttackUnit(BOT_DATA, ENEMY_TOWER_DATA, false)
+  common_algorithms.AttackUnit(BOT_DATA, ENEMY_TOWER_DATA, true)
 end
 
 --------------------------------
 
-function M.pre_stop_attack()
-  return common_algorithms.IsUnitAttack(BOT_DATA)
-         and common_algorithms.IsAttackDone(BOT_DATA)
-end
-
-function M.post_stop_attack()
-  return not M.pre_stop_attack()
-end
-
 function M.stop_attack()
+  if not common_algorithms.IsUnitAttack(BOT_DATA)
+     or not common_algorithms.IsAttackDone(BOT_DATA) then
+    return end
+
   local bot = GetBot()
   bot:Action_ClearActions(true)
 end
