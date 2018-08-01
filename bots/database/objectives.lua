@@ -268,10 +268,9 @@ M.OBJECTIVES = {
       },
       {
         move = "attack_enemy_tower",
-        is_interruptible = false,
+        is_interruptible = true,
         actions = {
           {action = "attack_enemy_tower"},
-          {action = "stop_attack"},
         }
       },
     },

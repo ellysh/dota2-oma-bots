@@ -265,7 +265,7 @@ function M.post_attack_enemy_tower()
 end
 
 function M.attack_enemy_tower()
-  common_algorithms.AttackUnit(BOT_DATA, ENEMY_TOWER_DATA, true)
+  common_algorithms.AttackUnit(BOT_DATA, ENEMY_TOWER_DATA, false)
 end
 
 --------------------------------
