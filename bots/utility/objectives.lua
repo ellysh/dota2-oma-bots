@@ -56,6 +56,7 @@ local function FindNextAction()
   ACTION_INDEX = ACTION_INDEX + 1
   if #CURRENT_MOVE.actions < ACTION_INDEX then
     ACTION_INDEX = 1
+    CURRENT_MOVE = nil
   end
 end
 
