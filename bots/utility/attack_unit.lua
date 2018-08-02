@@ -188,7 +188,8 @@ end
 function M.pre_attack_enemy_creep()
   local creep = GetMaxHealthCreep(SIDE["ENEMY"])
 
-  return (ALLY_CREEPS_HP + BOT_DATA.attack_damage * 3) < ENEMY_CREEPS_HP
+  return constants.MAX_CREEPS_HP_DELTA
+           < (ENEMY_CREEPS_HP - ALLY_CREEPS_HP)
          and creep ~= nil
          and 0.5 < functions.GetRate(creep.health, creep.max_health)
 end
@@ -208,7 +209,8 @@ end
 function M.pre_attack_ally_creep()
   local creep = GetMaxHealthCreep(SIDE["ALLY"])
 
-  return (ENEMY_CREEPS_HP + BOT_DATA.attack_damage * 3) < ALLY_CREEPS_HP
+  return constants.MAX_CREEPS_HP_DELTA
+           < (ALLY_CREEPS_HP - ENEMY_CREEPS_HP)
          and creep ~= nil
 end
 
