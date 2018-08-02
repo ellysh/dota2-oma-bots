@@ -141,6 +141,10 @@ end
 
 function M.pre_tp_base()
   return IsItemCastable("item_tpscroll")
+         and constants.MIN_TP_BASE_RADIUS
+             < functions.GetDistance(
+                 map.GetAllySpot(BOT_DATA, "fountain"),
+                 BOT_DATA.location)
          and not common_algorithms.DoesBotOrCourierHaveItem(
                    "item_faerie_fire")
          and not common_algorithms.DoesBotOrCourierHaveItem(
