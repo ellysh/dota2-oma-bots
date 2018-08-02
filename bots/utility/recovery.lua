@@ -147,6 +147,7 @@ function M.pre_tp_base()
              < functions.GetDistance(
                  map.GetAllySpot(BOT_DATA, "fountain"),
                  BOT_DATA.location)
+         and not map.IsUnitInEnemyTowerAttackRange(BOT_DATA)
          and not common_algorithms.DoesBotOrCourierHaveItem(
                    "item_faerie_fire")
          and not common_algorithms.DoesBotOrCourierHaveItem(

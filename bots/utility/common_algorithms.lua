@@ -425,9 +425,20 @@ function M.GetSafeSpot(unit_data, enemy_hero_data)
   end
 
   local forest_top_spot = map.GetAllySpot(unit_data, "forest_top")
-  if not IsEnemyUnitInSpot(unit_data, enemy_hero_data, forest_top_spot)
-     and not map.IsUnitInSpot(unit_data, forest_top_spot) then
-    return forest_top_spot
+  local forest_bot_spot = map.GetAllySpot(unit_data, "forest_bot")
+  local forest_spot = functions.ternary(
+                        functions.GetDistance(
+                          unit_data.location,
+                          forest_top_spot)
+                        < functions.GetDistance(
+                          unit_data.location,
+                          forest_bot_spot),
+                        forest_top_spot,
+                        forest_bot_spot)
+
+  if not IsEnemyUnitInSpot(unit_data, enemy_hero_data, forest_spot)
+     and not map.IsUnitInSpot(unit_data, forest_spot) then
+    return forest_spot
   end
 
   return map.GetAllySpot(unit_data, "fountain")
