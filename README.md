@@ -12,8 +12,9 @@ There are steps to start playing with the bot:
 
 1. Create a lobby.
 2. Choose the "1v1 Solo Mid" game mode.
-2. Choose the OMA bots for both sides.
-3. Start a game.
+3. Choose the OMA bots for both sides.
+4. Start a game.
+5. Pick Drow Ranger.
 
 ## Limitations
 
@@ -24,7 +25,8 @@ Now you should follow the following limitations when playing with the bot:
 3. No shrines.
 4. No neutral camps.
 5. No Roshan.
-6. Bot difficulty is Hard and above.
+6. No Glyph.
+7. Bot difficulty is Hard or above.
 
 ## Contacts
 
