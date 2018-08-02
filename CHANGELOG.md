@@ -1,3 +1,7 @@
+* version 0.6a
+  - Fix bugs with attack animation canceling
+  - Fixes in the algorithm of choosing objectives and moves
+
 * version 0.6
   - Rework the algorithm of choosing objectives and moves.
   - Support equilibrium on the line.
