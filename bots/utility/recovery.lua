@@ -20,11 +20,18 @@ local M = {}
 
 local BOT = {}
 local BOT_DATA = {}
+local ENEMY_HERO_DATA = {}
 local SAFE_SPOT = {}
 
 function M.UpdateVariables()
   BOT = GetBot()
+
   BOT_DATA = common_algorithms.GetBotData()
+
+  ENEMY_HERO_DATA = common_algorithms.GetEnemyHero(
+                      BOT_DATA,
+                      constants.MAX_UNIT_SEARCH_RADIUS)
+
   SAFE_SPOT = common_algorithms.GetSafeSpot(BOT_DATA, ENEMY_HERO_DATA)
 end
 
@@ -147,6 +154,10 @@ function M.pre_tp_base()
              < functions.GetDistance(
                  map.GetAllySpot(BOT_DATA, "fountain"),
                  BOT_DATA.location)
+         and constants.MIN_TP_ENEMY_HERO_RADIUS
+             < functions.GetUnitDistance(
+                 BOT_DATA,
+                 ENEMY_HERO_DATA)
          and not map.IsUnitInEnemyTowerAttackRange(BOT_DATA)
          and not common_algorithms.DoesBotOrCourierHaveItem(
                    "item_faerie_fire")

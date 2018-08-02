@@ -326,7 +326,7 @@ function M.DoesTowerProtectEnemyUnit(unit_data)
                                bot_data.location,
                                tower_spot)
 
-  return bot_tower_distance < constants.MAX_TOWER_ATTACK_RANGE
+  return map.IsUnitInEnemyTowerAttackRange(unit_data)
          or bot_tower_distance
               < functions.GetUnitDistance(bot_data, unit_data)
 end

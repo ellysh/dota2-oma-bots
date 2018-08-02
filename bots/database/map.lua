@@ -8,7 +8,7 @@ M.MAP = {
     tower_tier_1_night_vision = Vector(-1544, -1408, 800),
     high_ground = Vector(-1073, -952, 350),
     forest_bot = Vector(-1129, -1744, 100),
-    forest_top = Vector(-2045, -1000, 100),
+    forest_top = Vector(-2000, -993, 100),
     fountain = Vector(-7000, -6500, 500),
   },
   [TEAM_DIRE] = {
