@@ -31,11 +31,10 @@ M.OBJECTIVES = {
     is_interruptible = false,
     moves = {
       {
-        move = "move_base",
+        move = "move_safe_spot",
         is_interruptible = false,
         actions = {
-          {action = "move_base"},
-          {action = "restore_hp_on_base"},
+          {action = "move_safe_spot"},
         }
       },
       {
@@ -57,6 +56,14 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "heal_faerie_fire"},
+        }
+      },
+      {
+        move = "move_base",
+        is_interruptible = false,
+        actions = {
+          {action = "move_base"},
+          {action = "restore_hp_on_base"},
         }
       },
       {

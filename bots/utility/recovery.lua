@@ -20,10 +20,12 @@ local M = {}
 
 local BOT = {}
 local BOT_DATA = {}
+local SAFE_SPOT = {}
 
 function M.UpdateVariables()
   BOT = GetBot()
   BOT_DATA = common_algorithms.GetBotData()
+  SAFE_SPOT = common_algorithms.GetSafeSpot(BOT_DATA, ENEMY_HERO_DATA)
 end
 
 ---------------------------------
@@ -165,6 +167,21 @@ function M.tp_base()
     map.GetAllySpot(BOT_DATA, "fountain"))
 
   action_timing.SetNextActionDelay(item:GetChannelTime())
+end
+
+---------------------------------
+
+function M.pre_move_safe_spot()
+  return not common_algorithms.IsUnitMoving(BOT_DATA)
+         and not map.IsUnitInSpot(BOT_DATA, SAFE_SPOT)
+end
+
+function M.post_move_safe_spot()
+  return not M.pre_move_safe_spot()
+end
+
+function M.move_safe_spot()
+  BOT:Action_MoveToLocation(SAFE_SPOT)
 end
 
 ---------------------------------

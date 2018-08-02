@@ -26,6 +26,7 @@ local ALLY_CREEP_DATA = {}
 local ENEMY_TOWER_DATA = {}
 local ALLY_CREEPS_HP = 0
 local ENEMY_CREEPS_HP = 0
+local SAFE_SPOT = {}
 
 local function GetClosestCreep(radius, get_function)
   local creeps = get_function(
@@ -38,39 +39,6 @@ local function GetClosestCreep(radius, get_function)
     function(unit_data)
       return not common_algorithms.IsUnitLowHp(unit_data)
     end)
-end
-
-local function IsEnemyUnitInSpot(spot)
-  local creeps = common_algorithms.GetEnemyCreeps(
-                   BOT_DATA,
-                   constants.MAX_UNIT_TARGET_RADIUS)
-
-  local creep = functions.GetElementWith(
-                  creeps,
-                  common_algorithms.CompareMinDistance,
-                  function(unit_data)
-                    return map.IsUnitInSpot(unit_data, spot)
-                  end)
-
-  return (ENEMY_HERO_DATA ~= nil
-          and (functions.GetDistance(ENEMY_HERO_DATA.location, spot)
-                 <= ENEMY_HERO_DATA.attack_range
-               or map.IsUnitInSpot(ENEMY_HERO_DATA, spot)))
-         or creep ~= nil
-end
-
-local function GetSafeSpot()
-  local hg_spot = map.GetAllySpot(BOT_DATA, "high_ground")
-  if not IsEnemyUnitInSpot(hg_spot) then
-    return hg_spot
-  end
-
-  local forest_top_spot = map.GetAllySpot(BOT_DATA, "forest_top")
-  if not IsEnemyUnitInSpot(forest_top_spot) then
-    return forest_top_spot
-  end
-
-  return map.GetAllySpot(BOT_DATA, "fountain")
 end
 
 function M.UpdateVariables()
@@ -103,7 +71,7 @@ function M.UpdateVariables()
                         BOT_DATA,
                         constants.MAX_UNIT_SEARCH_RADIUS))
 
-  SAFE_SPOT = GetSafeSpot()
+  SAFE_SPOT = common_algorithms.GetSafeSpot(BOT_DATA, ENEMY_HERO_DATA)
 end
 
 ---------------------------------

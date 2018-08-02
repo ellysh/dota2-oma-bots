@@ -398,6 +398,41 @@ function M.DoesEnemyCreepAttack(
                constants.TURN_TARGET_MAX_DEGREE)
 end
 
+local function IsEnemyUnitInSpot(unit_data, enemy_hero_data, spot)
+  local creeps = M.GetEnemyCreeps(
+                   unit_data,
+                   constants.MAX_UNIT_TARGET_RADIUS)
+
+  local creep = functions.GetElementWith(
+                  creeps,
+                  M.CompareMinDistance,
+                  function(unit_data)
+                    return map.IsUnitInSpot(unit_data, spot)
+                  end)
+
+  return (enemy_hero_data ~= nil
+          and (functions.GetDistance(enemy_hero_data.location, spot)
+                 <= enemy_hero_data.attack_range
+               or map.IsUnitInSpot(enemy_hero_data, spot)))
+         or creep ~= nil
+end
+
+function M.GetSafeSpot(unit_data, enemy_hero_data)
+  local hg_spot = map.GetAllySpot(unit_data, "high_ground")
+  if not IsEnemyUnitInSpot(unit_data, enemy_hero_data, hg_spot)
+     and not map.IsUnitInSpot(unit_data, hg_spot) then
+    return hg_spot
+  end
+
+  local forest_top_spot = map.GetAllySpot(unit_data, "forest_top")
+  if not IsEnemyUnitInSpot(unit_data, enemy_hero_data, forest_top_spot)
+     and not map.IsUnitInSpot(unit_data, forest_top_spot) then
+    return forest_top_spot
+  end
+
+  return map.GetAllySpot(unit_data, "fountain")
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_GetNormalizedRadius = GetNormalizedRadius
 M.test_UpdateUnitList = all_units.UpdateUnitList
