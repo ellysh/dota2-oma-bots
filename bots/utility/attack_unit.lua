@@ -72,7 +72,7 @@ end
 
 ---------------------------------
 
-function M.pre_laning()
+function M.pre_attack_unit()
   return M.pre_lasthit_enemy_creep()
          or M.pre_deny_ally_creep()
          or M.pre_harras_enemy_hero()
@@ -81,8 +81,8 @@ function M.pre_laning()
          or M.pre_attack_enemy_tower()
 end
 
-function M.post_laning()
-  return not M.pre_laning()
+function M.post_attack_unit()
+  return not M.pre_attack_unit()
 end
 
 ---------------------------------

@@ -222,8 +222,8 @@ M.OBJECTIVES = {
   },
 
   {
-    objective = "laning",
-    module = require(GetScriptDirectory() .."/utility/laning"),
+    objective = "attack_unit",
+    module = require(GetScriptDirectory() .."/utility/attack_unit"),
     is_interruptible = true,
     moves = {
       {
