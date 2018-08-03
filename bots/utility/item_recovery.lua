@@ -44,6 +44,9 @@ function M.pre_item_recovery()
   return ((common_algorithms.IsUnitLowHp(BOT_DATA)
            and not BOT_DATA.is_healing))
 
+         and constants.BASE_RADIUS
+             < functions.GetDistance(FOUNTAIN_SPOT, BOT_DATA.location)
+
          and (M.pre_heal_tango()
               or M.pre_heal_flask()
               or M.pre_heal_faerie_fire()
