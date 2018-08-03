@@ -54,10 +54,17 @@ end
 ---------------------------------
 
 function M.pre_recovery()
+  local fountain_spot = map.GetAllySpot(BOT_DATA, "fountain")
+
   return ((common_algorithms.IsUnitLowHp(BOT_DATA)
            and not BOT_DATA.is_healing)
-
-          or M.pre_restore_hp_on_base())
+          or M.pre_restore_hp_on_base()
+          or (functions.GetRate(BOT_DATA.health, BOT_DATA.max_health)
+              < constants.UNIT_HALF_HEALTH_LEVEL
+              and functions.GetDistance(
+                    fountain_spot,
+                    BOT_DATA.location)
+                  < constants.BASE_RADIUS))
 
          and not BOT_DATA.is_casting
 end
@@ -199,16 +206,16 @@ end
 ---------------------------------
 
 function M.pre_move_base()
-  local base_location = map.GetAllySpot(BOT_DATA, "fountain")
+  local fountain_spot = map.GetAllySpot(BOT_DATA, "fountain")
 
   return (not (common_algorithms.IsUnitMoving(BOT_DATA)
-              and BOT:IsFacingLocation(base_location, 30)))
+              and BOT:IsFacingLocation(fountain_spot, 30)))
           or (functions.GetRate(BOT_DATA.health, BOT_DATA.max_health)
               < constants.UNIT_HALF_HEALTH_LEVEL
               and functions.GetDistance(
-                    map.GetAllySpot(BOT_DATA, "fountain"),
+                    fountain_spot,
                     BOT_DATA.location)
-                  < constants.MIN_TP_BASE_RADIUS)
+                  < constants.BASE_RADIUS)
 end
 
 function M.post_move_base()
@@ -216,7 +223,16 @@ function M.post_move_base()
 end
 
 function M.move_base()
-  BOT:Action_MoveToLocation(map.GetAllySpot(BOT_DATA, "fountain"))
+  local fountain_spot = map.GetAllySpot(BOT_DATA, "fountain")
+
+  BOT:Action_MoveToLocation(fountain_spot)
+
+  if functions.GetDistance(fountain_spot, BOT_DATA.location)
+     < constants.BASE_RADIUS
+     and not BOT:HasModifier("modifier_fountain_aura_buff") then
+
+    action_timing.SetNextActionDelay(3)
+  end
 end
 
 ---------------------------------
