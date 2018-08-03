@@ -99,7 +99,7 @@ function M.move_base()
      < constants.BASE_RADIUS
      and not BOT:HasModifier("modifier_fountain_aura_buff") then
 
-    action_timing.SetNextActionDelay(3)
+    action_timing.SetNextActionDelay(1.5)
   end
 end
 

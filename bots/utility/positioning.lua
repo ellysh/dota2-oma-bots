@@ -155,9 +155,6 @@ end
 function M.pre_increase_creeps_distance()
   return (AreEnemyCreepsInRadius(constants.MIN_CREEP_DISTANCE)
 
-         or (not AreAllyCreepsInRadius(constants.MIN_CREEP_DISTANCE)
-             and AreEnemyCreepsInRadius(constants.MAX_CREEP_DISTANCE))
-
          or map.IsUnitInEnemyTowerAttackRange(BOT_DATA)
 
          or (ENEMY_HERO_DATA ~= nil
