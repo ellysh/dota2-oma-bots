@@ -22,6 +22,7 @@ local BOT = {}
 local BOT_DATA = {}
 local ENEMY_HERO_DATA = {}
 local SAFE_SPOT = {}
+local FOUNTAIN_SPOT = {}
 
 function M.UpdateVariables()
   BOT = GetBot()
@@ -33,44 +34,26 @@ function M.UpdateVariables()
                       constants.MAX_UNIT_SEARCH_RADIUS)
 
   SAFE_SPOT = common_algorithms.GetSafeSpot(BOT_DATA, ENEMY_HERO_DATA)
+
+  FOUNTAIN_SPOT = map.GetAllySpot(BOT_DATA, "fountain")
 end
 
 ---------------------------------
 
-function M.pre_restore_hp_on_base()
-  return BOT:HasModifier("modifier_fountain_aura_buff")
-         and (BOT_DATA.health < BOT_DATA.max_health
-              or BOT_DATA.mana < BOT_DATA.max_mana)
-end
-
-function M.post_restore_hp_on_base()
-  return not M.pre_restore_hp_on_base()
-end
-
-function M.restore_hp_on_base()
-  BOT:Action_ClearActions(true)
-end
-
----------------------------------
-
-function M.pre_recovery()
-  local fountain_spot = map.GetAllySpot(BOT_DATA, "fountain")
-
+function M.pre_item_recovery()
   return ((common_algorithms.IsUnitLowHp(BOT_DATA)
-           and not BOT_DATA.is_healing)
-          or M.pre_restore_hp_on_base()
-          or (functions.GetRate(BOT_DATA.health, BOT_DATA.max_health)
-              < constants.UNIT_HALF_HEALTH_LEVEL
-              and functions.GetDistance(
-                    fountain_spot,
-                    BOT_DATA.location)
-                  < constants.BASE_RADIUS))
+           and not BOT_DATA.is_healing))
 
          and not BOT_DATA.is_casting
+
+         and (M.pre_heal_tango()
+              or M.heal_flask()
+              or M.heal_faerie_fire()
+              or M.tp_base())
 end
 
-function M.post_recovery()
-  return not M.pre_recovery()
+function M.post_item_recovery()
+  return not M.pre_item_recovery()
 end
 
 ---------------------------------
@@ -148,19 +131,10 @@ end
 
 ---------------------------------
 
-function M.pre_move_shrine()
-  -- TODO: Implement this move
-  return false
-end
-
----------------------------------
-
 function M.pre_tp_base()
   return IsItemCastable("item_tpscroll")
          and constants.MIN_TP_BASE_RADIUS
-             < functions.GetDistance(
-                 map.GetAllySpot(BOT_DATA, "fountain"),
-                 BOT_DATA.location)
+             < functions.GetDistance(FOUNTAIN_SPOT, BOT_DATA.location)
          and constants.MIN_TP_ENEMY_HERO_RADIUS
              < functions.GetUnitDistance(
                  BOT_DATA,
@@ -181,9 +155,7 @@ end
 function M.tp_base()
   local item = common_algorithms.GetItem(BOT_DATA, "item_tpscroll")
 
-  BOT:Action_UseAbilityOnLocation(
-    item,
-    map.GetAllySpot(BOT_DATA, "fountain"))
+  BOT:Action_UseAbilityOnLocation(item, FOUNTAIN_SPOT)
 
   action_timing.SetNextActionDelay(item:GetChannelTime())
 end
@@ -201,38 +173,6 @@ end
 
 function M.move_safe_spot()
   BOT:Action_MoveToLocation(SAFE_SPOT)
-end
-
----------------------------------
-
-function M.pre_move_base()
-  local fountain_spot = map.GetAllySpot(BOT_DATA, "fountain")
-
-  return (not (common_algorithms.IsUnitMoving(BOT_DATA)
-              and BOT:IsFacingLocation(fountain_spot, 30)))
-          or (functions.GetRate(BOT_DATA.health, BOT_DATA.max_health)
-              < constants.UNIT_HALF_HEALTH_LEVEL
-              and functions.GetDistance(
-                    fountain_spot,
-                    BOT_DATA.location)
-                  < constants.BASE_RADIUS)
-end
-
-function M.post_move_base()
-  return not M.pre_move_base()
-end
-
-function M.move_base()
-  local fountain_spot = map.GetAllySpot(BOT_DATA, "fountain")
-
-  BOT:Action_MoveToLocation(fountain_spot)
-
-  if functions.GetDistance(fountain_spot, BOT_DATA.location)
-     < constants.BASE_RADIUS
-     and not BOT:HasModifier("modifier_fountain_aura_buff") then
-
-    action_timing.SetNextActionDelay(3)
-  end
 end
 
 ---------------------------------

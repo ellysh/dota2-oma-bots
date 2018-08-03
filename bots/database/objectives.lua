@@ -26,8 +26,8 @@ M.OBJECTIVES = {
   },
 
   {
-    objective = "recovery",
-    module = require(GetScriptDirectory() .."/utility/recovery"),
+    objective = "item_recovery",
+    module = require(GetScriptDirectory() .."/utility/item_recovery"),
     is_interruptible = false,
     moves = {
       {
@@ -59,6 +59,21 @@ M.OBJECTIVES = {
         }
       },
       {
+        move = "tp_base",
+        is_interruptible = false,
+        actions = {
+          {action = "tp_base"},
+        }
+      },
+    },
+  },
+
+  {
+    objective = "base_recovery",
+    module = require(GetScriptDirectory() .."/utility/base_recovery"),
+    is_interruptible = false,
+    moves = {
+      {
         move = "move_base",
         is_interruptible = false,
         actions = {
@@ -73,17 +88,8 @@ M.OBJECTIVES = {
           {action = "move_shrine"},
         }
       },
-      {
-        move = "tp_base",
-        is_interruptible = false,
-        actions = {
-          {action = "tp_base"},
-          {action = "restore_hp_on_base"},
-        }
-      },
     },
   },
-
   {
     objective = "upgrade_skills",
     module = require(GetScriptDirectory() .."/utility/upgrade_skills"),
