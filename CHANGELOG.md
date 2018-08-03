@@ -1,3 +1,7 @@
+* version 0.7
+  - Implement an algorithm for choosing a safe spot for retreat.
+  - Add a move to TP on the mid tower.
+
 * version 0.6a
   - Fix bugs with attack animation canceling
   - Fixes in the algorithm of choosing objectives and moves

@@ -4,6 +4,6 @@ function M.Print(string)
   print(GameTime() .. ": " ..string .. "\n")
 end
 
-M.Print("OMA Bots version 0.6a")
+M.Print("OMA Bots version 0.7")
 
 return M
