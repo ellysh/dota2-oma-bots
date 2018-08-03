@@ -44,8 +44,6 @@ function M.pre_item_recovery()
   return ((common_algorithms.IsUnitLowHp(BOT_DATA)
            and not BOT_DATA.is_healing))
 
-         and not BOT_DATA.is_casting
-
          and (M.pre_heal_tango()
               or M.pre_heal_flask()
               or M.pre_heal_faerie_fire()

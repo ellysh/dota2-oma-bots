@@ -103,7 +103,9 @@ local function IsActionTimingDelay()
 end
 
 function M.Process()
-  if not IsBotAlive() or IsActionTimingDelay() then
+  if not IsBotAlive()
+     or IsActionTimingDelay()
+     or common_algorithms.GetBotData().is_casting then
     return end
 
   UpdateVariablesOfAllModules()

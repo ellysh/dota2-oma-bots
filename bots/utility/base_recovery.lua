@@ -61,8 +61,6 @@ function M.pre_base_recovery()
               < constants.UNIT_HALF_HEALTH_LEVEL
               and functions.GetDistance(FOUNTAIN_SPOT, BOT_DATA.location)
                   < constants.BASE_RADIUS))
-
-         and not BOT_DATA.is_casting
 end
 
 function M.post_base_recovery()
