@@ -71,11 +71,11 @@ M.OBJECTIVES = {
   {
     objective = "base_recovery",
     module = require(GetScriptDirectory() .."/utility/base_recovery"),
-    is_interruptible = false,
+    is_interruptible = true,
     moves = {
       {
         move = "move_base",
-        is_interruptible = false,
+        is_interruptible = true,
         actions = {
           {action = "move_base"},
           {action = "restore_hp_on_base"},
@@ -83,7 +83,7 @@ M.OBJECTIVES = {
       },
       {
         move = "move_shrine",
-        is_interruptible = false,
+        is_interruptible = true,
         actions = {
           {action = "move_shrine"},
         }
