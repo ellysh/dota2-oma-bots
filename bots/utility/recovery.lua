@@ -201,8 +201,14 @@ end
 function M.pre_move_base()
   local base_location = map.GetAllySpot(BOT_DATA, "fountain")
 
-  return not (common_algorithms.IsUnitMoving(BOT_DATA)
-              and BOT:IsFacingLocation(base_location, 30))
+  return (not (common_algorithms.IsUnitMoving(BOT_DATA)
+              and BOT:IsFacingLocation(base_location, 30)))
+          or (functions.GetRate(BOT_DATA.health, BOT_DATA.max_health)
+              < constants.UNIT_HALF_HEALTH_LEVEL
+              and functions.GetDistance(
+                    map.GetAllySpot(BOT_DATA, "fountain"),
+                    BOT_DATA.location)
+                  < constants.MIN_TP_BASE_RADIUS)
 end
 
 function M.post_move_base()
