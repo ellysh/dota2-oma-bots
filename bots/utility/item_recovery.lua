@@ -47,9 +47,9 @@ function M.pre_item_recovery()
          and not BOT_DATA.is_casting
 
          and (M.pre_heal_tango()
-              or M.heal_flask()
-              or M.heal_faerie_fire()
-              or M.tp_base())
+              or M.pre_heal_flask()
+              or M.pre_heal_faerie_fire()
+              or M.pre_tp_base())
 end
 
 function M.post_item_recovery()
