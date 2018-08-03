@@ -295,6 +295,13 @@ M.OBJECTIVES = {
     is_interruptible = true,
     moves = {
       {
+        move = "tp_mid_tower",
+        is_interruptible = false,
+        actions = {
+          {action = "tp_mid_tower"},
+        }
+      },
+      {
         move = "move_mid_tower",
         is_interruptible = true,
         actions = {

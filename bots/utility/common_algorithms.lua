@@ -444,6 +444,12 @@ function M.GetSafeSpot(unit_data, enemy_hero_data)
   return map.GetAllySpot(unit_data, "fountain")
 end
 
+function M.IsItemCastable(unit_data, item_name)
+  return M.IsItemPresent(unit_data, item_name)
+         and M.IsItemInInventory(unit_data, item_name)
+         and M.GetItem(unit_data, item_name):IsFullyCastable()
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_GetNormalizedRadius = GetNormalizedRadius
 M.test_UpdateUnitList = all_units.UpdateUnitList

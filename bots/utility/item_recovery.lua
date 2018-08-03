@@ -58,16 +58,8 @@ end
 
 ---------------------------------
 
-local function IsItemCastable(item_name)
-  return common_algorithms.IsItemPresent(BOT_DATA, item_name)
-         and common_algorithms.IsItemInInventory(BOT_DATA, item_name)
-         and common_algorithms.GetItem(
-               BOT_DATA,
-               item_name):IsFullyCastable()
-end
-
 function M.pre_heal_faerie_fire()
-  return IsItemCastable("item_faerie_fire")
+  return common_algorithms.IsItemCastable(BOT_DATA, "item_faerie_fire")
 end
 
 function M.post_heal_faerie_fire()
@@ -81,7 +73,7 @@ end
 ---------------------------------
 
 function M.pre_heal_flask()
-  return IsItemCastable("item_flask")
+  return common_algorithms.IsItemCastable(BOT_DATA, "item_flask")
          and not common_algorithms.IsFocusedByEnemyHero(BOT_DATA)
          and not common_algorithms.IsFocusedByUnknownUnit(BOT_DATA)
          and not common_algorithms.AreUnitsInRadius(
@@ -109,7 +101,7 @@ function M.pre_heal_tango()
 
   local tree = BOT_DATA.nearby_trees[1]
 
-  return IsItemCastable("item_tango")
+  return common_algorithms.IsItemCastable(BOT_DATA, "item_tango")
          and tree ~= nil
          and (tower_data == nil
               or constants.MAX_TOWER_ATTACK_RANGE
@@ -132,7 +124,7 @@ end
 ---------------------------------
 
 function M.pre_tp_base()
-  return IsItemCastable("item_tpscroll")
+  return common_algorithms.IsItemCastable(BOT_DATA, "item_tpscroll")
          and constants.MIN_TP_BASE_RADIUS
              < functions.GetDistance(FOUNTAIN_SPOT, BOT_DATA.location)
          and (ENEMY_HERO_DATA == nil

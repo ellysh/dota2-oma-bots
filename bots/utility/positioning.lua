@@ -43,6 +43,7 @@ end
 
 function M.UpdateVariables()
   BOT = GetBot()
+
   BOT_DATA = common_algorithms.GetBotData()
 
   ENEMY_HERO_DATA = common_algorithms.GetEnemyHero(
@@ -111,7 +112,7 @@ function M.pre_move_mid_tower()
           or functions.GetDistance(
                map.GetAllySpot(BOT_DATA, "fountain"),
                BOT_DATA.location)
-             < 3000)
+             < constants.BASE_RADIUS)
          and not map.IsUnitInSpot(BOT_DATA, target_location)
 end
 
@@ -123,6 +124,34 @@ function M.move_mid_tower()
   local target_location = map.GetAllySpot(BOT_DATA, "high_ground")
 
   GetBot():Action_MoveToLocation(target_location)
+end
+
+---------------------------------
+
+function M.pre_tp_mid_tower()
+  local target_location = map.GetAllySpot(BOT_DATA, "high_ground")
+
+  return (not AreAllyCreepsInRadius(constants.MAX_UNIT_SEARCH_RADIUS)
+          or functions.GetDistance(
+               map.GetAllySpot(BOT_DATA, "fountain"),
+               BOT_DATA.location)
+             < constants.BASE_RADIUS)
+         and common_algorithms.IsItemCastable(BOT_DATA, "item_tpscroll")
+         and not map.IsUnitInSpot(BOT_DATA, target_location)
+end
+
+function M.post_tp_mid_tower()
+  return not M.pre_tp_mid_tower()
+end
+
+function M.tp_mid_tower()
+  local item = common_algorithms.GetItem(BOT_DATA, "item_tpscroll")
+
+  BOT:Action_UseAbilityOnLocation(
+    item,
+    map.GetAllySpot(BOT_DATA, "tp_tower_tier_1"))
+
+  action_timing.SetNextActionDelay(item:GetChannelTime())
 end
 
 ---------------------------------
