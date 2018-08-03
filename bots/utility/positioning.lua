@@ -131,10 +131,8 @@ end
 function M.pre_tp_mid_tower()
   local target_location = map.GetAllySpot(BOT_DATA, "high_ground")
 
-  return (not AreAllyCreepsInRadius(constants.MAX_UNIT_SEARCH_RADIUS)
-          or constants.MIN_TP_BASE_RADIUS
-             < functions.GetDistance(target_location, BOT_DATA.location))
-
+  return constants.MIN_TP_BASE_RADIUS
+           < functions.GetDistance(target_location, BOT_DATA.location)
          and common_algorithms.IsItemCastable(BOT_DATA, "item_tpscroll")
 end
 

@@ -74,6 +74,13 @@ M.OBJECTIVES = {
     is_interruptible = true,
     moves = {
       {
+        move = "deliver_items",
+        is_interruptible = false,
+        actions = {
+          {action = "deliver_items"},
+        }
+      },
+      {
         move = "move_base",
         is_interruptible = true,
         actions = {

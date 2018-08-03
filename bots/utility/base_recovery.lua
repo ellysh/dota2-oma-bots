@@ -103,4 +103,27 @@ end
 
 ---------------------------------
 
+function M.pre_deliver_items()
+  local courier_data = common_algorithms.GetCourierData()
+
+  return 0 < BOT_DATA.stash_value
+         and map.IsUnitInSpot(
+               courier_data,
+               map.GetAllySpot(BOT_DATA, "fountain"))
+end
+
+function M.post_deliver_items()
+  return not M.pre_deliver_items()
+end
+
+function M.deliver_items()
+  local courier = GetCourier(0)
+
+  BOT:ActionImmediate_Courier(
+    courier,
+    COURIER_ACTION_TAKE_AND_TRANSFER_ITEMS)
+end
+
+---------------------------------
+
 return M
