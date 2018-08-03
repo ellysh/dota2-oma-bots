@@ -135,10 +135,11 @@ function M.pre_tp_base()
   return IsItemCastable("item_tpscroll")
          and constants.MIN_TP_BASE_RADIUS
              < functions.GetDistance(FOUNTAIN_SPOT, BOT_DATA.location)
-         and constants.MIN_TP_ENEMY_HERO_RADIUS
-             < functions.GetUnitDistance(
-                 BOT_DATA,
-                 ENEMY_HERO_DATA)
+         and (ENEMY_HERO_DATA == nil
+              or constants.MIN_TP_ENEMY_HERO_RADIUS
+                 < functions.GetUnitDistance(
+                     BOT_DATA,
+                     ENEMY_HERO_DATA))
          and not map.IsUnitInEnemyTowerAttackRange(BOT_DATA)
          and not common_algorithms.DoesBotOrCourierHaveItem(
                    "item_faerie_fire")
