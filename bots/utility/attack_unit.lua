@@ -148,7 +148,7 @@ function M.pre_deny_ally_creep()
 
   return target_data ~= nil
          and functions.GetRate(target_data.health, target_data.max_health)
-               < constants.UNIT_HALF_HEALTH_LEVEL
+             < constants.UNIT_HALF_HEALTH_LEVEL
 end
 
 function M.post_deny_ally_creep()
@@ -181,7 +181,8 @@ local function GetMaxHealthCreep(side)
              or (side == SIDE["ALLY"]
                  and functions.GetRate(
                        unit_data.health,
-                       unit_data.max_health) < 0.5)
+                       unit_data.max_health)
+                     < constants.UNIT_HALF_HEALTH_LEVEL)
     end)
 end
 
@@ -191,7 +192,8 @@ function M.pre_attack_enemy_creep()
   return constants.MAX_CREEPS_HP_DELTA
            < (ENEMY_CREEPS_HP - ALLY_CREEPS_HP)
          and creep ~= nil
-         and 0.5 < functions.GetRate(creep.health, creep.max_health)
+         and constants.UNIT_HALF_HEALTH_LEVEL
+             < functions.GetRate(creep.health, creep.max_health)
 end
 
 function M.post_attack_enemy_creep()

@@ -37,8 +37,10 @@ end
 
 function M.pre_restore_hp_on_base()
   return BOT:HasModifier("modifier_fountain_aura_buff")
-         and (BOT_DATA.health < BOT_DATA.max_health
-              or BOT_DATA.mana < BOT_DATA.max_mana)
+         and (functions.GetRate(BOT_DATA.health, BOT_DATA.max_health)
+              < constants.UNIT_FOUNTAIN_MAX_HEALTH
+              or functions.GetRate(BOT_DATA.mana, BOT_DATA.max_mana)
+                 < constants.UNIT_FOUNTAIN_MAX_MANA)
 end
 
 function M.post_restore_hp_on_base()
