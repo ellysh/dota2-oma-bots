@@ -122,6 +122,8 @@ function M.heal_tango()
   BOT:Action_UseAbilityOnTree(
     common_algorithms.GetItem(BOT_DATA, "item_tango"),
     BOT_DATA.nearby_trees[1])
+
+  action_timing.SetNextActionDelay(4)
 end
 
 ---------------------------------
