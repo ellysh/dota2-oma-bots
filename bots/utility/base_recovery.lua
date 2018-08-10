@@ -54,14 +54,15 @@ end
 ---------------------------------
 
 function M.pre_base_recovery()
-  return common_algorithms.IsUnitLowHp(BOT_DATA)
+  return ((common_algorithms.IsUnitLowHp(BOT_DATA)
+           and not BOT_DATA.is_healing)
 
-         or M.pre_restore_hp_on_base()
+          or M.pre_restore_hp_on_base()
 
-         or (functions.GetRate(BOT_DATA.health, BOT_DATA.max_health)
-             < constants.UNIT_HALF_HEALTH_LEVEL
-             and functions.GetDistance(FOUNTAIN_SPOT, BOT_DATA.location)
-                 < constants.BASE_RADIUS)
+          or (functions.GetRate(BOT_DATA.health, BOT_DATA.max_health)
+              < constants.UNIT_HALF_HEALTH_LEVEL
+              and functions.GetDistance(FOUNTAIN_SPOT, BOT_DATA.location)
+                  < constants.BASE_RADIUS))
 end
 
 function M.post_base_recovery()
