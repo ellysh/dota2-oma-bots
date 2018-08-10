@@ -52,9 +52,8 @@ end
 ---------------------------------
 
 function M.post_buy_starting_items()
-  return common_algorithms.IsItemPresent(BOT_DATA, "item_faerie_fire")
+  return common_algorithms.IsItemPresent(BOT_DATA, "item_tango")
          and common_algorithms.IsItemPresent(BOT_DATA, "item_wraith_band")
-         and common_algorithms.IsItemPresent(BOT_DATA, "item_branches")
 end
 
 function M.pre_buy_starting_items()
@@ -62,11 +61,10 @@ function M.pre_buy_starting_items()
 end
 
 function M.buy_starting_items()
-  common_algorithms.BuyItem("item_faerie_fire")
+  common_algorithms.BuyItem("item_tango")
   common_algorithms.BuyItem("item_recipe_wraith_band")
   common_algorithms.BuyItem("item_slippers")
   common_algorithms.BuyItem("item_circlet")
-  common_algorithms.BuyItem("item_branches")
 
   action_timing.SetNextActionDelay(0.5)
 end

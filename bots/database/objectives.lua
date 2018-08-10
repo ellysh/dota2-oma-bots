@@ -52,13 +52,6 @@ M.OBJECTIVES = {
         }
       },
       {
-        move = "heal_faerie_fire",
-        is_interruptible = false,
-        actions = {
-          {action = "heal_faerie_fire"},
-        }
-      },
-      {
         move = "tp_base",
         is_interruptible = false,
         actions = {
@@ -132,18 +125,18 @@ M.OBJECTIVES = {
         }
       },
       {
+        move = "buy_tango",
+        is_interruptible = false,
+        actions = {
+          {action = "buy_tango"},
+        },
+      },
+      {
         move = "buy_flask",
         is_interruptible = false,
         actions = {
           {action = "buy_flask"},
         }
-      },
-      {
-        move = "buy_faerie_fire",
-        is_interruptible = false,
-        actions = {
-          {action = "buy_faerie_fire"},
-        },
       },
       {
         move = "buy_tpscroll",
