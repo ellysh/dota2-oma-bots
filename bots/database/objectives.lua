@@ -48,6 +48,7 @@ M.OBJECTIVES = {
         move = "heal_flask",
         is_interruptible = false,
         actions = {
+          {action = "move_safe_spot"},
           {action = "heal_flask"},
         }
       },
