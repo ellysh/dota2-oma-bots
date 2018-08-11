@@ -127,13 +127,6 @@ M.OBJECTIVES = {
         }
       },
       {
-        move = "buy_tango",
-        is_interruptible = false,
-        actions = {
-          {action = "buy_tango"},
-        },
-      },
-      {
         move = "buy_flask",
         is_interruptible = false,
         actions = {

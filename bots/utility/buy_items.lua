@@ -21,7 +21,6 @@ end
 
 function M.pre_buy_items()
   return M.pre_buy_flask()
-         or M.pre_buy_tango()
          or M.pre_buy_ring_of_protection()
          or M.pre_buy_sobi_mask()
          or M.pre_buy_boots()
@@ -120,21 +119,6 @@ end
 
 function M.buy_flask()
   common_algorithms.BuyItem("item_flask")
-end
-
----------------------------------
-
-function M.pre_buy_tango()
-  return pre_buy_item("item_tango")
-         and BOT_DATA.level < 6
-end
-
-function M.post_buy_tango()
-  return not M.pre_buy_tango()
-end
-
-function M.buy_tango()
-  common_algorithms.BuyItem("item_tango")
 end
 
 ---------------------------------
