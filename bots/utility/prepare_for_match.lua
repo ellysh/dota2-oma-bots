@@ -4,13 +4,10 @@ local common_algorithms = require(
 local action_timing = require(
   GetScriptDirectory() .."/utility/action_timing")
 
+local env = require(
+  GetScriptDirectory() .."/utility/environment")
+
 local M = {}
-
-local BOT_DATA = {}
-
-function M.UpdateVariables()
-  BOT_DATA = common_algorithms.GetBotData()
-end
 
 ---------------------------------
 
@@ -44,7 +41,7 @@ function M.use_courier()
   local bot = GetBot()
 
   bot:Action_UseAbility(
-    common_algorithms.GetItem(BOT_DATA, "item_courier"))
+    common_algorithms.GetItem(env.BOT_DATA, "item_courier"))
 
   action_timing.SetNextActionDelay(0.5)
 end
@@ -52,8 +49,8 @@ end
 ---------------------------------
 
 function M.post_buy_starting_items()
-  return common_algorithms.IsItemPresent(BOT_DATA, "item_tango")
-         and common_algorithms.IsItemPresent(BOT_DATA, "item_wraith_band")
+  return common_algorithms.IsItemPresent(env.BOT_DATA, "item_tango")
+         and common_algorithms.IsItemPresent(env.BOT_DATA, "item_wraith_band")
 end
 
 function M.pre_buy_starting_items()
