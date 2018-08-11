@@ -234,6 +234,13 @@ M.OBJECTIVES = {
     is_interruptible = true,
     moves = {
       {
+        move = "use_trueshot",
+        is_interruptible = false,
+        actions = {
+          {action = "use_trueshot"},
+        }
+      },
+      {
         move = "lasthit_enemy_creep",
         is_interruptible = false,
         actions = {

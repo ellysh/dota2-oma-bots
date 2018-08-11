@@ -457,6 +457,10 @@ function M.IsItemCastable(unit_data, item_name)
          and M.GetItem(unit_data, item_name):IsFullyCastable()
 end
 
+function M.IsRangedUnit(unit_data)
+  return constants.MAX_MELEE_ATTACK_RANGE < unit_data.attack_range
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_GetNormalizedRadius = GetNormalizedRadius
 M.test_UpdateUnitList = all_units.UpdateUnitList

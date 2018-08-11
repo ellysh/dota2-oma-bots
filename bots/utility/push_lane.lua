@@ -38,6 +38,40 @@ end
 
 ---------------------------------
 
+local function IsRangedAllyCreep()
+  local creeps = algorithms.GetAllyCreeps(
+                   env.BOT_DATA,
+                   constants.MAX_UNIT_SEARCH_RADIUS)
+
+  return nil ~= functions.GetElementWith(
+                  creeps,
+                  algorithms.CompareMaxHealth,
+                  function(unit_data)
+                    return not algorithms.IsUnitLowHp(unit_data)
+                           and algorithms.IsRangedUnit(unit_data)
+                  end)
+end
+
+function M.pre_use_trueshot()
+  local ability = env.BOT:GetAbilityByName("drow_ranger_trueshot")
+
+  return not env.BOT_DATA.is_silenced
+         and ability:IsFullyCastable()
+         and IsRangedAllyCreep()
+end
+
+function M.post_use_trueshot()
+  return not M.pre_use_trueshot()
+end
+
+function M.use_trueshot()
+  local ability = env.BOT:GetAbilityByName("drow_ranger_trueshot")
+
+  env.BOT:Action_UseAbility(ability)
+end
+
+---------------------------------
+
 local SIDE = {
   ENEMY = {},
   ALLY = {},

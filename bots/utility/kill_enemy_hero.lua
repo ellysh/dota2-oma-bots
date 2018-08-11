@@ -54,8 +54,7 @@ function M.stop_attack()
      or not algorithms.IsAttackDone(env.BOT_DATA) then
     return end
 
-  local bot = GetBot()
-  bot:Action_ClearActions(true)
+  env.BOT:Action_ClearActions(true)
 end
 
 ---------------------------------
@@ -71,16 +70,13 @@ function M.post_move_enemy_hero()
 end
 
 function M.move_enemy_hero()
-  local bot = GetBot()
-
-  bot:Action_MoveToLocation(env.ENEMY_HERO_DATA.location)
+  env.BOT:Action_MoveToLocation(env.ENEMY_HERO_DATA.location)
 end
 
 ---------------------------------
 
 function M.pre_use_silence()
-  local bot = GetBot()
-  local ability = bot:GetAbilityByName("drow_ranger_wave_of_silence")
+  local ability = env.BOT:GetAbilityByName("drow_ranger_wave_of_silence")
 
   return env.ENEMY_HERO_DATA ~= nil
          and not env.ENEMY_HERO_DATA.is_silenced
@@ -96,10 +92,9 @@ function M.post_use_silence()
 end
 
 function M.use_silence()
-  local bot = GetBot()
-  local ability = bot:GetAbilityByName("drow_ranger_wave_of_silence")
+  local ability = env.BOT:GetAbilityByName("drow_ranger_wave_of_silence")
 
-  bot:Action_UseAbilityOnLocation(ability, env.ENEMY_HERO_DATA.location)
+  env.BOT:Action_UseAbilityOnLocation(ability, env.ENEMY_HERO_DATA.location)
 end
 
 ---------------------------------
