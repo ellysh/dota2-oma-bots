@@ -417,12 +417,16 @@ local function IsEnemyUnitInSpot(unit_data, enemy_hero_data, spot)
          or creep ~= nil
 end
 
+local function IsSpotSafe(unit_data, enemy_hero_data, spot)
+  return not IsEnemyUnitInSpot(unit_data, enemy_hero_data, spot)
+         and not map.IsUnitInSpot(unit_data, spot)
+end
+
 function M.GetSafeSpot(unit_data, enemy_hero_data)
   local hg_spot = map.GetAllySpot(unit_data, "high_ground")
-  if not IsEnemyUnitInSpot(unit_data, enemy_hero_data, hg_spot)
-     and not map.IsUnitInSpot(unit_data, hg_spot) then
-    return hg_spot
-  end
+
+  if IsSpotSafe(unit_data, enemy_hero_data, hg_spot) then
+    return hg_spot end
 
   local forest_top_spot = map.GetAllySpot(unit_data, "forest_top")
   local forest_bot_spot = map.GetAllySpot(unit_data, "forest_bot")
@@ -436,10 +440,13 @@ function M.GetSafeSpot(unit_data, enemy_hero_data)
                         forest_top_spot,
                         forest_bot_spot)
 
-  if not IsEnemyUnitInSpot(unit_data, enemy_hero_data, forest_spot)
-     and not map.IsUnitInSpot(unit_data, forest_spot) then
-    return forest_spot
-  end
+  if IsSpotSafe(unit_data, enemy_hero_data, forest_spot) then
+    return forest_spot end
+
+  local forest_back_spot = map.GetAllySpot(unit_data, "forest_back")
+
+  if IsSpotSafe(unit_data, enemy_hero_data, forest_back_spot) then
+    return forest_back_spot end
 
   return map.GetAllySpot(unit_data, "fountain")
 end
