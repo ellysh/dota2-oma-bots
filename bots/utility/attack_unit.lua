@@ -242,6 +242,8 @@ function M.pre_harras_enemy_hero()
                    ALLY_CREEP_DATA)
          and (not BOT_DATA.is_healing
               or BOT_DATA.health == BOT_DATA.max_health)
+         and (ENEMY_HERO_DATA.health <= BOT_DATA.health
+              or not common_algorithms.IsFocusedByEnemyHero(BOT_DATA))
 end
 
 function M.post_harras_enemy_hero()
