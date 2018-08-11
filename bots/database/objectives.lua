@@ -41,7 +41,6 @@ M.OBJECTIVES = {
         move = "heal_tango",
         is_interruptible = false,
         actions = {
-          {action = "move_safe_spot"},
           {action = "heal_tango"},
         }
       },

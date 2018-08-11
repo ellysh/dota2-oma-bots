@@ -94,7 +94,12 @@ function M.pre_heal_tango()
                  < functions.GetDistance(
                      GetTreeLocation(tree),
                      tower_data.location))
-
+         and not algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
+         and not algorithms.IsFocusedByUnknownUnit(env.BOT_DATA)
+         and not algorithms.AreUnitsInRadius(
+                   env.BOT_DATA,
+                   constants.MAX_HERO_ATTACK_RANGE,
+                   algorithms.GetEnemyHeroes)
 end
 
 function M.post_heal_tango()
@@ -105,8 +110,6 @@ function M.heal_tango()
   env.BOT:Action_UseAbilityOnTree(
     algorithms.GetItem(env.BOT_DATA, "item_tango"),
     env.BOT_DATA.nearby_trees[1])
-
-  action_timing.SetNextActionDelay(0.2)
 end
 
 ---------------------------------
@@ -154,8 +157,6 @@ end
 
 function M.move_safe_spot()
   env.BOT:Action_MoveToLocation(env.SAFE_SPOT)
-
-  action_timing.SetNextActionDelay(0.2)
 end
 
 ---------------------------------
