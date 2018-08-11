@@ -1,8 +1,8 @@
 local functions = require(
   GetScriptDirectory() .."/utility/functions")
 
-local common_algorithms = require(
-  GetScriptDirectory() .."/utility/common_algorithms")
+local algorithms = require(
+  GetScriptDirectory() .."/utility/algorithms")
 
 local constants = require(
   GetScriptDirectory() .."/utility/constants")
@@ -19,7 +19,7 @@ local M = {}
 
 function M.pre_kill_enemy_hero()
   return env.ENEMY_HERO_DATA ~= nil
-         and common_algorithms.IsUnitLowHp(env.ENEMY_HERO_DATA)
+         and algorithms.IsUnitLowHp(env.ENEMY_HERO_DATA)
          and env.ENEMY_HERO_DATA.health < env.BOT_DATA.health
          and not env.DOES_TOWER_PROTECT_ENEMY
 end
@@ -42,12 +42,12 @@ function M.post_attack_enemy_hero()
 end
 
 function M.attack_enemy_hero()
-  common_algorithms.AttackUnit(env.BOT_DATA, env.ENEMY_HERO_DATA, true)
+  algorithms.AttackUnit(env.BOT_DATA, env.ENEMY_HERO_DATA, true)
 end
 
 function M.stop_attack()
-  if not common_algorithms.IsUnitAttack(env.BOT_DATA)
-     or not common_algorithms.IsAttackDone(env.BOT_DATA) then
+  if not algorithms.IsUnitAttack(env.BOT_DATA)
+     or not algorithms.IsAttackDone(env.BOT_DATA) then
     return end
 
   local bot = GetBot()
@@ -59,7 +59,7 @@ end
 function M.pre_move_enemy_hero()
   return env.ENEMY_HERO_DATA ~= nil
          and not env.DOES_TOWER_PROTECT_ENEMY
-         and not common_algorithms.IsUnitMoving(env.BOT_DATA)
+         and not algorithms.IsUnitMoving(env.BOT_DATA)
 end
 
 function M.post_move_enemy_hero()

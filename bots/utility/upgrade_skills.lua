@@ -4,9 +4,6 @@ local skill_build = require(
 local map = require(
   GetScriptDirectory() .."/utility/map")
 
-local common_algorithms = require(
-  GetScriptDirectory() .."/utility/common_algorithms")
-
 local env = require(
   GetScriptDirectory() .."/utility/environment")
 

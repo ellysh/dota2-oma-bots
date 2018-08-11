@@ -7,8 +7,8 @@ local functions = require(
 local all_units = require(
   GetScriptDirectory() .."/utility/all_units")
 
-local common_algorithms = require(
-  GetScriptDirectory() .."/utility/common_algorithms")
+local algorithms = require(
+  GetScriptDirectory() .."/utility/algorithms")
 
 local constants = require(
   GetScriptDirectory() .."/utility/constants")
@@ -38,17 +38,17 @@ end
 ---------------------------------
 
 local function AreAllyCreepsInRadius(radius)
-  return common_algorithms.AreUnitsInRadius(
+  return algorithms.AreUnitsInRadius(
     env.BOT_DATA,
     radius,
-    common_algorithms.GetAllyCreeps)
+    algorithms.GetAllyCreeps)
 end
 
 local function AreEnemyCreepsInRadius(radius)
-  return common_algorithms.AreUnitsInRadius(
+  return algorithms.AreUnitsInRadius(
     env.BOT_DATA,
     radius,
-    common_algorithms.GetEnemyCreeps)
+    algorithms.GetEnemyCreeps)
 end
 
 function M.pre_move_mid_tower()
@@ -79,7 +79,7 @@ function M.pre_tp_mid_tower()
 
   return constants.MIN_TP_BASE_RADIUS
            < functions.GetDistance(target_location, env.BOT_DATA.location)
-         and common_algorithms.IsItemCastable(env.BOT_DATA, "item_tpscroll")
+         and algorithms.IsItemCastable(env.BOT_DATA, "item_tpscroll")
 end
 
 function M.post_tp_mid_tower()
@@ -87,7 +87,7 @@ function M.post_tp_mid_tower()
 end
 
 function M.tp_mid_tower()
-  local item = common_algorithms.GetItem(env.BOT_DATA, "item_tpscroll")
+  local item = algorithms.GetItem(env.BOT_DATA, "item_tpscroll")
 
   env.BOT:Action_UseAbilityOnLocation(
     item,
@@ -102,7 +102,7 @@ local function IsEnemyHeroNearCreeps()
   if env.ENEMY_HERO_DATA == nil then
     return false end
 
-  local creeps = common_algorithms.GetEnemyCreeps(
+  local creeps = algorithms.GetEnemyCreeps(
                        env.BOT_DATA,
                        constants.MAX_UNIT_SEARCH_RADIUS)
 
@@ -148,13 +148,13 @@ end
 
 function M.pre_decrease_creeps_distance()
   local creep_distance = functions.ternary(
-                         common_algorithms.IsUnitLowHp(env.BOT_DATA)
+                         algorithms.IsUnitLowHp(env.BOT_DATA)
                          or env.BOT_DATA.is_healing,
                          env.BOT_DATA.attack_range,
                          constants.BASE_CREEP_DISTANCE)
 
   return not AreEnemyCreepsInRadius(creep_distance)
-         and not common_algorithms.DoesEnemyCreepAttack(
+         and not algorithms.DoesEnemyCreepAttack(
                    env.BOT_DATA,
                    env.ENEMY_CREEP_DATA,
                    env.ALLY_CREEP_DATA)
@@ -180,13 +180,13 @@ end
 ---------------------------------
 
 function M.pre_evasion()
-  return common_algorithms.IsFocusedByCreeps(env.BOT_DATA)
-         or common_algorithms.IsFocusedByTower(
+  return algorithms.IsFocusedByCreeps(env.BOT_DATA)
+         or algorithms.IsFocusedByTower(
               env.BOT_DATA,
               env.ENEMY_TOWER_DATA)
-         or (common_algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
+         or (algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
              and AreEnemyCreepsInRadius(constants.CREEP_AGRO_RADIUS))
-         or common_algorithms.IsFocusedByUnknownUnit(env.BOT_DATA)
+         or algorithms.IsFocusedByUnknownUnit(env.BOT_DATA)
 end
 
 function M.post_evasion()

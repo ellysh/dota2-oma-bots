@@ -7,9 +7,6 @@ local functions = require(
 local logger = require(
   GetScriptDirectory() .."/utility/logger")
 
-local common_algorithms = require(
-  GetScriptDirectory() .."/utility/common_algorithms")
-
 local environment = require(
   GetScriptDirectory() .."/utility/environment")
 
@@ -23,7 +20,7 @@ local CURRENT_MOVE = nil
 local ACTION_INDEX = 1
 
 local function IsBotAlive()
-  return common_algorithms.GetBotData() ~= nil
+  return environment.BOT_DATA ~= nil
 end
 
 local function FindObjectiveToExecute()
@@ -102,7 +99,7 @@ end
 function M.Process()
   if not IsBotAlive()
      or IsActionTimingDelay()
-     or common_algorithms.GetBotData().is_casting then
+     or environment.BOT_DATA.is_casting then
     return end
 
   environment.UpdateVariables()

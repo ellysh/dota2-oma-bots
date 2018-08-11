@@ -1,8 +1,8 @@
 local map = require(
   GetScriptDirectory() .."/utility/map")
 
-local common_algorithms = require(
-  GetScriptDirectory() .."/utility/common_algorithms")
+local algorithms = require(
+  GetScriptDirectory() .."/utility/algorithms")
 
 local action_timing = require(
   GetScriptDirectory() .."/utility/action_timing")
@@ -100,7 +100,7 @@ local function IsEnoughGoldToBuy(item_name)
 end
 
 local function pre_buy_item(item_name)
-  return not common_algorithms.DoesBotOrCourierHaveItem(item_name)
+  return not algorithms.DoesBotOrCourierHaveItem(item_name)
          and IsEnoughGoldToBuy(item_name)
 end
 
@@ -113,7 +113,7 @@ function M.post_buy_flask()
 end
 
 function M.buy_flask()
-  common_algorithms.BuyItem("item_flask")
+  algorithms.BuyItem("item_flask")
 end
 
 ---------------------------------
@@ -127,16 +127,16 @@ function M.post_buy_tpscroll()
 end
 
 function M.buy_tpscroll()
-  common_algorithms.BuyItem("item_tpscroll")
+  algorithms.BuyItem("item_tpscroll")
 end
 
 ---------------------------------
 
 function M.pre_buy_ring_of_protection()
   return pre_buy_item("item_ring_of_protection")
-         and not common_algorithms.DoesBotOrCourierHaveItem(
+         and not algorithms.DoesBotOrCourierHaveItem(
                    "item_ring_of_basilius")
-         and not common_algorithms.DoesBotOrCourierHaveItem(
+         and not algorithms.DoesBotOrCourierHaveItem(
                    "item_ring_of_aquila")
 end
 
@@ -145,16 +145,16 @@ function M.post_buy_ring_of_protection()
 end
 
 function M.buy_ring_of_protection()
-  common_algorithms.BuyItem("item_ring_of_protection")
+  algorithms.BuyItem("item_ring_of_protection")
 end
 
 ---------------------------------
 
 function M.pre_buy_sobi_mask()
   return pre_buy_item("item_sobi_mask")
-         and not common_algorithms.DoesBotOrCourierHaveItem(
+         and not algorithms.DoesBotOrCourierHaveItem(
                    "item_ring_of_basilius")
-         and not common_algorithms.DoesBotOrCourierHaveItem(
+         and not algorithms.DoesBotOrCourierHaveItem(
                    "item_ring_of_aquila")
 end
 
@@ -163,14 +163,14 @@ function M.post_buy_sobi_mask()
 end
 
 function M.buy_sobi_mask()
-  common_algorithms.BuyItem("item_sobi_mask")
+  algorithms.BuyItem("item_sobi_mask")
 end
 
 ---------------------------------
 
 function M.pre_buy_boots()
   return pre_buy_item("item_boots")
-         and not common_algorithms.DoesBotOrCourierHaveItem(
+         and not algorithms.DoesBotOrCourierHaveItem(
                    "item_power_treads")
 end
 
@@ -179,14 +179,14 @@ function M.post_buy_boots()
 end
 
 function M.buy_boots()
-  common_algorithms.BuyItem("item_boots")
+  algorithms.BuyItem("item_boots")
 end
 
 ---------------------------------
 
 function M.pre_buy_gloves()
   return pre_buy_item("item_gloves")
-         and not common_algorithms.DoesBotOrCourierHaveItem(
+         and not algorithms.DoesBotOrCourierHaveItem(
                    "item_power_treads")
 end
 
@@ -195,14 +195,14 @@ function M.post_buy_gloves()
 end
 
 function M.buy_gloves()
-  common_algorithms.BuyItem("item_gloves")
+  algorithms.BuyItem("item_gloves")
 end
 
 ---------------------------------
 
 function M.pre_buy_boots_of_elves()
   return pre_buy_item("item_boots_of_elves")
-         and not common_algorithms.DoesBotOrCourierHaveItem(
+         and not algorithms.DoesBotOrCourierHaveItem(
                    "item_power_treads")
 end
 
@@ -211,17 +211,17 @@ function M.post_buy_boots_of_elves()
 end
 
 function M.buy_boots_of_elves()
-  common_algorithms.BuyItem("item_boots_of_elves")
+  algorithms.BuyItem("item_boots_of_elves")
 end
 
 ---------------------------------
 
 function M.pre_buy_two_boots_of_elves()
-  return common_algorithms.DoesBotOrCourierHaveItem("item_power_treads")
+  return algorithms.DoesBotOrCourierHaveItem("item_power_treads")
          and (2 * GetItemCost("item_boots_of_elves")) <= env.BOT_DATA.gold
-         and not common_algorithms.DoesBotOrCourierHaveItem(
+         and not algorithms.DoesBotOrCourierHaveItem(
                    "item_boots_of_elves")
-         and not common_algorithms.DoesBotOrCourierHaveItem(
+         and not algorithms.DoesBotOrCourierHaveItem(
                    "item_dragon_lance")
 end
 
@@ -230,15 +230,15 @@ function M.post_buy_two_boots_of_elves()
 end
 
 function M.buy_two_boots_of_elves()
-  common_algorithms.BuyItem("item_boots_of_elves")
-  common_algorithms.BuyItem("item_boots_of_elves")
+  algorithms.BuyItem("item_boots_of_elves")
+  algorithms.BuyItem("item_boots_of_elves")
 end
 
 ---------------------------------
 
 function M.pre_buy_ogre_axe()
   return pre_buy_item("item_ogre_axe")
-         and not common_algorithms.DoesBotOrCourierHaveItem(
+         and not algorithms.DoesBotOrCourierHaveItem(
                    "item_dragon_lance")
 end
 
@@ -247,13 +247,13 @@ function M.post_buy_ogre_axe()
 end
 
 function M.buy_ogre_axe()
-  common_algorithms.BuyItem("item_ogre_axe")
+  algorithms.BuyItem("item_ogre_axe")
 end
 
 ---------------------------------
 
 function M.pre_deliver_items()
-  local courier_data = common_algorithms.GetCourierData()
+  local courier_data = algorithms.GetCourierData()
 
   return 0 < env.BOT_DATA.stash_value
          and map.IsUnitInSpot(

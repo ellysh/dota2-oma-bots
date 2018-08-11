@@ -4,8 +4,8 @@ local map = require(
 local functions = require(
   GetScriptDirectory() .."/utility/functions")
 
-local common_algorithms = require(
-  GetScriptDirectory() .."/utility/common_algorithms")
+local algorithms = require(
+  GetScriptDirectory() .."/utility/algorithms")
 
 local constants = require(
   GetScriptDirectory() .."/utility/constants")
@@ -30,50 +30,50 @@ local function GetClosestCreep(radius, get_function)
 
   return functions.GetElementWith(
     creeps,
-    common_algorithms.CompareMinDistance,
+    algorithms.CompareMinDistance,
     function(unit_data)
-      return not common_algorithms.IsUnitLowHp(unit_data)
+      return not algorithms.IsUnitLowHp(unit_data)
     end)
 end
 
 function M.UpdateVariables()
   M.BOT = GetBot()
 
-  M.BOT_DATA = common_algorithms.GetBotData()
+  M.BOT_DATA = algorithms.GetBotData()
 
-  M.ENEMY_HERO_DATA = common_algorithms.GetEnemyHero(
+  M.ENEMY_HERO_DATA = algorithms.GetEnemyHero(
                         M.BOT_DATA,
                         constants.MAX_UNIT_SEARCH_RADIUS)
 
   M.ENEMY_CREEP_DATA = GetClosestCreep(
                          constants.MAX_UNIT_SEARCH_RADIUS,
-                         common_algorithms.GetEnemyCreeps)
+                         algorithms.GetEnemyCreeps)
 
   M.ALLY_CREEP_DATA = GetClosestCreep(
                         constants.MAX_UNIT_SEARCH_RADIUS,
-                        common_algorithms.GetAllyCreeps)
+                        algorithms.GetAllyCreeps)
 
-  M.ENEMY_TOWER_DATA = common_algorithms.GetEnemyBuildings(
+  M.ENEMY_TOWER_DATA = algorithms.GetEnemyBuildings(
                          M.BOT_DATA,
                          constants.MAX_UNIT_SEARCH_RADIUS)[1]
 
-  M.ALLY_CREEPS_HP = common_algorithms.GetTotalHealth(
-                       common_algorithms.GetAllyCreeps(
+  M.ALLY_CREEPS_HP = algorithms.GetTotalHealth(
+                       algorithms.GetAllyCreeps(
                          M.BOT_DATA,
                          constants.MAX_UNIT_SEARCH_RADIUS))
 
-  M.ENEMY_CREEPS_HP = common_algorithms.GetTotalHealth(
-                        common_algorithms.GetEnemyCreeps(
+  M.ENEMY_CREEPS_HP = algorithms.GetTotalHealth(
+                        algorithms.GetEnemyCreeps(
                           M.BOT_DATA,
                           constants.MAX_UNIT_SEARCH_RADIUS))
 
-  M.SAFE_SPOT = common_algorithms.GetSafeSpot(M.BOT_DATA, ENEMY_HERO_DATA)
+  M.SAFE_SPOT = algorithms.GetSafeSpot(M.BOT_DATA, ENEMY_HERO_DATA)
 
   M.FOUNTAIN_SPOT = map.GetAllySpot(M.BOT_DATA, "fountain")
 
   if M.ENEMY_HERO_DATA ~= nil then
     M.DOES_TOWER_PROTECT_ENEMY =
-      common_algorithms.DoesTowerProtectEnemyUnit(
+      algorithms.DoesTowerProtectEnemyUnit(
         M.ENEMY_HERO_DATA)
   end
 end

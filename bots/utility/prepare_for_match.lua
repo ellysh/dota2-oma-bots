@@ -1,5 +1,5 @@
-local common_algorithms = require(
-  GetScriptDirectory() .."/utility/common_algorithms")
+local algorithms = require(
+  GetScriptDirectory() .."/utility/algorithms")
 
 local action_timing = require(
   GetScriptDirectory() .."/utility/action_timing")
@@ -32,7 +32,7 @@ function M.pre_buy_and_use_courier()
 end
 
 function M.buy_courier()
-  common_algorithms.BuyItem("item_courier")
+  algorithms.BuyItem("item_courier")
 
   action_timing.SetNextActionDelay(0.3)
 end
@@ -41,7 +41,7 @@ function M.use_courier()
   local bot = GetBot()
 
   bot:Action_UseAbility(
-    common_algorithms.GetItem(env.BOT_DATA, "item_courier"))
+    algorithms.GetItem(env.BOT_DATA, "item_courier"))
 
   action_timing.SetNextActionDelay(0.5)
 end
@@ -49,8 +49,8 @@ end
 ---------------------------------
 
 function M.post_buy_starting_items()
-  return common_algorithms.IsItemPresent(env.BOT_DATA, "item_tango")
-         and common_algorithms.IsItemPresent(env.BOT_DATA, "item_wraith_band")
+  return algorithms.IsItemPresent(env.BOT_DATA, "item_tango")
+         and algorithms.IsItemPresent(env.BOT_DATA, "item_wraith_band")
 end
 
 function M.pre_buy_starting_items()
@@ -58,10 +58,10 @@ function M.pre_buy_starting_items()
 end
 
 function M.buy_starting_items()
-  common_algorithms.BuyItem("item_tango")
-  common_algorithms.BuyItem("item_recipe_wraith_band")
-  common_algorithms.BuyItem("item_slippers")
-  common_algorithms.BuyItem("item_circlet")
+  algorithms.BuyItem("item_tango")
+  algorithms.BuyItem("item_recipe_wraith_band")
+  algorithms.BuyItem("item_slippers")
+  algorithms.BuyItem("item_circlet")
 
   action_timing.SetNextActionDelay(0.5)
 end

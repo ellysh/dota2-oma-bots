@@ -1,8 +1,8 @@
 local functions = require(
   GetScriptDirectory() .."/utility/functions")
 
-local common_algorithms = require(
-  GetScriptDirectory() .."/utility/common_algorithms")
+local algorithms = require(
+  GetScriptDirectory() .."/utility/algorithms")
 
 local constants = require(
   GetScriptDirectory() .."/utility/constants")
@@ -42,9 +42,9 @@ end
 ---------------------------------
 
 function M.pre_base_recovery()
-  return ((common_algorithms.IsUnitLowHp(env.BOT_DATA)
+  return ((algorithms.IsUnitLowHp(env.BOT_DATA)
            and (not env.BOT_DATA.is_healing
-                or common_algorithms.IsFocusedByEnemyHero(env.BOT_DATA)))
+                or algorithms.IsFocusedByEnemyHero(env.BOT_DATA)))
 
           or M.pre_restore_hp_on_base()
 
@@ -69,7 +69,7 @@ end
 
 function M.pre_move_base()
 
-  return (not (common_algorithms.IsUnitMoving(env.BOT_DATA)
+  return (not (algorithms.IsUnitMoving(env.BOT_DATA)
               and env.BOT:IsFacingLocation(env.FOUNTAIN_SPOT, 30)))
           or (functions.GetRate(env.BOT_DATA.health, env.BOT_DATA.max_health)
               < constants.UNIT_HALF_HEALTH_LEVEL
@@ -97,7 +97,7 @@ end
 ---------------------------------
 
 function M.pre_deliver_items()
-  local courier_data = common_algorithms.GetCourierData()
+  local courier_data = algorithms.GetCourierData()
 
   return 0 < env.BOT_DATA.stash_value
          and map.IsUnitInSpot(

@@ -7,8 +7,8 @@ local functions = require(
 local all_units = require(
   GetScriptDirectory() .."/utility/all_units")
 
-local common_algorithms = require(
-  GetScriptDirectory() .."/utility/common_algorithms")
+local algorithms = require(
+  GetScriptDirectory() .."/utility/algorithms")
 
 local constants = require(
   GetScriptDirectory() .."/utility/constants")
@@ -46,7 +46,7 @@ local SIDE = {
 
 local function IsLastHit(bot_data, unit_data)
   local incoming_damage = bot_data.attack_damage
-                          + common_algorithms.GetTotalDamageToUnit(
+                          + algorithms.GetTotalDamageToUnit(
                               unit_data,
                               functions.GetUnitDistance(
                                 bot_data,
@@ -63,18 +63,18 @@ end
 local function GetLastHitCreep(side)
   local creeps = functions.ternary(
     side == SIDE["ENEMY"],
-    common_algorithms.GetEnemyCreeps(
+    algorithms.GetEnemyCreeps(
       env.BOT_DATA,
       constants.MAX_UNIT_TARGET_RADIUS),
-    common_algorithms.GetAllyCreeps(
+    algorithms.GetAllyCreeps(
       env.BOT_DATA,
       constants.MAX_UNIT_TARGET_RADIUS))
 
   return functions.GetElementWith(
     creeps,
-    common_algorithms.CompareMinHealth,
+    algorithms.CompareMinHealth,
     function(unit_data)
-      return common_algorithms.IsAttackTargetable(unit_data)
+      return algorithms.IsAttackTargetable(unit_data)
              and IsLastHit(env.BOT_DATA, unit_data)
     end)
 end
@@ -90,7 +90,7 @@ end
 function M.lasthit_enemy_creep()
   local creep = GetLastHitCreep(SIDE["ENEMY"])
 
-  common_algorithms.AttackUnit(env.BOT_DATA, creep, false)
+  algorithms.AttackUnit(env.BOT_DATA, creep, false)
 end
 
 ---------------------------------
@@ -110,7 +110,7 @@ end
 function M.deny_ally_creep()
   local target_data = GetLastHitCreep(SIDE["ALLY"])
 
-  common_algorithms.AttackUnit(env.BOT_DATA, target_data, false)
+  algorithms.AttackUnit(env.BOT_DATA, target_data, false)
 end
 
 --------------------------------
@@ -118,16 +118,16 @@ end
 local function GetMaxHealthCreep(side)
   local creeps = functions.ternary(
     side == SIDE["ENEMY"],
-    common_algorithms.GetEnemyCreeps(
+    algorithms.GetEnemyCreeps(
       env.BOT_DATA,
       env.BOT_DATA.attack_range),
-    common_algorithms.GetAllyCreeps(
+    algorithms.GetAllyCreeps(
       env.BOT_DATA,
       env.BOT_DATA.attack_range))
 
   return functions.GetElementWith(
     creeps,
-    common_algorithms.CompareMaxHealth,
+    algorithms.CompareMaxHealth,
     function(unit_data)
       return (side == SIDE["ENEMY"])
              or (side == SIDE["ALLY"]
@@ -146,8 +146,8 @@ function M.pre_attack_enemy_creep()
          and creep ~= nil
          and constants.UNIT_HALF_HEALTH_LEVEL
              < functions.GetRate(creep.health, creep.max_health)
-         and not common_algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
-         and not common_algorithms.IsFocusedByCreeps(env.BOT_DATA)
+         and not algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
+         and not algorithms.IsFocusedByCreeps(env.BOT_DATA)
 end
 
 function M.post_attack_enemy_creep()
@@ -157,7 +157,7 @@ end
 function M.attack_enemy_creep()
   local creep = GetMaxHealthCreep(SIDE["ENEMY"])
 
-  common_algorithms.AttackUnit(env.BOT_DATA, creep, false)
+  algorithms.AttackUnit(env.BOT_DATA, creep, false)
 end
 
 --------------------------------
@@ -168,8 +168,8 @@ function M.pre_attack_ally_creep()
   return constants.MAX_CREEPS_HP_DELTA
            < (env.ALLY_CREEPS_HP - env.ENEMY_CREEPS_HP)
          and creep ~= nil
-         and not common_algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
-         and not common_algorithms.IsFocusedByCreeps(env.BOT_DATA)
+         and not algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
+         and not algorithms.IsFocusedByCreeps(env.BOT_DATA)
 end
 
 function M.post_attack_ally_creep()
@@ -179,26 +179,26 @@ end
 function M.attack_ally_creep()
   local creep = GetMaxHealthCreep(SIDE["ALLY"])
 
-  common_algorithms.AttackUnit(env.BOT_DATA, creep, false)
+  algorithms.AttackUnit(env.BOT_DATA, creep, false)
 end
 
 --------------------------------
 
 function M.pre_harras_enemy_hero()
   return env.ENEMY_HERO_DATA ~= nil
-         and not common_algorithms.AreUnitsInRadius(
+         and not algorithms.AreUnitsInRadius(
                    env.BOT_DATA,
                    constants.CREEP_AGRO_RADIUS,
-                   common_algorithms.GetEnemyCreeps)
-         and not common_algorithms.DoesTowerProtectEnemyUnit(
+                   algorithms.GetEnemyCreeps)
+         and not algorithms.DoesTowerProtectEnemyUnit(
                    env.ENEMY_HERO_DATA)
-         and not common_algorithms.DoesEnemyCreepAttack(
+         and not algorithms.DoesEnemyCreepAttack(
                    env.BOT_DATA,
                    env.ENEMY_CREEP_DATA,
                    env.ALLY_CREEP_DATA)
          and (not env.BOT_DATA.is_healing
               or env.BOT_DATA.health == env.BOT_DATA.max_health)
-         and not common_algorithms.IsFocusedByCreeps(env.BOT_DATA)
+         and not algorithms.IsFocusedByCreeps(env.BOT_DATA)
 end
 
 function M.post_harras_enemy_hero()
@@ -206,19 +206,19 @@ function M.post_harras_enemy_hero()
 end
 
 function M.harras_enemy_hero()
-  common_algorithms.AttackUnit(env.BOT_DATA, env.ENEMY_HERO_DATA, true)
+  algorithms.AttackUnit(env.BOT_DATA, env.ENEMY_HERO_DATA, true)
 end
 
 --------------------------------
 
 function M.pre_attack_enemy_tower()
   return env.ENEMY_TOWER_DATA ~= nil
-         and common_algorithms.IsFocusedByCreeps(env.ENEMY_TOWER_DATA)
-         and not common_algorithms.IsFocusedByTower(
+         and algorithms.IsFocusedByCreeps(env.ENEMY_TOWER_DATA)
+         and not algorithms.IsFocusedByTower(
                    env.BOT_DATA,
                    env.ENEMY_TOWER_DATA)
-         and not common_algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
-         and not common_algorithms.IsFocusedByCreeps(env.BOT_DATA)
+         and not algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
+         and not algorithms.IsFocusedByCreeps(env.BOT_DATA)
 end
 
 function M.post_attack_enemy_tower()
@@ -226,14 +226,14 @@ function M.post_attack_enemy_tower()
 end
 
 function M.attack_enemy_tower()
-  common_algorithms.AttackUnit(env.BOT_DATA, env.ENEMY_TOWER_DATA, false)
+  algorithms.AttackUnit(env.BOT_DATA, env.ENEMY_TOWER_DATA, false)
 end
 
 --------------------------------
 
 function M.stop_attack()
-  if not common_algorithms.IsUnitAttack(env.BOT_DATA)
-     or not common_algorithms.IsAttackDone(env.BOT_DATA) then
+  if not algorithms.IsUnitAttack(env.BOT_DATA)
+     or not algorithms.IsAttackDone(env.BOT_DATA) then
     return end
 
   local bot = GetBot()
