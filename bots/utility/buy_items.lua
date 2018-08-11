@@ -9,14 +9,6 @@ local action_timing = require(
 
 local M = {}
 
-local BOT = {}
-local BOT_DATA = {}
-
-function M.UpdateVariables()
-  BOT = GetBot()
-  BOT_DATA = common_algorithms.GetBotData()
-end
-
 ---------------------------------
 
 function M.pre_buy_items()
@@ -42,7 +34,7 @@ end
 
 local function GetFullSlotInBackpack(unit_data)
   for i = 6, 8 do
-    if nil ~= BOT:GetItemInSlot(i) then
+    if nil ~= env.BOT:GetItemInSlot(i) then
       return i
     end
   end
@@ -52,7 +44,7 @@ end
 
 local function GetEmptySlotInInventory(unit_data)
   for i = 0, 5 do
-    if nil == BOT:GetItemInSlot(i) then
+    if nil == env.BOT:GetItemInSlot(i) then
       return i
     end
   end
@@ -61,8 +53,8 @@ local function GetEmptySlotInInventory(unit_data)
 end
 
 function M.pre_put_item_in_inventory()
-  return ((nil ~= GetFullSlotInBackpack(BOT_DATA))
-          and (nil ~= GetEmptySlotInInventory(BOT_DATA)))
+  return ((nil ~= GetFullSlotInBackpack(env.BOT_DATA))
+          and (nil ~= GetEmptySlotInInventory(env.BOT_DATA)))
 end
 
 function M.post_put_item_in_inventory()
@@ -70,9 +62,9 @@ function M.post_put_item_in_inventory()
 end
 
 function M.put_item_in_inventory()
-  BOT:ActionImmediate_SwapItems(
-    GetFullSlotInBackpack(BOT_DATA),
-    GetEmptySlotInInventory(BOT_DATA))
+  env.BOT:ActionImmediate_SwapItems(
+    GetFullSlotInBackpack(env.BOT_DATA),
+    GetEmptySlotInInventory(env.BOT_DATA))
 
   action_timing.SetNextActionDelay(0.1)
 end
@@ -80,11 +72,11 @@ end
 ---------------------------------
 
 function M.pre_swap_items()
-  local backpack_slot = GetFullSlotInBackpack(BOT_DATA)
+  local backpack_slot = GetFullSlotInBackpack(env.BOT_DATA)
 
-  return BOT:FindItemSlot("item_branches") < 6
+  return env.BOT:FindItemSlot("item_branches") < 6
          and nil ~= backpack_slot
-         and BOT:GetItemInSlot(backpack_slot):GetName() ~= "item_branches"
+         and env.BOT:GetItemInSlot(backpack_slot):GetName() ~= "item_branches"
 end
 
 function M.post_swap_items()
@@ -92,16 +84,16 @@ function M.post_swap_items()
 end
 
 function M.swap_items()
-  BOT:ActionImmediate_SwapItems(
-    BOT:FindItemSlot("item_branches"),
-    GetFullSlotInBackpack(BOT_DATA))
+  env.BOT:ActionImmediate_SwapItems(
+    env.BOT:FindItemSlot("item_branches"),
+    GetFullSlotInBackpack(env.BOT_DATA))
 
   action_timing.SetNextActionDelay(0.1)
 end
 
 ---------------------------------
 local function IsEnoughGoldToBuy(item_name)
-  return GetItemCost(item_name) <= BOT_DATA.gold
+  return GetItemCost(item_name) <= env.BOT_DATA.gold
 end
 
 local function pre_buy_item(item_name)
@@ -223,7 +215,7 @@ end
 
 function M.pre_buy_two_boots_of_elves()
   return common_algorithms.DoesBotOrCourierHaveItem("item_power_treads")
-         and (2 * GetItemCost("item_boots_of_elves")) <= BOT_DATA.gold
+         and (2 * GetItemCost("item_boots_of_elves")) <= env.BOT_DATA.gold
          and not common_algorithms.DoesBotOrCourierHaveItem(
                    "item_boots_of_elves")
          and not common_algorithms.DoesBotOrCourierHaveItem(
@@ -260,10 +252,10 @@ end
 function M.pre_deliver_items()
   local courier_data = common_algorithms.GetCourierData()
 
-  return 0 < BOT_DATA.stash_value
+  return 0 < env.BOT_DATA.stash_value
          and map.IsUnitInSpot(
                courier_data,
-               map.GetAllySpot(BOT_DATA, "fountain"))
+               map.GetAllySpot(env.BOT_DATA, "fountain"))
 end
 
 function M.post_deliver_items()
@@ -273,7 +265,7 @@ end
 function M.deliver_items()
   local courier = GetCourier(0)
 
-  BOT:ActionImmediate_Courier(
+  env.BOT:ActionImmediate_Courier(
     courier,
     COURIER_ACTION_TAKE_AND_TRANSFER_ITEMS)
 end
