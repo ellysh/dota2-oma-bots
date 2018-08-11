@@ -194,6 +194,8 @@ function M.pre_attack_enemy_creep()
          and creep ~= nil
          and constants.UNIT_HALF_HEALTH_LEVEL
              < functions.GetRate(creep.health, creep.max_health)
+         and not common_algorithms.IsFocusedByEnemyHero(BOT_DATA)
+         and not common_algorithms.IsFocusedByCreeps(BOT_DATA)
 end
 
 function M.post_attack_enemy_creep()
@@ -214,6 +216,8 @@ function M.pre_attack_ally_creep()
   return constants.MAX_CREEPS_HP_DELTA
            < (ALLY_CREEPS_HP - ENEMY_CREEPS_HP)
          and creep ~= nil
+         and not common_algorithms.IsFocusedByEnemyHero(BOT_DATA)
+         and not common_algorithms.IsFocusedByCreeps(BOT_DATA)
 end
 
 function M.post_attack_ally_creep()
