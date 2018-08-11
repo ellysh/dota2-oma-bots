@@ -25,12 +25,10 @@ local M = {}
 
 function M.pre_attack_unit()
   return not algorithms.IsUnitLowHp(env.BOT_DATA)
-         and env.ENEMY_HERO_DATA ~= nil
+         and env.ENEMY_HERO_DATA == nil
          and (M.pre_lasthit_enemy_creep()
               or M.pre_deny_ally_creep()
-              or M.pre_harras_enemy_hero()
               or M.pre_attack_enemy_creep()
-              or M.pre_attack_ally_creep()
               or M.pre_attack_enemy_tower())
 end
 
@@ -142,9 +140,7 @@ end
 function M.pre_attack_enemy_creep()
   local creep = GetMaxHealthCreep(SIDE["ENEMY"])
 
-  return constants.MAX_CREEPS_HP_DELTA
-           < (env.ENEMY_CREEPS_HP - env.ALLY_CREEPS_HP)
-         and creep ~= nil
+  return creep ~= nil
          and constants.UNIT_HALF_HEALTH_LEVEL
              < functions.GetRate(creep.health, creep.max_health)
          and not algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
@@ -159,55 +155,6 @@ function M.attack_enemy_creep()
   local creep = GetMaxHealthCreep(SIDE["ENEMY"])
 
   algorithms.AttackUnit(env.BOT_DATA, creep, false)
-end
-
---------------------------------
-
-function M.pre_attack_ally_creep()
-  local creep = GetMaxHealthCreep(SIDE["ALLY"])
-
-  return constants.MAX_CREEPS_HP_DELTA
-           < (env.ALLY_CREEPS_HP - env.ENEMY_CREEPS_HP)
-         and creep ~= nil
-         and not algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
-         and not algorithms.IsFocusedByCreeps(env.BOT_DATA)
-end
-
-function M.post_attack_ally_creep()
-  return not M.pre_attack_ally_creep()
-end
-
-function M.attack_ally_creep()
-  local creep = GetMaxHealthCreep(SIDE["ALLY"])
-
-  algorithms.AttackUnit(env.BOT_DATA, creep, false)
-end
-
---------------------------------
-
-function M.pre_harras_enemy_hero()
-  return env.ENEMY_HERO_DATA ~= nil
-         and not algorithms.AreUnitsInRadius(
-                   env.BOT_DATA,
-                   constants.CREEP_AGRO_RADIUS,
-                   algorithms.GetEnemyCreeps)
-         and not algorithms.DoesTowerProtectEnemyUnit(
-                   env.ENEMY_HERO_DATA)
-         and not algorithms.DoesEnemyCreepAttack(
-                   env.BOT_DATA,
-                   env.ENEMY_CREEP_DATA,
-                   env.ALLY_CREEP_DATA)
-         and (not env.BOT_DATA.is_healing
-              or env.BOT_DATA.health == env.BOT_DATA.max_health)
-         and not algorithms.IsFocusedByCreeps(env.BOT_DATA)
-end
-
-function M.post_harras_enemy_hero()
-  return not M.pre_harras_enemy_hero()
-end
-
-function M.harras_enemy_hero()
-  algorithms.AttackUnit(env.BOT_DATA, env.ENEMY_HERO_DATA, true)
 end
 
 --------------------------------

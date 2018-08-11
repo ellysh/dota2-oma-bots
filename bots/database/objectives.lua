@@ -229,6 +229,45 @@ M.OBJECTIVES = {
   },
 
   {
+    objective = "push_lane",
+    module = require(GetScriptDirectory() .."/utility/push_lane"),
+    is_interruptible = true,
+    moves = {
+      {
+        move = "lasthit_enemy_creep",
+        is_interruptible = false,
+        actions = {
+          {action = "lasthit_enemy_creep"},
+          {action = "stop_attack"},
+        }
+      },
+      {
+        move = "deny_ally_creep",
+        is_interruptible = false,
+        actions = {
+          {action = "deny_ally_creep"},
+          {action = "stop_attack"},
+        }
+      },
+      {
+        move = "attack_enemy_creep",
+        is_interruptible = false,
+        actions = {
+          {action = "attack_enemy_creep"},
+          {action = "stop_attack"},
+        }
+      },
+      {
+        move = "attack_enemy_tower",
+        is_interruptible = true,
+        actions = {
+          {action = "attack_enemy_tower"},
+        }
+      },
+    }
+  },
+
+  {
     objective = "attack_unit",
     module = require(GetScriptDirectory() .."/utility/attack_unit"),
     is_interruptible = true,
