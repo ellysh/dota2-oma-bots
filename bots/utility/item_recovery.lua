@@ -105,6 +105,8 @@ function M.heal_tango()
   env.BOT:Action_UseAbilityOnTree(
     algorithms.GetItem(env.BOT_DATA, "item_tango"),
     env.BOT_DATA.nearby_trees[1])
+
+  action_timing.SetNextActionDelay(0.2)
 end
 
 ---------------------------------
@@ -152,6 +154,8 @@ end
 
 function M.move_safe_spot()
   env.BOT:Action_MoveToLocation(env.SAFE_SPOT)
+
+  action_timing.SetNextActionDelay(0.2)
 end
 
 ---------------------------------
