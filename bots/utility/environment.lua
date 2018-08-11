@@ -25,7 +25,7 @@ M.DOES_TOWER_PROTECT_ENEMY = false
 
 local function GetClosestCreep(radius, get_function)
   local creeps = get_function(
-    BOT_DATA,
+    M.BOT_DATA,
     radius)
 
   return functions.GetElementWith(
@@ -42,7 +42,7 @@ function M.UpdateVariables()
   M.BOT_DATA = common_algorithms.GetBotData()
 
   M.ENEMY_HERO_DATA = common_algorithms.GetEnemyHero(
-                        BOT_DATA,
+                        M.BOT_DATA,
                         constants.MAX_UNIT_SEARCH_RADIUS)
 
   M.ENEMY_CREEP_DATA = GetClosestCreep(
@@ -54,22 +54,22 @@ function M.UpdateVariables()
                         common_algorithms.GetAllyCreeps)
 
   M.ENEMY_TOWER_DATA = common_algorithms.GetEnemyBuildings(
-                         BOT_DATA,
+                         M.BOT_DATA,
                          constants.MAX_UNIT_SEARCH_RADIUS)[1]
 
   M.ALLY_CREEPS_HP = common_algorithms.GetTotalHealth(
                        common_algorithms.GetAllyCreeps(
-                         BOT_DATA,
+                         M.BOT_DATA,
                          constants.MAX_UNIT_SEARCH_RADIUS))
 
   M.ENEMY_CREEPS_HP = common_algorithms.GetTotalHealth(
                         common_algorithms.GetEnemyCreeps(
-                          BOT_DATA,
+                          M.BOT_DATA,
                           constants.MAX_UNIT_SEARCH_RADIUS))
 
-  M.SAFE_SPOT = common_algorithms.GetSafeSpot(BOT_DATA, ENEMY_HERO_DATA)
+  M.SAFE_SPOT = common_algorithms.GetSafeSpot(M.BOT_DATA, ENEMY_HERO_DATA)
 
-  M.FOUNTAIN_SPOT = map.GetAllySpot(BOT_DATA, "fountain")
+  M.FOUNTAIN_SPOT = map.GetAllySpot(M.BOT_DATA, "fountain")
 
   if M.ENEMY_HERO_DATA ~= nil then
     M.DOES_TOWER_PROTECT_ENEMY =

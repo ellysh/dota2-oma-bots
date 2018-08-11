@@ -73,7 +73,7 @@ end
 function M.heal_flask()
   env.BOT:Action_UseAbilityOnEntity(
     common_algorithms.GetItem(env.BOT_DATA, "item_flask"),
-    BOT)
+    env.BOT)
 
   action_timing.SetNextActionDelay(4)
 end
