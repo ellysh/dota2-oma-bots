@@ -21,7 +21,7 @@ M.ALLY_CREEPS_HP = 0
 M.ENEMY_CREEPS_HP = 0
 M.SAFE_SPOT = {}
 M.FOUNTAIN_SPOT = {}
-
+M.DOES_TOWER_PROTECT_ENEMY = false
 
 local function GetClosestCreep(radius, get_function)
   local creeps = get_function(
@@ -70,6 +70,12 @@ function M.UpdateVariables()
   M.SAFE_SPOT = common_algorithms.GetSafeSpot(BOT_DATA, ENEMY_HERO_DATA)
 
   M.FOUNTAIN_SPOT = map.GetAllySpot(BOT_DATA, "fountain")
+
+  if M.ENEMY_HERO_DATA ~= nil then
+    M.DOES_TOWER_PROTECT_ENEMY =
+      common_algorithms.DoesTowerProtectEnemyUnit(
+        M.ENEMY_HERO_DATA)
+  end
 end
 
 -- Provide an access to local functions for unit tests only
