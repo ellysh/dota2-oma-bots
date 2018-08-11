@@ -4,17 +4,11 @@ local map = require(
 local functions = require(
   GetScriptDirectory() .."/utility/functions")
 
-local all_units = require(
-  GetScriptDirectory() .."/utility/all_units")
-
 local common_algorithms = require(
   GetScriptDirectory() .."/utility/common_algorithms")
 
 local constants = require(
   GetScriptDirectory() .."/utility/constants")
-
-local action_timing = require(
-  GetScriptDirectory() .."/utility/action_timing")
 
 local M = {}
 
@@ -25,6 +19,9 @@ M.ALLY_CREEP_DATA = {}
 M.ENEMY_TOWER_DATA = {}
 M.ALLY_CREEPS_HP = 0
 M.ENEMY_CREEPS_HP = 0
+M.SAFE_SPOT = {}
+M.FOUNTAIN_SPOT = {}
+
 
 local function GetClosestCreep(radius, get_function)
   local creeps = get_function(
@@ -69,6 +66,10 @@ function M.UpdateVariables()
                         common_algorithms.GetEnemyCreeps(
                           BOT_DATA,
                           constants.MAX_UNIT_SEARCH_RADIUS))
+
+  M.SAFE_SPOT = common_algorithms.GetSafeSpot(BOT_DATA, ENEMY_HERO_DATA)
+
+  M.FOUNTAIN_SPOT = map.GetAllySpot(BOT_DATA, "fountain")
 end
 
 -- Provide an access to local functions for unit tests only

@@ -18,28 +18,13 @@ local map = require(
 
 local M = {}
 
-local BOT = {}
-local BOT_DATA = {}
-local SAFE_SPOT = {}
-local FOUNTAIN_SPOT = {}
-
-function M.UpdateVariables()
-  BOT = GetBot()
-
-  BOT_DATA = common_algorithms.GetBotData()
-
-  SAFE_SPOT = common_algorithms.GetSafeSpot(BOT_DATA, ENEMY_HERO_DATA)
-
-  FOUNTAIN_SPOT = map.GetAllySpot(BOT_DATA, "fountain")
-end
-
 ---------------------------------
 
 function M.pre_restore_hp_on_base()
-  return BOT:HasModifier("modifier_fountain_aura_buff")
-         and (functions.GetRate(BOT_DATA.health, BOT_DATA.max_health)
+  return env.BOT:HasModifier("modifier_fountain_aura_buff")
+         and (functions.GetRate(env.BOT_DATA.health, env.BOT_DATA.max_health)
               < constants.UNIT_FOUNTAIN_MAX_HEALTH
-              or functions.GetRate(BOT_DATA.mana, BOT_DATA.max_mana)
+              or functions.GetRate(env.BOT_DATA.mana, env.BOT_DATA.max_mana)
                  < constants.UNIT_FOUNTAIN_MAX_MANA)
 end
 
@@ -48,21 +33,21 @@ function M.post_restore_hp_on_base()
 end
 
 function M.restore_hp_on_base()
-  BOT:Action_ClearActions(true)
+  env.BOT:Action_ClearActions(true)
 end
 
 ---------------------------------
 
 function M.pre_base_recovery()
-  return ((common_algorithms.IsUnitLowHp(BOT_DATA)
-           and (not BOT_DATA.is_healing
-                or common_algorithms.IsFocusedByEnemyHero(BOT_DATA)))
+  return ((common_algorithms.IsUnitLowHp(env.BOT_DATA)
+           and (not env.BOT_DATA.is_healing
+                or common_algorithms.IsFocusedByEnemyHero(env.BOT_DATA)))
 
           or M.pre_restore_hp_on_base()
 
-          or (functions.GetRate(BOT_DATA.health, BOT_DATA.max_health)
+          or (functions.GetRate(env.BOT_DATA.health, env.BOT_DATA.max_health)
               < constants.UNIT_HALF_HEALTH_LEVEL
-              and functions.GetDistance(FOUNTAIN_SPOT, BOT_DATA.location)
+              and functions.GetDistance(env.FOUNTAIN_SPOT, env.BOT_DATA.location)
                   < constants.BASE_RADIUS))
 end
 
@@ -81,11 +66,13 @@ end
 
 function M.pre_move_base()
 
-  return (not (common_algorithms.IsUnitMoving(BOT_DATA)
-              and BOT:IsFacingLocation(FOUNTAIN_SPOT, 30)))
-          or (functions.GetRate(BOT_DATA.health, BOT_DATA.max_health)
+  return (not (common_algorithms.IsUnitMoving(env.BOT_DATA)
+              and env.BOT:IsFacingLocation(env.FOUNTAIN_SPOT, 30)))
+          or (functions.GetRate(env.BOT_DATA.health, env.BOT_DATA.max_health)
               < constants.UNIT_HALF_HEALTH_LEVEL
-              and functions.GetDistance(FOUNTAIN_SPOT, BOT_DATA.location)
+              and functions.GetDistance(
+                    env.FOUNTAIN_SPOT,
+                    env.BOT_DATA.location)
                   < constants.BASE_RADIUS)
 end
 
@@ -94,11 +81,11 @@ function M.post_move_base()
 end
 
 function M.move_base()
-  BOT:Action_MoveToLocation(FOUNTAIN_SPOT)
+  env.BOT:Action_MoveToLocation(env.FOUNTAIN_SPOT)
 
-  if functions.GetDistance(FOUNTAIN_SPOT, BOT_DATA.location)
+  if functions.GetDistance(env.FOUNTAIN_SPOT, env.BOT_DATA.location)
      < constants.BASE_RADIUS
-     and not BOT:HasModifier("modifier_fountain_aura_buff") then
+     and not env.BOT:HasModifier("modifier_fountain_aura_buff") then
 
     action_timing.SetNextActionDelay(1.5)
   end
@@ -109,10 +96,10 @@ end
 function M.pre_deliver_items()
   local courier_data = common_algorithms.GetCourierData()
 
-  return 0 < BOT_DATA.stash_value
+  return 0 < env.BOT_DATA.stash_value
          and map.IsUnitInSpot(
                courier_data,
-               map.GetAllySpot(BOT_DATA, "fountain"))
+               map.GetAllySpot(env.BOT_DATA, "fountain"))
 end
 
 function M.post_deliver_items()
@@ -122,7 +109,7 @@ end
 function M.deliver_items()
   local courier = GetCourier(0)
 
-  BOT:ActionImmediate_Courier(
+  env.BOT:ActionImmediate_Courier(
     courier,
     COURIER_ACTION_TAKE_AND_TRANSFER_ITEMS)
 end
