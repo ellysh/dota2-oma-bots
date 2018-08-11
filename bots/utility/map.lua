@@ -4,6 +4,9 @@ local map = require(
 local functions = require(
   GetScriptDirectory() .."/utility/functions")
 
+local constants = require(
+  GetScriptDirectory() .."/utility/constants")
+
 local M = {}
 
 function M.GetAllySpot(unit_data, spot_name)
@@ -16,6 +19,11 @@ end
 
 function M.IsUnitInSpot(unit_data, spot)
   return functions.GetDistance(unit_data.location, spot) <= spot.z
+end
+
+function M.IsUnitNearSpot(unit_data, spot)
+  return functions.GetDistance(unit_data.location, spot)
+         <= constants.NEAR_SPOT_RADIUS
 end
 
 function M.IsUnitInEnemyTowerAttackRange(unit_data)

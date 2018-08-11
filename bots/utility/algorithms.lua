@@ -398,7 +398,7 @@ function M.DoesEnemyCreepAttack(
                constants.TURN_TARGET_MAX_DEGREE)
 end
 
-local function IsEnemyUnitInSpot(unit_data, enemy_hero_data, spot)
+local function IsEnemyUnitNearSpot(unit_data, enemy_hero_data, spot)
   local creeps = M.GetEnemyCreeps(
                    unit_data,
                    constants.MAX_UNIT_TARGET_RADIUS)
@@ -407,18 +407,18 @@ local function IsEnemyUnitInSpot(unit_data, enemy_hero_data, spot)
                   creeps,
                   M.CompareMinDistance,
                   function(unit_data)
-                    return map.IsUnitInSpot(unit_data, spot)
+                    return map.IsUnitNearSpot(unit_data, spot)
                   end)
 
   return (enemy_hero_data ~= nil
           and (functions.GetDistance(enemy_hero_data.location, spot)
                  <= enemy_hero_data.attack_range
-               or map.IsUnitInSpot(enemy_hero_data, spot)))
+               or map.IsUnitNearSpot(enemy_hero_data, spot)))
          or creep ~= nil
 end
 
 local function IsSpotSafe(unit_data, enemy_hero_data, spot)
-  return not IsEnemyUnitInSpot(unit_data, enemy_hero_data, spot)
+  return not IsEnemyUnitNearSpot(unit_data, enemy_hero_data, spot)
          and not map.IsUnitInSpot(unit_data, spot)
 end
 
