@@ -9,7 +9,7 @@ M.MAP = {
     high_ground = Vector(-1073, -952, 350),
     forest_bot = Vector(-1129, -1744, 100),
     forest_top = Vector(-2240, -1230, 100),
-    forest_back = Vector(-2303, -2337, 100),
+    forest_back = Vector(-1575, -1977, 100),
     fountain = Vector(-7000, -6500, 500),
     tp_tower_tier_1 = Vector(-1181, -1741, 100),
   },
