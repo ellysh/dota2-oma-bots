@@ -55,7 +55,8 @@ end
 
 function M.pre_base_recovery()
   return ((common_algorithms.IsUnitLowHp(BOT_DATA)
-           and not BOT_DATA.is_healing)
+           and (not BOT_DATA.is_healing
+                or common_algorithms.IsFocusedByEnemyHero(BOT_DATA)))
 
           or M.pre_restore_hp_on_base()
 

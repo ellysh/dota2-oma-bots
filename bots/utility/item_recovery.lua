@@ -84,7 +84,7 @@ function M.pre_heal_flask()
 end
 
 function M.post_heal_flask()
-  return not M.pre_heal_flask()
+  return BOT:HasModifier("modifier_flask_healing")
 end
 
 function M.heal_flask()
@@ -115,15 +115,13 @@ function M.pre_heal_tango()
 end
 
 function M.post_heal_tango()
-  return not M.pre_heal_tango()
+  return BOT:HasModifier("modifier_tango_heal")
 end
 
 function M.heal_tango()
   BOT:Action_UseAbilityOnTree(
     common_algorithms.GetItem(BOT_DATA, "item_tango"),
     BOT_DATA.nearby_trees[1])
-
-  action_timing.SetNextActionDelay(4)
 end
 
 ---------------------------------
