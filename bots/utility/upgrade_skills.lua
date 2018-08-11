@@ -7,17 +7,15 @@ local map = require(
 local common_algorithms = require(
   GetScriptDirectory() .."/utility/common_algorithms")
 
-local M = {}
+local env = require(
+  GetScriptDirectory() .."/utility/environment")
 
-function M.UpdateVariables()
-end
+local M = {}
 
 ---------------------------------
 
 function M.pre_upgrade_skills()
-  local bot_data = common_algorithms.GetBotData()
-
-  return 0 < bot_data.ability_points
+  return 0 < env.BOT_DATA.ability_points
 end
 
 function M.post_upgrade_skills()
@@ -35,11 +33,8 @@ function M.post_upgrade()
 end
 
 function M.upgrade()
-  local bot = GetBot()
-  local bot_data = common_algorithms.GetBotData()
-
-  bot:ActionImmediate_LevelAbility(
-    skill_build.SKILL_BUILD[bot_data.level])
+  env.BOT:ActionImmediate_LevelAbility(
+    skill_build.SKILL_BUILD[env.BOT_DATA.level])
 end
 
 ---------------------------------
