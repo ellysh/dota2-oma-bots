@@ -24,12 +24,13 @@ local M = {}
 ---------------------------------
 
 function M.pre_attack_unit()
-  return M.pre_lasthit_enemy_creep()
-         or M.pre_deny_ally_creep()
-         or M.pre_harras_enemy_hero()
-         or M.pre_attack_enemy_creep()
-         or M.pre_attack_ally_creep()
-         or M.pre_attack_enemy_tower()
+  return 0.2 < functions.GetRate(env.BOT_DATA.health, env.BOT_DATA.max_health)
+         and (M.pre_lasthit_enemy_creep()
+              or M.pre_deny_ally_creep()
+              or M.pre_harras_enemy_hero()
+              or M.pre_attack_enemy_creep()
+              or M.pre_attack_ally_creep()
+              or M.pre_attack_enemy_tower())
 end
 
 function M.post_attack_unit()
