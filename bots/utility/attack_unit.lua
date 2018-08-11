@@ -24,7 +24,7 @@ local M = {}
 ---------------------------------
 
 function M.pre_attack_unit()
-  return 0.2 < functions.GetRate(env.BOT_DATA.health, env.BOT_DATA.max_health)
+  return not algorithms.IsUnitLowHp(env.BOT_DATA)
          and (M.pre_lasthit_enemy_creep()
               or M.pre_deny_ally_creep()
               or M.pre_harras_enemy_hero()
