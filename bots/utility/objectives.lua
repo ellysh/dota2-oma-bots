@@ -10,6 +10,9 @@ local logger = require(
 local common_algorithms = require(
   GetScriptDirectory() .."/utility/common_algorithms")
 
+local environment = require(
+  GetScriptDirectory() .."/utility/environment")
+
 local action_timing = require(
   GetScriptDirectory() .."/utility/action_timing")
 
@@ -21,12 +24,6 @@ local ACTION_INDEX = 1
 
 local function IsBotAlive()
   return common_algorithms.GetBotData() ~= nil
-end
-
-local function UpdateVariablesOfAllModules()
-  for _, objective in pairs(objectives.OBJECTIVES) do
-    objective.module.UpdateVariables()
-  end
 end
 
 local function FindObjectiveToExecute()
@@ -108,7 +105,7 @@ function M.Process()
      or common_algorithms.GetBotData().is_casting then
     return end
 
-  UpdateVariablesOfAllModules()
+  environment.UpdateVariables()
 
   if CURRENT_OBJECTIVE == nil
      or (CURRENT_OBJECTIVE.is_interruptible
