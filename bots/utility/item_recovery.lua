@@ -16,36 +16,19 @@ local action_timing = require(
 local map = require(
   GetScriptDirectory() .."/utility/map")
 
+local env = require(
+  GetScriptDirectory() .."/utility/environment")
+
 local M = {}
-
-local BOT = {}
-local BOT_DATA = {}
-local ENEMY_HERO_DATA = {}
-local SAFE_SPOT = {}
-local FOUNTAIN_SPOT = {}
-
-function M.UpdateVariables()
-  BOT = GetBot()
-
-  BOT_DATA = common_algorithms.GetBotData()
-
-  ENEMY_HERO_DATA = common_algorithms.GetEnemyHero(
-                      BOT_DATA,
-                      constants.MAX_UNIT_SEARCH_RADIUS)
-
-  SAFE_SPOT = common_algorithms.GetSafeSpot(BOT_DATA, ENEMY_HERO_DATA)
-
-  FOUNTAIN_SPOT = map.GetAllySpot(BOT_DATA, "fountain")
-end
 
 ---------------------------------
 
 function M.pre_item_recovery()
-  return ((common_algorithms.IsUnitLowHp(BOT_DATA)
-           and not BOT_DATA.is_healing))
+  return ((common_algorithms.IsUnitLowHp(env.BOT_DATA)
+           and not env.BOT_DATA.is_healing))
 
          and constants.BASE_RADIUS
-             < functions.GetDistance(FOUNTAIN_SPOT, BOT_DATA.location)
+             < functions.GetDistance(env.FOUNTAIN_SPOT, env.BOT_DATA.location)
 
          and (M.pre_heal_tango()
               or M.pre_heal_flask()
@@ -60,7 +43,7 @@ end
 ---------------------------------
 
 function M.pre_heal_faerie_fire()
-  return common_algorithms.IsItemCastable(BOT_DATA, "item_faerie_fire")
+  return common_algorithms.IsItemCastable(env.BOT_DATA, "item_faerie_fire")
 end
 
 function M.post_heal_faerie_fire()
@@ -68,28 +51,28 @@ function M.post_heal_faerie_fire()
 end
 
 function M.heal_faerie_fire()
-  BOT:Action_UseAbility(
-    common_algorithms.GetItem(BOT_DATA, "item_faerie_fire"))
+  env.BOT:Action_UseAbility(
+    common_algorithms.GetItem(env.BOT_DATA, "item_faerie_fire"))
 end
 ---------------------------------
 
 function M.pre_heal_flask()
-  return common_algorithms.IsItemCastable(BOT_DATA, "item_flask")
-         and not common_algorithms.IsFocusedByEnemyHero(BOT_DATA)
-         and not common_algorithms.IsFocusedByUnknownUnit(BOT_DATA)
+  return common_algorithms.IsItemCastable(env.BOT_DATA, "item_flask")
+         and not common_algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
+         and not common_algorithms.IsFocusedByUnknownUnit(env.BOT_DATA)
          and not common_algorithms.AreUnitsInRadius(
-                   BOT_DATA,
+                   env.BOT_DATA,
                    constants.MAX_HERO_ATTACK_RANGE,
                    common_algorithms.GetEnemyHeroes)
 end
 
 function M.post_heal_flask()
-  return BOT:HasModifier("modifier_flask_healing")
+  return env.BOT:HasModifier("modifier_flask_healing")
 end
 
 function M.heal_flask()
-  BOT:Action_UseAbilityOnEntity(
-    common_algorithms.GetItem(BOT_DATA, "item_flask"),
+  env.BOT:Action_UseAbilityOnEntity(
+    common_algorithms.GetItem(env.BOT_DATA, "item_flask"),
     BOT)
 
   action_timing.SetNextActionDelay(4)
@@ -99,12 +82,12 @@ end
 
 function M.pre_heal_tango()
   local tower_data = common_algorithms.GetEnemyBuildings(
-                           BOT_DATA,
+                           env.BOT_DATA,
                            constants.MAX_UNIT_SEARCH_RADIUS)[1]
 
-  local tree = BOT_DATA.nearby_trees[1]
+  local tree = env.BOT_DATA.nearby_trees[1]
 
-  return common_algorithms.IsItemCastable(BOT_DATA, "item_tango")
+  return common_algorithms.IsItemCastable(env.BOT_DATA, "item_tango")
          and tree ~= nil
          and (tower_data == nil
               or constants.MAX_TOWER_ATTACK_RANGE
@@ -115,27 +98,27 @@ function M.pre_heal_tango()
 end
 
 function M.post_heal_tango()
-  return BOT:HasModifier("modifier_tango_heal")
+  return env.BOT:HasModifier("modifier_tango_heal")
 end
 
 function M.heal_tango()
-  BOT:Action_UseAbilityOnTree(
-    common_algorithms.GetItem(BOT_DATA, "item_tango"),
-    BOT_DATA.nearby_trees[1])
+  env.BOT:Action_UseAbilityOnTree(
+    common_algorithms.GetItem(env.BOT_DATA, "item_tango"),
+    env.BOT_DATA.nearby_trees[1])
 end
 
 ---------------------------------
 
 function M.pre_tp_base()
-  return common_algorithms.IsItemCastable(BOT_DATA, "item_tpscroll")
+  return common_algorithms.IsItemCastable(env.BOT_DATA, "item_tpscroll")
          and constants.MIN_TP_BASE_RADIUS
-             < functions.GetDistance(FOUNTAIN_SPOT, BOT_DATA.location)
-         and (ENEMY_HERO_DATA == nil
+             < functions.GetDistance(env.FOUNTAIN_SPOT, env.BOT_DATA.location)
+         and (env.ENEMY_HERO_DATA == nil
               or constants.MIN_TP_ENEMY_HERO_RADIUS
                  < functions.GetUnitDistance(
-                     BOT_DATA,
-                     ENEMY_HERO_DATA))
-         and not map.IsUnitInEnemyTowerAttackRange(BOT_DATA)
+                     env.BOT_DATA,
+                     env.ENEMY_HERO_DATA))
+         and not map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
          and not common_algorithms.DoesBotOrCourierHaveItem(
                    "item_faerie_fire")
          and not common_algorithms.DoesBotOrCourierHaveItem(
@@ -149,9 +132,9 @@ function M.post_tp_base()
 end
 
 function M.tp_base()
-  local item = common_algorithms.GetItem(BOT_DATA, "item_tpscroll")
+  local item = common_algorithms.GetItem(env.BOT_DATA, "item_tpscroll")
 
-  BOT:Action_UseAbilityOnLocation(item, FOUNTAIN_SPOT)
+  env.BOT:Action_UseAbilityOnLocation(item, env.FOUNTAIN_SPOT)
 
   action_timing.SetNextActionDelay(item:GetChannelTime())
 end
@@ -159,8 +142,8 @@ end
 ---------------------------------
 
 function M.pre_move_safe_spot()
-  return not common_algorithms.IsUnitMoving(BOT_DATA)
-         and not map.IsUnitInSpot(BOT_DATA, SAFE_SPOT)
+  return not common_algorithms.IsUnitMoving(env.BOT_DATA)
+         and not map.IsUnitInSpot(env.BOT_DATA, env.SAFE_SPOT)
 end
 
 function M.post_move_safe_spot()
@@ -168,7 +151,7 @@ function M.post_move_safe_spot()
 end
 
 function M.move_safe_spot()
-  BOT:Action_MoveToLocation(SAFE_SPOT)
+  env.BOT:Action_MoveToLocation(env.SAFE_SPOT)
 end
 
 ---------------------------------

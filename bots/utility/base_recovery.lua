@@ -13,6 +13,9 @@ local logger = require(
 local action_timing = require(
   GetScriptDirectory() .."/utility/action_timing")
 
+local env = require(
+  GetScriptDirectory() .."/utility/environment")
+
 local map = require(
   GetScriptDirectory() .."/utility/map")
 
