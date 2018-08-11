@@ -83,6 +83,7 @@ local function AddUnit(unit, type, team)
     stash_value = unit:GetStashValue(),
     level = unit:GetLevel(),
     ability_points = unit:GetAbilityPoints(),
+    height_level = GetHeightLevel(unit:GetLocation()),
   }
 end
 

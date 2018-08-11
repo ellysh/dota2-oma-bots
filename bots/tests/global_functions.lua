@@ -318,3 +318,7 @@ function GetNeutralSpawners()
            }
          }
 end
+
+function GetHeightLevel(location)
+  return 1
+end
