@@ -1,3 +1,7 @@
+* version 0.7a
+  - Buy tango instead of faerie fire.
+  - Fix mistakes when bot dies because of agressive actions.
+
 * version 0.7
   - Implement an algorithm for choosing a safe spot for retreat.
   - Add a move to TP on the mid tower.
