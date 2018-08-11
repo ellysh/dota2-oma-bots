@@ -23,7 +23,7 @@ local M = {}
 
 ---------------------------------
 
-function M.pre_attack_unit()
+function M.pre_push_lane()
   return not algorithms.IsUnitLowHp(env.BOT_DATA)
          and env.ENEMY_HERO_DATA == nil
          and (M.pre_lasthit_enemy_creep()
@@ -32,8 +32,8 @@ function M.pre_attack_unit()
               or M.pre_attack_enemy_tower())
 end
 
-function M.post_attack_unit()
-  return not M.pre_attack_unit()
+function M.post_push_lane()
+  return not M.pre_push_lane()
 end
 
 ---------------------------------
