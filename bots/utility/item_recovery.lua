@@ -25,35 +25,20 @@ local M = {}
 
 function M.pre_item_recovery()
   return ((algorithms.IsUnitLowHp(env.BOT_DATA)
-           and not env.BOT_DATA.is_healing))
+           and not env.BOT_DATA.is_healing)
+
+          or M.pre_heal_tango()
+          or M.pre_heal_flask()
+          or M.pre_tp_base())
 
          and constants.BASE_RADIUS
              < functions.GetDistance(env.FOUNTAIN_SPOT, env.BOT_DATA.location)
-
-         and (M.pre_heal_tango()
-              or M.pre_heal_flask()
-              or M.pre_heal_faerie_fire()
-              or M.pre_tp_base())
 end
 
 function M.post_item_recovery()
   return not M.pre_item_recovery()
 end
 
----------------------------------
-
-function M.pre_heal_faerie_fire()
-  return algorithms.IsItemCastable(env.BOT_DATA, "item_faerie_fire")
-end
-
-function M.post_heal_faerie_fire()
-  return not M.pre_heal_faerie_fire()
-end
-
-function M.heal_faerie_fire()
-  env.BOT:Action_UseAbility(
-    algorithms.GetItem(env.BOT_DATA, "item_faerie_fire"))
-end
 ---------------------------------
 
 function M.pre_heal_flask()
