@@ -25,7 +25,8 @@ local M = {}
 
 function M.pre_attack_unit()
   return not algorithms.IsUnitLowHp(env.BOT_DATA)
-         and env.ENEMY_HERO_DATA ~= nil
+         and (env.ENEMY_HERO_DATA ~= nil
+              or env.BOT_DATA.level < 4)
          and (M.pre_lasthit_enemy_creep()
               or M.pre_deny_ally_creep()
               or M.pre_harras_enemy_hero()
