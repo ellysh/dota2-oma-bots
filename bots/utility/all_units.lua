@@ -76,6 +76,7 @@ local function AddUnit(unit, type, team)
     items = GetItems(unit),
     incoming_projectiles = unit:GetIncomingTrackingProjectiles(),
     is_healing = IsHealing(unit),
+    is_flask_healing = unit:HasModifier("modifier_flask_healing");
     nearby_trees = unit:GetNearbyTrees(constants.TREE_SEARCH_RADIUS),
     is_casting = IsUnitCasting(unit),
     is_silenced = unit:IsSilenced(),

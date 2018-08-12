@@ -166,13 +166,7 @@ end
 ---------------------------------
 
 function M.pre_decrease_creeps_distance()
-  local creep_distance = functions.ternary(
-                         algorithms.IsUnitLowHp(env.BOT_DATA)
-                         or env.BOT_DATA.is_healing,
-                         env.BOT_DATA.attack_range,
-                         constants.BASE_CREEP_DISTANCE)
-
-  return not AreEnemyCreepsInRadius(creep_distance)
+  return not AreEnemyCreepsInRadius(constants.BASE_CREEP_DISTANCE)
          and not algorithms.DoesEnemyCreepAttack(
                    env.BOT_DATA,
                    env.ENEMY_CREEP_DATA,

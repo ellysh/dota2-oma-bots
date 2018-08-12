@@ -24,15 +24,16 @@ local M = {}
 ---------------------------------
 
 function M.pre_item_recovery()
-  return ((algorithms.IsUnitLowHp(env.BOT_DATA)
-           and not env.BOT_DATA.is_healing)
+  return not env.BOT_DATA.is_healing
 
-          or M.pre_heal_tango()
-          or M.pre_heal_flask()
-          or M.pre_tp_base())
+        and (M.pre_heal_tango()
+             or M.pre_heal_flask()
+             or M.pre_tp_base())
 
-         and constants.BASE_RADIUS
-             < functions.GetDistance(env.FOUNTAIN_SPOT, env.BOT_DATA.location)
+        and constants.BASE_RADIUS
+             < functions.GetDistance(
+                 env.FOUNTAIN_SPOT,
+                 env.BOT_DATA.location)
 end
 
 function M.post_item_recovery()
@@ -43,6 +44,8 @@ end
 
 function M.pre_heal_flask()
   return algorithms.IsItemCastable(env.BOT_DATA, "item_flask")
+         and (algorithms.IsUnitLowHp(env.BOT_DATA)
+              or  420 < (env.BOT_DATA.max_health - env.BOT_DATA.health))
          and not env.BOT:HasModifier(
                    "modifier_drow_ranger_frost_arrows_slow")
          and not algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
@@ -79,6 +82,8 @@ function M.pre_heal_tango()
                  < functions.GetDistance(
                      GetTreeLocation(tree),
                      tower_data.location))
+         and (algorithms.IsUnitLowHp(env.BOT_DATA)
+              or 130 < (env.BOT_DATA.max_health - env.BOT_DATA.health))
          and not algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
          and not algorithms.IsFocusedByUnknownUnit(env.BOT_DATA)
          and not algorithms.AreUnitsInRadius(
@@ -101,6 +106,7 @@ end
 
 function M.pre_tp_base()
   return algorithms.IsItemCastable(env.BOT_DATA, "item_tpscroll")
+         and algorithms.IsUnitLowHp(env.BOT_DATA)
          and constants.MIN_TP_BASE_RADIUS
              < functions.GetDistance(env.FOUNTAIN_SPOT, env.BOT_DATA.location)
          and (env.ENEMY_HERO_DATA == nil
