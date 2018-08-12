@@ -14,6 +14,7 @@ M.MAP = {
     fountain = Vector(-7000, -6500, 500),
     tp_tower_tier_1 = Vector(-1181, -1741, 100),
     start_body_block = Vector(-3972, -3471, 100),
+    tower_tier_1_rear = Vector(-2056, -1782, 500),
   },
   [TEAM_DIRE] = {
     tower_tier_1_attack = Vector(524, 652, 800),
@@ -27,6 +28,7 @@ M.MAP = {
     fountain = Vector(6950, 6300, 500),
     tp_tower_tier_1 = Vector(530, 1138, 100),
     start_body_block = Vector(3459, 2940, 100),
+    tower_tier_1_rear = Vector(1118, 676, 400),
   },
   [TEAM_NEUTRAL] = {
     river = Vector(-521, -375, 280),
