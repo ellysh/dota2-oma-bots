@@ -1,3 +1,7 @@
+* version 0.8
+  - Implement the push lane objective.
+  - Implement the body block objective.
+
 * version 0.7a
   - Buy tango instead of faerie fire.
   - Fix mistakes when bot dies because of agressive actions.
