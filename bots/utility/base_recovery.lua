@@ -84,6 +84,8 @@ function M.move_base()
      and not env.BOT:HasModifier("modifier_fountain_aura_buff") then
 
     action_timing.SetNextActionDelay(1.5)
+  else
+    action_timing.SetNextActionDelay(0.2)
   end
 end
 

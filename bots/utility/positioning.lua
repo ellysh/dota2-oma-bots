@@ -52,6 +52,8 @@ end
 
 function M.move_safe_spot()
   env.BOT:Action_MoveToLocation(env.SAFE_SPOT)
+
+  action_timing.SetNextActionDelay(0.1)
 end
 
 ---------------------------------
