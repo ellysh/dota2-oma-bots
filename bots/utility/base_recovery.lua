@@ -60,13 +60,6 @@ end
 
 ---------------------------------
 
-function M.pre_move_shrine()
-  -- TODO: Implement this move
-  return false
-end
-
----------------------------------
-
 function M.pre_move_base()
 
   return (not (algorithms.IsUnitMoving(env.BOT_DATA)

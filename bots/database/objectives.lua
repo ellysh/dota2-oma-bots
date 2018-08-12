@@ -97,13 +97,6 @@ M.OBJECTIVES = {
           {action = "restore_hp_on_base"},
         }
       },
-      {
-        move = "move_shrine",
-        is_interruptible = true,
-        actions = {
-          {action = "move_shrine"},
-        }
-      },
     },
   },
   {
