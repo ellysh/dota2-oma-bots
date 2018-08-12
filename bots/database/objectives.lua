@@ -54,13 +54,6 @@ M.OBJECTIVES = {
     is_interruptible = false,
     moves = {
       {
-        move = "move_safe_spot",
-        is_interruptible = false,
-        actions = {
-          {action = "move_safe_spot"},
-        }
-      },
-      {
         move = "heal_tango",
         is_interruptible = false,
         actions = {
@@ -71,7 +64,6 @@ M.OBJECTIVES = {
         move = "heal_flask",
         is_interruptible = false,
         actions = {
-          {action = "move_safe_spot"},
           {action = "heal_flask"},
         }
       },
@@ -357,6 +349,13 @@ M.OBJECTIVES = {
     module = require(GetScriptDirectory() .."/utility/positioning"),
     is_interruptible = true,
     moves = {
+      {
+        move = "move_safe_spot",
+        is_interruptible = false,
+        actions = {
+          {action = "move_safe_spot"},
+        }
+      },
       {
         move = "tp_mid_tower",
         is_interruptible = false,

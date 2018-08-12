@@ -29,11 +29,29 @@ function M.pre_positioning()
               or M.pre_increase_creeps_distance()
               or M.pre_decrease_creeps_distance()
               or M.pre_evasion()
-              or M.pre_turn())
+              or M.pre_turn()
+              or M.pre_move_safe_spot())
 end
 
 function M.post_positioning()
   return not M.pre_positioning()
+end
+
+---------------------------------
+
+function M.pre_move_safe_spot()
+  return (env.BOT_DATA.is_healing
+          and env.BOT_DATA.health ~= env.BOT_DATA.max_health)
+
+         and not map.IsUnitInSpot(env.BOT_DATA, env.SAFE_SPOT)
+end
+
+function M.post_move_safe_spot()
+  return not M.pre_move_safe_spot()
+end
+
+function M.move_safe_spot()
+  env.BOT:Action_MoveToLocation(env.SAFE_SPOT)
 end
 
 ---------------------------------

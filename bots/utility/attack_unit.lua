@@ -16,6 +16,8 @@ local M = {}
 
 function M.pre_attack_unit()
   return not algorithms.IsUnitLowHp(env.BOT_DATA)
+         and (not env.BOT_DATA.is_healing
+              or env.BOT_DATA.health == env.BOT_DATA.max_health)
          and (env.ENEMY_HERO_DATA ~= nil
               or env.BOT_DATA.level < 4)
          and (M.pre_lasthit_enemy_creep()

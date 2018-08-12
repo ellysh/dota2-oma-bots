@@ -76,8 +76,6 @@ function M.heal_flask()
   env.BOT:Action_UseAbilityOnEntity(
     algorithms.GetItem(env.BOT_DATA, "item_flask"),
     env.BOT)
-
-  action_timing.SetNextActionDelay(4)
 end
 
 ---------------------------------
@@ -144,21 +142,6 @@ function M.tp_base()
   env.BOT:Action_UseAbilityOnLocation(item, env.FOUNTAIN_SPOT)
 
   action_timing.SetNextActionDelay(item:GetChannelTime())
-end
-
----------------------------------
-
-function M.pre_move_safe_spot()
-  return not algorithms.IsUnitMoving(env.BOT_DATA)
-         and not map.IsUnitInSpot(env.BOT_DATA, env.SAFE_SPOT)
-end
-
-function M.post_move_safe_spot()
-  return not M.pre_move_safe_spot()
-end
-
-function M.move_safe_spot()
-  env.BOT:Action_MoveToLocation(env.SAFE_SPOT)
 end
 
 ---------------------------------
