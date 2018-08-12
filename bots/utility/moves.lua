@@ -23,24 +23,6 @@ local M = {}
 
 ---------------------------------
 
-function M.pre_attack_unit()
-  return not algorithms.IsUnitLowHp(env.BOT_DATA)
-         and (env.ENEMY_HERO_DATA ~= nil
-              or env.BOT_DATA.level < 4)
-         and (M.pre_lasthit_enemy_creep()
-              or M.pre_deny_ally_creep()
-              or M.pre_harras_enemy_hero()
-              or M.pre_attack_enemy_creep()
-              or M.pre_attack_ally_creep()
-              or M.pre_attack_enemy_tower())
-end
-
-function M.post_attack_unit()
-  return not M.pre_attack_unit()
-end
-
----------------------------------
-
 local SIDE = {
   ENEMY = {},
   ALLY = {},
@@ -143,9 +125,7 @@ end
 function M.pre_attack_enemy_creep()
   local creep = GetMaxHealthCreep(SIDE["ENEMY"])
 
-  return constants.MAX_CREEPS_HP_DELTA
-           < (env.ENEMY_CREEPS_HP - env.ALLY_CREEPS_HP)
-         and creep ~= nil
+  return creep ~= nil
          and constants.UNIT_HALF_HEALTH_LEVEL
              < functions.GetRate(creep.health, creep.max_health)
          and not algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
@@ -238,8 +218,7 @@ function M.stop_attack()
      or not algorithms.IsAttackDone(env.BOT_DATA) then
     return end
 
-  local bot = GetBot()
-  bot:Action_ClearActions(true)
+  env.BOT:Action_ClearActions(true)
 end
 
 ---------------------------------
