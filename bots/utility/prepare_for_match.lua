@@ -66,6 +66,25 @@ function M.buy_starting_items()
   action_timing.SetNextActionDelay(0.5)
 end
 
+---------------------------------
+
+function M.pre_move_start_position()
+  return not map.IsUnitInSpot(
+               env.BOT_DATA,
+               map.GetAllySpot(env.BOT_DATA, "start_body_block"))
+end
+
+function M.post_move_start_position()
+  return not M.pre_move_start_position()
+end
+
+function M.move_start_position()
+  env.BOT:Action_MoveToLocation(
+    map.GetAllySpot(env.BOT_DATA, "start_body_block"))
+
+  action_timing.SetNextActionDelay(5)
+end
+
 -- Provide an access to local functions for unit tests only
 
 return M
