@@ -25,7 +25,7 @@ function M.pre_attack_unit()
                          env.BOT_DATA.health,
                          env.BOT_DATA.max_health))
          and (env.ENEMY_HERO_DATA ~= nil
-              or env.BOT_DATA.level < 4)
+              or env.BOT_DATA.level < 6)
          and (M.pre_lasthit_enemy_creep()
               or M.pre_deny_ally_creep()
               or M.pre_harras_enemy_hero()

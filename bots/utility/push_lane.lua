@@ -23,7 +23,7 @@ local M = {}
 function M.pre_push_lane()
   return not algorithms.IsUnitLowHp(env.BOT_DATA)
          and env.ENEMY_HERO_DATA == nil
-         and 4 <= env.BOT_DATA.level
+         and 6 <= env.BOT_DATA.level
          and not env.BOT_DATA.is_flask_healing
          and (not env.BOT_DATA.is_healing
               or  0.5 < functions.GetRate(
