@@ -27,10 +27,12 @@ Now you should follow the following limitations when playing with the bot:
 1. Pick only Drow Ranger hero.
 2. No wards.
 3. No shrines.
-4. No neutral camps.
-5. No Roshan.
-6. No Glyph.
-7. Bot difficulty is Hard or above.
+4. No neutral camps or Roshan.
+5. No bottle.
+6. No glyph.
+7. No scan.
+8. No runes.
+9. Bot difficulty is Hard or above.
 
 ## Contacts
 
