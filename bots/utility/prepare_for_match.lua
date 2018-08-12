@@ -17,7 +17,8 @@ local M = {}
 function M.pre_prepare_for_match()
   return DotaTime() < 0
          and (M.pre_buy_and_use_courier()
-              or M.pre_buy_starting_items())
+              or M.pre_buy_starting_items()
+              or M.pre_move_start_position())
 end
 
 function M.post_prepare_for_match()

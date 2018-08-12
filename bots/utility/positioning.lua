@@ -24,11 +24,12 @@ local M = {}
 ---------------------------------
 
 function M.pre_positioning()
-  return M.pre_move_mid_tower()
-         or M.pre_increase_creeps_distance()
-         or M.pre_decrease_creeps_distance()
-         or M.pre_evasion()
-         or M.pre_turn()
+  return 20 < DotaTime()
+         and (M.pre_move_mid_tower()
+              or M.pre_increase_creeps_distance()
+              or M.pre_decrease_creeps_distance()
+              or M.pre_evasion()
+              or M.pre_turn())
 end
 
 function M.post_positioning()
