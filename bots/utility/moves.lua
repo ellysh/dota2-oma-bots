@@ -181,6 +181,9 @@ function M.pre_harras_enemy_hero()
          and (not env.BOT_DATA.is_healing
               or env.BOT_DATA.health == env.BOT_DATA.max_health)
          and not algorithms.IsFocusedByCreeps(env.BOT_DATA)
+         and not algorithms.IsFocusedByTower(
+                   env.BOT_DATA,
+                   env.ENEMY_TOWER_DATA)
 end
 
 function M.post_harras_enemy_hero()
