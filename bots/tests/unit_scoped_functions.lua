@@ -637,6 +637,10 @@ function Unit:GetAnimCycle()
   return 0
 end
 
+function Unit:GetCurrentMovementSpeed()
+  return 0
+end
+
 UNIT_HAS_BUYBACK = true
 
 function Unit:HasBuyback()
