@@ -130,9 +130,6 @@ function M.pre_attack_enemy_creep()
              < functions.GetRate(creep.health, creep.max_health)
          and not algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
          and not algorithms.IsFocusedByCreeps(env.BOT_DATA)
-         and not algorithms.IsFocusedByTower(
-                   env.BOT_DATA,
-                   env.ENEMY_TOWER_DATA)
 end
 
 function M.post_attack_enemy_creep()
@@ -155,9 +152,6 @@ function M.pre_attack_ally_creep()
          and creep ~= nil
          and not algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
          and not algorithms.IsFocusedByCreeps(env.BOT_DATA)
-         and not algorithms.IsFocusedByTower(
-                   env.BOT_DATA,
-                   env.ENEMY_TOWER_DATA)
 end
 
 function M.post_attack_ally_creep()
@@ -181,9 +175,6 @@ function M.pre_harras_enemy_hero()
                    env.ENEMY_CREEP_DATA,
                    env.ALLY_CREEP_DATA)
          and not algorithms.IsFocusedByCreeps(env.BOT_DATA)
-         and not algorithms.IsFocusedByTower(
-                   env.BOT_DATA,
-                   env.ENEMY_TOWER_DATA)
 end
 
 function M.post_harras_enemy_hero()
@@ -199,9 +190,6 @@ end
 function M.pre_attack_enemy_tower()
   return env.ENEMY_TOWER_DATA ~= nil
          and algorithms.IsFocusedByCreeps(env.ENEMY_TOWER_DATA)
-         and not algorithms.IsFocusedByTower(
-                   env.BOT_DATA,
-                   env.ENEMY_TOWER_DATA)
          and not algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
          and not algorithms.IsFocusedByCreeps(env.BOT_DATA)
 end
