@@ -95,7 +95,7 @@ function M.pre_heal_tango()
                    constants.MAX_HERO_ATTACK_RANGE,
                    algorithms.GetEnemyHeroes)
          and 1000 < functions.GetDistance(
-                      map.GetEnemySpot(M.BOT_DATA, "high_ground"),
+                      map.GetEnemySpot(env.BOT_DATA, "high_ground"),
                       env.BOT_DATA.location)
 end
 

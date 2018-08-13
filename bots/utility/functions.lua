@@ -236,13 +236,35 @@ function M.GetOpposingTeam(team)
   return OPPOSING_TEAM[team]
 end
 
-function M.IsTargetBetweenLocations(target_data, location1, location2)
+function M.IsLocationBetweenLocations(
+  target_location,
+  location1,
+  location2)
+
   local locations_distance = M.GetDistance(location1, location2)
 
-  return M.GetDistance(target_data.location, location1)
+  return M.GetDistance(target_location, location1)
            < locations_distance
-         and M.GetDistance(target_data.location, location2)
+         and M.GetDistance(target_location, location2)
                < locations_distance
+end
+
+function M.IsLocationBetweenUnits(
+  target_location,
+  unit1_data,
+  unit2_data)
+
+  return M.IsLocationBetweenLocations(
+           target_location,
+           unit1_data.location,
+           unit2_data.location)
+end
+
+function M.IsTargetBetweenLocations(target_data, location1, location2)
+  return M.IsLocationBetweenLocations(
+           target_data.location,
+           location1,
+           location2)
 end
 
 function M.IsTargetBetweenUnits(target_data, unit1_data, unit2_data)
