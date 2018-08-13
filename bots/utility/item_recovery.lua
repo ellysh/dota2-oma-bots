@@ -45,7 +45,7 @@ end
 function M.pre_heal_flask()
   return algorithms.IsItemCastable(env.BOT_DATA, "item_flask")
          and (algorithms.IsUnitLowHp(env.BOT_DATA)
-              or  420 < (env.BOT_DATA.max_health - env.BOT_DATA.health))
+              or 420 < (env.BOT_DATA.max_health - env.BOT_DATA.health))
          and not env.BOT:HasModifier(
                    "modifier_drow_ranger_frost_arrows_slow")
          and not algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
@@ -83,7 +83,7 @@ function M.pre_heal_tango()
                      GetTreeLocation(tree),
                      tower_data.location))
          and (algorithms.IsUnitLowHp(env.BOT_DATA)
-              or 130 < (env.BOT_DATA.max_health - env.BOT_DATA.health))
+              or 250 < (env.BOT_DATA.max_health - env.BOT_DATA.health))
          and not algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
          and not algorithms.IsFocusedByUnknownUnit(env.BOT_DATA)
          and not algorithms.AreUnitsInRadius(

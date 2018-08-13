@@ -56,8 +56,20 @@ end
 
 ---------------------------------
 
+local function DoesPowerEnemyHeroPursuit()
+  return env.ENEMY_HERO_DATA ~= nil
+         and functions.GetRate(
+                env.BOT_DATA.power,
+                env.ENEMY_HERO_DATA.power)
+             <= 0.5
+         and functions.GetUnitDistance(env.BOT_DATA, env.ENEMY_HERO_DATA)
+               < env.ENEMY_HERO_DATA.attack_range
+end
+
 function M.pre_move_safe_evasion()
   return algorithms.IsFocusedByCreeps(env.BOT_DATA)
+
+         or DoesPowerEnemyHeroPursuit()
 
          or algorithms.IsFocusedByTower(
               env.BOT_DATA,
