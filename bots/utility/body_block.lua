@@ -42,13 +42,6 @@ local function AreAllyCreepsInRadius(radius)
     algorithms.GetAllyCreeps)
 end
 
-local function AreEnemyCreepsInRadius(radius)
-  return algorithms.AreUnitsInRadius(
-    env.BOT_DATA,
-    radius,
-    algorithms.GetEnemyCreeps)
-end
-
 local function CompareMinHgDistance(t, a, b)
   local high_ground_spot = map.GetAllySpot(env.BOT_DATA, "high_ground")
 
@@ -68,7 +61,9 @@ end
 
 function M.pre_move_and_block()
   return AreAllyCreepsInRadius(constants.MAX_MELEE_ATTACK_RANGE)
-         and not AreEnemyCreepsInRadius(constants.MAX_CREEP_DISTANCE)
+         and not algorithms.AreEnemyCreepsInRadius(
+                   env.BOT_DATA,
+                   constants.MAX_CREEP_DISTANCE)
 end
 
 function M.post_move_and_block()

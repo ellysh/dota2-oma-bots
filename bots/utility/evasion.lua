@@ -10,6 +10,12 @@ local action_timing = require(
 local env = require(
   GetScriptDirectory() .."/utility/environment")
 
+local functions = require(
+  GetScriptDirectory() .."/utility/functions")
+
+local constants = require(
+  GetScriptDirectory() .."/utility/constants")
+
 local M = {}
 
 ---------------------------------
@@ -52,11 +58,16 @@ end
 
 function M.pre_move_safe_evasion()
   return algorithms.IsFocusedByCreeps(env.BOT_DATA)
+
          or algorithms.IsFocusedByTower(
               env.BOT_DATA,
               env.ENEMY_TOWER_DATA)
+
          or (algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
-             and AreEnemyCreepsInRadius(constants.CREEP_AGRO_RADIUS))
+             and algorithms.AreEnemyCreepsInRadius(
+                   env.BOT_DATA,
+                   constants.CREEP_AGRO_RADIUS))
+
          or algorithms.IsFocusedByUnknownUnit(env.BOT_DATA)
 end
 

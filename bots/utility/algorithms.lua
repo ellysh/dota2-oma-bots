@@ -471,6 +471,10 @@ function M.IsRangedUnit(unit_data)
   return constants.MAX_MELEE_ATTACK_RANGE < unit_data.attack_range
 end
 
+function M.AreEnemyCreepsInRadius(unit_data, radius)
+  return M.AreUnitsInRadius(unit_data, radius, M.GetEnemyCreeps)
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_GetNormalizedRadius = GetNormalizedRadius
 M.test_UpdateUnitList = all_units.UpdateUnitList

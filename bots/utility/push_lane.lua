@@ -13,9 +13,6 @@ local env = require(
 local moves = require(
   GetScriptDirectory() .."/utility/moves")
 
-local functions = require(
-  GetScriptDirectory() .."/utility/functions")
-
 local M = {}
 
 ---------------------------------

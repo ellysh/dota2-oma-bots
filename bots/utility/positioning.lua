@@ -44,13 +44,6 @@ local function AreAllyCreepsInRadius(radius)
     algorithms.GetAllyCreeps)
 end
 
-local function AreEnemyCreepsInRadius(radius)
-  return algorithms.AreUnitsInRadius(
-    env.BOT_DATA,
-    radius,
-    algorithms.GetEnemyCreeps)
-end
-
 function M.pre_move_mid_tower()
   local target_location = map.GetAllySpot(env.BOT_DATA, "high_ground")
 
@@ -124,7 +117,9 @@ local function IsEnemyHeroNearCreeps()
 end
 
 function M.pre_increase_creeps_distance()
-  return (AreEnemyCreepsInRadius(constants.MIN_CREEP_DISTANCE)
+  return (algorithms.AreEnemyCreepsInRadius(
+            env.BOT_DATA,
+            constants.MIN_CREEP_DISTANCE)
 
          or map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
 
@@ -147,11 +142,15 @@ end
 ---------------------------------
 
 function M.pre_decrease_creeps_distance()
-  return not AreEnemyCreepsInRadius(constants.BASE_CREEP_DISTANCE)
+  return not algorithms.AreEnemyCreepsInRadius(
+               env.BOT_DATA,
+               constants.BASE_CREEP_DISTANCE)
+
          and not algorithms.DoesEnemyCreepAttack(
                    env.BOT_DATA,
                    env.ENEMY_CREEP_DATA,
                    env.ALLY_CREEP_DATA)
+
          and (env.ENEMY_CREEP_DATA ~= nil or env.ALLY_CREEP_DATA ~= nil)
 end
 
@@ -172,7 +171,9 @@ end
 ---------------------------------
 
 function M.pre_turn()
-  return AreEnemyCreepsInRadius(env.BOT_DATA.attack_range)
+  return algorithms.AreEnemyCreepsInRadius(
+           env.BOT_DATA,
+           env.BOT_DATA.attack_range)
          and env.ENEMY_CREEP_DATA ~= nil
          and not env.BOT:IsFacingLocation(
                    env.ENEMY_CREEP_DATA.location,
