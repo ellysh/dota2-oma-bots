@@ -106,6 +106,13 @@ M.OBJECTIVES = {
     is_interruptible = true,
     moves = {
       {
+        move = "use_silence",
+        is_interruptible = false,
+        actions = {
+          {action = "use_silence"},
+        }
+      },
+      {
         move = "move_safe_recovery",
         is_interruptible = false,
         actions = {
@@ -239,6 +246,14 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "use_silence"},
+        }
+      },
+      {
+        move = "attack_enemy_hero",
+        is_interruptible = false,
+        actions = {
+          {action = "attack_enemy_hero"},
+          {action = "stop_attack"},
         }
       },
       {

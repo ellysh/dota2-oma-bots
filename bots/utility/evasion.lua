@@ -16,6 +16,9 @@ local functions = require(
 local constants = require(
   GetScriptDirectory() .."/utility/constants")
 
+local all_units = require(
+  GetScriptDirectory() .."/utility/all_units")
+
 local M = {}
 
 ---------------------------------
@@ -23,10 +26,79 @@ local M = {}
 function M.pre_evasion()
   return M.pre_move_safe_evasion()
          or M.pre_move_safe_recovery()
+         or M.pre_use_silence()
 end
 
 function M.post_evasion()
   return not M.pre_evasion()
+end
+
+---------------------------------
+
+local function DoesPowerEnemyHeroPursuit()
+  return env.ENEMY_HERO_DATA ~= nil
+         and functions.GetRate(
+                env.BOT_DATA.power,
+                env.ENEMY_HERO_DATA.power)
+             <= 0.6
+         and functions.GetUnitDistance(env.BOT_DATA, env.ENEMY_HERO_DATA)
+               < (env.ENEMY_HERO_DATA.attack_range - 100)
+end
+
+function M.pre_use_silence()
+  local ability = env.BOT:GetAbilityByName("drow_ranger_wave_of_silence")
+
+  return env.ENEMY_HERO_DATA ~= nil
+         and not env.ENEMY_HERO_DATA.is_silenced
+         and not env.BOT_DATA.is_silenced
+         and ability:IsFullyCastable()
+         and functions.GetUnitDistance(env.BOT_DATA, env.ENEMY_HERO_DATA)
+               <= ability:GetCastRange()
+         and not env.DOES_TOWER_PROTECT_ENEMY
+
+         and DoesPowerEnemyHeroPursuit()
+end
+
+function M.post_use_silence()
+  return not M.pre_use_silence()
+end
+
+function M.use_silence()
+  local ability = env.BOT:GetAbilityByName("drow_ranger_wave_of_silence")
+
+  env.BOT:Action_UseAbilityOnLocation(ability, env.ENEMY_HERO_DATA.location)  end
+
+---------------------------------
+
+function M.pre_attack_enemy_hero()
+  local ability = env.BOT:GetAbilityByName("drow_ranger_frost_arrows")
+
+  return env.ENEMY_HERO_DATA ~= nil
+         and not env.DOES_TOWER_PROTECT_ENEMY
+         and functions.GetUnitDistance(env.BOT_DATA, env.ENEMY_HERO_DATA)
+             <= env.BOT_DATA.attack_range
+
+         and DoesPowerEnemyHeroPursuit()
+         and not env.BOT_DATA.is_silenced
+         and ability:IsFullyCastable()
+         and not all_units.GetUnitData(env.ENEMY_HERO_DATA):HasModifier(
+                   "modifier_drow_ranger_frost_arrows_slow")
+end
+
+function M.post_attack_enemy_hero()
+  return not M.pre_attack_enemy_hero()
+end
+
+function M.attack_enemy_hero()
+  algorithms.AttackUnit(env.BOT_DATA, env.ENEMY_HERO_DATA, true)
+end
+
+function M.stop_attack()
+  if not algorithms.IsUnitAttack(env.BOT_DATA)
+     or not algorithms.IsAttackDone(env.BOT_DATA) then
+    return end
+
+  env.BOT:Action_ClearActions(true)
 end
 
 ---------------------------------
@@ -55,16 +127,6 @@ function M.move_safe_recovery()
 end
 
 ---------------------------------
-
-local function DoesPowerEnemyHeroPursuit()
-  return env.ENEMY_HERO_DATA ~= nil
-         and functions.GetRate(
-                env.BOT_DATA.power,
-                env.ENEMY_HERO_DATA.power)
-             <= 0.5
-         and functions.GetUnitDistance(env.BOT_DATA, env.ENEMY_HERO_DATA)
-               < env.ENEMY_HERO_DATA.attack_range
-end
 
 function M.pre_move_safe_evasion()
   return algorithms.IsFocusedByCreeps(env.BOT_DATA)
