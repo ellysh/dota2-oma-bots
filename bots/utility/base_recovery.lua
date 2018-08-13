@@ -19,6 +19,9 @@ local env = require(
 local map = require(
   GetScriptDirectory() .."/utility/map")
 
+local moves = require(
+  GetScriptDirectory() .."/utility/moves")
+
 local M = {}
 
 ---------------------------------
@@ -94,24 +97,15 @@ end
 ---------------------------------
 
 function M.pre_deliver_items()
-  local courier_data = algorithms.GetCourierData()
-
-  return 0 < env.BOT_DATA.stash_value
-         and map.IsUnitInSpot(
-               courier_data,
-               map.GetAllySpot(env.BOT_DATA, "fountain"))
+  return moves.pre_deliver_items()
 end
 
 function M.post_deliver_items()
-  return not M.pre_deliver_items()
+  return moves.post_deliver_items()
 end
 
 function M.deliver_items()
-  local courier = GetCourier(0)
-
-  env.BOT:ActionImmediate_Courier(
-    courier,
-    COURIER_ACTION_TAKE_AND_TRANSFER_ITEMS)
+  moves.deliver_items()
 end
 
 ---------------------------------
