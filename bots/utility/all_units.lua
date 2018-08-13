@@ -86,6 +86,7 @@ local function AddUnit(unit, type, team)
     ability_points = unit:GetAbilityPoints(),
     height_level = GetHeightLevel(unit:GetLocation()),
     speed = unit:GetCurrentMovementSpeed(),
+    power = unit:GetHealth() * unit:GetAttackDamage(),
   }
 end
 
