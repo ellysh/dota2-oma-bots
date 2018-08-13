@@ -83,7 +83,7 @@ function M.pre_heal_tango()
                      GetTreeLocation(tree),
                      tower_data.location))
          and (algorithms.IsUnitLowHp(env.BOT_DATA)
-              or 250 < (env.BOT_DATA.max_health - env.BOT_DATA.health))
+              or 200 < (env.BOT_DATA.max_health - env.BOT_DATA.health))
          and not algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
          and not algorithms.IsFocusedByUnknownUnit(env.BOT_DATA)
          and not algorithms.AreUnitsInRadius(

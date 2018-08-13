@@ -27,6 +27,7 @@ function M.pre_evasion()
   return M.pre_move_safe_evasion()
          or M.pre_move_safe_recovery()
          or M.pre_use_silence()
+         or M.pre_attack_enemy_hero()
 end
 
 function M.post_evasion()
@@ -42,7 +43,7 @@ local function DoesPowerEnemyHeroPursuit()
                 env.ENEMY_HERO_DATA.power)
              <= 0.6
          and functions.GetUnitDistance(env.BOT_DATA, env.ENEMY_HERO_DATA)
-               < (env.ENEMY_HERO_DATA.attack_range - 100)
+               <= env.ENEMY_HERO_DATA.attack_range
 end
 
 function M.pre_use_silence()
@@ -81,7 +82,7 @@ function M.pre_attack_enemy_hero()
          and DoesPowerEnemyHeroPursuit()
          and not env.BOT_DATA.is_silenced
          and ability:IsFullyCastable()
-         and not all_units.GetUnitData(env.ENEMY_HERO_DATA):HasModifier(
+         and not all_units.GetUnit(env.ENEMY_HERO_DATA):HasModifier(
                    "modifier_drow_ranger_frost_arrows_slow")
 end
 
