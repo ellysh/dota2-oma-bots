@@ -28,32 +28,11 @@ function M.pre_positioning()
          and (M.pre_move_mid_tower()
               or M.pre_increase_creeps_distance()
               or M.pre_decrease_creeps_distance()
-              or M.pre_evasion()
-              or M.pre_turn()
-              or M.pre_move_safe_spot())
+              or M.pre_turn())
 end
 
 function M.post_positioning()
   return not M.pre_positioning()
-end
-
----------------------------------
-
-function M.pre_move_safe_spot()
-  return (env.BOT_DATA.is_healing
-          and env.BOT_DATA.health ~= env.BOT_DATA.max_health)
-
-         and not map.IsUnitInSpot(env.BOT_DATA, env.SAFE_SPOT)
-end
-
-function M.post_move_safe_spot()
-  return not M.pre_move_safe_spot()
-end
-
-function M.move_safe_spot()
-  env.BOT:Action_MoveToLocation(env.SAFE_SPOT)
-
-  action_timing.SetNextActionDelay(0.1)
 end
 
 ---------------------------------
@@ -193,28 +172,6 @@ function M.decrease_creeps_distance()
 end
 
 ---------------------------------
-
-function M.pre_evasion()
-  return algorithms.IsFocusedByCreeps(env.BOT_DATA)
-         or algorithms.IsFocusedByTower(
-              env.BOT_DATA,
-              env.ENEMY_TOWER_DATA)
-         or (algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
-             and AreEnemyCreepsInRadius(constants.CREEP_AGRO_RADIUS))
-         or algorithms.IsFocusedByUnknownUnit(env.BOT_DATA)
-end
-
-function M.post_evasion()
-  return not M.pre_evasion()
-end
-
-function M.evasion()
-  env.BOT:Action_MoveToLocation(env.SAFE_SPOT)
-
-  action_timing.SetNextActionDelay(0.8)
-end
-
---------------------------------
 
 function M.pre_turn()
   return AreEnemyCreepsInRadius(env.BOT_DATA.attack_range)

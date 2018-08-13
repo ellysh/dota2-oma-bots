@@ -99,6 +99,29 @@ M.OBJECTIVES = {
       },
     },
   },
+
+  {
+    objective = "evasion",
+    module = require(GetScriptDirectory() .."/utility/evasion"),
+    is_interruptible = true,
+    moves = {
+      {
+        move = "move_safe_recovery",
+        is_interruptible = false,
+        actions = {
+          {action = "move_safe_recovery"},
+        }
+      },
+      {
+        move = "move_safe_evasion",
+        is_interruptible = false,
+        actions = {
+          {action = "move_safe_evasion"},
+        }
+      },
+    },
+  },
+
   {
     objective = "upgrade_skills",
     module = require(GetScriptDirectory() .."/utility/upgrade_skills"),
@@ -343,13 +366,6 @@ M.OBJECTIVES = {
     is_interruptible = true,
     moves = {
       {
-        move = "move_safe_spot",
-        is_interruptible = false,
-        actions = {
-          {action = "move_safe_spot"},
-        }
-      },
-      {
         move = "tp_mid_tower",
         is_interruptible = false,
         actions = {
@@ -361,13 +377,6 @@ M.OBJECTIVES = {
         is_interruptible = true,
         actions = {
           {action = "move_mid_tower"},
-        }
-      },
-      {
-        move = "evasion",
-        is_interruptible = false,
-        actions = {
-          {action = "evasion"},
         }
       },
       {
