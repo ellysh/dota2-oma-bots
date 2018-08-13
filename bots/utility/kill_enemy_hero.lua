@@ -16,6 +16,9 @@ local env = require(
 local map = require(
   GetScriptDirectory() .."/utility/map")
 
+local moves = require(
+  GetScriptDirectory() .."/utility/moves")
+
 local M = {}
 
 ---------------------------------
@@ -46,26 +49,19 @@ end
 ---------------------------------
 
 function M.pre_attack_enemy_hero()
-  return env.ENEMY_HERO_DATA ~= nil
-         and not env.DOES_TOWER_PROTECT_ENEMY
-         and functions.GetUnitDistance(env.BOT_DATA, env.ENEMY_HERO_DATA)
-             <= env.BOT_DATA.attack_range
+  return moves.pre_attack_enemy_hero()
 end
 
 function M.post_attack_enemy_hero()
-  return not M.pre_attack_enemy_hero()
+  return moves.post_attack_enemy_hero()
 end
 
 function M.attack_enemy_hero()
-  algorithms.AttackUnit(env.BOT_DATA, env.ENEMY_HERO_DATA, true)
+  moves.attack_enemy_hero()
 end
 
 function M.stop_attack()
-  if not algorithms.IsUnitAttack(env.BOT_DATA)
-     or not algorithms.IsAttackDone(env.BOT_DATA) then
-    return end
-
-  env.BOT:Action_ClearActions(true)
+  moves.stop_attack()
 end
 
 ---------------------------------
@@ -87,26 +83,17 @@ end
 ---------------------------------
 
 function M.pre_use_silence()
-  local ability = env.BOT:GetAbilityByName("drow_ranger_wave_of_silence")
-
-  return env.ENEMY_HERO_DATA ~= nil
-         and not env.ENEMY_HERO_DATA.is_silenced
-         and not env.BOT_DATA.is_silenced
-         and ability:IsFullyCastable()
-         and functions.GetUnitDistance(env.BOT_DATA, env.ENEMY_HERO_DATA)
-               <= ability:GetCastRange()
-         and not env.DOES_TOWER_PROTECT_ENEMY
+  return moves.pre_use_silence()
 end
 
 function M.post_use_silence()
-  return not M.pre_use_silence()
+  return moves.post_use_silence()
 end
 
 function M.use_silence()
-  local ability = env.BOT:GetAbilityByName("drow_ranger_wave_of_silence")
-
-  env.BOT:Action_UseAbilityOnLocation(ability, env.ENEMY_HERO_DATA.location)
+  moves.use_silence()
 end
 
 ---------------------------------
+
 return M

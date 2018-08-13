@@ -226,6 +226,45 @@ end
 
 ---------------------------------
 
+function M.pre_attack_enemy_hero()
+  return env.ENEMY_HERO_DATA ~= nil
+         and not env.DOES_TOWER_PROTECT_ENEMY
+         and functions.GetUnitDistance(env.BOT_DATA, env.ENEMY_HERO_DATA)
+             <= env.BOT_DATA.attack_range
+end
+
+function M.post_attack_enemy_hero()
+  return not M.pre_attack_enemy_hero()
+end
+
+function M.attack_enemy_hero()
+  algorithms.AttackUnit(env.BOT_DATA, env.ENEMY_HERO_DATA, true)
+end
+
+---------------------------------
+
+function M.pre_use_silence()
+  local ability = env.BOT:GetAbilityByName("drow_ranger_wave_of_silence")
+
+  return env.ENEMY_HERO_DATA ~= nil
+         and not env.ENEMY_HERO_DATA.is_silenced
+         and not env.BOT_DATA.is_silenced
+         and ability:IsFullyCastable()
+         and functions.GetUnitDistance(env.BOT_DATA, env.ENEMY_HERO_DATA)
+               <= ability:GetCastRange()
+         and not env.DOES_TOWER_PROTECT_ENEMY
+end
+
+function M.post_use_silence()
+  return not M.pre_use_silence()
+end
+
+function M.use_silence()
+  local ability = env.BOT:GetAbilityByName("drow_ranger_wave_of_silence")
+
+  env.BOT:Action_UseAbilityOnLocation(ability, env.ENEMY_HERO_DATA.location)
+end
+
 -- Provide an access to local functions for unit tests only
 
 return M
