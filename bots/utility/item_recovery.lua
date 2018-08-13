@@ -48,6 +48,10 @@ function M.pre_heal_flask()
               or 420 < (env.BOT_DATA.max_health - env.BOT_DATA.health))
          and not env.BOT:HasModifier(
                    "modifier_drow_ranger_frost_arrows_slow")
+         and constants.BASE_RADIUS
+             < functions.GetDistance(
+                 env.FOUNTAIN_SPOT,
+                 env.BOT_DATA.location)
          and not algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
          and not algorithms.IsFocusedByUnknownUnit(env.BOT_DATA)
          and not algorithms.AreUnitsInRadius(

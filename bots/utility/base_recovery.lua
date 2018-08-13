@@ -50,8 +50,10 @@ function M.pre_base_recovery()
 
           or (functions.GetRate(env.BOT_DATA.health, env.BOT_DATA.max_health)
               < constants.UNIT_HALF_HEALTH_LEVEL
-              and functions.GetDistance(env.FOUNTAIN_SPOT, env.BOT_DATA.location)
-                  < constants.BASE_RADIUS))
+              and functions.GetDistance(
+                    env.FOUNTAIN_SPOT,
+                    env.BOT_DATA.location)
+                  <= constants.BASE_RADIUS))
 end
 
 function M.post_base_recovery()
