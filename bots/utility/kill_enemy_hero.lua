@@ -25,6 +25,12 @@ function M.pre_kill_enemy_hero()
          and algorithms.IsUnitLowHp(env.ENEMY_HERO_DATA)
          and not algorithms.IsUnitLowHp(env.BOT_DATA)
          and not env.DOES_TOWER_PROTECT_ENEMY
+
+         and (not algorithms.IsFocusedByTower(
+                    env.BOT_DATA,
+                    env.ENEMY_TOWER_DATA)
+              or 6 < env.BOT_DATA.level)
+
          and not map.IsUnitInSpot(
                    env.BOT_DATA,
                    map.GetEnemySpot(env.BOT_DATA, "tower_tier_1_rear"))
