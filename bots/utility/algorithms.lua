@@ -419,7 +419,13 @@ end
 
 local function IsSpotSafe(unit_data, enemy_hero_data, spot)
   return not IsEnemyUnitNearSpot(unit_data, enemy_hero_data, spot)
-         and not map.IsUnitInSpot(unit_data, spot)
+
+         and ((map.IsUnitInSpot(unit_data, spot)
+               and not M.IsFocusedByEnemyHero(unit_data)
+               and not M.IsFocusedByUnknownUnit(unit_data)
+               and not M.IsFocusedByCreeps(unit_data))
+
+             or not map.IsUnitInSpot(unit_data, spot))
 end
 
 function M.GetSafeSpot(unit_data, enemy_hero_data)
