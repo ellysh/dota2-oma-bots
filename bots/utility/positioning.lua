@@ -153,8 +153,6 @@ function M.pre_decrease_creeps_distance()
                    env.ENEMY_CREEP_DATA,
                    env.ALLY_CREEP_DATA)
          and (env.ENEMY_CREEP_DATA ~= nil or env.ALLY_CREEP_DATA ~= nil)
-         and (not env.BOT_DATA.is_healing
-              or env.BOT_DATA.health == env.BOT_DATA.max_health)
 end
 
 function M.post_decrease_creeps_distance()

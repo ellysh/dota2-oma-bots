@@ -26,8 +26,14 @@ end
 ---------------------------------
 
 function M.pre_move_safe_recovery()
-  return (env.BOT_DATA.is_healing
+  return (env.BOT_DATA.is_flask_healing
           and env.BOT_DATA.health ~= env.BOT_DATA.max_health)
+
+         or (env.BOT_DATA.is_healing
+             and functions.GetRate(
+                   env.BOT_DATA.health,
+                   env.BOT_DATA.max_health)
+                 <= 0.5)
 
          and not map.IsUnitInSpot(env.BOT_DATA, env.SAFE_SPOT)
 end
