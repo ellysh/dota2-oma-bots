@@ -23,10 +23,11 @@ function M.pre_keep_equilibrium()
          and (M.pre_attack_enemy_creep()
               or M.pre_attack_ally_creep())
 
-         and env.ENEMY_HERO_DATA.attack_range
-             < functions.GetUnitDistance(
-                 env.BOT_DATA,
-                 env.ENEMY_HERO_DATA)
+         and (env.ENEMY_HERO_DATA == nil
+              or env.ENEMY_HERO_DATA.attack_range
+                 < functions.GetUnitDistance(
+                     env.BOT_DATA,
+                     env.ENEMY_HERO_DATA))
 end
 
 function M.post_keep_equilibrium()
