@@ -468,14 +468,17 @@ end
 function M.GetSafeSpot(unit_data, enemy_hero_data)
   local hg_spot = map.GetAllySpot(unit_data, "high_ground")
 
-  if IsSpotSafe(hg_spot, unit_data, enemy_hero_data) then
-    return hg_spot end
-
   local forest_spot = GetClosestSafeSpot(
                         map.GetAllySpot(unit_data, "forest_top"),
                         map.GetAllySpot(unit_data, "forest_bot"),
                         unit_data,
                         enemy_hero_data)
+
+  if IsSpotSafe(hg_spot, unit_data, enemy_hero_data)
+     and forest_spot ~= nil then
+
+    return hg_spot
+  end
 
   if forest_spot ~= nil then
     return forest_spot end
