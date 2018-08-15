@@ -25,7 +25,7 @@ You can play with OMA Bots in the "All pick" mode. In this case, Shadow Shaman b
 
 ## Limitations
 
-Now you should follow the following limitations when playing with the bot:
+You should follow the following limitations when playing with the bot:
 
 1. Pick only Drow Ranger hero.
 2. No wards.
