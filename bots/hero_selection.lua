@@ -1,3 +1,6 @@
+local functions = require(
+  GetScriptDirectory() .."/utility/functions")
+
 local BotHeroes = {
   "npc_dota_hero_drow_ranger",
   "npc_dota_hero_shadow_shaman",
@@ -10,7 +13,24 @@ function GetBotNames()
   return {"OMA"}
 end
 
+local function IsHumanPlayersPicked()
+  local players = functions.TableConcat(
+                    GetTeamPlayers(GetTeam()),
+                    GetTeamPlayers(GetOpposingTeam()))
+  local no_pick_player = functions.GetElementWith(
+    players,
+    nil,
+    function(player)
+      return not IsPlayerBot(player)
+             and GetSelectedHeroName(player) == ""
+    end)
+
+    return no_pick_player == nil
+end
+
 function Think()
+  if not IsHumanPlayersPicked() then return end
+
   local players = GetTeamPlayers(GetTeam());
   for i, player in pairs(players) do
     if IsPlayerBot(player) then
