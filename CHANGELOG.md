@@ -1,3 +1,9 @@
+* version 0.9
+  - Implement the kite objective.
+  - Implement defensive moves against attacking hero.
+  - Fix bugs with positioning.
+  - Fix bugs with healing items usage.
+
 * version 0.8
   - Implement the push lane objective.
   - Implement the body block objective.
