@@ -26,6 +26,7 @@ M.IS_FOCUSED_BY_CREEPS = false
 M.IS_FOCUSED_BY_ENEMY_HERO = false
 M.IS_FOCUSED_BY_UNKNOWN_UNIT = false
 M.IS_FOCUSED_BY_TOWER = false
+M.IS_BASE_RECOVERY = false
 
 local function GetClosestCreep(radius, get_function)
   local creeps = get_function(
@@ -92,6 +93,16 @@ function M.UpdateVariables()
   M.IS_FOCUSED_BY_TOWER = algorithms.IsFocusedByTower(
                             M.BOT_DATA,
                             M.ENEMY_TOWER_DATA)
+
+  M.IS_BASE_RECOVERY = functions.GetRate(
+                         M.BOT_DATA.health,
+                         M.BOT_DATA.max_health)
+                       < constants.UNIT_HALF_HEALTH_LEVEL
+
+                       and functions.GetDistance(
+                             M.FOUNTAIN_SPOT,
+                             M.BOT_DATA.location)
+                           <= constants.BASE_RADIUS
 end
 
 -- Provide an access to local functions for unit tests only

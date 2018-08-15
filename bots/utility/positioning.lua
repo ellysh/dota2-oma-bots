@@ -72,7 +72,9 @@ function M.pre_tp_mid_tower()
 
   return constants.MIN_TP_BASE_RADIUS
            < functions.GetDistance(target_location, env.BOT_DATA.location)
+
          and algorithms.IsItemCastable(env.BOT_DATA, "item_tpscroll")
+         and not env.IS_BASE_RECOVERY
 end
 
 function M.post_tp_mid_tower()

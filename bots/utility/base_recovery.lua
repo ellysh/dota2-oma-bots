@@ -45,18 +45,12 @@ end
 ---------------------------------
 
 function M.pre_base_recovery()
-  return ((algorithms.IsUnitLowHp(env.BOT_DATA)
-           and (not env.BOT_DATA.is_healing
-                or env.IS_FOCUSED_BY_ENEMY_HERO))
+  return (algorithms.IsUnitLowHp(env.BOT_DATA)
+          and (not env.BOT_DATA.is_healing
+               or env.IS_FOCUSED_BY_ENEMY_HERO))
 
           or M.pre_restore_hp_on_base()
-
-          or (functions.GetRate(env.BOT_DATA.health, env.BOT_DATA.max_health)
-              < constants.UNIT_HALF_HEALTH_LEVEL
-              and functions.GetDistance(
-                    env.FOUNTAIN_SPOT,
-                    env.BOT_DATA.location)
-                  <= constants.BASE_RADIUS))
+          or env.IS_BASE_RECOVERY
 end
 
 function M.post_base_recovery()
@@ -69,12 +63,7 @@ function M.pre_move_base()
 
   return (not (algorithms.IsUnitMoving(env.BOT_DATA)
               and env.BOT:IsFacingLocation(env.FOUNTAIN_SPOT, 30)))
-          or (functions.GetRate(env.BOT_DATA.health, env.BOT_DATA.max_health)
-              < constants.UNIT_HALF_HEALTH_LEVEL
-              and functions.GetDistance(
-                    env.FOUNTAIN_SPOT,
-                    env.BOT_DATA.location)
-                  < constants.BASE_RADIUS)
+          or env.IS_BASE_RECOVERY
 end
 
 function M.post_move_base()
