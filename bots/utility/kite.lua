@@ -13,7 +13,7 @@ local M = {}
 
 function M.pre_kite()
   return not algorithms.IsUnitLowHp(env.BOT_DATA)
-         and M.pre_harras_enemy_hero()
+         and M.pre_attack_enemy_hero()
 end
 
 function M.post_kite()
@@ -22,16 +22,23 @@ end
 
 ---------------------------------
 
-function M.pre_harras_enemy_hero()
-  return moves.pre_harras_enemy_hero()
+function M.pre_attack_enemy_hero()
+  return moves.pre_attack_enemy_hero()
+
+         and not algorithms.DoesEnemyCreepAttack(
+                   env.BOT_DATA,
+                   env.ENEMY_CREEP_DATA,
+                   env.ALLY_CREEP_DATA)
+         and not env.IS_FOCUSED_BY_CREEPS
+         and not env.IS_FOCUSED_BY_TOWER
 end
 
-function M.post_harras_enemy_hero()
-  return moves.post_harras_enemy_hero()
+function M.post_attack_enemy_hero()
+  return not M.pre_attack_enemy_hero()
 end
 
-function M.harras_enemy_hero()
-  moves.harras_enemy_hero()
+function M.attack_enemy_hero()
+  moves.attack_enemy_hero()
 end
 
 --------------------------------

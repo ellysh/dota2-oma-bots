@@ -80,15 +80,19 @@ end
 --------------------------------
 
 function M.pre_attack_enemy_tower()
-  return moves.pre_attack_enemy_tower()
+  return env.ENEMY_TOWER_DATA ~= nil
+         and algorithms.IsFocusedByCreeps(env.ENEMY_TOWER_DATA)
+         and not env.IS_FOCUSED_BY_ENEMY_HERO
+         and not env.IS_FOCUSED_BY_CREEPS
+         and not env.IS_FOCUSED_BY_TOWER
 end
 
 function M.post_attack_enemy_tower()
-  return moves.post_attack_enemy_tower()
+  return not M.pre_attack_enemy_tower()
 end
 
 function M.attack_enemy_tower()
-  moves.attack_enemy_tower()
+  algorithms.AttackUnit(env.BOT_DATA, env.ENEMY_TOWER_DATA, false)
 end
 
 --------------------------------

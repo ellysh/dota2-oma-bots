@@ -295,10 +295,10 @@ M.OBJECTIVES = {
     is_interruptible = false,
     moves = {
       {
-        move = "harras_enemy_hero",
+        move = "attack_enemy_hero",
         is_interruptible = false,
         actions = {
-          {action = "harras_enemy_hero"},
+          {action = "attack_enemy_hero"},
           {action = "stop_attack"},
         }
       },
