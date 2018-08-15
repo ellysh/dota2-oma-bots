@@ -115,20 +115,18 @@ end
 ---------------------------------
 
 function M.pre_move_safe_evasion()
-  return algorithms.IsFocusedByCreeps(env.BOT_DATA)
+  return env.IS_FOCUSED_BY_CREEPS
 
          or DoesPowerEnemyHeroPursuit()
 
-         or algorithms.IsFocusedByTower(
-              env.BOT_DATA,
-              env.ENEMY_TOWER_DATA)
+         or env.IS_FOCUSED_BY_TOWER
 
-         or (algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
+         or (env.IS_FOCUSED_BY_ENEMY_HERO
              and algorithms.AreEnemyCreepsInRadius(
                    env.BOT_DATA,
                    constants.CREEP_AGRO_RADIUS))
 
-         or algorithms.IsFocusedByUnknownUnit(env.BOT_DATA)
+         or env.IS_FOCUSED_BY_UNKNOWN_UNIT
 end
 
 function M.post_move_safe_evasion()

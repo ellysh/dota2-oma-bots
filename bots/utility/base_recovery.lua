@@ -47,7 +47,7 @@ end
 function M.pre_base_recovery()
   return ((algorithms.IsUnitLowHp(env.BOT_DATA)
            and (not env.BOT_DATA.is_healing
-                or algorithms.IsFocusedByEnemyHero(env.BOT_DATA)))
+                or env.IS_FOCUSED_BY_ENEMY_HERO))
 
           or M.pre_restore_hp_on_base()
 

@@ -52,8 +52,8 @@ function M.pre_heal_flask()
              < functions.GetDistance(
                  env.FOUNTAIN_SPOT,
                  env.BOT_DATA.location)
-         and not algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
-         and not algorithms.IsFocusedByUnknownUnit(env.BOT_DATA)
+         and not env.IS_FOCUSED_BY_ENEMY_HERO
+         and not env.IS_FOCUSED_BY_UNKNOWN_UNIT
          and not algorithms.AreUnitsInRadius(
                    env.BOT_DATA,
                    constants.MAX_HERO_ATTACK_RANGE,
@@ -88,8 +88,8 @@ function M.pre_heal_tango()
                      tower_data.location))
          and (algorithms.IsUnitLowHp(env.BOT_DATA)
               or 200 < (env.BOT_DATA.max_health - env.BOT_DATA.health))
-         and not algorithms.IsFocusedByEnemyHero(env.BOT_DATA)
-         and not algorithms.IsFocusedByUnknownUnit(env.BOT_DATA)
+         and not env.IS_FOCUSED_BY_ENEMY_HERO
+         and not env.IS_FOCUSED_BY_UNKNOWN_UNIT
          and not algorithms.AreUnitsInRadius(
                    env.BOT_DATA,
                    constants.MAX_HERO_ATTACK_RANGE,

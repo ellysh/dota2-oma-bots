@@ -22,6 +22,10 @@ M.ENEMY_CREEPS_HP = 0
 M.SAFE_SPOT = {}
 M.FOUNTAIN_SPOT = {}
 M.DOES_TOWER_PROTECT_ENEMY = false
+M.IS_FOCUSED_BY_CREEPS = false
+M.IS_FOCUSED_BY_ENEMY_HERO = false
+M.IS_FOCUSED_BY_UNKNOWN_UNIT = false
+M.IS_FOCUSED_BY_TOWER = false
 
 local function GetClosestCreep(radius, get_function)
   local creeps = get_function(
@@ -76,6 +80,18 @@ function M.UpdateVariables()
       algorithms.DoesTowerProtectEnemyUnit(
         M.ENEMY_HERO_DATA)
   end
+
+  M.IS_FOCUSED_BY_CREEPS = algorithms.IsFocusedByCreeps(M.BOT_DATA)
+
+  M.IS_FOCUSED_BY_ENEMY_HERO = algorithms.IsFocusedByEnemyHero(
+                                 M.BOT_DATA)
+
+  M.IS_FOCUSED_BY_UNKNOWN_UNIT = algorithms.IsFocusedByUnknownUnit(
+                                   M.BOT_DATA)
+
+  M.IS_FOCUSED_BY_TOWER = algorithms.IsFocusedByTower(
+                            M.BOT_DATA,
+                            M.ENEMY_TOWER_DATA)
 end
 
 -- Provide an access to local functions for unit tests only
