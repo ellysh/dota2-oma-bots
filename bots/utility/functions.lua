@@ -260,15 +260,15 @@ function M.IsLocationBetweenUnits(
            unit2_data.location)
 end
 
-function M.IsTargetBetweenLocations(target_data, location1, location2)
+function M.IsUnitBetweenLocations(unit_data, location1, location2)
   return M.IsLocationBetweenLocations(
-           target_data.location,
+           unit_data.location,
            location1,
            location2)
 end
 
-function M.IsTargetBetweenUnits(target_data, unit1_data, unit2_data)
-  return M.IsTargetBetweenLocations(
+function M.IsUnitBetweenUnits(target_data, unit1_data, unit2_data)
+  return M.IsUnitBetweenLocations(
            target_data,
            unit1_data.location,
            unit2_data.location)

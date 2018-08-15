@@ -387,7 +387,7 @@ function M.DoesEnemyCreepAttack(
   return enemy_creep_data ~= nil
 
          and ((ally_creep_data ~= nil
-               and not functions.IsTargetBetweenUnits(
+               and not functions.IsUnitBetweenUnits(
                          ally_creep_data,
                          unit_data,
                          enemy_creep_data))
