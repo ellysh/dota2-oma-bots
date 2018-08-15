@@ -46,4 +46,9 @@ M.MAX_CREEPS_HP_DELTA = 300
 M.POWER_RATE_DEFENSE = 0.65
 M.POWER_RATE_OFFENSE = 3
 
+M.SIDE = {
+  ENEMY = {},
+  ALLY = {},
+}
+
 return M

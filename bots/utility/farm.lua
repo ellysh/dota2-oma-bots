@@ -1,3 +1,9 @@
+local constants = require(
+  GetScriptDirectory() .."/utility/constants")
+
+local functions = require(
+  GetScriptDirectory() .."/utility/functions")
+
 local algorithms = require(
   GetScriptDirectory() .."/utility/algorithms")
 
@@ -23,11 +29,6 @@ end
 
 ---------------------------------
 
-local SIDE = {
-  ENEMY = {},
-  ALLY = {},
-}
-
 local function IsLastHit(bot_data, unit_data)
   local incoming_damage = bot_data.attack_damage
                           + algorithms.GetTotalDamageToUnit(
@@ -46,7 +47,7 @@ end
 
 local function GetLastHitCreep(side)
   local creeps = functions.ternary(
-    side == SIDE["ENEMY"],
+    side == constants.SIDE["ENEMY"],
     algorithms.GetEnemyCreeps(
       env.BOT_DATA,
       constants.MAX_UNIT_TARGET_RADIUS),
@@ -64,7 +65,7 @@ local function GetLastHitCreep(side)
 end
 
 function M.pre_lasthit_enemy_creep()
-  return GetLastHitCreep(SIDE["ENEMY"]) ~= nil
+  return GetLastHitCreep(constants.SIDE["ENEMY"]) ~= nil
 end
 
 function M.post_lasthit_enemy_creep()
@@ -72,7 +73,7 @@ function M.post_lasthit_enemy_creep()
 end
 
 function M.lasthit_enemy_creep()
-  local creep = GetLastHitCreep(SIDE["ENEMY"])
+  local creep = GetLastHitCreep(constants.SIDE["ENEMY"])
 
   algorithms.AttackUnit(env.BOT_DATA, creep, false)
 end
@@ -80,7 +81,7 @@ end
 ---------------------------------
 
 function M.pre_deny_ally_creep()
-  local target_data = GetLastHitCreep(SIDE["ALLY"])
+  local target_data = GetLastHitCreep(constants.SIDE["ALLY"])
 
   return target_data ~= nil
          and functions.GetRate(target_data.health, target_data.max_health)
@@ -92,7 +93,7 @@ function M.post_deny_ally_creep()
 end
 
 function M.deny_ally_creep()
-  local target_data = GetLastHitCreep(SIDE["ALLY"])
+  local target_data = GetLastHitCreep(constants.SIDE["ALLY"])
 
   algorithms.AttackUnit(env.BOT_DATA, target_data, false)
 end

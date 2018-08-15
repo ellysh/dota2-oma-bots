@@ -7,13 +7,17 @@ local env = require(
 local moves = require(
   GetScriptDirectory() .."/utility/moves")
 
+local action_timing = require(
+  GetScriptDirectory() .."/utility/action_timing")
+
 local M = {}
 
 ---------------------------------
 
 function M.pre_kite()
   return not algorithms.IsUnitLowHp(env.BOT_DATA)
-         and M.pre_attack_enemy_hero()
+         and (M.pre_attack_enemy_hero()
+              or M.pre_move_safe())
 end
 
 function M.post_kite()
@@ -31,6 +35,9 @@ function M.pre_attack_enemy_hero()
                    env.ALLY_CREEP_DATA)
          and not env.IS_FOCUSED_BY_CREEPS
          and not env.IS_FOCUSED_BY_TOWER
+         and not algorithms.IsUnitAttackTarget(
+                   env.BOT_DATA,
+                   env.ENEMY_HERO_DATA)
 end
 
 function M.post_attack_enemy_hero()
@@ -51,6 +58,9 @@ end
 
 function M.pre_move_safe()
   return env.ENEMY_HERO_DATA ~= nil
+         and algorithms.IsUnitAttackTarget(
+               env.BOT_DATA,
+               env.ENEMY_HERO_DATA)
          and not algorithms.IsUnitMoving(env.BOT_DATA)
 end
 

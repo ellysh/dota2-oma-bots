@@ -25,7 +25,7 @@ local M = {}
 
 local function GetMaxHealthCreep(side)
   local creeps = functions.ternary(
-    side == SIDE["ENEMY"],
+    side == constants.SIDE["ENEMY"],
     algorithms.GetEnemyCreeps(
       env.BOT_DATA,
       env.BOT_DATA.attack_range),
@@ -37,8 +37,8 @@ local function GetMaxHealthCreep(side)
     creeps,
     algorithms.CompareMaxHealth,
     function(unit_data)
-      return (side == SIDE["ENEMY"])
-             or (side == SIDE["ALLY"]
+      return (side == constants.SIDE["ENEMY"])
+             or (side == constants.SIDE["ALLY"]
                  and functions.GetRate(
                        unit_data.health,
                        unit_data.max_health)
@@ -47,7 +47,7 @@ local function GetMaxHealthCreep(side)
 end
 
 function M.pre_attack_enemy_creep()
-  local creep = GetMaxHealthCreep(SIDE["ENEMY"])
+  local creep = GetMaxHealthCreep(constants.SIDE["ENEMY"])
 
   return creep ~= nil
          and constants.UNIT_HALF_HEALTH_LEVEL
@@ -62,7 +62,7 @@ function M.post_attack_enemy_creep()
 end
 
 function M.attack_enemy_creep()
-  local creep = GetMaxHealthCreep(SIDE["ENEMY"])
+  local creep = GetMaxHealthCreep(constants.SIDE["ENEMY"])
 
   algorithms.AttackUnit(env.BOT_DATA, creep, false)
 end
@@ -70,7 +70,7 @@ end
 --------------------------------
 
 function M.pre_attack_ally_creep()
-  local creep = GetMaxHealthCreep(SIDE["ALLY"])
+  local creep = GetMaxHealthCreep(constants.SIDE["ALLY"])
 
   return constants.MAX_CREEPS_HP_DELTA
            < (env.ALLY_CREEPS_HP - env.ENEMY_CREEPS_HP)
@@ -85,7 +85,7 @@ function M.post_attack_ally_creep()
 end
 
 function M.attack_ally_creep()
-  local creep = GetMaxHealthCreep(SIDE["ALLY"])
+  local creep = GetMaxHealthCreep(constants.SIDE["ALLY"])
 
   algorithms.AttackUnit(env.BOT_DATA, creep, false)
 end
