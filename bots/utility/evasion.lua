@@ -129,6 +129,9 @@ function M.pre_move_safe_evasion()
                    constants.CREEP_AGRO_RADIUS))
 
          or env.IS_FOCUSED_BY_UNKNOWN_UNIT
+
+         or (map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
+             and env.BOT_DATA.level < 4)
 end
 
 function M.post_move_safe_evasion()
