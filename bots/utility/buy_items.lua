@@ -29,10 +29,9 @@ function M.pre_buy_items()
               or M.pre_deliver_items()
               or M.pre_buy_two_boots_of_elves()
               or M.pre_buy_ogre_axe()
-              or M.pre_blades_of_attack()
-              or M.pre_broadsword()
-              or M.pre_recipe_lesser_crit()
-              or M.pre_swap_items()
+              or M.pre_buy_blades_of_attack()
+              or M.pre_buy_broadsword()
+              or M.pre_buy_recipe_lesser_crit()
               or M.pre_put_item_in_inventory())
 end
 
@@ -81,27 +80,6 @@ end
 
 ---------------------------------
 
-function M.pre_swap_items()
-  local backpack_slot = GetFullSlotInBackpack(env.BOT_DATA)
-
-  return env.BOT:FindItemSlot("item_branches") < 6
-         and nil ~= backpack_slot
-         and env.BOT:GetItemInSlot(backpack_slot):GetName() ~= "item_branches"
-end
-
-function M.post_swap_items()
-  return not M.pre_swap_items()
-end
-
-function M.swap_items()
-  env.BOT:ActionImmediate_SwapItems(
-    env.BOT:FindItemSlot("item_branches"),
-    GetFullSlotInBackpack(env.BOT_DATA))
-
-  action_timing.SetNextActionDelay(0.1)
-end
-
----------------------------------
 local function IsEnoughGoldToBuy(item_name)
   return GetItemCost(item_name) <= env.BOT_DATA.gold
 end
