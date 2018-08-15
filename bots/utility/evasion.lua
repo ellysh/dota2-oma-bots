@@ -100,6 +100,8 @@ function M.pre_move_safe_recovery()
                  <= 0.5)
 
          and not map.IsUnitInSpot(env.BOT_DATA, env.SAFE_SPOT)
+
+         and not env.BOT:HasModifier("modifier_fountain_aura_buff")
 end
 
 function M.post_move_safe_recovery()
