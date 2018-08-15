@@ -8,14 +8,6 @@ M.OBJECTIVES = {
     is_interruptible = false,
     moves = {
       {
-        move = "buy_and_use_courier",
-        is_interruptible = false,
-        actions = {
-          {action = "buy_courier"},
-          {action = "use_courier"},
-        },
-      },
-      {
         move = "buy_starting_items",
         is_interruptible = false,
         actions = {

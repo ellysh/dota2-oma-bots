@@ -16,38 +16,12 @@ local M = {}
 
 function M.pre_prepare_for_match()
   return DotaTime() < 0
-         and (M.pre_buy_and_use_courier()
-              or M.pre_buy_starting_items()
+         and (M.pre_buy_starting_items()
               or M.pre_move_start_position())
 end
 
 function M.post_prepare_for_match()
   return not M.pre_prepare_for_match()
-end
-
----------------------------------
-
-function M.post_buy_and_use_courier()
-  return IsCourierAvailable()
-end
-
-function M.pre_buy_and_use_courier()
-  return not M.post_buy_and_use_courier()
-end
-
-function M.buy_courier()
-  algorithms.BuyItem("item_courier")
-
-  action_timing.SetNextActionDelay(0.3)
-end
-
-function M.use_courier()
-  local bot = GetBot()
-
-  bot:Action_UseAbility(
-    algorithms.GetItem(env.BOT_DATA, "item_courier"))
-
-  action_timing.SetNextActionDelay(0.5)
 end
 
 ---------------------------------
