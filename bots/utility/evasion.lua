@@ -44,7 +44,7 @@ local function DoesPowerEnemyHeroPursuit()
          and functions.GetRate(
                 env.BOT_DATA.power,
                 env.ENEMY_HERO_DATA.power)
-             <= 0.6
+             <= constants.POWER_RATE_DEFENSE
          and functions.GetUnitDistance(env.BOT_DATA, env.ENEMY_HERO_DATA)
                <= env.ENEMY_HERO_DATA.attack_range
 end
