@@ -1,4 +1,3 @@
-
 local M = {}
 
 M.OBJECTIVES = {
@@ -267,17 +266,10 @@ M.OBJECTIVES = {
   },
 
   {
-    objective = "push_lane",
-    module = require(GetScriptDirectory() .."/utility/push_lane"),
-    is_interruptible = true,
+    objective = "farm",
+    module = require(GetScriptDirectory() .."/utility/farm"),
+    is_interruptible = false,
     moves = {
-      {
-        move = "use_trueshot",
-        is_interruptible = false,
-        actions = {
-          {action = "use_trueshot"},
-        }
-      },
       {
         move = "lasthit_enemy_creep",
         is_interruptible = false,
@@ -292,6 +284,37 @@ M.OBJECTIVES = {
         actions = {
           {action = "deny_ally_creep"},
           {action = "stop_attack"},
+        }
+      },
+    }
+  },
+
+  {
+    objective = "kite",
+    module = require(GetScriptDirectory() .."/utility/kite"),
+    is_interruptible = false,
+    moves = {
+      {
+        move = "harras_enemy_hero",
+        is_interruptible = false,
+        actions = {
+          {action = "harras_enemy_hero"},
+          {action = "stop_attack"},
+        }
+      },
+    }
+  },
+
+  {
+    objective = "push_lane",
+    module = require(GetScriptDirectory() .."/utility/push_lane"),
+    is_interruptible = true,
+    moves = {
+      {
+        move = "use_trueshot",
+        is_interruptible = false,
+        actions = {
+          {action = "use_trueshot"},
         }
       },
       {
@@ -313,34 +336,10 @@ M.OBJECTIVES = {
   },
 
   {
-    objective = "attack_unit",
-    module = require(GetScriptDirectory() .."/utility/attack_unit"),
+    objective = "keep_equilibrium",
+    module = require(GetScriptDirectory() .."/utility/keep_equilibrium"),
     is_interruptible = true,
     moves = {
-      {
-        move = "lasthit_enemy_creep",
-        is_interruptible = false,
-        actions = {
-          {action = "lasthit_enemy_creep"},
-          {action = "stop_attack"},
-        }
-      },
-      {
-        move = "deny_ally_creep",
-        is_interruptible = false,
-        actions = {
-          {action = "deny_ally_creep"},
-          {action = "stop_attack"},
-        }
-      },
-      {
-        move = "harras_enemy_hero",
-        is_interruptible = false,
-        actions = {
-          {action = "harras_enemy_hero"},
-          {action = "stop_attack"},
-        }
-      },
       {
         move = "attack_enemy_creep",
         is_interruptible = false,
@@ -357,14 +356,7 @@ M.OBJECTIVES = {
           {action = "stop_attack"},
         }
       },
-      {
-        move = "attack_enemy_tower",
-        is_interruptible = true,
-        actions = {
-          {action = "attack_enemy_tower"},
-        }
-      },
-    },
+    }
   },
 
   {

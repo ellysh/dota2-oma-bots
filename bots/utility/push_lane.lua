@@ -21,9 +21,7 @@ function M.pre_push_lane()
   return not algorithms.IsUnitLowHp(env.BOT_DATA)
          and env.ENEMY_HERO_DATA == nil
          and 6 <= env.BOT_DATA.level
-         and (M.pre_lasthit_enemy_creep()
-              or M.pre_deny_ally_creep()
-              or M.pre_attack_enemy_creep()
+         and (M.pre_attack_enemy_creep()
               or M.pre_attack_enemy_tower())
 end
 
@@ -66,34 +64,6 @@ function M.use_trueshot()
 end
 
 ---------------------------------
-
-function M.pre_lasthit_enemy_creep()
-  return moves.pre_lasthit_enemy_creep()
-end
-
-function M.post_lasthit_enemy_creep()
-  return moves.post_lasthit_enemy_creep()
-end
-
-function M.lasthit_enemy_creep()
-  moves.lasthit_enemy_creep()
-end
-
----------------------------------
-
-function M.pre_deny_ally_creep()
-  return moves.pre_deny_ally_creep()
-end
-
-function M.post_deny_ally_creep()
-  return moves.post_deny_ally_creep()
-end
-
-function M.deny_ally_creep()
-  moves.deny_ally_creep()
-end
-
---------------------------------
 
 function M.pre_attack_enemy_creep()
   return moves.pre_attack_enemy_creep()
