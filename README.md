@@ -19,6 +19,9 @@ There are steps to start playing with the bot:
 3. Choose the OMA bots for both sides.
 4. Start a game.
 5. Pick Drow Ranger.
+6. Wait until bots do not pick their heroes after you.
+
+You can play with OMA Bots in the "All pick" mode. In this case, Shadow Shaman bot buys a courier for you. You should stop "All pick" game when any side does two kills or mid Tier 1 Tower is destroyed.
 
 ## Limitations
 
