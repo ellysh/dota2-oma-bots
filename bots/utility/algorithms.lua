@@ -417,25 +417,30 @@ local function IsEnemyUnitNearSpot(unit_data, enemy_hero_data, spot)
          or creep ~= nil
 end
 
+function M.GetUnitDistanceFromFountain(unit_data)
+  return functions.GetDistance(
+           map.GetAllySpot(unit_data, "fountain"),
+           unit_data.location)
+end
+
+function M.GetDistanceFromFountain(unit_data, location)
+  return functions.GetDistance(
+           map.GetAllySpot(unit_data, "fountain"),
+           location)
+end
+
 local function IsSpotSafe(spot, unit_data, enemy_hero_data)
-  return not IsEnemyUnitNearSpot(unit_data, enemy_hero_data, spot)
+  return not (
+         IsEnemyUnitNearSpot(unit_data, enemy_hero_data, spot)
 
-         and (enemy_hero_data == nil
-              or not functions.IsLocationBetweenUnits(
-                       spot,
-                       unit_data,
-                       enemy_hero_data)
-              or not functions.IsLocationBetweenLocations(
-                       enemy_hero_data.location,
-                       spot,
-                       unit_data.location))
+         or 100
+            < (M.GetDistanceFromFountain(unit_data, spot)
+               - M.GetUnitDistanceFromFountain(unit_data))
 
-         and ((map.IsUnitInSpot(unit_data, spot)
-               and not M.IsFocusedByEnemyHero(unit_data)
-               and not M.IsFocusedByUnknownUnit(unit_data)
-               and not M.IsFocusedByCreeps(unit_data))
-
-              or not map.IsUnitInSpot(unit_data, spot))
+         or (map.IsUnitInSpot(unit_data, spot)
+             and (M.IsFocusedByEnemyHero(unit_data)
+                  or M.IsFocusedByUnknownUnit(unit_data)
+                  or M.IsFocusedByCreeps(unit_data))))
 end
 
 local function GetClosestSafeSpot(
@@ -453,17 +458,9 @@ local function GetClosestSafeSpot(
                < functions.GetDistance(unit_data.location, spot2),
              spot1,
              spot2)
+  else
+    return nil
   end
-
-  if is_spot1_safe then
-    return spot1
-  end
-
-  if is_spot2_safe then
-    return spot2
-  end
-
-  return nil
 end
 
 function M.GetSafeSpot(unit_data, enemy_hero_data)
