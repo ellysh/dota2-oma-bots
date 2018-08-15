@@ -417,14 +417,18 @@ local function IsEnemyUnitNearSpot(unit_data, enemy_hero_data, spot)
          or creep ~= nil
 end
 
-local function IsSpotSafe(unit_data, enemy_hero_data, spot)
+local function IsSpotSafe(spot, unit_data, enemy_hero_data)
   return not IsEnemyUnitNearSpot(unit_data, enemy_hero_data, spot)
 
          and (enemy_hero_data == nil
               or not functions.IsLocationBetweenUnits(
                        spot,
                        unit_data,
-                       enemy_hero_data))
+                       enemy_hero_data)
+              or not functions.IsLocationBetweenLocations(
+                       enemy_hero_data.location,
+                       spot,
+                       unit_data.location))
 
          and ((map.IsUnitInSpot(unit_data, spot)
                and not M.IsFocusedByEnemyHero(unit_data)
@@ -434,40 +438,56 @@ local function IsSpotSafe(unit_data, enemy_hero_data, spot)
               or not map.IsUnitInSpot(unit_data, spot))
 end
 
+local function GetClosestSafeSpot(
+  spot1,
+  spot2,
+  unit_data,
+  enemy_hero_data)
+
+  local is_spot1_safe = IsSpotSafe(spot1, unit_data, enemy_hero_data)
+  local is_spot2_safe = IsSpotSafe(spot2, unit_data, enemy_hero_data)
+
+  if is_spot1_safe and is_spot2_safe then
+    return functions.ternary(
+             functions.GetDistance(unit_data.location, spot1)
+               < functions.GetDistance(unit_data.location, spot2),
+             spot1,
+             spot2)
+  end
+
+  if is_spot1_safe then
+    return spot1
+  end
+
+  if is_spot2_safe then
+    return spot2
+  end
+
+  return nil
+end
+
 function M.GetSafeSpot(unit_data, enemy_hero_data)
   local hg_spot = map.GetAllySpot(unit_data, "high_ground")
 
-  if IsSpotSafe(unit_data, enemy_hero_data, hg_spot) then
+  if IsSpotSafe(hg_spot, unit_data, enemy_hero_data) then
     return hg_spot end
 
-  local forest_top_spot = map.GetAllySpot(unit_data, "forest_top")
-  local forest_bot_spot = map.GetAllySpot(unit_data, "forest_bot")
-  local forest_spot = functions.ternary(
-                        functions.GetDistance(
-                          unit_data.location,
-                          forest_top_spot)
-                        < functions.GetDistance(
-                          unit_data.location,
-                          forest_bot_spot),
-                        forest_top_spot,
-                        forest_bot_spot)
+  local forest_spot = GetClosestSafeSpot(
+                        map.GetAllySpot(unit_data, "forest_top"),
+                        map.GetAllySpot(unit_data, "forest_bot"),
+                        unit_data,
+                        enemy_hero_data)
 
-  if IsSpotSafe(unit_data, enemy_hero_data, forest_spot) then
+  if forest_spot ~= nil then
     return forest_spot end
 
-  local forest_back_top_spot = map.GetAllySpot(unit_data, "forest_back_top")
-  local forest_back_bot_spot = map.GetAllySpot(unit_data, "forest_back_bot")
-  local forest_back_spot = functions.ternary(
-                        functions.GetDistance(
-                          unit_data.location,
-                          forest_back_top_spot)
-                        < functions.GetDistance(
-                          unit_data.location,
-                          forest_back_bot_spot),
-                        forest_back_top_spot,
-                        forest_back_bot_spot)
+  local forest_back_spot = GetClosestSafeSpot(
+                            map.GetAllySpot(unit_data, "forest_back_top"),
+                            map.GetAllySpot(unit_data, "forest_back_bot"),
+                            unit_data,
+                            enemy_hero_data)
 
-  if IsSpotSafe(unit_data, enemy_hero_data, forest_back_spot) then
+  if forest_back_spot ~= nil then
     return forest_back_spot end
 
   return map.GetAllySpot(unit_data, "fountain")
