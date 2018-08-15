@@ -302,6 +302,13 @@ M.OBJECTIVES = {
           {action = "stop_attack"},
         }
       },
+      {
+        move = "move_safe",
+        is_interruptible = false,
+        actions = {
+          {action = "move_safe"},
+        }
+      },
     }
   },
 

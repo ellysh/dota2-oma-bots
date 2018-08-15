@@ -42,6 +42,23 @@ end
 
 ---------------------------------
 
+function M.pre_move_safe()
+  return env.ENEMY_HERO_DATA ~= nil
+         and not algorithms.IsUnitMoving(env.BOT_DATA)
+end
+
+function M.post_move_safe()
+  return not M.pre_move_safe()
+end
+
+function M.move_safe()
+  env.BOT:Action_MoveToLocation(env.SAFE_SPOT)
+
+  action_timing.SetNextActionDelay(0.4)
+end
+
+---------------------------------
+
 -- Provide an access to local functions for unit tests only
 
 return M
