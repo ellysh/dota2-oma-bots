@@ -1,8 +1,11 @@
-local algorithms = require(
-  GetScriptDirectory() .."/utility/algorithms")
-
 local constants = require(
   GetScriptDirectory() .."/utility/constants")
+
+local functions = require(
+  GetScriptDirectory() .."/utility/functions")
+
+local algorithms = require(
+  GetScriptDirectory() .."/utility/algorithms")
 
 local env = require(
   GetScriptDirectory() .."/utility/environment")
@@ -16,8 +19,14 @@ local M = {}
 
 function M.pre_keep_equilibrium()
   return not algorithms.IsUnitLowHp(env.BOT_DATA)
+
          and (M.pre_attack_enemy_creep()
               or M.pre_attack_ally_creep())
+
+         and env.ENEMY_HERO_DATA.attack_range
+             < functions.GetUnitDistance(
+                 env.BOT_DATA,
+                 env.ENEMY_HERO_DATA)
 end
 
 function M.post_keep_equilibrium()
