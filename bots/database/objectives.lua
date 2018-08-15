@@ -176,6 +176,7 @@ M.OBJECTIVES = {
           {action = "buy_tpscroll"},
         },
       },
+      -- Ring of Aquila
       {
         move = "buy_ring_of_protection",
         is_interruptible = false,
@@ -190,6 +191,7 @@ M.OBJECTIVES = {
           {action = "buy_sobi_mask"},
         },
       },
+      -- Power Treads
       {
         move = "buy_boots",
         is_interruptible = false,
@@ -211,6 +213,7 @@ M.OBJECTIVES = {
           {action = "buy_boots_of_elves"},
         },
       },
+      -- Dragon Lance
       {
         move = "buy_two_boots_of_elves",
         is_interruptible = false,
@@ -223,6 +226,28 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "buy_ogre_axe"},
+        },
+      },
+      -- Crystalys
+      {
+        move = "buy_blades_of_attack",
+        is_interruptible = false,
+        actions = {
+          {action = "buy_blades_of_attack"},
+        },
+      },
+      {
+        move = "buy_broadsword",
+        is_interruptible = false,
+        actions = {
+          {action = "buy_broadsword"},
+        },
+      },
+      {
+        move = "buy_recipe_lesser_crit",
+        is_interruptible = false,
+        actions = {
+          {action = "buy_recipe_lesser_crit"},
         },
       },
       {

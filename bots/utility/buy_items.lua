@@ -29,6 +29,9 @@ function M.pre_buy_items()
               or M.pre_deliver_items()
               or M.pre_buy_two_boots_of_elves()
               or M.pre_buy_ogre_axe()
+              or M.pre_blades_of_attack()
+              or M.pre_broadsword()
+              or M.pre_recipe_lesser_crit()
               or M.pre_swap_items()
               or M.pre_put_item_in_inventory())
 end
@@ -252,6 +255,60 @@ end
 
 function M.buy_ogre_axe()
   algorithms.BuyItem("item_ogre_axe")
+end
+
+---------------------------------
+
+function M.pre_buy_blades_of_attack()
+  return pre_buy_item("item_blades_of_attack")
+         and not algorithms.DoesBotOrCourierHaveItem(
+                   "item_lesser_crit")
+         and algorithms.DoesBotOrCourierHaveItem(
+               "item_dragon_lance")
+end
+
+function M.post_buy_blades_of_attack()
+  return not M.pre_buy_blades_of_attack()
+end
+
+function M.buy_blades_of_attack()
+  algorithms.BuyItem("item_blades_of_attack")
+end
+
+---------------------------------
+
+function M.pre_buy_broadsword()
+  return pre_buy_item("item_broadsword")
+         and not algorithms.DoesBotOrCourierHaveItem(
+                   "item_lesser_crit")
+         and algorithms.DoesBotOrCourierHaveItem(
+               "item_dragon_lance")
+end
+
+function M.post_buy_broadsword()
+  return not M.pre_buy_broadsword()
+end
+
+function M.buy_broadsword()
+  algorithms.BuyItem("item_broadsword")
+end
+
+---------------------------------
+
+function M.pre_buy_recipe_lesser_crit()
+  return pre_buy_item("item_recipe_lesser_crit")
+         and not algorithms.DoesBotOrCourierHaveItem(
+                   "item_lesser_crit")
+         and algorithms.DoesBotOrCourierHaveItem(
+               "item_dragon_lance")
+end
+
+function M.post_buy_recipe_lesser_crit()
+  return not M.pre_buy_recipe_lesser_crit()
+end
+
+function M.buy_recipe_lesser_crit()
+  algorithms.BuyItem("item_recipe_lesser_crit")
 end
 
 ---------------------------------
