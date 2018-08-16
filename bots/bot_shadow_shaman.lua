@@ -1,4 +1,7 @@
-function Think()
+local chat = require(
+  GetScriptDirectory() .."/utility/chat")
+
+local function BuyCourier()
   if IsCourierAvailable() then
     return end
 
@@ -16,4 +19,10 @@ function Think()
   if slot_type == ITEM_SLOT_TYPE_MAIN then
     bot:Action_UseAbility(bot:GetItemInSlot(slot))
   end
+end
+
+function Think()
+  chat.PrintVersion(GetBot())
+
+  BuyCourier()
 end
