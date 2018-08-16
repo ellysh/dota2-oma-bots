@@ -24,6 +24,27 @@ M.OBJECTIVES = {
   },
 
   {
+    objective = "swap_items",
+    module = require(GetScriptDirectory() .."/utility/swap_items"),
+    is_interruptible = false,
+    moves = {
+      {
+        move = "swap_flask_tp",
+        is_interruptible = false,
+        actions = {
+          {action = "swap_flask_tp"},
+        },
+      },
+      {
+        move = "put_item_in_inventory",
+        is_interruptible = false,
+        actions = {
+          {action = "put_item_in_inventory"},
+        }
+      },
+    },
+  },
+  {
     objective = "body_block",
     module = require(GetScriptDirectory() .."/utility/body_block"),
     is_interruptible = false,
@@ -148,13 +169,6 @@ M.OBJECTIVES = {
     module = require(GetScriptDirectory() .."/utility/buy_items"),
     is_interruptible = false,
     moves = {
-      {
-        move = "put_item_in_inventory",
-        is_interruptible = false,
-        actions = {
-          {action = "put_item_in_inventory"},
-        }
-      },
       {
         move = "buy_flask",
         is_interruptible = false,

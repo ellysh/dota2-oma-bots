@@ -31,51 +31,11 @@ function M.pre_buy_items()
               or M.pre_buy_ogre_axe()
               or M.pre_buy_blades_of_attack()
               or M.pre_buy_broadsword()
-              or M.pre_buy_recipe_lesser_crit()
-              or M.pre_put_item_in_inventory())
+              or M.pre_buy_recipe_lesser_crit())
 end
 
 function M.post_buy_items()
   return not M.pre_buy_items()
-end
-
----------------------------------
-
-local function GetFullSlotInBackpack(unit_data)
-  for i = 6, 8 do
-    if nil ~= env.BOT:GetItemInSlot(i) then
-      return i
-    end
-  end
-
-  return nil
-end
-
-local function GetEmptySlotInInventory(unit_data)
-  for i = 0, 5 do
-    if nil == env.BOT:GetItemInSlot(i) then
-      return i
-    end
-  end
-
-  return nil
-end
-
-function M.pre_put_item_in_inventory()
-  return ((nil ~= GetFullSlotInBackpack(env.BOT_DATA))
-          and (nil ~= GetEmptySlotInInventory(env.BOT_DATA)))
-end
-
-function M.post_put_item_in_inventory()
-  return not M.pre_put_item_in_inventory()
-end
-
-function M.put_item_in_inventory()
-  env.BOT:ActionImmediate_SwapItems(
-    GetFullSlotInBackpack(env.BOT_DATA),
-    GetEmptySlotInInventory(env.BOT_DATA))
-
-  action_timing.SetNextActionDelay(0.1)
 end
 
 ---------------------------------
