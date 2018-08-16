@@ -37,6 +37,19 @@ You should follow the following limitations when playing with the bot:
 8. No runes.
 9. Bot difficulty is Hard or above.
 
+## Update
+
+Shadow Shaman bot prints the current bots version in all chat when a game starts. If you notice that the bots version is older than the actual one on the steam workshop, you should update bots. In most cases, workshop items do their update automatically but sometimes you should do it manually.
+
+These are steps for manual updating a workshop item:
+
+1. Unsubscribe from the workshop item from the Dota 2 client.
+2. Exit from the Dota 2 and Steam.
+3. Start the Steam and Dota 2.
+4. Subscribe to the workshop item again.
+
+Dota 2 client removes the workshop item from the hard drive when you unsubscribe from it. When you subscribe on it again, the item will be downloaded in the new clean directory.
+
 ## Contacts
 
 You can ask any questions about usage of OMA Bots via email petrsum@gmail.com.
