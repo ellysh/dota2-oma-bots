@@ -1,3 +1,9 @@
+* version 0.9a
+  - Implement the move for kiting enemy tower.
+  - Reserve gold for buying the flask after level 5.
+  - Implement the "swap_items" objective.
+  - Print the bots version in chat when a game starts.
+
 * version 0.9
   - Implement the kite objective.
   - Implement defensive moves against attacking hero.
