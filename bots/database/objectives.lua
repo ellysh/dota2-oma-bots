@@ -335,6 +335,14 @@ M.OBJECTIVES = {
         }
       },
       {
+        move = "attack_enemy_tower",
+        is_interruptible = false,
+        actions = {
+          {action = "attack_enemy_tower"},
+          {action = "stop_attack"},
+        }
+      },
+      {
         move = "move_safe",
         is_interruptible = false,
         actions = {

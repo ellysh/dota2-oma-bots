@@ -1,3 +1,9 @@
+local constants = require(
+  GetScriptDirectory() .."/utility/constants")
+
+local functions = require(
+  GetScriptDirectory() .."/utility/functions")
+
 local algorithms = require(
   GetScriptDirectory() .."/utility/algorithms")
 
@@ -17,7 +23,8 @@ local M = {}
 function M.pre_kite()
   return not algorithms.IsUnitLowHp(env.BOT_DATA)
          and (M.pre_attack_enemy_hero()
-              or M.pre_move_safe())
+              or M.pre_move_safe()
+              or M.pre_attack_enemy_tower())
 end
 
 function M.post_kite()
@@ -46,6 +53,40 @@ end
 
 function M.attack_enemy_hero()
   moves.attack_enemy_hero()
+end
+
+--------------------------------
+
+local function DoesTowerAttackAllyCreep()
+  local creeps = algorithms.GetAllyCreeps(
+                       env.BOT_DATA,
+                       constants.MAX_UNIT_SEARCH_RADIUS)
+
+  return nil ~= functions.GetElementWith(
+                  creeps,
+                  nil,
+                  function(unit_data)
+                    return algorithms.IsUnitAttackTarget(
+                             env.ENEMY_TOWER_DATA,
+                             unit_data)
+                  end)
+end
+
+function M.pre_attack_enemy_tower()
+  return env.ENEMY_TOWER_DATA ~= nil
+         and 6 <= env.BOT_DATA.level
+         and DoesTowerAttackAllyCreep()
+         and not env.IS_FOCUSED_BY_ENEMY_HERO
+         and not env.IS_FOCUSED_BY_CREEPS
+         and not env.IS_FOCUSED_BY_TOWER
+end
+
+function M.post_attack_enemy_tower()
+  return not M.pre_attack_enemy_tower()
+end
+
+function M.attack_enemy_tower()
+  algorithms.AttackUnit(env.BOT_DATA, env.ENEMY_TOWER_DATA, false)
 end
 
 --------------------------------
