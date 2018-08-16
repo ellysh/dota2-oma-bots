@@ -119,7 +119,7 @@ end
 
 function M.pre_tp_base()
   return algorithms.IsItemCastable(env.BOT_DATA, "item_tpscroll")
-         and 100 < env.BOT_DATA.gold
+         and env.BOT_DATA.gold < constants.RESERVED_GOLD
          and algorithms.IsUnitLowHp(env.BOT_DATA)
          and constants.MIN_TP_BASE_RADIUS
              < functions.GetDistance(env.FOUNTAIN_SPOT, env.BOT_DATA.location)

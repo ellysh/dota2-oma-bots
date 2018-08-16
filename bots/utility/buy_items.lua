@@ -1,3 +1,9 @@
+local functions = require(
+  GetScriptDirectory() .."/utility/functions")
+
+local constants = require(
+  GetScriptDirectory() .."/utility/constants")
+
 local map = require(
   GetScriptDirectory() .."/utility/map")
 
@@ -41,7 +47,13 @@ end
 ---------------------------------
 
 local function IsEnoughGoldToBuy(item_name)
-  return GetItemCost(item_name) <= env.BOT_DATA.gold
+  local reserved_gold = functions.ternary(
+                          env.BOT_DATA.level < 5,
+                          0,
+                          constants.RESERVED_GOLD)
+
+  return (GetItemCost(item_name) + reserved_gold)
+          <= env.BOT_DATA.gold
 end
 
 local function pre_buy_item(item_name)
@@ -50,7 +62,8 @@ local function pre_buy_item(item_name)
 end
 
 function M.pre_buy_flask()
-  return pre_buy_item("item_flask")
+  return not algorithms.DoesBotOrCourierHaveItem("item_flask")
+         and GetItemCost("item_flask") <= env.BOT_DATA.gold
 end
 
 function M.post_buy_flask()
