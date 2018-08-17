@@ -66,9 +66,11 @@ local function DoesTowerAttackAllyCreep()
                   creeps,
                   nil,
                   function(unit_data)
-                    return algorithms.IsUnitAttackTarget(
-                             env.ENEMY_TOWER_DATA,
-                             unit_data)
+                    return env.ENEMY_TOWER_DATA.attack_damage
+                           < unit_data.health
+                           and algorithms.IsUnitAttackTarget(
+                                 env.ENEMY_TOWER_DATA,
+                                 unit_data)
                   end)
 end
 
