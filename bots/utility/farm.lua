@@ -10,6 +10,9 @@ local algorithms = require(
 local env = require(
   GetScriptDirectory() .."/utility/environment")
 
+local map = require(
+  GetScriptDirectory() .."/utility/map")
+
 local moves = require(
   GetScriptDirectory() .."/utility/moves")
 
@@ -19,8 +22,13 @@ local M = {}
 
 function M.pre_farm()
   return not algorithms.IsUnitLowHp(env.BOT_DATA)
+
          and (M.pre_lasthit_enemy_creep()
               or M.pre_deny_ally_creep())
+
+         and not map.IsUnitInSpot(
+                   env.BOT_DATA,
+                   map.GetEnemySpot(env.BOT_DATA, "tower_tier_1_rear"))
 end
 
 function M.post_farm()

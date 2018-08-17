@@ -13,6 +13,9 @@ local env = require(
 local moves = require(
   GetScriptDirectory() .."/utility/moves")
 
+local map = require(
+  GetScriptDirectory() .."/utility/map")
+
 local action_timing = require(
   GetScriptDirectory() .."/utility/action_timing")
 
@@ -22,9 +25,14 @@ local M = {}
 
 function M.pre_kite()
   return not algorithms.IsUnitLowHp(env.BOT_DATA)
+
          and (M.pre_attack_enemy_hero()
               or M.pre_move_safe()
               or M.pre_attack_enemy_tower())
+
+         and not map.IsUnitInSpot(
+                   env.BOT_DATA,
+                   map.GetEnemySpot(env.BOT_DATA, "tower_tier_1_rear"))
 end
 
 function M.post_kite()
