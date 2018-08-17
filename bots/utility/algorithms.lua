@@ -509,6 +509,25 @@ function M.AreEnemyCreepsInRadius(unit_data, radius)
   return M.AreUnitsInRadius(unit_data, radius, M.GetEnemyCreeps)
 end
 
+function M.DoesEnemyTowerAttackAllyCreep(unit_data, tower_data)
+  if tower_data == nil then
+    return end
+
+  local creeps = M.GetAllyCreeps(
+                       unit_data,
+                       constants.MAX_UNIT_SEARCH_RADIUS)
+
+  return nil ~= functions.GetElementWith(
+                  creeps,
+                  nil,
+                  function(creep)
+                    return tower_data.attack_damage < creep.health
+                           and M.IsUnitAttackTarget(
+                                 tower_data,
+                                 creep)
+                  end)
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_GetNormalizedRadius = GetNormalizedRadius
 M.test_UpdateUnitList = all_units.UpdateUnitList

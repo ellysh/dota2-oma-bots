@@ -57,27 +57,12 @@ end
 
 --------------------------------
 
-local function DoesTowerAttackAllyCreep()
-  local creeps = algorithms.GetAllyCreeps(
-                       env.BOT_DATA,
-                       constants.MAX_UNIT_SEARCH_RADIUS)
-
-  return nil ~= functions.GetElementWith(
-                  creeps,
-                  nil,
-                  function(unit_data)
-                    return env.ENEMY_TOWER_DATA.attack_damage
-                           < unit_data.health
-                           and algorithms.IsUnitAttackTarget(
-                                 env.ENEMY_TOWER_DATA,
-                                 unit_data)
-                  end)
-end
-
 function M.pre_attack_enemy_tower()
   return env.ENEMY_TOWER_DATA ~= nil
          and 6 <= env.BOT_DATA.level
-         and DoesTowerAttackAllyCreep()
+         and algorithms.DoesEnemyTowerAttackAllyCreep(
+               env.BOT_DATA,
+               env.ENEMY_TOWER_DATA)
          and not env.IS_FOCUSED_BY_ENEMY_HERO
          and not env.IS_FOCUSED_BY_CREEPS
          and not env.IS_FOCUSED_BY_TOWER
