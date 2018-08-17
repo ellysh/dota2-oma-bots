@@ -521,7 +521,7 @@ function M.DoesEnemyTowerAttackAllyCreep(unit_data, tower_data)
                   creeps,
                   nil,
                   function(creep)
-                    return tower_data.attack_damage < creep.health
+                    return 2 * tower_data.attack_damage < creep.health
                            and M.IsUnitAttackTarget(
                                  tower_data,
                                  creep)
