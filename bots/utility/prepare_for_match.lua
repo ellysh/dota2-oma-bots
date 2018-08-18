@@ -16,8 +16,7 @@ local M = {}
 
 function M.pre_prepare_for_match()
   return DotaTime() < 0
-         and (M.pre_buy_starting_items()
-              or M.pre_move_start_position())
+         and M.pre_buy_starting_items()
 end
 
 function M.post_prepare_for_match()
@@ -45,23 +44,6 @@ function M.buy_starting_items()
 end
 
 ---------------------------------
-
-function M.pre_move_start_position()
-  return not map.IsUnitInSpot(
-               env.BOT_DATA,
-               map.GetAllySpot(env.BOT_DATA, "start_body_block"))
-end
-
-function M.post_move_start_position()
-  return not M.pre_move_start_position()
-end
-
-function M.move_start_position()
-  env.BOT:Action_MoveToLocation(
-    map.GetAllySpot(env.BOT_DATA, "start_body_block"))
-
-  action_timing.SetNextActionDelay(5)
-end
 
 -- Provide an access to local functions for unit tests only
 

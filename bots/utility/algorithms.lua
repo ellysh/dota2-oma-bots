@@ -509,6 +509,10 @@ function M.AreEnemyCreepsInRadius(unit_data, radius)
   return M.AreUnitsInRadius(unit_data, radius, M.GetEnemyCreeps)
 end
 
+function M.AreAllyCreepsInRadius(unit_data, radius)
+  return M.AreUnitsInRadius(unit_data, radius, M.GetAllyCreeps)
+end
+
 function M.DoesEnemyTowerAttackAllyCreep(unit_data, tower_data)
   if tower_data == nil then
     return end

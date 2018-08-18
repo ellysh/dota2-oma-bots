@@ -37,17 +37,12 @@ end
 
 ---------------------------------
 
-local function AreAllyCreepsInRadius(radius)
-  return algorithms.AreUnitsInRadius(
-    env.BOT_DATA,
-    radius,
-    algorithms.GetAllyCreeps)
-end
-
 function M.pre_move_mid_tower()
   local target_location = map.GetAllySpot(env.BOT_DATA, "high_ground")
 
-  return (not AreAllyCreepsInRadius(constants.MAX_UNIT_SEARCH_RADIUS)
+  return (not algorithms.AreAllyCreepsInRadius(
+                env.BOT_DATA,
+                constants.MAX_UNIT_SEARCH_RADIUS)
           or functions.GetDistance(
                map.GetAllySpot(env.BOT_DATA, "fountain"),
                env.BOT_DATA.location)

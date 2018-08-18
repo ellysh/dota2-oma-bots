@@ -13,13 +13,6 @@ M.OBJECTIVES = {
           {action = "buy_starting_items"},
        }
       },
-      {
-        move = "move_start_position",
-        is_interruptible = false,
-        actions = {
-          {action = "move_start_position"},
-        },
-      },
     },
   },
 
@@ -49,6 +42,13 @@ M.OBJECTIVES = {
     module = require(GetScriptDirectory() .."/utility/body_block"),
     is_interruptible = false,
     moves = {
+      {
+        move = "move_start_position",
+        is_interruptible = false,
+        actions = {
+          {action = "move_start_position"},
+        },
+      },
       {
         move = "move_and_block",
         is_interruptible = false,

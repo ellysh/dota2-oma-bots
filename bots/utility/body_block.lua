@@ -26,7 +26,8 @@ local M = {}
 function M.pre_body_block()
   return 0 < DotaTime()
          and DotaTime() < 20
-         and M.pre_move_and_block()
+         and (M.pre_move_and_block()
+              or M.pre_move_start_position())
 end
 
 function M.post_body_block()
@@ -35,12 +36,37 @@ end
 
 ---------------------------------
 
-local function AreAllyCreepsInRadius(radius)
-  return algorithms.AreUnitsInRadius(
-    env.BOT_DATA,
-    radius,
-    algorithms.GetAllyCreeps)
+local function GetBodyBlockSpot()
+  return functions.ternary(
+           DotaTime() < 20,
+           map.GetAllySpot(env.BOT_DATA, "first_body_block"),
+           map.GetAllySpot(env.BOT_DATA, "tower_tier_1_attack"))
 end
+
+function M.pre_move_start_position()
+  return not algorithms.AreAllyCreepsInRadius(
+               env.BOT_DATA,
+               constants.MAX_UNIT_SEARCH_RADIUS)
+         and not algorithms.AreEnemyCreepsInRadius(
+               env.BOT_DATA,
+               constants.MAX_UNIT_SEARCH_RADIUS)
+         and not map.IsUnitInSpot(
+                   env.BOT_DATA,
+                   GetBodyBlockSpot())
+end
+
+function M.post_move_start_position()
+  return not M.pre_move_start_position()
+end
+
+function M.move_start_position()
+  env.BOT:Action_MoveToLocation(
+    map.GetAllySpot(env.BOT_DATA, GetBodyBlockSpot()))
+
+  action_timing.SetNextActionDelay(1)
+end
+
+---------------------------------
 
 local function CompareMinHgDistance(t, a, b)
   local high_ground_spot = map.GetAllySpot(env.BOT_DATA, "high_ground")
@@ -60,7 +86,9 @@ local function GetFirstMovingCreep()
 end
 
 function M.pre_move_and_block()
-  return AreAllyCreepsInRadius(constants.MAX_MELEE_ATTACK_RANGE)
+  return algorithms.AreAllyCreepsInRadius(
+           env.BOT_DATA,
+           constants.MAX_MELEE_ATTACK_RANGE)
          and not algorithms.AreEnemyCreepsInRadius(
                    env.BOT_DATA,
                    constants.MAX_CREEP_DISTANCE)
