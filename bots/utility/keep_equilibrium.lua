@@ -44,6 +44,7 @@ function M.pre_keep_equilibrium()
                  < functions.GetUnitDistance(
                      env.BOT_DATA,
                      env.ENEMY_HERO_DATA))
+
          and constants.UNIT_HALF_HEALTH_LEVEL
              < functions.GetRate(creep.health, creep.max_health)
 end

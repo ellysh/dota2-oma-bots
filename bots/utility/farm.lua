@@ -73,7 +73,10 @@ local function GetLastHitCreep(side)
 end
 
 function M.pre_lasthit_enemy_creep()
-  return GetLastHitCreep(constants.SIDE["ENEMY"]) ~= nil
+  local creep = GetLastHitCreep(constants.SIDE["ENEMY"])
+
+  return creep ~= nil
+         and not algorithms.DoesTowerProtectEnemyUnit(creep)
 end
 
 function M.post_lasthit_enemy_creep()
@@ -89,11 +92,12 @@ end
 ---------------------------------
 
 function M.pre_deny_ally_creep()
-  local target_data = GetLastHitCreep(constants.SIDE["ALLY"])
+  local creep = GetLastHitCreep(constants.SIDE["ALLY"])
 
-  return target_data ~= nil
-         and functions.GetRate(target_data.health, target_data.max_health)
+  return creep ~= nil
+         and functions.GetRate(creep.health, creep.max_health)
              < constants.UNIT_HALF_HEALTH_LEVEL
+         and not algorithms.DoesTowerProtectEnemyUnit(creep)
 end
 
 function M.post_deny_ally_creep()
