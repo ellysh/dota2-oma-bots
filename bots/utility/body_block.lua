@@ -71,8 +71,8 @@ function M.post_move_and_block()
 end
 
 function M.move_and_block()
-  local unit = all_units.GetUnit(GetFirstMovingCreep())
-  local target_location = unit:GetExtrapolatedLocation(2)
+  local creep = all_units.GetUnit(GetFirstMovingCreep())
+  local target_location = creep:GetExtrapolatedLocation(2)
 
   env.BOT:Action_MoveToLocation(target_location)
 
@@ -84,9 +84,14 @@ function M.move_and_block()
 end
 
 function M.stop_attack_and_move()
+  local creep_data = GetFirstMovingCreep()
+  local distance = functions.GetDistance(
+                     env.BOT_DATA.location,
+                     creep_data.location)
+
   env.BOT:Action_ClearActions(true)
 
-  action_timing.SetNextActionDelay(0.2)
+  action_timing.SetNextActionDelay((distance/creep_data.speed) / 2)
 end
 
 ---------------------------------
