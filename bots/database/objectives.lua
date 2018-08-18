@@ -427,6 +427,14 @@ M.OBJECTIVES = {
     is_interruptible = false,
     moves = {
       {
+        move = "move_and_block",
+        is_interruptible = false,
+        actions = {
+          {action = "move_and_block"},
+          {action = "stop_attack_and_move"},
+        },
+      },
+      {
         move = "move_start_position",
         is_interruptible = false,
         actions = {
@@ -439,14 +447,6 @@ M.OBJECTIVES = {
         actions = {
           {action = "turn_enemy_fountain"},
           {action = "stop_turn"},
-        },
-      },
-      {
-        move = "move_and_block",
-        is_interruptible = false,
-        actions = {
-          {action = "move_and_block"},
-          {action = "stop_attack_and_move"},
         },
       },
     },
