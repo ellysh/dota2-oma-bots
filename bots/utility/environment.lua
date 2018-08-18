@@ -39,6 +39,7 @@ local function GetClosestCreep(radius, get_function, direction)
     algorithms.CompareMinDistance,
     function(unit_data)
       return not algorithms.IsUnitLowHp(unit_data)
+             and not algorithms.IsCourierUnit(unit_data)
              and (direction == constants.DIRECTION["ANY"]
                   or (direction == constants.DIRECTION["FRONT"]
                       and algorithms.IsFrontUnit(M.BOT_DATA, unit_data))

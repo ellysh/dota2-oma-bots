@@ -45,7 +45,8 @@ end
 function M.pre_move_start_position()
   return not algorithms.AreAllyCreepsInRadius(
                env.BOT_DATA,
-               constants.MAX_UNIT_SEARCH_RADIUS)
+               constants.MAX_UNIT_SEARCH_RADIUS,
+               constants.DIRECTION["FRONT"])
 
          and not algorithms.AreEnemyCreepsInRadius(
                env.BOT_DATA,
@@ -77,7 +78,8 @@ end
 function M.pre_turn_enemy_fountain()
   return not algorithms.AreAllyCreepsInRadius(
                env.BOT_DATA,
-               constants.MAX_UNIT_SEARCH_RADIUS)
+               constants.MAX_UNIT_SEARCH_RADIUS,
+               constants.DIRECTION["FRONT"])
 
          and not algorithms.AreEnemyCreepsInRadius(
                env.BOT_DATA,
@@ -141,7 +143,8 @@ function M.pre_move_and_block()
 
   return algorithms.AreAllyCreepsInRadius(
            env.BOT_DATA,
-           constants.MAX_MELEE_ATTACK_RANGE)
+           constants.MAX_MELEE_ATTACK_RANGE,
+           constants.DIRECTION["BACK"])
 
          and not algorithms.AreEnemyCreepsInRadius(
                    env.BOT_DATA,

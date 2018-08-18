@@ -515,13 +515,25 @@ function M.AreEnemyCreepsInRadius(unit_data, radius)
   return M.AreUnitsInRadius(unit_data, radius, M.GetEnemyCreeps)
 end
 
-function M.AreAllyCreepsInRadius(unit_data, radius)
+function M.IsCourierUnit(unit_data)
+  return unit_data.name == "npc_dota_courier"
+         or unit_data.name == "npc_dota_flying_courier"
+end
+
+function M.AreAllyCreepsInRadius(unit_data, radius, direction)
   local creeps = M.GetAllyCreeps(unit_data, radius)
 
-  return not functions.IsTableEmpty(creeps)
-         and not (#creeps == 1
-                  and (creeps[1].name == "npc_dota_courier"
-                       or creeps[1].name == "npc_dota_flying_courier"))
+  return nil ~= functions.GetElementWith(
+    creeps,
+    nil,
+    function(creep)
+      return not M.IsCourierUnit(creep)
+             and (direction == constants.DIRECTION["ANY"]
+                  or (direction == constants.DIRECTION["FRONT"]
+                      and M.IsFrontUnit(unit_data, creep))
+                  or (direction == constants.DIRECTION["BACK"]
+                      and not M.IsFrontUnit(unit_data, creep)))
+    end)
 end
 
 function M.DoesEnemyTowerAttackAllyCreep(unit_data, tower_data)
