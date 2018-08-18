@@ -429,6 +429,12 @@ function M.GetDistanceFromFountain(unit_data, location)
            location)
 end
 
+-- Check if an unit stays ahead of the bot
+function M.IsFrontUnit(bot_data, unit_data)
+  return M.GetUnitDistanceFromFountain(bot_data)
+         < M.GetUnitDistanceFromFountain(unit_data)
+end
+
 local function IsSpotSafe(spot, unit_data, enemy_hero_data)
   return not (
          IsEnemyUnitNearSpot(unit_data, enemy_hero_data, spot)

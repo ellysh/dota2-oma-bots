@@ -55,4 +55,10 @@ M.SIDE = {
   ALLY = {},
 }
 
+M.DIRECTION = {
+  FRONT = {},
+  BACK = {},
+  ANY = {},
+}
+
 return M

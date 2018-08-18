@@ -120,9 +120,10 @@ function M.pre_decrease_creeps_distance()
          and not algorithms.DoesEnemyCreepAttack(
                    env.BOT_DATA,
                    env.ENEMY_CREEP_DATA,
-                   env.ALLY_CREEP_DATA)
+                   env.ALLY_CREEP_FRONT_DATA)
 
-         and (env.ENEMY_CREEP_DATA ~= nil or env.ALLY_CREEP_DATA ~= nil)
+         and (env.ENEMY_CREEP_DATA ~= nil
+              or env.ALLY_CREEP_FRONT_DATA ~= nil)
 end
 
 function M.post_decrease_creeps_distance()
@@ -133,7 +134,7 @@ function M.decrease_creeps_distance()
   local target_data = env.ENEMY_CREEP_DATA
 
   if target_data == nil then
-    target_data = env.ALLY_CREEP_DATA
+    target_data = env.ALLY_CREEP_FRONT_DATA
   end
 
   env.BOT:Action_MoveToLocation(target_data.location)

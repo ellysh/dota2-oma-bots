@@ -133,10 +133,10 @@ end
 function M.pre_move_and_block()
   local creep_distance = 0
 
-  if env.ALLY_CREEP_DATA ~= nil then
+  if env.ALLY_CREEP_BACK_DATA ~= nil then
     creep_distance = functions.GetUnitDistance(
                        env.BOT_DATA,
-                       env.ALLY_CREEP_DATA)
+                       env.ALLY_CREEP_BACK_DATA)
   end
 
   return algorithms.AreAllyCreepsInRadius(

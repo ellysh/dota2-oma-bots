@@ -47,9 +47,11 @@ function M.pre_attack_enemy_hero()
          and not algorithms.DoesEnemyCreepAttack(
                    env.BOT_DATA,
                    env.ENEMY_CREEP_DATA,
-                   env.ALLY_CREEP_DATA)
+                   env.ALLY_CREEP_FRONT_DATA)
+
          and not env.IS_FOCUSED_BY_CREEPS
          and not env.IS_FOCUSED_BY_TOWER
+
          and not algorithms.IsUnitAttackTarget(
                    env.BOT_DATA,
                    env.ENEMY_HERO_DATA)

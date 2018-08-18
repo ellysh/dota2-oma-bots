@@ -15,7 +15,8 @@ local M = {}
 M.BOT_DATA = {}
 M.ENEMY_CREEP_DATA = {}
 M.ENEMY_HERO_DATA = {}
-M.ALLY_CREEP_DATA = {}
+M.ALLY_CREEP_FRONT_DATA = {}
+M.ALLY_CREEP_BACK_DATA = {}
 M.ENEMY_TOWER_DATA = {}
 M.ALLY_CREEPS_HP = 0
 M.ENEMY_CREEPS_HP = 0
@@ -28,7 +29,7 @@ M.IS_FOCUSED_BY_UNKNOWN_UNIT = false
 M.IS_FOCUSED_BY_TOWER = false
 M.IS_BASE_RECOVERY = false
 
-local function GetClosestCreep(radius, get_function)
+local function GetClosestCreep(radius, get_function, direction)
   local creeps = get_function(
     M.BOT_DATA,
     radius)
@@ -38,6 +39,13 @@ local function GetClosestCreep(radius, get_function)
     algorithms.CompareMinDistance,
     function(unit_data)
       return not algorithms.IsUnitLowHp(unit_data)
+             and (direction == constants.DIRECTION["ANY"]
+                  or (direction == constants.DIRECTION["FRONT"]
+                      and algorithms.IsFrontUnit(M.BOT_DATA, unit_data))
+                  or (direction == constants.DIRECTION["BACK"]
+                      and not algorithms.IsFrontUnit(
+                                M.BOT_DATA,
+                                unit_data)))
     end)
 end
 
@@ -52,11 +60,18 @@ function M.UpdateVariables()
 
   M.ENEMY_CREEP_DATA = GetClosestCreep(
                          constants.MAX_UNIT_SEARCH_RADIUS,
-                         algorithms.GetEnemyCreeps)
+                         algorithms.GetEnemyCreeps,
+                         constants.DIRECTION["ANY"])
 
-  M.ALLY_CREEP_DATA = GetClosestCreep(
-                        constants.MAX_UNIT_SEARCH_RADIUS,
-                        algorithms.GetAllyCreeps)
+  M.ALLY_CREEP_FRONT_DATA = GetClosestCreep(
+                              constants.MAX_UNIT_SEARCH_RADIUS,
+                              algorithms.GetAllyCreeps,
+                              constants.DIRECTION["FRONT"])
+
+  M.ALLY_CREEP_BACK_DATA = GetClosestCreep(
+                             constants.MAX_UNIT_SEARCH_RADIUS,
+                             algorithms.GetAllyCreeps,
+                             constants.DIRECTION["BACK"])
 
   M.ENEMY_TOWER_DATA = algorithms.GetEnemyBuildings(
                          M.BOT_DATA,
