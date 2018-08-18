@@ -22,6 +22,9 @@ local function BuyCourier()
 end
 
 function Think()
+  if DotaTime() < -85 then
+    return end
+
   chat.PrintVersion(GetBot())
 
   BuyCourier()
