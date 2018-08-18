@@ -163,7 +163,13 @@ end
 
 function M.move_and_block()
   local creep = all_units.GetUnit(GetFirstMovingCreep())
-  local target_location = creep:GetExtrapolatedLocation(2)
+  local target_location = creep:GetExtrapolatedLocation(1.5)
+
+  if algorithms.GetDistanceFromFountain(env.BOT_DATA, target_location)
+     < algorithms.GetUnitDistanceFromFountain(env.BOT_DATA) then
+
+     return
+  end
 
   env.BOT:Action_MoveToLocation(target_location)
 
@@ -171,7 +177,7 @@ function M.move_and_block()
                      env.BOT_DATA.location,
                      target_location)
 
-  action_timing.SetNextActionDelay(distance/env.BOT_DATA.speed)
+  action_timing.SetNextActionDelay((distance/env.BOT_DATA.speed) * 0.6)
 end
 
 function M.stop_attack_and_move()
@@ -182,11 +188,10 @@ function M.stop_attack_and_move()
 
   env.BOT:Action_ClearActions(true)
 
-  action_timing.SetNextActionDelay((distance/creep_data.speed) / 2)
+  action_timing.SetNextActionDelay((distance/creep_data.speed) * 0.2)
 end
 
 ---------------------------------
-
 
 -- Provide an access to local functions for unit tests only
 
