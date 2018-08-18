@@ -138,10 +138,7 @@ function M.pre_move_safe_evasion()
               map.GetEnemySpot(env.BOT_DATA, "tower_tier_1_rear"))
 
          or (map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
-             and (env.BOT_DATA.level < 4
-                  or not algorithms.DoesEnemyTowerAttackAllyCreep(
-                           env.BOT_DATA,
-                           env.ENEMY_TOWER_DATA)))
+             and env.BOT_DATA.level < 4)
 end
 
 function M.post_move_safe_evasion()
