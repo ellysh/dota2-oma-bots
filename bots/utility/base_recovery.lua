@@ -62,7 +62,10 @@ end
 function M.pre_move_base()
 
   return (not (algorithms.IsUnitMoving(env.BOT_DATA)
-              and env.BOT:IsFacingLocation(env.FOUNTAIN_SPOT, 30)))
+              and algorithms.IsFacingLocation(
+                    env.BOT_DATA,
+                    env.FOUNTAIN_SPOT,
+                    30)))
           or env.IS_BASE_RECOVERY
 end
 

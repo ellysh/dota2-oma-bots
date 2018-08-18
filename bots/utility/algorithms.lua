@@ -159,7 +159,8 @@ function M.IsUnitAttackTarget(unit_data, target_data, target_distance)
     local unit = all_units.GetUnit(unit_data)
 
     return M.IsUnitAttack(unit_data)
-           and unit:IsFacingLocation(
+           and M.IsFacingLocation(
+                 unit,
                  target_data.location,
                  constants.TURN_TARGET_MAX_DEGREE)
            and not M.IsAttackDone(unit_data)
@@ -301,7 +302,8 @@ function M.AttackUnit(bot_data, unit_data, is_modifier)
   local attack_point = (constants.DROW_RANGER_ATTACK_POINT)
                          * bot_data.seconds_per_attack
 
-  if not bot:IsFacingLocation(
+  if not M.IsFacingLocation(
+           bot_data,
            unit_data.location,
            constants.TURN_TARGET_MAX_DEGREE) then
     attack_point = attack_point + constants.DROW_RANGER_TURN_TIME
@@ -393,7 +395,8 @@ function M.DoesEnemyCreepAttack(
                          enemy_creep_data))
               or ally_creep_data == nil)
 
-         and all_units.GetUnit(enemy_creep_data):IsFacingLocation(
+         and M.IsFacingLocation(
+               enemy_creep_data,
                unit_data.location,
                constants.TURN_TARGET_MAX_DEGREE)
 end
