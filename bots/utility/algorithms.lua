@@ -510,7 +510,12 @@ function M.AreEnemyCreepsInRadius(unit_data, radius)
 end
 
 function M.AreAllyCreepsInRadius(unit_data, radius)
-  return M.AreUnitsInRadius(unit_data, radius, M.GetAllyCreeps)
+  local creeps = M.GetAllyCreeps(unit_data, radius)
+
+  return not functions.IsTableEmpty(creeps)
+         and not (#creeps == 1
+                  and (creeps[1].name == "npc_dota_courier"
+                       or creeps[1].name == "npc_dota_flying_courier"))
 end
 
 function M.DoesEnemyTowerAttackAllyCreep(unit_data, tower_data)

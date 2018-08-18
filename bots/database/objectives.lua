@@ -50,6 +50,13 @@ M.OBJECTIVES = {
         },
       },
       {
+        move = "turn_enemy_fountain",
+        is_interruptible = false,
+        actions = {
+          {action = "turn_enemy_fountain"},
+        },
+      },
+      {
         move = "move_and_block",
         is_interruptible = false,
         actions = {

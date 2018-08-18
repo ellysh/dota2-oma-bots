@@ -24,10 +24,9 @@ local M = {}
 ---------------------------------
 
 function M.pre_body_block()
-  return 0 < DotaTime()
-         and DotaTime() < 20
-         and (M.pre_move_and_block()
-              or M.pre_move_start_position())
+  return M.pre_move_and_block()
+         or M.pre_move_start_position()
+         or M.pre_turn_enemy_fountain()
 end
 
 function M.post_body_block()
@@ -47,12 +46,20 @@ function M.pre_move_start_position()
   return not algorithms.AreAllyCreepsInRadius(
                env.BOT_DATA,
                constants.MAX_UNIT_SEARCH_RADIUS)
+
          and not algorithms.AreEnemyCreepsInRadius(
                env.BOT_DATA,
                constants.MAX_UNIT_SEARCH_RADIUS)
+
          and not map.IsUnitInSpot(
                    env.BOT_DATA,
                    GetBodyBlockSpot())
+
+         and (env.ENEMY_HERO_DATA == nil
+              or constants.MAX_HERO_ATTACK_RANGE
+                 < functions.GetUnitDistance(
+                     env.BOT_DATA,
+                     env.ENEMY_HERO_DATA))
 end
 
 function M.post_move_start_position()
@@ -60,10 +67,42 @@ function M.post_move_start_position()
 end
 
 function M.move_start_position()
-  env.BOT:Action_MoveToLocation(
-    map.GetAllySpot(env.BOT_DATA, GetBodyBlockSpot()))
+  env.BOT:Action_MoveToLocation(GetBodyBlockSpot())
 
   action_timing.SetNextActionDelay(1)
+end
+
+---------------------------------
+
+function M.pre_turn_enemy_fountain()
+  return not algorithms.AreAllyCreepsInRadius(
+               env.BOT_DATA,
+               constants.MAX_UNIT_SEARCH_RADIUS)
+
+         and not algorithms.AreEnemyCreepsInRadius(
+               env.BOT_DATA,
+               constants.MAX_UNIT_SEARCH_RADIUS)
+
+         and map.IsUnitInSpot(
+               env.BOT_DATA,
+               GetBodyBlockSpot())
+
+         and (env.ENEMY_HERO_DATA == nil
+              or constants.MAX_HERO_ATTACK_RANGE
+                 < functions.GetUnitDistance(
+                     env.BOT_DATA,
+                     env.ENEMY_HERO_DATA))
+end
+
+function M.post_turn_enemy_fountain()
+  return not M.pre_turn_enemy_fountain()
+end
+
+function M.turn_enemy_fountain()
+  env.BOT:Action_MoveToLocation(
+    map.GetEnemySpot(env.BOT_DATA, "fountain"))
+
+  action_timing.SetNextActionDelay(constants.DROW_RANGER_TURN_TIME)
 end
 
 ---------------------------------
@@ -78,7 +117,7 @@ end
 local function GetFirstMovingCreep()
   local creeps = algorithms.GetAllyCreeps(
                    env.BOT_DATA,
-                   constants.MAX_UNIT_SEARCH_RADIUS)
+                   constants.MAX_UNIT_TARGET_RADIUS)
 
   return functions.GetElementWith(
            creeps,
@@ -88,10 +127,17 @@ end
 function M.pre_move_and_block()
   return algorithms.AreAllyCreepsInRadius(
            env.BOT_DATA,
-           constants.MAX_MELEE_ATTACK_RANGE)
+           constants.MAX_CREEP_DISTANCE)
+
          and not algorithms.AreEnemyCreepsInRadius(
                    env.BOT_DATA,
-                   constants.MAX_CREEP_DISTANCE)
+                   env.BOT_DATA.attack_range)
+
+         and (env.ENEMY_HERO_DATA == nil
+              or constants.MAX_HERO_ATTACK_RANGE
+                 < functions.GetUnitDistance(
+                     env.BOT_DATA,
+                     env.ENEMY_HERO_DATA))
 end
 
 function M.post_move_and_block()
