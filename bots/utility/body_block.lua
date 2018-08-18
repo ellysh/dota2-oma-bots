@@ -69,7 +69,7 @@ end
 function M.move_start_position()
   env.BOT:Action_MoveToLocation(GetBodyBlockSpot())
 
-  action_timing.SetNextActionDelay(1)
+  action_timing.SetNextActionDelay(0.1)
 end
 
 ---------------------------------

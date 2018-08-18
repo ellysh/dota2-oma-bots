@@ -136,7 +136,7 @@ function M.decrease_creeps_distance()
     target_data = env.ALLY_CREEP_DATA
   end
 
-  GetBot():Action_MoveToLocation(target_data.location)
+  env.BOT:Action_MoveToLocation(target_data.location)
 end
 
 ---------------------------------
