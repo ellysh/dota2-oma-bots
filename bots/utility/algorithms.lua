@@ -555,6 +555,28 @@ function M.DoesEnemyTowerAttackAllyCreep(unit_data, tower_data)
                   end)
 end
 
+local function DegToRad(deg)
+  return deg * math.pi / 180
+end
+
+local function RadToDeg(rad)
+  return rad * 180 / math.pi
+end
+
+local function GetPositiveDeg(deg)
+  return functions.ternary(0 <= deg, deg, 360 + deg)
+end
+
+function M.IsFacingLocation(unit_data, location, degrees)
+  local angle_to_location = math.asin(
+    (location.y - unit_data.location.y)
+    / functions.GetDistance(unit_data.location, location))
+
+  return math.abs(unit_data.facing
+                  - GetPositiveDeg(RadToDeg(angle_to_location)))
+         <= degrees
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_GetNormalizedRadius = GetNormalizedRadius
 M.test_UpdateUnitList = all_units.UpdateUnitList

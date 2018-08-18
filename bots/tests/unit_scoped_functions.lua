@@ -659,6 +659,10 @@ function Unit:GetAttackRange()
   return 550
 end
 
+function Unit:GetFacing()
+  return 0
+end
+
 UNIT_ITEM_SLOT_TYPE = ITEM_SLOT_TYPE_MAIN
 
 function Unit:GetItemSlotType()
