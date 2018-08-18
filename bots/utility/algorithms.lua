@@ -156,11 +156,9 @@ function M.IsUnitAttackTarget(unit_data, target_data, target_distance)
   if functions.GetUnitDistance(unit_data, target_data)
      <= constants.MAX_MELEE_ATTACK_RANGE then
 
-    local unit = all_units.GetUnit(unit_data)
-
     return M.IsUnitAttack(unit_data)
            and M.IsFacingLocation(
-                 unit,
+                 unit_data,
                  target_data.location,
                  constants.TURN_TARGET_MAX_DEGREE)
            and not M.IsAttackDone(unit_data)
