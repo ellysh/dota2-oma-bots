@@ -107,7 +107,7 @@ function M.post_increase_creeps_distance()
 end
 
 function M.increase_creeps_distance()
-  env.BOT:Action_MoveToLocation(env.SAFE_SPOT)
+  env.BOT:Action_MoveDirectly(env.SAFE_SPOT)
 end
 
 ---------------------------------
@@ -137,7 +137,7 @@ function M.decrease_creeps_distance()
     target_data = env.ALLY_CREEP_FRONT_DATA
   end
 
-  env.BOT:Action_MoveToLocation(target_data.location)
+  env.BOT:Action_MoveDirectly(target_data.location)
 end
 
 ---------------------------------

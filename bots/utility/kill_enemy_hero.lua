@@ -76,7 +76,7 @@ function M.post_move_enemy_hero()
 end
 
 function M.move_enemy_hero()
-  env.BOT:Action_MoveToLocation(env.ENEMY_HERO_DATA.location)
+  env.BOT:Action_MoveDirectly(env.ENEMY_HERO_DATA.location)
 end
 
 ---------------------------------

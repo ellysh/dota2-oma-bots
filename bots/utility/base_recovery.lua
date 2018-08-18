@@ -74,7 +74,7 @@ function M.post_move_base()
 end
 
 function M.move_base()
-  env.BOT:Action_MoveToLocation(env.FOUNTAIN_SPOT)
+  env.BOT:Action_MoveDirectly(env.FOUNTAIN_SPOT)
 
   if functions.GetDistance(env.FOUNTAIN_SPOT, env.BOT_DATA.location)
      < constants.BASE_RADIUS

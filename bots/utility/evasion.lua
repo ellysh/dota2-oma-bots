@@ -112,7 +112,7 @@ function M.post_move_safe_recovery()
 end
 
 function M.move_safe_recovery()
-  env.BOT:Action_MoveToLocation(env.SAFE_SPOT)
+  env.BOT:Action_MoveDirectly(env.SAFE_SPOT)
 
   action_timing.SetNextActionDelay(0.1)
 end
@@ -143,7 +143,7 @@ function M.post_move_safe_evasion()
 end
 
 function M.move_safe_evasion()
-  env.BOT:Action_MoveToLocation(env.SAFE_SPOT)
+  env.BOT:Action_MoveDirectly(env.SAFE_SPOT)
 
   action_timing.SetNextActionDelay(0.8)
 end

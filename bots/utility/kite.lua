@@ -107,7 +107,7 @@ function M.post_move_safe()
 end
 
 function M.move_safe()
-  env.BOT:Action_MoveToLocation(env.SAFE_SPOT)
+  env.BOT:Action_MoveDirectly(env.SAFE_SPOT)
 
   action_timing.SetNextActionDelay(0.4)
 end

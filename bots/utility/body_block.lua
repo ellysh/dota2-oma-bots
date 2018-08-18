@@ -68,7 +68,7 @@ function M.post_move_start_position()
 end
 
 function M.move_start_position()
-  env.BOT:Action_MoveToLocation(GetBodyBlockSpot())
+  env.BOT:Action_MoveDirectly(GetBodyBlockSpot())
 
   action_timing.SetNextActionDelay(0.1)
 end
@@ -106,7 +106,7 @@ function M.post_turn_enemy_fountain()
 end
 
 function M.turn_enemy_fountain()
-  env.BOT:Action_MoveToLocation(
+  env.BOT:Action_MoveDirectly(
     map.GetEnemySpot(env.BOT_DATA, "tower_tier_1_attack"))
 end
 
@@ -172,7 +172,7 @@ function M.move_and_block()
      return
   end
 
-  env.BOT:Action_MoveToLocation(target_location)
+  env.BOT:Action_MoveDirectly(target_location)
 
   local distance = functions.GetDistance(
                      env.BOT_DATA.location,
