@@ -25,39 +25,13 @@ local M = {}
 
 function M.pre_positioning()
   return 20 < DotaTime()
-         and (M.pre_move_mid_tower()
-              or M.pre_increase_creeps_distance()
+         and (M.pre_increase_creeps_distance()
               or M.pre_decrease_creeps_distance()
               or M.pre_turn())
 end
 
 function M.post_positioning()
   return not M.pre_positioning()
-end
-
----------------------------------
-
-function M.pre_move_mid_tower()
-  local target_location = map.GetAllySpot(env.BOT_DATA, "high_ground")
-
-  return (not algorithms.AreAllyCreepsInRadius(
-                env.BOT_DATA,
-                constants.MAX_UNIT_SEARCH_RADIUS)
-          or functions.GetDistance(
-               map.GetAllySpot(env.BOT_DATA, "fountain"),
-               env.BOT_DATA.location)
-             < constants.BASE_RADIUS)
-         and not map.IsUnitInSpot(env.BOT_DATA, target_location)
-end
-
-function M.post_move_mid_tower()
-  return not M.pre_move_mid_tower()
-end
-
-function M.move_mid_tower()
-  local target_location = map.GetAllySpot(env.BOT_DATA, "high_ground")
-
-  GetBot():Action_MoveToLocation(target_location)
 end
 
 ---------------------------------

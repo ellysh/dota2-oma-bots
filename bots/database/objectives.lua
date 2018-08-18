@@ -397,13 +397,6 @@ M.OBJECTIVES = {
         }
       },
       {
-        move = "move_mid_tower",
-        is_interruptible = true,
-        actions = {
-          {action = "move_mid_tower"},
-        }
-      },
-      {
         move = "increase_creeps_distance",
         is_interruptible = true,
         actions = {

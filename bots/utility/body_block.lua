@@ -87,6 +87,10 @@ function M.pre_turn_enemy_fountain()
                env.BOT_DATA,
                GetBodyBlockSpot())
 
+         and not env.BOT:IsFacingLocation(
+                   map.GetEnemySpot(env.BOT_DATA, "tower_tier_1_attack"),
+                   30)
+
          and (env.ENEMY_HERO_DATA == nil
               or constants.MAX_HERO_ATTACK_RANGE
                  < functions.GetUnitDistance(
@@ -100,9 +104,11 @@ end
 
 function M.turn_enemy_fountain()
   env.BOT:Action_MoveToLocation(
-    map.GetEnemySpot(env.BOT_DATA, "fountain"))
+    map.GetEnemySpot(env.BOT_DATA, "tower_tier_1_attack"))
+end
 
-  action_timing.SetNextActionDelay(constants.DROW_RANGER_TURN_TIME)
+function M.stop_turn()
+  env.BOT:Action_ClearActions(true)
 end
 
 ---------------------------------
@@ -125,16 +131,24 @@ local function GetFirstMovingCreep()
 end
 
 function M.pre_move_and_block()
+  local creep_distance = 0
+
+  if env.ALLY_CREEP_DATA ~= nil then
+    creep_distance = functions.GetUnitDistance(
+                       env.BOT_DATA,
+                       env.ALLY_CREEP_DATA)
+  end
+
   return algorithms.AreAllyCreepsInRadius(
            env.BOT_DATA,
-           constants.MAX_CREEP_DISTANCE)
+           constants.MAX_MELEE_ATTACK_RANGE)
 
          and not algorithms.AreEnemyCreepsInRadius(
                    env.BOT_DATA,
-                   env.BOT_DATA.attack_range)
+                   env.BOT_DATA.attack_range + creep_distance)
 
          and (env.ENEMY_HERO_DATA == nil
-              or constants.MAX_HERO_ATTACK_RANGE
+              or env.BOT_DATA.attack_range + creep_distance
                  < functions.GetUnitDistance(
                      env.BOT_DATA,
                      env.ENEMY_HERO_DATA))
