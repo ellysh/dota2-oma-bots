@@ -358,6 +358,22 @@ function M.IsFocusedByUnknownUnit(unit_data)
            constants.MAX_HERO_ATTACK_RANGE)
 end
 
+function M.IsLastHitTarget(unit_data, target_data)
+  local incoming_damage = unit_data.attack_damage
+                          + M.GetTotalDamageToUnit(
+                              target_data,
+                              functions.GetUnitDistance(
+                                unit_data,
+                                target_data))
+
+  if (100 < unit_data.attack_damage or 2 < target_data.armor) then
+    incoming_damage = incoming_damage
+                      * functions.GetDamageMultiplier(target_data.armor)
+  end
+
+  return target_data.health < incoming_damage
+end
+
 function M.IsFocusedByCreeps(unit_data)
   local creeps = M.GetEnemyCreeps(
                    unit_data,
@@ -367,7 +383,8 @@ function M.IsFocusedByCreeps(unit_data)
                   creeps,
                   nil,
                   function(creep_data)
-                    return M.IsUnitAttackTarget(
+                    return not M.IsLastHitTarget(unit_data, creep_data)
+                           and M.IsUnitAttackTarget(
                              creep_data,
                              unit_data)
                   end)

@@ -37,22 +37,6 @@ end
 
 ---------------------------------
 
-local function IsLastHit(bot_data, unit_data)
-  local incoming_damage = bot_data.attack_damage
-                          + algorithms.GetTotalDamageToUnit(
-                              unit_data,
-                              functions.GetUnitDistance(
-                                bot_data,
-                                unit_data))
-
-  if (100 < bot_data.attack_damage or 2 < unit_data.armor) then
-    incoming_damage = incoming_damage
-                      * functions.GetDamageMultiplier(unit_data.armor)
-  end
-
-  return unit_data.health < incoming_damage
-end
-
 local function GetLastHitCreep(side)
   local creeps = functions.ternary(
     side == constants.SIDE["ENEMY"],
@@ -68,7 +52,7 @@ local function GetLastHitCreep(side)
     algorithms.CompareMinHealth,
     function(unit_data)
       return algorithms.IsAttackTargetable(unit_data)
-             and IsLastHit(env.BOT_DATA, unit_data)
+             and algorithms.IsLastHitTarget(env.BOT_DATA, unit_data)
     end)
 end
 
