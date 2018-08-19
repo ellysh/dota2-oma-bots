@@ -147,7 +147,7 @@ function M.pre_turn()
            env.BOT_DATA,
            env.BOT_DATA.attack_range)
          and env.ENEMY_CREEP_DATA ~= nil
-         and not algorithms.IsFacingLocation(
+         and not functions.IsFacingLocation(
                    env.BOT_DATA,
                    env.ENEMY_CREEP_DATA.location,
                    constants.TURN_TARGET_MAX_DEGREE)

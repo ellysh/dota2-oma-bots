@@ -89,7 +89,7 @@ function M.pre_turn_enemy_fountain()
                env.BOT_DATA,
                GetBodyBlockSpot())
 
-         and not algorithms.IsFacingLocation(
+         and not functions.IsFacingLocation(
                    env.BOT_DATA,
                    map.GetEnemySpot(env.BOT_DATA, "tower_tier_1_attack"),
                    30)
