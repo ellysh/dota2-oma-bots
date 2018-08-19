@@ -42,7 +42,8 @@ local function GetClosestCreep(radius, get_function, direction)
              and not algorithms.IsCourierUnit(unit_data)
              and (direction == constants.DIRECTION["ANY"]
                   or (direction == constants.DIRECTION["FRONT"]
-                      and algorithms.IsFrontUnit(M.BOT_DATA, unit_data))
+                      and algorithms.IsFrontUnit(M.BOT_DATA, unit_data)
+                      and algorithms.IsAliveFrontUnit(unit_data))
                   or (direction == constants.DIRECTION["BACK"]
                       and not algorithms.IsFrontUnit(
                                 M.BOT_DATA,

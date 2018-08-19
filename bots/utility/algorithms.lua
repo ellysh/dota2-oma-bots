@@ -522,6 +522,12 @@ function M.IsCourierUnit(unit_data)
          or unit_data.name == "npc_dota_flying_courier"
 end
 
+function M.IsAliveFrontUnit(unit_data)
+  return constants.UNIT_HALF_HEALTH_LEVEL
+         < functions.GetRate(unit_data.health, unit_data.max_health)
+         or not map.IsUnitInEnemyTowerAttackRange(unit_data)
+end
+
 function M.AreAllyCreepsInRadius(unit_data, radius, direction)
   local creeps = M.GetAllyCreeps(unit_data, radius)
 
@@ -532,7 +538,8 @@ function M.AreAllyCreepsInRadius(unit_data, radius, direction)
       return not M.IsCourierUnit(creep)
              and (direction == constants.DIRECTION["ANY"]
                   or (direction == constants.DIRECTION["FRONT"]
-                      and M.IsFrontUnit(unit_data, creep))
+                      and M.IsFrontUnit(unit_data, creep)
+                      and M.IsAliveFrontUnit(unit_data))
                   or (direction == constants.DIRECTION["BACK"]
                       and not M.IsFrontUnit(unit_data, creep)))
     end)
