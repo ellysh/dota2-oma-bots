@@ -77,7 +77,8 @@ end
 ---------------------------------
 
 function M.pre_buy_tpscroll()
-  return pre_buy_item("item_tpscroll")
+  return not algorithms.DoesBotOrCourierHaveItem("item_tpscroll")
+         and GetItemCost("item_tpscroll") <= env.BOT_DATA.gold
 end
 
 function M.post_buy_tpscroll()
