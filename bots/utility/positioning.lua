@@ -117,10 +117,7 @@ function M.pre_decrease_creeps_distance()
                env.BOT_DATA,
                constants.BASE_CREEP_DISTANCE)
 
-         and not algorithms.DoesEnemyCreepAttack(
-                   env.BOT_DATA,
-                   env.ENEMY_CREEP_DATA,
-                   env.ALLY_CREEP_FRONT_DATA)
+         and not env.IS_FOCUSED_BY_CREEPS
 
          and (env.ENEMY_CREEP_DATA ~= nil
               or env.ALLY_CREEP_FRONT_DATA ~= nil)

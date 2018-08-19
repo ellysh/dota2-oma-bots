@@ -380,26 +380,6 @@ function M.IsFocusedByTower(unit_data, tower_data)
                 unit_data)
 end
 
-function M.DoesEnemyCreepAttack(
-  unit_data,
-  enemy_creep_data,
-  ally_creep_data)
-
-  return enemy_creep_data ~= nil
-
-         and ((ally_creep_data ~= nil
-               and not functions.IsUnitBetweenUnits(
-                         ally_creep_data,
-                         unit_data,
-                         enemy_creep_data))
-              or ally_creep_data == nil)
-
-         and functions.IsFacingLocation(
-               enemy_creep_data,
-               unit_data.location,
-               constants.TURN_TARGET_MAX_DEGREE)
-end
-
 local function IsEnemyUnitNearSpot(unit_data, enemy_hero_data, spot)
   local creeps = M.GetEnemyCreeps(
                    unit_data,
