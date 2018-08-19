@@ -39,7 +39,7 @@ local function GetBodyBlockSpot()
   return functions.ternary(
            DotaTime() < 20,
            map.GetAllySpot(env.BOT_DATA, "first_body_block"),
-           map.GetAllySpot(env.BOT_DATA, "tower_tier_1_attack"))
+           map.GetAllySpot(env.BOT_DATA, "second_body_block"))
 end
 
 function M.pre_move_start_position()
@@ -91,7 +91,7 @@ function M.pre_turn_enemy_fountain()
 
          and not functions.IsFacingLocation(
                    env.BOT_DATA,
-                   map.GetEnemySpot(env.BOT_DATA, "tower_tier_1_attack"),
+                   map.GetEnemySpot(env.BOT_DATA, "high_ground"),
                    30)
 
          and (env.ENEMY_HERO_DATA == nil
@@ -107,7 +107,7 @@ end
 
 function M.turn_enemy_fountain()
   env.BOT:Action_MoveDirectly(
-    map.GetEnemySpot(env.BOT_DATA, "tower_tier_1_attack"))
+    map.GetEnemySpot(env.BOT_DATA, "high_ground"))
 end
 
 function M.stop_turn()

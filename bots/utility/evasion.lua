@@ -148,7 +148,7 @@ end
 function M.move_safe_evasion()
   env.BOT:Action_MoveDirectly(env.SAFE_SPOT)
 
-  action_timing.SetNextActionDelay(0.8)
+  action_timing.SetNextActionDelay(0.1)
 end
 
 -- Provide an access to local functions for unit tests only
