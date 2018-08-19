@@ -227,15 +227,6 @@ function M.GetDamageMultiplier(armor)
   return result
 end
 
-function M.GetOpposingTeam(team)
-  local OPPOSING_TEAM = {
-    [TEAM_RADIANT] = TEAM_DIRE,
-    [TEAM_DIRE] = TEAM_RADIANT,
-  }
-
-  return OPPOSING_TEAM[team]
-end
-
 function M.IsLocationBetweenLocations(
   target_location,
   location1,

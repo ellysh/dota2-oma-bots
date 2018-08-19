@@ -14,7 +14,7 @@ function M.GetAllySpot(unit_data, spot_name)
 end
 
 function M.GetEnemySpot(unit_data, spot_name)
-  return map.MAP[functions.GetOpposingTeam(unit_data.team)][spot_name]
+  return map.MAP[GetOpposingTeam()][spot_name]
 end
 
 function M.IsUnitInSpot(unit_data, spot)

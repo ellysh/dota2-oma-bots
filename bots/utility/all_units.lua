@@ -25,6 +25,7 @@ local UNIT_LIST = {
   },
 }
 
+local CURRENT_GAME_TIME = 0
 
 -------------------------------
 -- Functions to fill UNIT_LIST
@@ -52,9 +53,11 @@ local function IsUnitCasting(unit)
          or unit:IsCastingAbility()
 end
 
-local function AddUnit(unit, type, team)
-  UNIT_LIST[team][type][tostring(unit)] = {
+local function AddUnit(unit, unit_type, team)
+  UNIT_LIST[team][unit_type][tostring(unit)] = {
+    timestamp = CURRENT_GAME_TIME,
     handle = unit,
+    type = unit_type,
     name = unit:GetUnitName(),
     location = unit:GetLocation(),
     health = unit:GetHealth(),
@@ -88,6 +91,7 @@ local function AddUnit(unit, type, team)
     speed = unit:GetCurrentMovementSpeed(),
     power = unit:GetHealth() * unit:GetAttackDamage(),
     facing = unit:GetFacing(),
+    is_visible = true,
   }
 end
 
@@ -104,44 +108,56 @@ local function AddAllyBuilding(_, unit)
 end
 
 local function AddEnemyCreep(_, unit)
-  AddUnit(unit, UNIT_TYPE["CREEP"], functions.GetOpposingTeam(GetTeam()))
+  AddUnit(unit, UNIT_TYPE["CREEP"], GetOpposingTeam())
 end
 
 local function AddEnemyHero(_, unit)
-  AddUnit(unit, UNIT_TYPE["HERO"], functions.GetOpposingTeam(GetTeam()))
+  AddUnit(unit, UNIT_TYPE["HERO"], GetOpposingTeam())
 end
 
 local function AddEnemyBuilding(_, unit)
-  AddUnit(unit, UNIT_TYPE["BUILDING"], functions.GetOpposingTeam(GetTeam()))
+  AddUnit(unit, UNIT_TYPE["BUILDING"], GetOpposingTeam())
 end
 
-local function ClearUnitList()
-  -- TODO: Track the history of units parameters here
+local function InvalidateUnit(_, unit_data)
+  local age = CURRENT_GAME_TIME - unit_data.timestamp
 
-  functions.ClearTable(UNIT_LIST[TEAM_RADIANT][UNIT_TYPE["CREEP"]])
-  functions.ClearTable(UNIT_LIST[TEAM_RADIANT][UNIT_TYPE["HERO"]])
-  functions.ClearTable(UNIT_LIST[TEAM_RADIANT][UNIT_TYPE["BUILDING"]])
+  if 0 < age and age < 5 then
+    unit_data.is_visible = false
+  elseif 5 <= age then
+    functions.ClearTable(
+      UNIT_LIST[unit_data.team][unit_data.type][tostring(unit_data.handle)])
+  end
+end
 
-  functions.ClearTable(UNIT_LIST[TEAM_DIRE][UNIT_TYPE["CREEP"]])
-  functions.ClearTable(UNIT_LIST[TEAM_DIRE][UNIT_TYPE["HERO"]])
-  functions.ClearTable(UNIT_LIST[TEAM_DIRE][UNIT_TYPE["BUILDING"]])
+local function InvalidateDeprecatedUnits()
+  functions.DoWithKeysAndElements(
+    UNIT_LIST[GetTeam()][UNIT_TYPE["CREEP"]],
+    InvalidateUnit)
 
-  UNIT_LIST = {
-    [TEAM_RADIANT] = {
-      [UNIT_TYPE["CREEP"]] = {},
-      [UNIT_TYPE["HERO"]] = {},
-      [UNIT_TYPE["BUILDING"]] = {},
-    },
-    [TEAM_DIRE] = {
-      [UNIT_TYPE["CREEP"]] = {},
-      [UNIT_TYPE["HERO"]] = {},
-      [UNIT_TYPE["BUILDING"]] = {},
-    }
-  }
+  functions.DoWithKeysAndElements(
+    UNIT_LIST[GetTeam()][UNIT_TYPE["HERO"]],
+    InvalidateUnit)
+
+  functions.DoWithKeysAndElements(
+    UNIT_LIST[GetTeam()][UNIT_TYPE["BUILDING"]],
+    InvalidateUnit)
+
+  functions.DoWithKeysAndElements(
+    UNIT_LIST[GetOpposingTeam()][UNIT_TYPE["CREEP"]],
+    InvalidateUnit)
+
+  functions.DoWithKeysAndElements(
+    UNIT_LIST[GetOpposingTeam()][UNIT_TYPE["HERO"]],
+    InvalidateUnit)
+
+  functions.DoWithKeysAndElements(
+    UNIT_LIST[GetOpposingTeam()][UNIT_TYPE["BUILDING"]],
+    InvalidateUnit)
 end
 
 function M.UpdateUnitList()
-  ClearUnitList()
+  CURRENT_GAME_TIME = GameTime()
 
   local units = GetUnitList(UNIT_LIST_ALLIED_CREEPS)
   functions.DoWithKeysAndElements(units, AddAllyCreep)
@@ -166,6 +182,8 @@ function M.UpdateUnitList()
     return end
 
   functions.DoWithKeysAndElements(units, AddAllyCreep)
+
+  InvalidateDeprecatedUnits()
 end
 
 ----------------------------------
@@ -195,15 +213,15 @@ function M.GetUnit(unit_data)
 end
 
 function M.GetEnemyCreepsData(unit_data)
-  return UNIT_LIST[functions.GetOpposingTeam(unit_data.team)][UNIT_TYPE["CREEP"]]
+  return UNIT_LIST[GetOpposingTeam()][UNIT_TYPE["CREEP"]]
 end
 
 function M.GetEnemyHeroesData(unit_data)
-  return UNIT_LIST[functions.GetOpposingTeam(unit_data.team)][UNIT_TYPE["HERO"]]
+  return UNIT_LIST[GetOpposingTeam()][UNIT_TYPE["HERO"]]
 end
 
 function M.GetEnemyBuildingsData(unit_data)
-  return UNIT_LIST[functions.GetOpposingTeam(unit_data.team)][UNIT_TYPE["BUILDING"]]
+  return UNIT_LIST[GetOpposingTeam()][UNIT_TYPE["BUILDING"]]
 end
 
 function M.GetAllyCreepsData(unit_data)

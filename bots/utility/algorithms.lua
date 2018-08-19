@@ -48,6 +48,7 @@ function M.IsAttackTargetable(unit_data)
   return unit_data.is_alive
          and not unit_data.is_invulnerable
          and not unit_data.is_illusion
+         and unit_data.is_visible
 end
 
 function M.CompareMinHealth(t, a, b)
@@ -88,6 +89,7 @@ local function GetUnitsInRadius(unit_data, radius, get_function)
     function(check_unit_data)
       return functions.GetUnitDistance(unit_data, check_unit_data)
                <= GetNormalizedRadius(radius)
+             and check_unit_data.is_visible
     end)
 end
 
