@@ -563,18 +563,61 @@ local function RadToDeg(rad)
   return rad * 180 / math.pi
 end
 
-local function GetPositiveDeg(deg)
-  return functions.ternary(0 <= deg, deg, 360 + deg)
+local CIRCLE_QUARTER = {
+  [1] = {},
+  [2] = {},
+  [3] = {},
+  [4] = {},
+  UNDEFINED = {},
+}
+
+local function GetCircleQuarter(sin, cos)
+  if 0 <= sin and 0 < cos then
+    return CIRCLE_QUARTER[1]
+  elseif 0 <= sin and cos <= 0 then
+    return CIRCLE_QUARTER[2]
+  elseif sin < 0 and cos <= 0 then
+    return CIRCLE_QUARTER[3]
+  elseif sin < 0 and 0 < cos then
+    return CIRCLE_QUARTER[4]
+  end
+
+  return CIRCLE_QUARTER["UNDEFINED"]
+end
+
+local function GetSin(location1, location2)
+  return (location2.y - location1.y)
+         / functions.GetDistance(location1, location2)
+end
+
+local function GetCos(location1, location2)
+  return (location2.x - location1.x)
+         / functions.GetDistance(location1, location2)
+end
+
+local function GetAngle(sin, cos, circle_quarter)
+  local angle = 0
+
+  if circle_quarter == CIRCLE_QUARTER[1] then
+    angle = RadToDeg(math.asin(sin))
+  elseif circle_quarter == CIRCLE_QUARTER[2] then
+    angle = RadToDeg(math.acos(cos))
+  elseif circle_quarter == CIRCLE_QUARTER[3] then
+    angle = 180 - RadToDeg(math.asin(sin))
+  elseif circle_quarter == CIRCLE_QUARTER[4] then
+    angle = 270 + RadToDeg(math.acos(cos))
+  end
+
+  return angle
 end
 
 function M.IsFacingLocation(unit_data, location, degrees)
-  local angle_to_location = math.asin(
-    (location.y - unit_data.location.y)
-    / functions.GetDistance(unit_data.location, location))
+  local sin = GetSin(unit_data.location, location)
+  local cos = GetCos(unit_data.location, location)
+  local circle_quarter = GetCircleQuarter(sin, cos)
+  local angle = GetAngle(sin, cos, circle_quarter)
 
-  return math.abs(unit_data.facing
-                  - GetPositiveDeg(RadToDeg(angle_to_location)))
-         <= degrees
+  return math.abs(unit_data.facing - angle) <= degrees
 end
 
 -- Provide an access to local functions for unit tests only
