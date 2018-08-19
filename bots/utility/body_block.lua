@@ -48,10 +48,6 @@ function M.pre_move_start_position()
                constants.MAX_UNIT_SEARCH_RADIUS,
                constants.DIRECTION["FRONT"])
 
-         and not algorithms.AreEnemyCreepsInRadius(
-               env.BOT_DATA,
-               constants.MAX_UNIT_SEARCH_RADIUS)
-
          and not map.IsUnitInSpot(
                    env.BOT_DATA,
                    GetBodyBlockSpot())
@@ -80,10 +76,6 @@ function M.pre_turn_enemy_fountain()
                env.BOT_DATA,
                constants.MAX_UNIT_SEARCH_RADIUS,
                constants.DIRECTION["FRONT"])
-
-         and not algorithms.AreEnemyCreepsInRadius(
-               env.BOT_DATA,
-               constants.MAX_UNIT_SEARCH_RADIUS)
 
          and map.IsUnitInSpot(
                env.BOT_DATA,

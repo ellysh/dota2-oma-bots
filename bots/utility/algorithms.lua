@@ -536,7 +536,7 @@ function M.AreAllyCreepsInRadius(unit_data, radius, direction)
              and (direction == constants.DIRECTION["ANY"]
                   or (direction == constants.DIRECTION["FRONT"]
                       and M.IsFrontUnit(unit_data, creep)
-                      and M.IsAliveFrontUnit(unit_data))
+                      and M.IsAliveFrontUnit(creep))
                   or (direction == constants.DIRECTION["BACK"]
                       and not M.IsFrontUnit(unit_data, creep)))
     end)

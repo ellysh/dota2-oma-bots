@@ -113,7 +113,12 @@ end
 ---------------------------------
 
 function M.pre_decrease_creeps_distance()
-  return not algorithms.AreEnemyCreepsInRadius(
+  return algorithms.AreAllyCreepsInRadius(
+           env.BOT_DATA,
+           constants.MAX_UNIT_SEARCH_RADIUS,
+           constants.DIRECTION["FRONT"])
+
+         and not algorithms.AreEnemyCreepsInRadius(
                env.BOT_DATA,
                constants.BASE_CREEP_DISTANCE)
 
