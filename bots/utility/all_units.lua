@@ -92,6 +92,8 @@ local function AddUnit(unit, unit_type, team)
     power = unit:GetHealth() * unit:GetAttackDamage(),
     facing = unit:GetFacing(),
     is_visible = true,
+    last_attack_time = 0,
+    attack_target = nil,
   }
 end
 
@@ -156,6 +158,99 @@ local function InvalidateDeprecatedUnits()
     InvalidateUnit)
 end
 
+------------------------------
+
+-- TODO: The functions below have duplicates in the  algorithms.lua module
+
+function M.IsUnitAttack(unit_data)
+  return unit_data.anim_activity == ACTIVITY_ATTACK
+         or unit_data.anim_activity == ACTIVITY_ATTACK2
+end
+
+function M.IsAttackDone(unit_data)
+  if not M.IsUnitAttack(unit_data) then
+    return true
+  end
+
+  return unit_data.anim_attack_point <= unit_data.anim_cycle
+end
+
+-- We should pass unit handle to this function for detecting a "nil" caster
+function M.IsUnitShootTarget(unit, target_data, target_distance)
+  local unit_projectile = functions.GetElementWith(
+    target_data.incoming_projectiles,
+    nil,
+    function(projectile)
+      return projectile.caster == unit
+             and (target_distance == nil
+                  or functions.GetDistance(
+                       projectile.location,
+                       target_data.location) <= target_distance)
+    end)
+
+  return unit_projectile ~= nil
+end
+
+function M.IsUnitAttackTarget(unit_data, target_data, target_distance)
+  if unit_data.attack_range <= constants.MAX_MELEE_ATTACK_RANGE then
+
+    return M.IsUnitAttack(unit_data)
+           and functions.IsFacingLocation(
+                 unit_data,
+                 target_data.location,
+                 constants.TURN_TARGET_MAX_DEGREE)
+           and functions.GetUnitDistance(unit_data, target_data)
+               <= unit_data.attack_range
+           and not M.IsAttackDone(unit_data)
+  else
+    return M.IsUnitShootTarget(
+             all_units.GetUnit(unit_data),
+             target_data,
+             target_distance)
+  end
+end
+
+------------------------------
+
+local function UpdateUnitAttackTarget(_, unit_data)
+  if not unit_data.is_visible then
+    return end
+
+  local unit_targets = functions.TableConcat(
+                    UNIT_LIST[GetOpposingTeam()][UNIT_TYPE["CREEP"]],
+                    UNIT_LIST[GetOpposingTeam()][UNIT_TYPE["HERO"]])
+
+  local targets = functions.TableConcat(
+                    unit_targets,
+                    UNIT_LIST[GetOpposingTeam()][UNIT_TYPE["BUILDING"]])
+
+  local target = functions.GetElementWith(
+                   targets,
+                   nil,
+                   function(target_data)
+                     return target_data.is_visible
+                            and M.IsUnitAttackTarget(
+                                  unit_data,
+                                  target_data)
+                   end)
+
+  if target == nil
+     and unit_data.seconds_per_attack
+         < (CURRENT_GAME_TIME - unit_data.last_attack_time) then
+    unit_data.last_attack_time = 0
+    unit_data.attack_target = nil
+  elseif target ~= nil then
+    unit_data.last_attack_time = CURRENT_GAME_TIME
+    unit_data.attack_target = target
+  end
+end
+
+local function UpdateAttackTarget()
+  functions.DoWithKeysAndElements(
+    UNIT_LIST[GetTeam()][UNIT_TYPE["CREEP"]],
+    UpdateUnitAttackTarget)
+end
+
 function M.UpdateUnitList()
   CURRENT_GAME_TIME = GameTime()
 
@@ -184,6 +279,8 @@ function M.UpdateUnitList()
   functions.DoWithKeysAndElements(units, AddAllyCreep)
 
   InvalidateDeprecatedUnits()
+
+  UpdateAttackTarget()
 end
 
 ----------------------------------
