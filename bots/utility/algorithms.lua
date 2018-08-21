@@ -299,7 +299,7 @@ function M.IsFocusedByEnemyHero(unit_data)
 end
 
 function M.IsFocusedByUnknownUnit(unit_data)
-  return M.IsUnitShootTarget(
+  return all_units.IsUnitShootTarget(
            nil,
            unit_data,
            constants.MAX_HERO_ATTACK_RANGE)
