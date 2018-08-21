@@ -95,8 +95,8 @@ end
 --------------------------------
 
 function M.stop_attack()
-  if not algorithms.IsUnitAttack(env.BOT_DATA)
-     or not algorithms.IsAttackDone(env.BOT_DATA) then
+  if not all_units.IsUnitAttack(env.BOT_DATA)
+     or not all_units.IsAttackDone(env.BOT_DATA) then
     return end
 
   env.BOT:Action_ClearActions(true)

@@ -45,10 +45,7 @@ function M.pre_attack_enemy_hero()
   return moves.pre_attack_enemy_hero()
          and not env.IS_FOCUSED_BY_CREEPS
          and not env.IS_FOCUSED_BY_TOWER
-
-         and not algorithms.IsUnitAttackTarget(
-                   env.BOT_DATA,
-                   env.ENEMY_HERO_DATA)
+         and env.BOT_DATA.attack_target ~= env.ENEMY_HERO_DATA
 end
 
 function M.post_attack_enemy_hero()
@@ -90,9 +87,7 @@ end
 
 function M.pre_move_safe()
   return env.ENEMY_HERO_DATA ~= nil
-         and algorithms.IsUnitAttackTarget(
-               env.BOT_DATA,
-               env.ENEMY_HERO_DATA)
+         and env.BOT_DATA.attack_target == env.ENEMY_HERO_DATA
          and not algorithms.IsUnitMoving(env.BOT_DATA)
 end
 

@@ -125,54 +125,6 @@ function M.GetAllyBuildings(unit_data, radius)
     all_units.GetAllyBuildingsData)
 end
 
-function M.IsUnitAttack(unit_data)
-  return unit_data.anim_activity == ACTIVITY_ATTACK
-         or unit_data.anim_activity == ACTIVITY_ATTACK2
-end
-
-function M.IsAttackDone(unit_data)
-  if not M.IsUnitAttack(unit_data) then
-    return true
-  end
-
-  return unit_data.anim_attack_point <= unit_data.anim_cycle
-end
-
--- We should pass unit handle to this function for detecting a "nil" caster
-function M.IsUnitShootTarget(unit, target_data, target_distance)
-  local unit_projectile = functions.GetElementWith(
-    target_data.incoming_projectiles,
-    nil,
-    function(projectile)
-      return projectile.caster == unit
-             and (target_distance == nil
-                  or functions.GetDistance(
-                       projectile.location,
-                       target_data.location) <= target_distance)
-    end)
-
-  return unit_projectile ~= nil
-end
-
-function M.IsUnitAttackTarget(unit_data, target_data, target_distance)
-  if unit_data.attack_range <= constants.MAX_MELEE_ATTACK_RANGE then
-
-    return M.IsUnitAttack(unit_data)
-           and functions.IsFacingLocation(
-                 unit_data,
-                 target_data.location,
-                 constants.TURN_TARGET_MAX_DEGREE)
-           and functions.GetUnitDistance(unit_data, target_data)
-               <= unit_data.attack_range
-           and not M.IsAttackDone(unit_data)
-  else
-    return M.IsUnitShootTarget(
-             all_units.GetUnit(unit_data),
-             target_data,
-             target_distance)
-  end
-end
-
 function M.GetTotalHealth(unit_list)
   if unit_list == nil or #unit_list == 0 then
     return 0 end
@@ -190,7 +142,7 @@ function M.GetTotalHealth(unit_list)
   return total_health
 end
 
-function M.GetTotalDamage(unit_list, target_data, target_distance)
+function M.GetTotalDamage(unit_list, target_data)
   if unit_list == nil or #unit_list == 0 then
     return 0 end
 
@@ -200,10 +152,7 @@ function M.GetTotalDamage(unit_list, target_data, target_distance)
     unit_list,
     function(_, unit_data)
       if unit_data.is_alive
-         and M.IsUnitAttackTarget(
-               unit_data,
-               target_data,
-               target_distance) then
+         and unit_data.attack_target == target_data then
 
         total_damage = total_damage + unit_data.attack_damage
       end
@@ -212,7 +161,7 @@ function M.GetTotalDamage(unit_list, target_data, target_distance)
   return total_damage
 end
 
-function M.GetTotalDamageToUnit(unit_data, target_distance)
+function M.GetTotalDamageToUnit(unit_data)
   local result = 0
 
   local unit_list = M.GetEnemyCreeps(
@@ -221,8 +170,7 @@ function M.GetTotalDamageToUnit(unit_data, target_distance)
 
   result = result + M.GetTotalDamage(
                       unit_list,
-                      unit_data,
-                      target_distance)
+                      unit_data)
 
   unit_list = M.GetEnemyBuildings(
                          unit_data,
@@ -230,8 +178,7 @@ function M.GetTotalDamageToUnit(unit_data, target_distance)
 
   result = result + M.GetTotalDamage(
                       unit_list,
-                      unit_data,
-                      target_distance)
+                      unit_data)
 
   unit_list = M.GetEnemyHeroes(
                          unit_data,
@@ -239,8 +186,7 @@ function M.GetTotalDamageToUnit(unit_data, target_distance)
 
   result = result + M.GetTotalDamage(
                       unit_list,
-                      unit_data,
-                      target_distance)
+                      unit_data)
 
   unit_list = M.GetAllyHeroes(
                          unit_data,
@@ -248,8 +194,7 @@ function M.GetTotalDamageToUnit(unit_data, target_distance)
 
   result = result + M.GetTotalDamage(
                       unit_list,
-                      unit_data,
-                      target_distance)
+                      unit_data)
 
   return result
 end
@@ -350,7 +295,7 @@ function M.IsFocusedByEnemyHero(unit_data)
                       constants.MAX_UNIT_SEARCH_RADIUS)
 
    return hero_data ~= nil
-          and M.IsUnitAttackTarget(hero_data, unit_data)
+          and hero_data.attack_target == unit_data
 end
 
 function M.IsFocusedByUnknownUnit(unit_data)
@@ -386,17 +331,13 @@ function M.IsFocusedByCreeps(unit_data)
                   nil,
                   function(creep_data)
                     return not M.IsLastHitTarget(unit_data, creep_data)
-                           and M.IsUnitAttackTarget(
-                             creep_data,
-                             unit_data)
+                           and creep_data.attack_target == unit_data
                   end)
 end
 
 function M.IsFocusedByTower(unit_data, tower_data)
    return tower_data ~= nil
-          and M.IsUnitAttackTarget(
-                tower_data,
-                unit_data)
+          and tower_data.attack_target == unit_data
 end
 
 local function IsEnemyUnitNearSpot(unit_data, enemy_hero_data, spot)
@@ -557,9 +498,7 @@ function M.DoesEnemyTowerAttackAllyCreep(unit_data, tower_data)
                   nil,
                   function(creep)
                     return 1.5 * tower_data.attack_damage < creep.health
-                           and M.IsUnitAttackTarget(
-                                 tower_data,
-                                 creep)
+                           and tower_data.attack_target == creep
                   end)
 end
 
