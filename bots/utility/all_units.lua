@@ -214,6 +214,8 @@ local function FindTargetInTable(unit_data, table)
            nil,
            function(target_data)
              return target_data.is_visible
+                    and functions.GetUnitDistance(unit_data, target_data)
+                        < (unit_data.attack_range + 100)
                     and M.IsUnitAttackTarget(
                          unit_data,
                          target_data)
