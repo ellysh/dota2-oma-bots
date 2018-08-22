@@ -25,11 +25,7 @@ local M = {}
 
 function M.pre_kill_enemy_hero()
   return env.ENEMY_HERO_DATA ~= nil
-         and (algorithms.IsUnitLowHp(env.ENEMY_HERO_DATA)
-
-              or constants.POWER_RATE_OFFENSE <= functions.GetRate(
-                   env.BOT_DATA.power,
-                   env.ENEMY_HERO_DATA.power))
+         and algorithms.IsUnitLowHp(env.ENEMY_HERO_DATA)
 
          and not algorithms.IsUnitLowHp(env.BOT_DATA)
 
