@@ -156,7 +156,7 @@ end
 
 function M.move_and_block()
   local creep = all_units.GetUnit(GetFirstMovingCreep())
-  local target_location = creep:GetExtrapolatedLocation(1.5)
+  local target_location = creep:GetExtrapolatedLocation(1.0)
 
   if algorithms.GetDistanceFromFountain(env.BOT_DATA, target_location)
      < algorithms.GetUnitDistanceFromFountain(env.BOT_DATA) then
@@ -170,7 +170,7 @@ function M.move_and_block()
                      env.BOT_DATA.location,
                      target_location)
 
-  action_timing.SetNextActionDelay((distance/env.BOT_DATA.speed) * 0.6)
+  action_timing.SetNextActionDelay((distance/env.BOT_DATA.speed) * 0.8)
 end
 
 function M.stop_attack_and_move()
