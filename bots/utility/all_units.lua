@@ -226,11 +226,20 @@ local function UpdateUnitAttackTarget(_, unit_data)
   if not unit_data.is_visible then
     return end
 
+  local api_target = unit_data.handle:GetAttackTarget()
+  local target = nil
+
+  if api_target ~= nil then
+    target = M.GetUnitData(unit_data.handle:GetAttackTarget())
+  end
+
   local opposing_team = M.GetOpposingTeam(unit_data.team)
 
-  local target = FindTargetInTable(
-                   unit_data,
-                   UNIT_LIST[opposing_team][UNIT_TYPE["CREEP"]])
+  if target == nil then
+    target = FindTargetInTable(
+               unit_data,
+               UNIT_LIST[opposing_team][UNIT_TYPE["CREEP"]])
+  end
 
   if target == nil then
     target = FindTargetInTable(
