@@ -142,7 +142,37 @@ function M.GetTotalHealth(unit_list)
   return total_health
 end
 
-function M.GetTotalDamage(unit_list, target_data)
+local function IsProjectileClose(unit_data, target_data, bot_data)
+  if bot_data == nil then
+    return true
+  end
+
+  local unit_projectile = functions.GetElementWith(
+    target_data.incoming_projectiles,
+    nil,
+    function(projectile)
+      if projectile.caster ~= unit_data.handler then
+        return false
+      end
+
+      local time_unit_projectile = functions.GetDistance(
+                                     projectile.location,
+                                     target_data.location)
+                                   / unit_data.projectile_speed
+
+      local time_bot_projectile = (functions.GetDistance(
+                                      bot_data.location,
+                                      target_data.location)
+                                   / bot_data.projectile_speed)
+                                  + bot_data.seconds_per_attack
+
+      return time_unit_projectile < time_bot_projectile
+    end)
+
+  return unit_projectile ~= nil
+end
+
+function M.GetTotalDamage(unit_list, target_data, bot_data)
   if unit_list == nil or #unit_list == 0 then
     return 0 end
 
@@ -152,7 +182,8 @@ function M.GetTotalDamage(unit_list, target_data)
     unit_list,
     function(_, unit_data)
       if unit_data.is_alive
-         and unit_data.attack_target == target_data then
+         and unit_data.attack_target == target_data
+         and IsProjectileClose(unit_data, target_data, bot_data) then
 
         total_damage = total_damage + unit_data.attack_damage
       end
@@ -161,7 +192,7 @@ function M.GetTotalDamage(unit_list, target_data)
   return total_damage
 end
 
-function M.GetTotalDamageToUnit(unit_data)
+function M.GetTotalDamageToUnit(unit_data, bot_data)
   local result = 0
 
   local unit_list = M.GetEnemyCreeps(
@@ -170,7 +201,8 @@ function M.GetTotalDamageToUnit(unit_data)
 
   result = result + M.GetTotalDamage(
                       unit_list,
-                      unit_data)
+                      unit_data,
+                      bot_data)
 
   unit_list = M.GetEnemyBuildings(
                          unit_data,
@@ -178,7 +210,8 @@ function M.GetTotalDamageToUnit(unit_data)
 
   result = result + M.GetTotalDamage(
                       unit_list,
-                      unit_data)
+                      unit_data,
+                      bot_data)
 
   unit_list = M.GetEnemyHeroes(
                          unit_data,
@@ -186,7 +219,8 @@ function M.GetTotalDamageToUnit(unit_data)
 
   result = result + M.GetTotalDamage(
                       unit_list,
-                      unit_data)
+                      unit_data,
+                      bot_data)
 
   unit_list = M.GetAllyHeroes(
                          unit_data,
@@ -194,7 +228,8 @@ function M.GetTotalDamageToUnit(unit_data)
 
   result = result + M.GetTotalDamage(
                       unit_list,
-                      unit_data)
+                      unit_data,
+                      bot_data)
 
   return result
 end
@@ -311,7 +346,8 @@ function M.IsLastHitTarget(unit_data, target_data)
                               target_data,
                               functions.GetUnitDistance(
                                 unit_data,
-                                target_data))
+                                target_data),
+                              unit_data)
 
   if (100 < unit_data.attack_damage or 2 < target_data.armor) then
     incoming_damage = incoming_damage

@@ -163,6 +163,10 @@ function Unit:GetAttackSpeed()
   return 0
 end
 
+function Unit:GetAttackProjectileSpeed()
+  return 0
+end
+
 function Unit:GetSecondsPerAttack()
   return 0
 end

@@ -92,6 +92,7 @@ local function AddUnit(unit, unit_type, team)
     power = unit:GetHealth() * unit:GetAttackDamage(),
     facing = unit:GetFacing(),
     is_visible = true,
+    projectile_speed = unit:GetAttackProjectileSpeed(),
   }
 end
 
