@@ -223,8 +223,13 @@ local function FindTargetInTable(unit_data, table)
 end
 
 local function UpdateUnitAttackTarget(_, unit_data)
-  if not unit_data.is_visible then
-    return end
+  if not unit_data.is_visible
+     or (unit_data.last_attack_time ~= nil
+         and (CURRENT_GAME_TIME - unit_data.last_attack_time)
+              < unit_data.seconds_per_attack) then
+
+    return
+  end
 
   local api_target = unit_data.handle:GetAttackTarget()
   local target = nil
