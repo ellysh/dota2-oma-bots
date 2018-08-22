@@ -188,6 +188,8 @@ end
 -- https://stackoverflow.com/a/15278426
 -- Result will be stored in the t1 table. The return value is
 -- requried for tests.
+--
+-- The function should be used for tables indexed by numbers only!
 
 function M.TableConcat(t1, t2)
   for i = 1, #t2 do
