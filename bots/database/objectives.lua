@@ -452,6 +452,21 @@ M.OBJECTIVES = {
     },
   },
 
+  {
+    objective = "force_stop",
+    module = require(GetScriptDirectory() .."/utility/force_stop"),
+    is_interruptible = true,
+    moves = {
+      {
+        move = "stop",
+        is_interruptible = true,
+        actions = {
+          {action = "stop_attack_and_move"},
+        },
+      },
+    },
+  },
+
 }
 
 return M
