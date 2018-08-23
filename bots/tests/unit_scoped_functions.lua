@@ -159,6 +159,10 @@ function Unit:GetArmor()
   return 0
 end
 
+function Unit:GetRespawnTime()
+  return 0
+end
+
 function Unit:GetAttackSpeed()
   return 0
 end

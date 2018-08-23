@@ -538,6 +538,10 @@ function M.DoesEnemyTowerAttackAllyCreep(unit_data, tower_data)
                   end)
 end
 
+function M.IsBotAlive()
+  return GetBot():IsAlive()
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_GetNormalizedRadius = GetNormalizedRadius
 M.test_UpdateUnitList = all_units.UpdateUnitList

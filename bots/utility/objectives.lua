@@ -13,6 +13,9 @@ local algorithms = require(
 local environment = require(
   GetScriptDirectory() .."/utility/environment")
 
+local buyback = require(
+  GetScriptDirectory() .."/utility/buyback")
+
 local action_timing = require(
   GetScriptDirectory() .."/utility/action_timing")
 
@@ -21,10 +24,6 @@ local M = {}
 local CURRENT_OBJECTIVE = nil
 local CURRENT_MOVE = nil
 local ACTION_INDEX = 1
-
-local function IsBotAlive()
-  return algorithms.GetBotData() ~= nil
-end
 
 local function FindObjectiveToExecute()
   return functions.GetElementWith(
@@ -100,7 +99,9 @@ local function IsActionTimingDelay()
 end
 
 function M.Process()
-  if not IsBotAlive()
+  if (not algorithms.IsBotAlive()
+      and not buyback.pre_buyback())
+
      or IsActionTimingDelay()
      or algorithms.GetBotData().is_casting then
     return end
