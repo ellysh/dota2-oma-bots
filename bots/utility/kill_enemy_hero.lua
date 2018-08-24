@@ -25,6 +25,7 @@ local M = {}
 
 function M.pre_kill_enemy_hero()
   return env.ENEMY_HERO_DATA ~= nil
+         and algorithms.IsBotAlive()
          and algorithms.IsUnitLowHp(env.ENEMY_HERO_DATA)
 
          and not algorithms.IsUnitLowHp(env.BOT_DATA)

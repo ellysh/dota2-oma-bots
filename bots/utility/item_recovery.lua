@@ -24,16 +24,17 @@ local M = {}
 ---------------------------------
 
 function M.pre_item_recovery()
-  return not env.BOT_DATA.is_healing
+  return algorithms.IsBotAlive()
+         and not env.BOT_DATA.is_healing
 
-        and (M.pre_heal_tango()
-             or M.pre_heal_flask()
-             or M.pre_tp_base())
+         and (M.pre_heal_tango()
+              or M.pre_heal_flask()
+              or M.pre_tp_base())
 
-        and constants.BASE_RADIUS
-             < functions.GetDistance(
-                 env.FOUNTAIN_SPOT,
-                 env.BOT_DATA.location)
+         and constants.BASE_RADIUS
+              < functions.GetDistance(
+                  env.FOUNTAIN_SPOT,
+                  env.BOT_DATA.location)
 end
 
 function M.post_item_recovery()

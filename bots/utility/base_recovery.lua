@@ -26,6 +26,22 @@ local M = {}
 
 ---------------------------------
 
+function M.pre_base_recovery()
+  return algorithms.IsBotAlive()
+         and ((algorithms.IsUnitLowHp(env.BOT_DATA)
+               and (not env.BOT_DATA.is_healing
+                    or env.IS_FOCUSED_BY_ENEMY_HERO))
+
+               or M.pre_restore_hp_on_base()
+               or env.IS_BASE_RECOVERY)
+end
+
+function M.post_base_recovery()
+  return not M.pre_base_recovery()
+end
+
+---------------------------------
+
 function M.pre_restore_hp_on_base()
   return env.BOT:HasModifier("modifier_fountain_aura_buff")
          and (functions.GetRate(env.BOT_DATA.health, env.BOT_DATA.max_health)
@@ -44,23 +60,7 @@ end
 
 ---------------------------------
 
-function M.pre_base_recovery()
-  return (algorithms.IsUnitLowHp(env.BOT_DATA)
-          and (not env.BOT_DATA.is_healing
-               or env.IS_FOCUSED_BY_ENEMY_HERO))
-
-          or M.pre_restore_hp_on_base()
-          or env.IS_BASE_RECOVERY
-end
-
-function M.post_base_recovery()
-  return not M.pre_base_recovery()
-end
-
----------------------------------
-
 function M.pre_move_base()
-
   return (not (algorithms.IsUnitMoving(env.BOT_DATA)
               and functions.IsFacingLocation(
                     env.BOT_DATA,

@@ -12,8 +12,9 @@ local M = {}
 ---------------------------------
 
 function M.pre_swap_items()
-  return M.pre_swap_flask_tp()
-         or M.pre_put_item_in_inventory()
+  return algorithms.IsBotAlive()
+         and (M.pre_swap_flask_tp()
+              or M.pre_put_item_in_inventory())
 end
 
 function M.post_swap_items()

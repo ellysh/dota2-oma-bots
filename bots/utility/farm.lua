@@ -21,7 +21,8 @@ local M = {}
 ---------------------------------
 
 function M.pre_farm()
-  return not algorithms.IsUnitLowHp(env.BOT_DATA)
+  return algorithms.IsBotAlive()
+         and not algorithms.IsUnitLowHp(env.BOT_DATA)
 
          and (M.pre_lasthit_enemy_creep()
               or M.pre_deny_ally_creep())

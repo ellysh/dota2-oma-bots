@@ -13,9 +13,6 @@ local algorithms = require(
 local environment = require(
   GetScriptDirectory() .."/utility/environment")
 
-local buyback = require(
-  GetScriptDirectory() .."/utility/buyback")
-
 local action_timing = require(
   GetScriptDirectory() .."/utility/action_timing")
 
@@ -99,11 +96,9 @@ local function IsActionTimingDelay()
 end
 
 function M.Process()
-  if (not algorithms.IsBotAlive()
-      and not buyback.pre_buyback())
-
-     or IsActionTimingDelay()
-     or algorithms.GetBotData().is_casting then
+  if IsActionTimingDelay()
+     or (algorithms.IsBotAlive() and
+         algorithms.GetBotData().is_casting) then
     return end
 
   environment.UpdateVariables()

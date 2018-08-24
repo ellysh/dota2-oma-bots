@@ -1,6 +1,9 @@
 local skill_build = require(
   GetScriptDirectory() .."/database/skill_build")
 
+local algorithms = require(
+  GetScriptDirectory() .."/utility/algorithms")
+
 local map = require(
   GetScriptDirectory() .."/utility/map")
 
@@ -12,7 +15,8 @@ local M = {}
 ---------------------------------
 
 function M.pre_upgrade_skills()
-  return 0 < env.BOT_DATA.ability_points
+  return algorithms.IsBotAlive()
+         and 0 < env.BOT_DATA.ability_points
 end
 
 function M.post_upgrade_skills()

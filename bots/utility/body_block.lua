@@ -24,9 +24,10 @@ local M = {}
 ---------------------------------
 
 function M.pre_body_block()
-  return M.pre_move_and_block()
-         or M.pre_move_start_position()
-         or M.pre_turn_enemy_fountain()
+  return algorithms.IsBotAlive()
+         and (M.pre_move_and_block()
+              or M.pre_move_start_position()
+              or M.pre_turn_enemy_fountain())
 end
 
 function M.post_body_block()

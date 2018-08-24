@@ -25,6 +25,7 @@ local M = {}
 
 function M.pre_buy_items()
   return IsCourierAvailable()
+         and algorithms.IsBotAlive()
          and (M.pre_buy_flask()
               or M.pre_buy_ring_of_protection()
               or M.pre_buy_sobi_mask()

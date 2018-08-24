@@ -16,6 +16,7 @@ local M = {}
 
 function M.pre_prepare_for_match()
   return DotaTime() < 0
+         and algorithms.IsBotAlive()
          and M.pre_buy_starting_items()
 end
 

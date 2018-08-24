@@ -27,10 +27,11 @@ local M = {}
 ---------------------------------
 
 function M.pre_evasion()
-  return M.pre_move_safe_evasion()
-         or M.pre_move_safe_recovery()
-         or M.pre_use_silence()
-         or M.pre_attack_enemy_hero()
+  return algorithms.IsBotAlive()
+         and (M.pre_move_safe_evasion()
+              or M.pre_move_safe_recovery()
+              or M.pre_use_silence()
+              or M.pre_attack_enemy_hero())
 end
 
 function M.post_evasion()

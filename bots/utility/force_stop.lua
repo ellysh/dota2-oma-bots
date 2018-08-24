@@ -1,12 +1,15 @@
 local env = require(
   GetScriptDirectory() .."/utility/environment")
 
+local algorithms = require(
+  GetScriptDirectory() .."/utility/algorithms")
+
 local M = {}
 
 ---------------------------------
 
 function M.pre_force_stop()
-  return true
+  return algorithms.IsBotAlive()
 end
 
 function M.post_force_stop()
