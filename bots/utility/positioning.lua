@@ -25,7 +25,8 @@ local M = {}
 
 function M.pre_positioning()
   return 20 < DotaTime()
-         and (M.pre_increase_creeps_distance()
+         and (M.pre_tp_mid_tower()
+              or M.pre_increase_creeps_distance()
               or M.pre_decrease_creeps_distance()
               or M.pre_turn())
 end
