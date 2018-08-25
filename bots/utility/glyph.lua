@@ -4,6 +4,9 @@ local env = require(
 local algorithms = require(
   GetScriptDirectory() .."/utility/algorithms")
 
+local constants = require(
+  GetScriptDirectory() .."/utility/constants")
+
 local M = {}
 
 ---------------------------------
@@ -20,18 +23,19 @@ end
 
 ---------------------------------
 
-local function DoesEnemyAttackAllyTower()
+function M.pre_do_glyph()
   local tower_data = algorithms.GetAllyBuildings(
                        env.BOT_DATA,
                        constants.MAX_UNIT_SEARCH_RADIUS)[1]
 
-  return constants.MAX_INCOMING_TOWER_DAMAGE
-         < algorithms.GetTotalDamageToUnit(tower_data)
-end
+  local tower_incoming_damage = algorithms.GetTotalDamageToUnit(
+                                  tower_data)
 
-function M.pre_do_glyph()
   return GetGlyphCooldown() == 0
-         and DoesEnemyAttackAllyTower()
+         and (constants.MAX_INCOMING_TOWER_DAMAGE < tower_incoming_damage
+              or (algorithms.IsUnitLowHp(tower_data)
+                  and constants.MIN_INCOMING_TOWER_DAMAGE
+                      < tower_incoming_damage))
 end
 
 function M.post_do_glyph()
