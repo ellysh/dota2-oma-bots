@@ -298,7 +298,7 @@ function M.BuyItem(item_name)
 
   bot:ActionImmediate_PurchaseItem(item_name)
 
-  action_timing.SetNextActionDelay(0.1)
+  action_timing.SetNextActionDelay(0.05)
 end
 
 function M.DoesTowerProtectEnemyUnit(unit_data)

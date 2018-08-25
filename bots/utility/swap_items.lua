@@ -41,7 +41,7 @@ function M.swap_flask_tp()
 
   env.BOT:ActionImmediate_SwapItems(flask_slot, tp_slot)
 
-  action_timing.SetNextActionDelay(0.1)
+  action_timing.SetNextActionDelay(0.05)
 end
 
 ---------------------------------
@@ -80,7 +80,7 @@ function M.put_item_in_inventory()
     GetFullSlotInBackpack(env.BOT_DATA),
     GetEmptySlotInInventory(env.BOT_DATA))
 
-  action_timing.SetNextActionDelay(0.1)
+  action_timing.SetNextActionDelay(0.05)
 end
 
 ---------------------------------
