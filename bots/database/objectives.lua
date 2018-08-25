@@ -32,6 +32,21 @@ M.OBJECTIVES = {
   },
 
   {
+    objective = "glyph",
+    module = require(GetScriptDirectory() .."/utility/glyph"),
+    is_interruptible = false,
+    moves = {
+      {
+        move = "do_glyph",
+        is_interruptible = false,
+        actions = {
+          {action = "do_glyph"},
+        },
+      },
+    },
+  },
+
+  {
     objective = "swap_items",
     module = require(GetScriptDirectory() .."/utility/swap_items"),
     is_interruptible = false,

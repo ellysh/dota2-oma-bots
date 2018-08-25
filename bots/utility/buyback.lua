@@ -11,9 +11,7 @@ local M = {}
 -- We do not have environment variables in this objective
 
 function M.pre_buyback()
-  return not algorithms.IsBotAlive()
-         and env.BOT:HasBuyback()
-         and 10 < env.BOT:GetRespawnTime()
+  return M.pre_do_buyback()
 end
 
 function M.post_buyback()
@@ -23,7 +21,9 @@ end
 ---------------------------------
 
 function M.pre_do_buyback()
-  return true
+  return not algorithms.IsBotAlive()
+         and env.BOT:HasBuyback()
+         and 10 < env.BOT:GetRespawnTime()
 end
 
 function M.post_do_buyback()
