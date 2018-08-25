@@ -4,6 +4,12 @@ local env = require(
 local algorithms = require(
   GetScriptDirectory() .."/utility/algorithms")
 
+local functions = require(
+  GetScriptDirectory() .."/utility/functions")
+
+local all_units = require(
+  GetScriptDirectory() .."/utility/all_units")
+
 local constants = require(
   GetScriptDirectory() .."/utility/constants")
 
@@ -23,10 +29,20 @@ end
 
 ---------------------------------
 
+local function GetAllyTower()
+  local buildings = all_units.GetAllyBuildingsData(env.BOT_DATA)
+
+  return functions.GetElementWith(
+           buildings,
+           nil,
+           function(unit_data)
+             return unit_data.name == "npc_dota_badguys_tower1_mid"
+                    or "npc_dota_goodguys_tower1_mid"
+           end)
+end
+
 function M.pre_do_glyph()
-  local tower_data = algorithms.GetAllyBuildings(
-                       env.BOT_DATA,
-                       constants.MAX_UNIT_SEARCH_RADIUS)[1]
+  local tower_data = GetAllyTower()
 
   local tower_incoming_damage = algorithms.GetTotalDamageToUnit(
                                   tower_data)
