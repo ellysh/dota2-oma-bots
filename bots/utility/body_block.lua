@@ -144,6 +144,8 @@ function M.pre_move_and_block()
                    env.BOT_DATA,
                    env.BOT_DATA.attack_range + creep_distance)
 
+         and not map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
+
          and (env.ENEMY_HERO_DATA == nil
               or env.BOT_DATA.attack_range + creep_distance
                  < functions.GetUnitDistance(
