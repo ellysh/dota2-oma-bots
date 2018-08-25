@@ -46,6 +46,8 @@ function M.pre_do_glyph()
 
   local tower_incoming_damage = algorithms.GetTotalDamageToUnit(
                                   tower_data)
+                                * functions.GetDamageMultiplier(
+                                    tower_data.armor)
 
   return GetGlyphCooldown() == 0
          and (constants.MAX_INCOMING_TOWER_DAMAGE < tower_incoming_damage
