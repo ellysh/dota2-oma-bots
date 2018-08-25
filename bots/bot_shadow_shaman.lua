@@ -2,7 +2,7 @@ local chat = require(
   GetScriptDirectory() .."/utility/chat")
 
 local function BuyCourier()
-  if IsCourierAvailable() then
+  if GetCourier(0) ~= nil then
     return end
 
   local bot = GetBot()
