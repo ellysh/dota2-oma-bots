@@ -100,7 +100,7 @@ M.OBJECTIVES = {
   {
     objective = "evasion",
     module = require(GetScriptDirectory() .."/utility/evasion"),
-    is_interruptible = false,
+    is_interruptible = true,
     moves = {
       {
         move = "use_silence",
