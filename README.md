@@ -32,10 +32,9 @@ You should follow the following limitations when playing with the bot:
 3. No shrines.
 4. No neutral camps or Roshan.
 5. No bottle.
-6. No glyph.
-7. No scan.
-8. No runes.
-9. Bot difficulty is Hard or above.
+6. No scan.
+7. No runes.
+8. Bot difficulty is Hard or above.
 
 ## Update
 
