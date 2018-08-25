@@ -162,6 +162,7 @@ end
 
 function M.pre_buy_boots_of_elves()
   return pre_buy_item("item_boots_of_elves")
+         and algorithms.DoesBotOrCourierHaveItem("item_boots")
          and not algorithms.DoesBotOrCourierHaveItem(
                    "item_power_treads")
 end
