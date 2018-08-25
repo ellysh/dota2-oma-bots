@@ -216,7 +216,7 @@ local function FindTargetInTable(unit_data, table)
            function(target_data)
              return target_data.is_visible
                     and functions.GetUnitDistance(unit_data, target_data)
-                        < (unit_data.attack_range + 100)
+                        < constants.MAX_UNIT_TARGET_RADIUS
                     and M.IsUnitAttackTarget(
                          unit_data,
                          target_data)
@@ -232,20 +232,10 @@ local function UpdateUnitAttackTarget(_, unit_data)
     return
   end
 
-  local api_target = unit_data.handle:GetAttackTarget()
-  local target = nil
-
-  if api_target ~= nil then
-    target = M.GetUnitData(unit_data.handle:GetAttackTarget())
-  end
-
   local opposing_team = M.GetOpposingTeam(unit_data.team)
-
-  if target == nil then
-    target = FindTargetInTable(
-               unit_data,
-               UNIT_LIST[opposing_team][UNIT_TYPE["CREEP"]])
-  end
+  local target = FindTargetInTable(
+                   unit_data,
+                   UNIT_LIST[opposing_team][UNIT_TYPE["CREEP"]])
 
   if target == nil then
     target = FindTargetInTable(

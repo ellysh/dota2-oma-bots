@@ -197,7 +197,7 @@ function M.GetTotalDamageToUnit(unit_data, bot_data)
 
   local unit_list = M.GetEnemyCreeps(
                          unit_data,
-                         constants.MAX_CREEP_ATTACK_RANGE)
+                         constants.MAX_UNIT_TARGET_RADIUS)
 
   result = result + M.GetTotalDamage(
                       unit_list,
@@ -206,7 +206,7 @@ function M.GetTotalDamageToUnit(unit_data, bot_data)
 
   unit_list = M.GetEnemyBuildings(
                          unit_data,
-                         constants.MAX_TOWER_ATTACK_RANGE)
+                         constants.MAX_UNIT_TARGET_RADIUS)
 
   result = result + M.GetTotalDamage(
                       unit_list,
@@ -215,7 +215,7 @@ function M.GetTotalDamageToUnit(unit_data, bot_data)
 
   unit_list = M.GetEnemyHeroes(
                          unit_data,
-                         constants.MAX_HERO_ATTACK_RANGE)
+                         constants.MAX_UNIT_TARGET_RADIUS)
 
   result = result + M.GetTotalDamage(
                       unit_list,
@@ -224,7 +224,7 @@ function M.GetTotalDamageToUnit(unit_data, bot_data)
 
   unit_list = M.GetAllyHeroes(
                          unit_data,
-                         constants.MAX_HERO_ATTACK_RANGE)
+                         constants.MAX_UNIT_TARGET_RADIUS)
 
   result = result + M.GetTotalDamage(
                       unit_list,

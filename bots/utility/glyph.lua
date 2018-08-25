@@ -37,7 +37,7 @@ local function GetAllyTower()
            nil,
            function(unit_data)
              return unit_data.name == "npc_dota_badguys_tower1_mid"
-                    or "npc_dota_goodguys_tower1_mid"
+                    or unit_data.name == "npc_dota_goodguys_tower1_mid"
            end)
 end
 
