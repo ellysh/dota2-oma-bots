@@ -28,7 +28,7 @@ M.MAP = {
     forest_back_top = Vector(1084, 1144, 100),
     fountain = Vector(6950, 6300, 500),
     tp_tower_tier_1 = Vector(530, 1138, 100),
-    first_body_block = Vector(3422, 2945, 100),
+    first_body_block = Vector(3357, 2878, 100),
     second_body_block = Vector(573, 463, 100),
     tower_tier_1_rear = Vector(984, 1163, 830),
   },
