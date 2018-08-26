@@ -93,6 +93,11 @@ local function AddUnit(unit, unit_type, team)
     facing = unit:GetFacing(),
     is_visible = true,
     projectile_speed = unit:GetAttackProjectileSpeed(),
+    incoming_damage_from_creeps = 0,
+    incoming_damage_from_heroes = 0,
+    incoming_damage_from_towers = 0,
+    -- attack_target
+    -- last_attack_time
   }
 end
 
@@ -223,6 +228,19 @@ local function FindTargetInTable(unit_data, table)
            end)
 end
 
+local function AddTargetIncomingDamage(unit_data, target_data)
+  if unit_data.type == UNIT_TYPE["CREEP"] then
+    target_data.incoming_damage_from_creeps =
+      target_data.incoming_damage_from_creeps + unit_data.attack_damage
+  elseif unit_data.type == UNIT_TYPE["HERO"] then
+    target_data.incoming_damage_from_heroes =
+      target_data.incoming_damage_from_heroes + unit_data.attack_damage
+  elseif unit_data.type == UNIT_TYPE["BUILDING"] then
+    target_data.incoming_damage_from_towers =
+      target_data.incoming_damage_from_towers + unit_data.attack_damage
+  end
+end
+
 local function UpdateUnitAttackTarget(_, unit_data)
   if not unit_data.is_visible
      or (unit_data.last_attack_time ~= nil
@@ -249,6 +267,12 @@ local function UpdateUnitAttackTarget(_, unit_data)
                UNIT_LIST[opposing_team][UNIT_TYPE["BUILDING"]])
   end
 
+  local prev_target = functions.ternary(
+                        unit_data.attack_target ~= nil
+                        and unit_data.last_attack_time ~= nil,
+                        unit_data.attack_target,
+                        nil)
+
   if target == nil
      and unit_data.last_attack_time ~= nil
      and unit_data.seconds_per_attack
@@ -260,6 +284,9 @@ local function UpdateUnitAttackTarget(_, unit_data)
 
     unit_data.last_attack_time = CURRENT_GAME_TIME
     unit_data.attack_target = target
+    AddTargetIncomingDamage(unit_data, target)
+  elseif prev_target ~= nil then
+    AddTargetIncomingDamage(unit_data, prev_target)
   end
 end
 
