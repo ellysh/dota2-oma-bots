@@ -172,68 +172,6 @@ local function IsProjectileClose(unit_data, target_data, bot_data)
   return unit_projectile ~= nil
 end
 
-function M.GetTotalDamage(unit_list, target_data, bot_data)
-  if unit_list == nil or #unit_list == 0 then
-    return 0 end
-
-  local total_damage = 0
-
-  functions.DoWithKeysAndElements(
-    unit_list,
-    function(_, unit_data)
-      if unit_data.is_alive
-         and unit_data.attack_target == target_data
-         and IsProjectileClose(unit_data, target_data, bot_data) then
-
-        total_damage = total_damage + unit_data.attack_damage
-      end
-    end)
-
-  return total_damage
-end
-
-function M.GetTotalDamageToUnit(unit_data, bot_data)
-  local result = 0
-
-  local unit_list = M.GetEnemyCreeps(
-                         unit_data,
-                         constants.MAX_UNIT_TARGET_RADIUS)
-
-  result = result + M.GetTotalDamage(
-                      unit_list,
-                      unit_data,
-                      bot_data)
-
-  unit_list = M.GetEnemyBuildings(
-                         unit_data,
-                         constants.MAX_UNIT_TARGET_RADIUS)
-
-  result = result + M.GetTotalDamage(
-                      unit_list,
-                      unit_data,
-                      bot_data)
-
-  unit_list = M.GetEnemyHeroes(
-                         unit_data,
-                         constants.MAX_UNIT_TARGET_RADIUS)
-
-  result = result + M.GetTotalDamage(
-                      unit_list,
-                      unit_data,
-                      bot_data)
-
-  unit_list = M.GetAllyHeroes(
-                         unit_data,
-                         constants.MAX_UNIT_TARGET_RADIUS)
-
-  result = result + M.GetTotalDamage(
-                      unit_list,
-                      unit_data,
-                      bot_data)
-
-  return result
-end
-
 function M.GetEnemyHero(unit_data, radius)
   local heroes = M.GetEnemyHeroes(
     unit_data,
@@ -258,9 +196,15 @@ function M.IsUnitMoving(unit_data)
          or unit_data.anim_activity == ACTIVITY_FLAIL
 end
 
+function M.GetTotalIncomingDamage(unit_data)
+  return unit_data.incoming_damage_from_creeps
+         + unit_data.incoming_damage_from_heroes
+         + unit_data.incoming_damage_from_towers
+end
+
 function M.IsUnitLowHp(unit_data)
   local unit_health = unit_data.health
-                      - M.GetTotalDamageToUnit(unit_data, nil)
+                      - M.GetTotalIncomingDamage(unit_data)
 
   return unit_health <= constants.UNIT_LOW_HEALTH
          or functions.GetRate(unit_health, unit_data.max_health)
@@ -342,12 +286,7 @@ end
 
 function M.IsLastHitTarget(unit_data, target_data)
   local incoming_damage = unit_data.attack_damage
-                          + M.GetTotalDamageToUnit(
-                              target_data,
-                              functions.GetUnitDistance(
-                                unit_data,
-                                target_data),
-                              unit_data)
+                            + M.GetTotalIncomingDamage(target_data)
 
   if (100 < unit_data.attack_damage or 2 < target_data.armor) then
     incoming_damage = incoming_damage

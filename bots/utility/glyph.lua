@@ -44,7 +44,7 @@ end
 function M.pre_do_glyph()
   local tower_data = GetAllyTower()
 
-  local tower_incoming_damage = algorithms.GetTotalDamageToUnit(
+  local tower_incoming_damage = algorithms.GetTotalIncomingDamage(
                                   tower_data)
                                 * functions.GetDamageMultiplier(
                                     tower_data.armor)
