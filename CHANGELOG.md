@@ -1,3 +1,9 @@
+* version 1.0
+  - Implement the glyph usage.
+  - Implement the buyback usage.
+  - Improve the body block mechanism.
+  - Fix a bug with taking extra damage from an enemy tower.
+
 * version 0.9a
   - Implement the move for kiting enemy tower.
   - Reserve gold for buying the flask after level 5.
