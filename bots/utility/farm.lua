@@ -67,7 +67,9 @@ function M.pre_deny_ally_creep()
                   constants.SIDE["ALLY"])
 
   return LAST_HIT_ALLY_CREEP ~= nil
-         and functions.GetRate(creep.health, creep.max_health)
+         and functions.GetRate(
+               LAST_HIT_ALLY_CREEP.health,
+               LAST_HIT_ALLY_CREEP.max_health)
              < constants.UNIT_HALF_HEALTH_LEVEL
          and not algorithms.DoesTowerProtectUnit(LAST_HIT_ALLY_CREEP)
 end

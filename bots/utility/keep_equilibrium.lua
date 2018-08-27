@@ -21,6 +21,9 @@ function M.pre_keep_equilibrium()
   return algorithms.IsBotAlive()
          and not algorithms.IsUnitLowHp(env.BOT_DATA)
 
+         and env.PRE_LAST_HIT_ENEMY_CREEP == nil
+         and env.PRE_LAST_HIT_ALLY_CREEP == nil
+
          and (M.pre_attack_enemy_creep()
               or M.pre_attack_ally_creep())
 
@@ -29,9 +32,6 @@ function M.pre_keep_equilibrium()
                  < functions.GetUnitDistance(
                      env.BOT_DATA,
                      env.ENEMY_HERO_DATA))
-
-         and env.PRE_LAST_HIT_ENEMY_CREEP == nil
-         and env.PRE_LAST_HIT_ALLY_CREEP == nil
 end
 
 function M.post_keep_equilibrium()
