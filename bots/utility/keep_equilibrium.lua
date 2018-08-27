@@ -17,23 +17,7 @@ local M = {}
 
 ---------------------------------
 
-local function GetMinHealthCreep()
-  local creeps = functions.TableConcat(
-    algorithms.GetEnemyCreeps(
-      env.BOT_DATA,
-      env.BOT_DATA.attack_range),
-    algorithms.GetAllyCreeps(
-      env.BOT_DATA,
-      env.BOT_DATA.attack_range))
-
-  return functions.GetElementWith(
-    creeps,
-    algorithms.CompareMinHealth)
-end
-
 function M.pre_keep_equilibrium()
-  local creep = GetMinHealthCreep()
-
   return algorithms.IsBotAlive()
          and not algorithms.IsUnitLowHp(env.BOT_DATA)
 
@@ -46,8 +30,8 @@ function M.pre_keep_equilibrium()
                      env.BOT_DATA,
                      env.ENEMY_HERO_DATA))
 
-         and constants.UNIT_HALF_HEALTH_LEVEL
-             < functions.GetRate(creep.health, creep.max_health)
+         and env.PRE_LAST_HIT_ENEMY_CREEP == nil
+         and env.PRE_LAST_HIT_ALLY_CREEP == nil
 end
 
 function M.post_keep_equilibrium()

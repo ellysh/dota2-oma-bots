@@ -38,29 +38,14 @@ end
 
 ---------------------------------
 
-local function GetLastHitCreep(side)
-  local creeps = functions.ternary(
-    side == constants.SIDE["ENEMY"],
-    algorithms.GetEnemyCreeps(
-      env.BOT_DATA,
-      constants.MAX_UNIT_TARGET_RADIUS),
-    algorithms.GetAllyCreeps(
-      env.BOT_DATA,
-      constants.MAX_UNIT_TARGET_RADIUS))
-
-  return functions.GetElementWith(
-    creeps,
-    algorithms.CompareMinHealth,
-    function(unit_data)
-      return algorithms.IsAttackTargetable(unit_data)
-             and algorithms.IsLastHitTarget(env.BOT_DATA, unit_data)
-    end)
-end
+local LAST_HIT_ENEMY_CREEP = nil
 
 function M.pre_lasthit_enemy_creep()
-  local creep = GetLastHitCreep(constants.SIDE["ENEMY"])
+  LAST_HIT_ENEMY_CREEP = algorithms.GetLastHitCreep(
+                  env.BOT_DATA,
+                  constants.SIDE["ENEMY"])
 
-  return creep ~= nil
+  return LAST_HIT_ENEMY_CREEP ~= nil
          and not algorithms.DoesTowerProtectEnemyUnit(creep)
 end
 
@@ -69,17 +54,19 @@ function M.post_lasthit_enemy_creep()
 end
 
 function M.lasthit_enemy_creep()
-  local creep = GetLastHitCreep(constants.SIDE["ENEMY"])
-
-  algorithms.AttackUnit(env.BOT_DATA, creep, false)
+  algorithms.AttackUnit(env.BOT_DATA, LAST_HIT_ENEMY_CREEP, false)
 end
 
 ---------------------------------
 
-function M.pre_deny_ally_creep()
-  local creep = GetLastHitCreep(constants.SIDE["ALLY"])
+local LAST_HIT_ALLY_CREEP = nil
 
-  return creep ~= nil
+function M.pre_deny_ally_creep()
+  LAST_HIT_ALLY_CREEP = algorithms.GetLastHitCreep(
+                  env.BOT_DATA,
+                  constants.SIDE["ALLY"])
+
+  return LAST_HIT_ALLY_CREEP ~= nil
          and functions.GetRate(creep.health, creep.max_health)
              < constants.UNIT_HALF_HEALTH_LEVEL
          and not algorithms.DoesTowerProtectEnemyUnit(creep)
@@ -90,9 +77,7 @@ function M.post_deny_ally_creep()
 end
 
 function M.deny_ally_creep()
-  local target_data = GetLastHitCreep(constants.SIDE["ALLY"])
-
-  algorithms.AttackUnit(env.BOT_DATA, target_data, false)
+  algorithms.AttackUnit(env.BOT_DATA, LAST_HIT_ALLY_CREEP, false)
 end
 
 --------------------------------

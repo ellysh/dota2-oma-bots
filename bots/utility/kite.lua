@@ -47,6 +47,8 @@ function M.pre_attack_enemy_hero()
          and not env.IS_FOCUSED_BY_CREEPS
          and not env.IS_FOCUSED_BY_TOWER
          and env.BOT_DATA.attack_target ~= env.ENEMY_HERO_DATA
+         and env.PRE_LAST_HIT_ENEMY_CREEP == nil
+         and env.PRE_LAST_HIT_ALLY_CREEP == nil
 end
 
 function M.post_attack_enemy_hero()

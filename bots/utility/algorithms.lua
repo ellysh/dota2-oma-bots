@@ -475,6 +475,43 @@ function M.IsBotAlive()
   return GetBot():IsAlive()
 end
 
+local function GetCreepWith(side, validate_function)
+  local creeps = functions.ternary(
+    side == constants.SIDE["ENEMY"],
+    M.GetEnemyCreeps(
+      env.BOT_DATA,
+      constants.MAX_UNIT_TARGET_RADIUS),
+    M.GetAllyCreeps(
+      env.BOT_DATA,
+      constants.MAX_UNIT_TARGET_RADIUS))
+
+  return functions.GetElementWith(
+    creeps,
+    M.CompareMinHealth,
+    function(unit_data)
+      return M.IsAttackTargetable(unit_data)
+             and validate_function(unit_data)
+    end)
+end
+
+function M.GetPreLastHitCreep(bot_data, side)
+  return GetCreepWith(
+           side,
+           function(unit_data)
+             local incoming_damage = (1.5 * bot_data.attack_damage)
+                                     + M.GetTotalIncomingDamage(unit_data)
+             return unit_data.health < incoming_damage
+           end)
+end
+
+function M.GetLastHitCreep(bot_data, side)
+  return GetCreepWith(
+           side,
+           function(unit_data)
+             return M.IsLastHitTarget(bot_data, unit_data)
+           end)
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_GetNormalizedRadius = GetNormalizedRadius
 M.test_UpdateUnitList = all_units.UpdateUnitList
