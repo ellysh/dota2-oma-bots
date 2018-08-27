@@ -108,9 +108,7 @@ function M.UpdateVariables()
   M.IS_FOCUSED_BY_UNKNOWN_UNIT = algorithms.IsFocusedByUnknownUnit(
                                    M.BOT_DATA)
 
-  M.IS_FOCUSED_BY_TOWER = algorithms.IsFocusedByTower(
-                            M.BOT_DATA,
-                            M.ENEMY_TOWER_DATA)
+  M.IS_FOCUSED_BY_TOWER = algorithms.IsFocusedByTower(M.BOT_DATA)
 
   M.IS_BASE_RECOVERY = functions.GetRate(
                          M.BOT_DATA.health,

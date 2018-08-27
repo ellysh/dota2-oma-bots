@@ -269,12 +269,7 @@ function M.DoesBotOrCourierHaveItem(item_name)
 end
 
 function M.IsFocusedByEnemyHero(unit_data)
-  local hero_data = M.GetEnemyHero(
-                      unit_data,
-                      constants.MAX_UNIT_SEARCH_RADIUS)
-
-   return hero_data ~= nil
-          and hero_data.attack_target == unit_data
+   return 0 < unit_data.incoming_damage_from_heroes
 end
 
 function M.IsFocusedByUnknownUnit(unit_data)
@@ -310,9 +305,8 @@ function M.IsFocusedByCreeps(unit_data)
                   end)
 end
 
-function M.IsFocusedByTower(unit_data, tower_data)
-   return tower_data ~= nil
-          and tower_data.attack_target == unit_data
+function M.IsFocusedByTower(unit_data)
+  return 0 < unit_data.incoming_damage_from_towers
 end
 
 local function IsEnemyUnitNearSpot(unit_data, enemy_hero_data, spot)
