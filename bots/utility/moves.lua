@@ -52,7 +52,7 @@ function M.pre_attack_enemy_creep()
   return creep ~= nil
          and constants.UNIT_HALF_HEALTH_LEVEL
              < functions.GetRate(creep.health, creep.max_health)
-         and not algorithms.DoesTowerProtectEnemyUnit(creep)
+         and not algorithms.DoesTowerProtectUnit(creep)
          and not env.IS_FOCUSED_BY_ENEMY_HERO
          and not env.IS_FOCUSED_BY_CREEPS
          and not env.IS_FOCUSED_BY_TOWER
@@ -76,7 +76,7 @@ function M.pre_attack_ally_creep()
   return constants.MAX_CREEPS_HP_DELTA
            < (env.ALLY_CREEPS_HP - env.ENEMY_CREEPS_HP)
          and creep ~= nil
-         and not algorithms.DoesTowerProtectEnemyUnit(creep)
+         and not algorithms.DoesTowerProtectUnit(creep)
          and not env.IS_FOCUSED_BY_ENEMY_HERO
          and not env.IS_FOCUSED_BY_CREEPS
          and not env.IS_FOCUSED_BY_TOWER
@@ -151,7 +151,7 @@ function M.pre_deliver_items()
   return 0 < env.BOT_DATA.stash_value
          and map.IsUnitInSpot(
                courier_data,
-               map.GetAllySpot(env.BOT_DATA, "fountain"))
+               map.GetAllySpot("fountain"))
 end
 
 function M.post_deliver_items()

@@ -132,7 +132,7 @@ function M.pre_move_safe_evasion()
 
          or map.IsUnitInSpot(
               env.BOT_DATA,
-              map.GetEnemySpot(env.BOT_DATA, "tower_tier_1_rear"))
+              map.GetEnemySpot("tower_tier_1_rear"))
 
          or (map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
              and env.BOT_DATA.level < 4)

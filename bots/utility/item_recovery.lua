@@ -102,7 +102,7 @@ function M.pre_heal_tango()
 
          and constants.TANGO_USAGE_FROM_HG_DISTANCE
              < functions.GetDistance(
-                 map.GetEnemySpot(env.BOT_DATA, "high_ground"),
+                 map.GetEnemySpot("high_ground"),
                  env.BOT_DATA.location)
 end
 

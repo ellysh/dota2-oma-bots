@@ -245,9 +245,9 @@ function M.BuyItem(item_name)
   action_timing.SetNextActionDelay(0.05)
 end
 
-function M.DoesTowerProtectEnemyUnit(unit_data)
+function M.DoesTowerProtectUnit(unit_data)
   local bot_data = M.GetBotData()
-  local tower_spot = map.GetEnemySpot(unit_data, "tower_tier_1_attack")
+  local tower_spot = map.GetEnemySpot("tower_tier_1_attack")
 
   local bot_tower_distance = functions.GetDistance(
                                bot_data.location,
@@ -330,13 +330,13 @@ end
 
 function M.GetUnitDistanceFromFountain(unit_data)
   return functions.GetDistance(
-           map.GetAllySpot(unit_data, "fountain"),
+           map.GetUnitAllySpot(unit_data, "fountain"),
            unit_data.location)
 end
 
 function M.GetDistanceFromFountain(unit_data, location)
   return functions.GetDistance(
-           map.GetAllySpot(unit_data, "fountain"),
+           map.GetUnitAllySpot(unit_data, "fountain"),
            location)
 end
 
@@ -383,11 +383,11 @@ local function GetClosestSafeSpot(
 end
 
 function M.GetSafeSpot(unit_data, enemy_hero_data)
-  local hg_spot = map.GetAllySpot(unit_data, "high_ground")
+  local hg_spot = map.GetUnitAllySpot(unit_data, "high_ground")
 
   local forest_spot = GetClosestSafeSpot(
-                        map.GetAllySpot(unit_data, "forest_top"),
-                        map.GetAllySpot(unit_data, "forest_bot"),
+                        map.GetUnitAllySpot(unit_data, "forest_top"),
+                        map.GetUnitAllySpot(unit_data, "forest_bot"),
                         unit_data,
                         enemy_hero_data)
 
@@ -401,15 +401,19 @@ function M.GetSafeSpot(unit_data, enemy_hero_data)
     return forest_spot end
 
   local forest_back_spot = GetClosestSafeSpot(
-                            map.GetAllySpot(unit_data, "forest_back_top"),
-                            map.GetAllySpot(unit_data, "forest_back_bot"),
+                            map.GetUnitAllySpot(
+                              unit_data,
+                              "forest_back_top"),
+                            map.GetUnitAllySpot(
+                              unit_data,
+                              "forest_back_bot"),
                             unit_data,
                             enemy_hero_data)
 
   if forest_back_spot ~= nil then
     return forest_back_spot end
 
-  return map.GetAllySpot(unit_data, "fountain")
+  return map.GetUnitAllySpot(unit_data, "fountain")
 end
 
 function M.IsItemCastable(unit_data, item_name)
@@ -475,14 +479,14 @@ function M.IsBotAlive()
   return GetBot():IsAlive()
 end
 
-local function GetCreepWith(side, validate_function)
+local function GetCreepWith(bot_data, side, validate_function)
   local creeps = functions.ternary(
     side == constants.SIDE["ENEMY"],
     M.GetEnemyCreeps(
-      env.BOT_DATA,
+      bot_data,
       constants.MAX_UNIT_TARGET_RADIUS),
     M.GetAllyCreeps(
-      env.BOT_DATA,
+      bot_data,
       constants.MAX_UNIT_TARGET_RADIUS))
 
   return functions.GetElementWith(
@@ -496,6 +500,7 @@ end
 
 function M.GetPreLastHitCreep(bot_data, side)
   return GetCreepWith(
+           bot_data,
            side,
            function(unit_data)
              local incoming_damage = (1.5 * bot_data.attack_damage)
@@ -506,6 +511,7 @@ end
 
 function M.GetLastHitCreep(bot_data, side)
   return GetCreepWith(
+           bot_data,
            side,
            function(unit_data)
              return M.IsLastHitTarget(bot_data, unit_data)

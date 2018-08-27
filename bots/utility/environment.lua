@@ -102,12 +102,11 @@ function M.UpdateVariables()
 
   M.SAFE_SPOT = algorithms.GetSafeSpot(M.BOT_DATA, ENEMY_HERO_DATA)
 
-  M.FOUNTAIN_SPOT = map.GetAllySpot(M.BOT_DATA, "fountain")
+  M.FOUNTAIN_SPOT = map.GetAllySpot("fountain")
 
   if M.ENEMY_HERO_DATA ~= nil then
     M.DOES_TOWER_PROTECT_ENEMY =
-      algorithms.DoesTowerProtectEnemyUnit(
-        M.ENEMY_HERO_DATA)
+      algorithms.DoesTowerProtectUnit(M.ENEMY_HERO_DATA)
   end
 
   M.IS_FOCUSED_BY_CREEPS = algorithms.IsFocusedByCreeps(M.BOT_DATA)

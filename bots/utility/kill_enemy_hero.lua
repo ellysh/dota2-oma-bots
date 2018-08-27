@@ -35,7 +35,7 @@ function M.pre_kill_enemy_hero()
 
          and not map.IsUnitInSpot(
                    env.BOT_DATA,
-                   map.GetEnemySpot(env.BOT_DATA, "tower_tier_1_rear"))
+                   map.GetEnemySpot("tower_tier_1_rear"))
 end
 
 function M.post_kill_enemy_hero()

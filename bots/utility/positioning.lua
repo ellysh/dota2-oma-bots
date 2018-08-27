@@ -39,7 +39,7 @@ end
 ---------------------------------
 
 function M.pre_tp_mid_tower()
-  local target_location = map.GetAllySpot(env.BOT_DATA, "high_ground")
+  local target_location = map.GetAllySpot("high_ground")
 
   return constants.MIN_TP_BASE_RADIUS
            < functions.GetDistance(target_location, env.BOT_DATA.location)
@@ -57,7 +57,7 @@ function M.tp_mid_tower()
 
   env.BOT:Action_UseAbilityOnLocation(
     item,
-    map.GetAllySpot(env.BOT_DATA, "tp_tower_tier_1"))
+    map.GetAllySpot("tp_tower_tier_1"))
 
   action_timing.SetNextActionDelay(item:GetChannelTime())
 end

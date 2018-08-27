@@ -29,7 +29,7 @@ function M.pre_farm()
 
          and not map.IsUnitInSpot(
                    env.BOT_DATA,
-                   map.GetEnemySpot(env.BOT_DATA, "tower_tier_1_rear"))
+                   map.GetEnemySpot("tower_tier_1_rear"))
 end
 
 function M.post_farm()
@@ -46,7 +46,7 @@ function M.pre_lasthit_enemy_creep()
                   constants.SIDE["ENEMY"])
 
   return LAST_HIT_ENEMY_CREEP ~= nil
-         and not algorithms.DoesTowerProtectEnemyUnit(creep)
+         and not algorithms.DoesTowerProtectUnit(LAST_HIT_ENEMY_CREEP)
 end
 
 function M.post_lasthit_enemy_creep()
@@ -69,7 +69,7 @@ function M.pre_deny_ally_creep()
   return LAST_HIT_ALLY_CREEP ~= nil
          and functions.GetRate(creep.health, creep.max_health)
              < constants.UNIT_HALF_HEALTH_LEVEL
-         and not algorithms.DoesTowerProtectEnemyUnit(creep)
+         and not algorithms.DoesTowerProtectUnit(LAST_HIT_ALLY_CREEP)
 end
 
 function M.post_deny_ally_creep()
