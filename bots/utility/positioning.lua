@@ -64,44 +64,35 @@ end
 
 ---------------------------------
 
-local function IsEnemyHeroNearCreeps()
-  if env.ENEMY_HERO_DATA == nil then
-    return false end
+local function GetPreLastHitCreep()
+  return functions.ternary(
+          env.PRE_LAST_HIT_ENEMY_CREEP ~= nil,
+          env.PRE_LAST_HIT_ENEMY_CREEP,
+          env.PRE_LAST_HIT_ALLY_CREEP)
+end
 
-  local creeps = algorithms.GetEnemyCreeps(
-                       env.BOT_DATA,
-                       constants.MAX_UNIT_SEARCH_RADIUS)
-
-  if functions.IsTableEmpty(creeps) then
-    return false end
-
-  local creep_data = functions.GetElementWith(
-                       creeps,
-                       nil,
-                       function(unit_data)
-                         return constants.CREEP_AGRO_RADIUS
-                          < functions.GetUnitDistance(
-                              env.ENEMY_HERO_DATA,
-                              unit_data)
-                       end)
-
-
-  return creep_data == nil
+local function GetClosestCreep()
+  return functions.ternary(
+          env.ENEMY_CREEP_DATA ~= nil,
+          env.ENEMY_CREEP_DATA,
+          env.ALLY_CREEP_FRONT_DATA)
 end
 
 function M.pre_increase_creeps_distance()
+  local last_hit_creep = GetPreLastHitCreep()
+  local closest_creep = GetClosestCreep()
+
   return (algorithms.AreEnemyCreepsInRadius(
-            env.BOT_DATA,
-            constants.MIN_CREEP_DISTANCE)
+             env.BOT_DATA,
+             constants.MIN_CREEP_DISTANCE)
 
-         or map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
+          or last_hit_creep == nil
 
-         or (env.ENEMY_HERO_DATA ~= nil
-             and IsEnemyHeroNearCreeps()
-             and functions.GetUnitDistance(env.BOT_DATA, env.ENEMY_HERO_DATA)
-                   <= env.BOT_DATA.attack_range - 50))
+          or (env.ALLY_CREEPS_HP * 3) < env.ENEMY_CREEPS_HP)
 
-         or (env.ALLY_CREEPS_HP * 3) < env.ENEMY_CREEPS_HP
+         and (closest_creep ~= nil
+              and functions.GetUnitDistance(env.BOT_DATA, closest_creep)
+                  < env.BASE_CREEP_DISTANCE)
 end
 
 function M.post_increase_creeps_distance()
@@ -115,19 +106,17 @@ end
 ---------------------------------
 
 function M.pre_decrease_creeps_distance()
-  return algorithms.AreAllyCreepsInRadius(
-           env.BOT_DATA,
-           constants.MAX_UNIT_SEARCH_RADIUS,
-           constants.DIRECTION["FRONT"])
+  local last_hit_creep = GetPreLastHitCreep()
 
-         and not algorithms.AreEnemyCreepsInRadius(
-               env.BOT_DATA,
-               constants.BASE_CREEP_DISTANCE)
+  return (last_hit_creep ~= nil
+          and constants.LASTHIT_CREEP_DISTANCE
+              < functions.GetUnitDistance(
+                  env.BOT_DATA,
+                  last_hit_creep))
 
          and not env.IS_FOCUSED_BY_CREEPS
 
-         and (env.ENEMY_CREEP_DATA ~= nil
-              or env.ALLY_CREEP_FRONT_DATA ~= nil)
+         and env.ALLY_CREEP_FRONT_DATA ~= nil
 end
 
 function M.post_decrease_creeps_distance()
@@ -135,11 +124,7 @@ function M.post_decrease_creeps_distance()
 end
 
 function M.decrease_creeps_distance()
-  local target_data = env.ENEMY_CREEP_DATA
-
-  if target_data == nil then
-    target_data = env.ALLY_CREEP_FRONT_DATA
-  end
+  local target_data = GetPreLastHitCreep()
 
   env.BOT:Action_MoveDirectly(target_data.location)
 end
@@ -147,13 +132,17 @@ end
 ---------------------------------
 
 function M.pre_turn()
-  return algorithms.AreEnemyCreepsInRadius(
-           env.BOT_DATA,
-           env.BOT_DATA.attack_range)
-         and env.ENEMY_CREEP_DATA ~= nil
+  local last_hit_creep = GetPreLastHitCreep()
+
+  return (last_hit_creep ~= nil
+          and constants.LASTHIT_CREEP_DISTANCE
+              < functions.GetUnitDistance(
+                  env.BOT_DATA,
+                  last_hit_creep))
+
          and not functions.IsFacingLocation(
                    env.BOT_DATA,
-                   env.ENEMY_CREEP_DATA.location,
+                   last_hit_creep.location,
                    constants.TURN_TARGET_MAX_DEGREE)
 end
 
@@ -162,7 +151,9 @@ function M.post_turn()
 end
 
 function M.turn()
-  env.BOT:Action_AttackUnit(all_units.GetUnit(env.ENEMY_CREEP_DATA), true)
+  local last_hit_creep = GetPreLastHitCreep()
+
+  env.BOT:Action_AttackUnit(all_units.GetUnit(last_hit_creep), true)
 
   action_timing.SetNextActionDelay(constants.DROW_RANGER_TURN_TIME)
 end
