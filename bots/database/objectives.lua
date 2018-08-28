@@ -391,30 +391,6 @@ M.OBJECTIVES = {
   },
 
   {
-    objective = "keep_equilibrium",
-    module = require(GetScriptDirectory() .."/utility/keep_equilibrium"),
-    is_interruptible = true,
-    moves = {
-      {
-        move = "attack_enemy_creep",
-        is_interruptible = false,
-        actions = {
-          {action = "attack_enemy_creep"},
-          {action = "stop_attack"},
-        }
-      },
-      {
-        move = "attack_ally_creep",
-        is_interruptible = false,
-        actions = {
-          {action = "attack_ally_creep"},
-          {action = "stop_attack"},
-        }
-      },
-    }
-  },
-
-  {
     objective = "positioning",
     module = require(GetScriptDirectory() .."/utility/positioning"),
     is_interruptible = true,
@@ -446,6 +422,30 @@ M.OBJECTIVES = {
         actions = {
           {action = "turn"},
           {action = "stop_attack_and_move"},
+        }
+      },
+    }
+  },
+
+  {
+    objective = "keep_equilibrium",
+    module = require(GetScriptDirectory() .."/utility/keep_equilibrium"),
+    is_interruptible = true,
+    moves = {
+      {
+        move = "attack_enemy_creep",
+        is_interruptible = false,
+        actions = {
+          {action = "attack_enemy_creep"},
+          {action = "stop_attack"},
+        }
+      },
+      {
+        move = "attack_ally_creep",
+        is_interruptible = false,
+        actions = {
+          {action = "attack_ally_creep"},
+          {action = "stop_attack"},
         }
       },
     }
