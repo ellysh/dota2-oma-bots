@@ -10,6 +10,9 @@ local algorithms = require(
 local moves = require(
   GetScriptDirectory() .."/utility/moves")
 
+local map = require(
+  GetScriptDirectory() .."/utility/map")
+
 local action_timing = require(
   GetScriptDirectory() .."/utility/action_timing")
 
@@ -45,16 +48,21 @@ end
 function M.pre_aggro_last_hit()
   local last_hit_creep = GetPreLastHitCreep()
 
-  return last_hit_creep ~= nil
+  if last_hit_creep == nil then
+    return false end
 
-         and env.ENEMY_HERO_DATA ~= nil
+  local creep_distance = functions.GetUnitDistance(
+                           env.BOT_DATA,
+                           last_hit_creep)
+
+  return env.ENEMY_HERO_DATA ~= nil
+
+         and not map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
 
          and not algorithms.IsUnitMoving(last_hit_creep)
 
-         and functions.GetUnitDistance(
-               env.BOT_DATA,
-               last_hit_creep)
-             <= constants.CREEP_AGRO_RADIUS
+         and (creep_distance <= constants.CREEP_AGRO_RADIUS
+              and constants.MIN_CREEP_DISTANCE < creep_distance)
 end
 
 function M.post_aggro_last_hit()
@@ -65,8 +73,6 @@ function M.aggro_last_hit()
   local last_hit_creep = GetPreLastHitCreep()
 
   env.BOT:Action_AttackUnit(all_units.GetUnit(env.ENEMY_HERO_DATA), true)
-
-  action_timing.SetNextActionDelay(0.05)
 end
 
 function M.stop_attack()
