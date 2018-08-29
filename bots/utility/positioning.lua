@@ -118,6 +118,8 @@ function M.pre_decrease_creeps_distance()
                        env.BOT_DATA,
                        constants.BASE_CREEP_DISTANCE)))
 
+         and not env.BOT_DATA.is_flask_healing
+
          and not env.IS_FOCUSED_BY_CREEPS
 
          and not map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
