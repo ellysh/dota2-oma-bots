@@ -508,10 +508,13 @@ function M.GetPreLastHitCreep(bot_data, side)
            bot_data,
            side,
            function(unit_data)
-             local incoming_damage = (GetPreLastHitMultiplier(bot_data)
-                                      * bot_data.attack_damage)
-                                     + M.GetTotalIncomingDamage(unit_data)
-             return unit_data.health < incoming_damage
+             local incoming_damage = M.GetTotalIncomingDamage(unit_data)
+             local total_damage = (GetPreLastHitMultiplier(bot_data)
+                                   * bot_data.attack_damage)
+                                  + incoming_damage
+
+             return 0 < incoming_damage
+                    and unit_data.health < total_damage
            end)
 end
 
