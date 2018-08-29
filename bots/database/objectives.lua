@@ -391,6 +391,22 @@ M.OBJECTIVES = {
   },
 
   {
+    objective = "aggro_control",
+    module = require(GetScriptDirectory() .."/utility/aggro_control"),
+    is_interruptible = false,
+    moves = {
+      {
+        move = "aggro_last_hit",
+        is_interruptible = false,
+        actions = {
+          {action = "aggro_last_hit"},
+          {action = "stop_attack"},
+        }
+      },
+    }
+  },
+
+  {
     objective = "positioning",
     module = require(GetScriptDirectory() .."/utility/positioning"),
     is_interruptible = true,
