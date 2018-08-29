@@ -38,15 +38,9 @@ end
 
 ---------------------------------
 
-local LAST_HIT_ENEMY_CREEP = nil
-
 function M.pre_lasthit_enemy_creep()
-  LAST_HIT_ENEMY_CREEP = algorithms.GetLastHitCreep(
-                  env.BOT_DATA,
-                  constants.SIDE["ENEMY"])
-
-  return LAST_HIT_ENEMY_CREEP ~= nil
-         and not algorithms.DoesTowerProtectUnit(LAST_HIT_ENEMY_CREEP)
+  return env.LAST_HIT_ENEMY_CREEP ~= nil
+         and not algorithms.DoesTowerProtectUnit(env.LAST_HIT_ENEMY_CREEP)
 end
 
 function M.post_lasthit_enemy_creep()
@@ -54,24 +48,18 @@ function M.post_lasthit_enemy_creep()
 end
 
 function M.lasthit_enemy_creep()
-  algorithms.AttackUnit(env.BOT_DATA, LAST_HIT_ENEMY_CREEP, false)
+  algorithms.AttackUnit(env.BOT_DATA, env.LAST_HIT_ENEMY_CREEP, false)
 end
 
 ---------------------------------
 
-local LAST_HIT_ALLY_CREEP = nil
-
 function M.pre_deny_ally_creep()
-  LAST_HIT_ALLY_CREEP = algorithms.GetLastHitCreep(
-                  env.BOT_DATA,
-                  constants.SIDE["ALLY"])
-
-  return LAST_HIT_ALLY_CREEP ~= nil
+  return env.LAST_HIT_ALLY_CREEP ~= nil
          and functions.GetRate(
-               LAST_HIT_ALLY_CREEP.health,
-               LAST_HIT_ALLY_CREEP.max_health)
+               env.LAST_HIT_ALLY_CREEP.health,
+               env.LAST_HIT_ALLY_CREEP.max_health)
              < constants.UNIT_HALF_HEALTH_LEVEL
-         and not algorithms.DoesTowerProtectUnit(LAST_HIT_ALLY_CREEP)
+         and not algorithms.DoesTowerProtectUnit(env.LAST_HIT_ALLY_CREEP)
 end
 
 function M.post_deny_ally_creep()
@@ -79,7 +67,7 @@ function M.post_deny_ally_creep()
 end
 
 function M.deny_ally_creep()
-  algorithms.AttackUnit(env.BOT_DATA, LAST_HIT_ALLY_CREEP, false)
+  algorithms.AttackUnit(env.BOT_DATA, env.LAST_HIT_ALLY_CREEP, false)
 end
 
 --------------------------------

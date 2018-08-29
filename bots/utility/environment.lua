@@ -20,6 +20,8 @@ M.ALLY_CREEP_BACK_DATA = {}
 M.ENEMY_TOWER_DATA = {}
 M.PRE_LAST_HIT_ENEMY_CREEP = {}
 M.PRE_LAST_HIT_ALLY_CREEP = {}
+M.LAST_HIT_ENEMY_CREEP = {}
+M.LAST_HIT_ALLY_CREEP = {}
 M.ALLY_CREEPS_HP = 0
 M.ENEMY_CREEPS_HP = 0
 M.SAFE_SPOT = {}
@@ -89,6 +91,14 @@ function M.UpdateVariables()
   M.PRE_LAST_HIT_ALLY_CREEP = algorithms.GetPreLastHitCreep(
                                 M.BOT_DATA,
                                 constants.SIDE["ALLY"])
+
+  M.LAST_HIT_ENEMY_CREEP = algorithms.GetLastHitCreep(
+                             M.BOT_DATA,
+                             constants.SIDE["ENEMY"])
+
+  M.LAST_HIT_ALLY_CREEP = algorithms.GetLastHitCreep(
+                             M.BOT_DATA,
+                             constants.SIDE["ALLY"])
 
   M.ALLY_CREEPS_HP = algorithms.GetTotalHealth(
                        algorithms.GetAllyCreeps(
