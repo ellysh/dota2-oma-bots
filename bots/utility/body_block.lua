@@ -54,7 +54,7 @@ function M.pre_move_start_position()
                    GetBodyBlockSpot())
 
          and (env.ENEMY_HERO_DATA == nil
-              or constants.MAX_HERO_ATTACK_RANGE
+              or env.BOT_DATA.attack_range
                  < functions.GetUnitDistance(
                      env.BOT_DATA,
                      env.ENEMY_HERO_DATA))
