@@ -54,10 +54,7 @@ function M.pre_move_start_position()
                    GetBodyBlockSpot())
 
          and (env.ENEMY_HERO_DATA == nil
-              or env.BOT_DATA.attack_range
-                 < functions.GetUnitDistance(
-                     env.BOT_DATA,
-                     env.ENEMY_HERO_DATA))
+              or env.BOT_DATA.attack_range < env.ENEMY_HERO_DISTANCE)
 end
 
 function M.post_move_start_position()
@@ -89,9 +86,7 @@ function M.pre_turn_enemy_fountain()
 
          and (env.ENEMY_HERO_DATA == nil
               or constants.MAX_HERO_ATTACK_RANGE
-                 < functions.GetUnitDistance(
-                     env.BOT_DATA,
-                     env.ENEMY_HERO_DATA))
+                 < env.ENEMY_HERO_DISTANCE)
 end
 
 function M.post_turn_enemy_fountain()
@@ -148,9 +143,7 @@ function M.pre_move_and_block()
 
          and (env.ENEMY_HERO_DATA == nil
               or env.BOT_DATA.attack_range + creep_distance
-                 < functions.GetUnitDistance(
-                     env.BOT_DATA,
-                     env.ENEMY_HERO_DATA))
+                 < env.ENEMY_HERO_DISTANCE)
 end
 
 function M.post_move_and_block()

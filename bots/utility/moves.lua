@@ -107,8 +107,7 @@ end
 function M.pre_attack_enemy_hero()
   return env.ENEMY_HERO_DATA ~= nil
          and not env.DOES_TOWER_PROTECT_ENEMY
-         and functions.GetUnitDistance(env.BOT_DATA, env.ENEMY_HERO_DATA)
-             <= env.BOT_DATA.attack_range
+         and env.ENEMY_HERO_DISTANCE <= env.BOT_DATA.attack_range
 end
 
 function M.post_attack_enemy_hero()
@@ -128,8 +127,7 @@ function M.pre_use_silence()
          and not env.ENEMY_HERO_DATA.is_silenced
          and not env.BOT_DATA.is_silenced
          and ability:IsFullyCastable()
-         and functions.GetUnitDistance(env.BOT_DATA, env.ENEMY_HERO_DATA)
-               <= ability:GetCastRange()
+         and env.ENEMY_HERO_DISTANCE <= ability:GetCastRange()
          and not env.DOES_TOWER_PROTECT_ENEMY
 end
 

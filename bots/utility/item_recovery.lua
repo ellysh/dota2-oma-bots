@@ -126,9 +126,7 @@ function M.pre_tp_base()
              < functions.GetDistance(env.FOUNTAIN_SPOT, env.BOT_DATA.location)
          and (env.ENEMY_HERO_DATA == nil
               or constants.MIN_TP_ENEMY_HERO_RADIUS
-                 < functions.GetUnitDistance(
-                     env.BOT_DATA,
-                     env.ENEMY_HERO_DATA))
+                 < env.ENEMY_HERO_DISTANCE)
          and not map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
          and not algorithms.DoesBotOrCourierHaveItem(
                    "item_faerie_fire")

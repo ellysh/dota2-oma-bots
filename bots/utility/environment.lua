@@ -15,6 +15,7 @@ local M = {}
 M.BOT_DATA = {}
 M.ENEMY_CREEP_DATA = {}
 M.ENEMY_HERO_DATA = {}
+M.ENEMY_HERO_DISTANCE = 0
 M.ALLY_CREEP_FRONT_DATA = {}
 M.ALLY_CREEP_BACK_DATA = {}
 M.ENEMY_TOWER_DATA = {}
@@ -117,6 +118,10 @@ function M.UpdateVariables()
   if M.ENEMY_HERO_DATA ~= nil then
     M.DOES_TOWER_PROTECT_ENEMY =
       algorithms.DoesTowerProtectUnit(M.ENEMY_HERO_DATA)
+
+    M.ENEMY_HERO_DISTANCE = functions.GetUnitDistance(
+                              M.BOT_DATA,
+                              M.ENEMY_HERO_DATA)
   end
 
   M.IS_FOCUSED_BY_CREEPS = algorithms.IsFocusedByCreeps(M.BOT_DATA)

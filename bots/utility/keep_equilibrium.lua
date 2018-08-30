@@ -29,9 +29,7 @@ function M.pre_keep_equilibrium()
 
          and (env.ENEMY_HERO_DATA == nil
               or env.ENEMY_HERO_DATA.attack_range
-                 < functions.GetUnitDistance(
-                     env.BOT_DATA,
-                     env.ENEMY_HERO_DATA))
+                 < env.ENEMY_HERO_DISTANCE)
 end
 
 function M.post_keep_equilibrium()
