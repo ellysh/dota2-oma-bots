@@ -13,9 +13,6 @@ local moves = require(
 local map = require(
   GetScriptDirectory() .."/utility/map")
 
-local action_timing = require(
-  GetScriptDirectory() .."/utility/action_timing")
-
 local all_units = require(
   GetScriptDirectory() .."/utility/all_units")
 
