@@ -70,9 +70,14 @@ function M.pre_attack_enemy_tower()
          and algorithms.DoesEnemyTowerAttackAllyCreep(
                env.BOT_DATA,
                env.ENEMY_TOWER_DATA)
+
          and not env.IS_FOCUSED_BY_ENEMY_HERO
          and not env.IS_FOCUSED_BY_CREEPS
          and not env.IS_FOCUSED_BY_TOWER
+
+         and constants.MIN_HERO_DISTANCE
+            < functions.GetUnitDistance(env.BOT_DATA, env.ENEMY_HERO_DATA)
+
 end
 
 function M.post_attack_enemy_tower()
