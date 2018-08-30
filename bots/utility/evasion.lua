@@ -89,31 +89,15 @@ end
 
 ---------------------------------
 
-local function IsCreepToLastHit()
-  return (env.LAST_HIT_ENEMY_CREEP ~= nil
-          and functions.GetUnitDistance(
-                env.BOT_DATA,
-                env.LAST_HIT_ENEMY_CREEP)
-              <= env.BOT_DATA.attack_range)
-
-         or (env.LAST_HIT_ALLY_CREEP ~= nil
-             and functions.GetUnitDistance(
-                   env.BOT_DATA,
-                   env.LAST_HIT_ALLY_CREEP)
-                 <= env.BOT_DATA.attack_range)
-end
-
 function M.pre_move_safe_recovery()
-  return ((env.BOT_DATA.is_flask_healing
+  return (env.BOT_DATA.is_flask_healing
            and env.BOT_DATA.health ~= env.BOT_DATA.max_health)
 
-          or (env.BOT_DATA.is_healing
-              and functions.GetRate(
-                    env.BOT_DATA.health,
-                    env.BOT_DATA.max_health)
-                  <= 0.5))
-
-         and not IsCreepToLastHit()
+         or (env.BOT_DATA.is_healing
+             and functions.GetRate(
+                   env.BOT_DATA.health,
+                   env.BOT_DATA.max_health)
+                 <= 0.5)
 
          and not map.IsUnitInSpot(env.BOT_DATA, env.SAFE_SPOT)
 
