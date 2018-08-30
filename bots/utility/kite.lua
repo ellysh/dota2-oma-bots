@@ -49,6 +49,9 @@ function M.pre_attack_enemy_hero()
          and env.BOT_DATA.attack_target ~= env.ENEMY_HERO_DATA
          and env.PRE_LAST_HIT_ENEMY_CREEP == nil
          and env.PRE_LAST_HIT_ALLY_CREEP == nil
+         and not algorithms.AreEnemyCreepsInRadius(
+                   env.BOT_DATA,
+                   constants.CREEP_AGRO_RADIUS)
 end
 
 function M.post_attack_enemy_hero()
