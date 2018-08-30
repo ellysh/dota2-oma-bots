@@ -56,6 +56,10 @@ function M.pre_aggro_last_hit()
 
          and not map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
 
+         and not map.IsUnitInSpot(
+                   env.BOT_DATA,
+                   map.GetAllySpot("tower_tier_1_attack"))
+
          and not algorithms.IsUnitMoving(last_hit_creep)
 
          and (creep_distance <= constants.CREEP_AGRO_RADIUS
