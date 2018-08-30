@@ -253,9 +253,9 @@ function M.DoesTowerProtectUnit(unit_data)
                                bot_data.location,
                                tower_spot)
 
-  return map.IsUnitInEnemyTowerAttackRange(unit_data)
+  return bot_tower_distance < constants.CREEP_AGRO_RADIUS
          or bot_tower_distance
-              < functions.GetUnitDistance(bot_data, unit_data)
+            < functions.GetUnitDistance(bot_data, unit_data)
 end
 
 function M.DoesBotOrCourierHaveItem(item_name)
