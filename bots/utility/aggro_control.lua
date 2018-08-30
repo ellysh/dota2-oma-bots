@@ -54,7 +54,11 @@ function M.pre_aggro_last_hit()
 
   return env.ENEMY_HERO_DATA ~= nil
 
-         and not map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
+         and (env.ENEMY_TOWER_DATA == nil
+              or constants.CREEP_AGRO_RADIUS
+                 < functions.GetUnitDistance(
+                     env.BOT_DATA,
+                     env.ENEMY_TOWER_DATA))
 
          and not map.IsUnitInSpot(
                    env.BOT_DATA,
