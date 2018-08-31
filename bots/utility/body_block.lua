@@ -186,7 +186,7 @@ function M.stop_attack_and_move()
 
   env.BOT:Action_ClearActions(true)
 
-  local multiplier = functions.ternary(DotaTime() < 20, 0.2, 0.3)
+  local multiplier = functions.ternary(DotaTime() < 20, 0.18, 0.3)
 
   action_timing.SetNextActionDelay(
     (distance/creep_data.speed) * multiplier)
