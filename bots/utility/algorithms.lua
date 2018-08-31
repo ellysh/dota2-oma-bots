@@ -245,13 +245,17 @@ function M.BuyItem(item_name)
   action_timing.SetNextActionDelay(0.05)
 end
 
+function M.GetEnemyTowerDistance(unit_data)
+  return functions.GetDistance(
+           unit_data.location,
+           map.GetEnemySpot("tower_tier_1_attack"))
+end
+
 function M.DoesTowerProtectUnit(unit_data)
   local bot_data = M.GetBotData()
   local tower_spot = map.GetEnemySpot("tower_tier_1_attack")
 
-  local bot_tower_distance = functions.GetDistance(
-                               bot_data.location,
-                               tower_spot)
+  local bot_tower_distance = M.GetEnemyTowerDistance(bot_data)
 
   return bot_tower_distance < constants.CREEP_AGRO_RADIUS
          or bot_tower_distance
