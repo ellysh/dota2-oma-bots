@@ -98,81 +98,6 @@ M.OBJECTIVES = {
   },
 
   {
-    objective = "evasion",
-    module = require(GetScriptDirectory() .."/utility/evasion"),
-    is_interruptible = false,
-    moves = {
-      {
-        move = "use_silence",
-        is_interruptible = false,
-        actions = {
-          {action = "use_silence"},
-        }
-      },
-      {
-        move = "attack_enemy_hero",
-        is_interruptible = false,
-        actions = {
-          {action = "attack_enemy_hero"},
-          {action = "stop_attack"},
-        }
-      },
-      {
-        move = "move_safe_recovery",
-        is_interruptible = false,
-        actions = {
-          {action = "move_safe_recovery"},
-        }
-      },
-      {
-        move = "move_safe_evasion",
-        is_interruptible = false,
-        actions = {
-          {action = "move_safe_evasion"},
-        }
-      },
-    },
-  },
-
-  {
-    objective = "base_recovery",
-    module = require(GetScriptDirectory() .."/utility/base_recovery"),
-    is_interruptible = true,
-    moves = {
-      {
-        move = "deliver_items",
-        is_interruptible = false,
-        actions = {
-          {action = "deliver_items"},
-        }
-      },
-      {
-        move = "move_base",
-        is_interruptible = true,
-        actions = {
-          {action = "move_base"},
-          {action = "restore_hp_on_base"},
-        }
-      },
-    },
-  },
-
-  {
-    objective = "upgrade_skills",
-    module = require(GetScriptDirectory() .."/utility/upgrade_skills"),
-    is_interruptible = false,
-    moves = {
-      {
-        move = "upgrade",
-        is_interruptible = false,
-        actions = {
-          {action = "upgrade"},
-        }
-      },
-    }
-  },
-
-  {
     objective = "buy_items",
     module = require(GetScriptDirectory() .."/utility/buy_items"),
     is_interruptible = false,
@@ -273,6 +198,81 @@ M.OBJECTIVES = {
         }
       },
     },
+  },
+
+  {
+    objective = "evasion",
+    module = require(GetScriptDirectory() .."/utility/evasion"),
+    is_interruptible = false,
+    moves = {
+      {
+        move = "use_silence",
+        is_interruptible = false,
+        actions = {
+          {action = "use_silence"},
+        }
+      },
+      {
+        move = "attack_enemy_hero",
+        is_interruptible = false,
+        actions = {
+          {action = "attack_enemy_hero"},
+          {action = "stop_attack"},
+        }
+      },
+      {
+        move = "move_safe_recovery",
+        is_interruptible = false,
+        actions = {
+          {action = "move_safe_recovery"},
+        }
+      },
+      {
+        move = "move_safe_evasion",
+        is_interruptible = false,
+        actions = {
+          {action = "move_safe_evasion"},
+        }
+      },
+    },
+  },
+
+  {
+    objective = "base_recovery",
+    module = require(GetScriptDirectory() .."/utility/base_recovery"),
+    is_interruptible = true,
+    moves = {
+      {
+        move = "deliver_items",
+        is_interruptible = false,
+        actions = {
+          {action = "deliver_items"},
+        }
+      },
+      {
+        move = "move_base",
+        is_interruptible = true,
+        actions = {
+          {action = "move_base"},
+          {action = "restore_hp_on_base"},
+        }
+      },
+    },
+  },
+
+  {
+    objective = "upgrade_skills",
+    module = require(GetScriptDirectory() .."/utility/upgrade_skills"),
+    is_interruptible = false,
+    moves = {
+      {
+        move = "upgrade",
+        is_interruptible = false,
+        actions = {
+          {action = "upgrade"},
+        }
+      },
+    }
   },
 
   {
