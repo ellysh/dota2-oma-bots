@@ -167,6 +167,8 @@ function M.move_and_block()
                      target_location)
                    - (env.BOT_DATA.collision_size / 2)
 
+  local multiplier = functions.ternary(DotaTime() < 20, 0.8, 0.6)
+
   action_timing.SetNextActionDelay((distance/env.BOT_DATA.speed) * 0.8)
 end
 
@@ -184,7 +186,10 @@ function M.stop_attack_and_move()
 
   env.BOT:Action_ClearActions(true)
 
-  action_timing.SetNextActionDelay((distance/creep_data.speed) * 0.2)
+  local multiplier = functions.ternary(DotaTime() < 20, 0.2, 0.3)
+
+  action_timing.SetNextActionDelay(
+    (distance/creep_data.speed) * multiplier)
 end
 
 ---------------------------------
