@@ -59,10 +59,7 @@ function M.pre_heal_flask()
                  env.BOT_DATA.location)
          and not env.IS_FOCUSED_BY_ENEMY_HERO
          and not env.IS_FOCUSED_BY_UNKNOWN_UNIT
-         and not algorithms.AreUnitsInRadius(
-                   env.BOT_DATA,
-                   constants.MAX_HERO_ATTACK_RANGE,
-                   algorithms.GetEnemyHeroes)
+         and constants.MAX_HERO_ATTACK_RANGE < env.ENEMY_HERO_DISTANCE
 end
 
 function M.post_heal_flask()
@@ -95,10 +92,7 @@ function M.pre_heal_tango()
               or 200 < (env.BOT_DATA.max_health - env.BOT_DATA.health))
          and not env.IS_FOCUSED_BY_ENEMY_HERO
          and not env.IS_FOCUSED_BY_UNKNOWN_UNIT
-         and not algorithms.AreUnitsInRadius(
-                   env.BOT_DATA,
-                   constants.MAX_HERO_ATTACK_RANGE,
-                   algorithms.GetEnemyHeroes)
+         and constants.MAX_HERO_ATTACK_RANGE < env.ENEMY_HERO_DISTANCE
 
          and constants.TANGO_USAGE_FROM_HG_DISTANCE
              < functions.GetDistance(

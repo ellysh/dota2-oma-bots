@@ -275,8 +275,7 @@ end
 function M.IsFocusedByUnknownUnit(unit_data)
   return all_units.IsUnitShootTarget(
            nil,
-           unit_data,
-           constants.MAX_HERO_ATTACK_RANGE)
+           unit_data)
 end
 
 function M.IsLastHitTarget(unit_data, target_data)
