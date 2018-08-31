@@ -88,7 +88,10 @@ function M.pre_heal_tango()
                  < functions.GetDistance(
                      GetTreeLocation(tree),
                      tower_data.location))
-         and (algorithms.IsUnitLowHp(env.BOT_DATA)
+         and ((algorithms.IsUnitLowHp(env.BOT_DATA)
+               and not algorithms.IsItemCastable(
+                         env.BOT_DATA,
+                         "item_flask"))
               or 200 < (env.BOT_DATA.max_health - env.BOT_DATA.health))
          and not env.IS_FOCUSED_BY_ENEMY_HERO
          and not env.IS_FOCUSED_BY_UNKNOWN_UNIT
