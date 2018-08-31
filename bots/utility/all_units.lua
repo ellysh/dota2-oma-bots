@@ -93,6 +93,7 @@ local function AddUnit(unit, unit_type, team)
     facing = unit:GetFacing(),
     is_visible = true,
     projectile_speed = unit:GetAttackProjectileSpeed(),
+    collision_size = unit:GetBoundingRadius(),
     incoming_damage_from_creeps = 0,
     incoming_damage_from_heroes = 0,
     incoming_damage_from_towers = 0,
