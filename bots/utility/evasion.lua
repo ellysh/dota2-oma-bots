@@ -67,7 +67,7 @@ end
 function M.pre_attack_enemy_hero()
   local ability = env.BOT:GetAbilityByName("drow_ranger_frost_arrows")
 
-  return moves.pre_attack_enemy_hero()
+  return moves.pre_attack_enemy_hero_safe()
          and DoesPowerEnemyHeroPursuit()
          and not env.BOT_DATA.is_silenced
          and ability:IsFullyCastable()

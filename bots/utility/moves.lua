@@ -104,14 +104,14 @@ end
 
 ---------------------------------
 
-function M.pre_attack_enemy_hero()
+function M.pre_attack_enemy_hero_unsafe()
   return env.ENEMY_HERO_DATA ~= nil
          and not env.DOES_TOWER_PROTECT_ENEMY
-         and env.ENEMY_HERO_DISTANCE <= env.BOT_DATA.attack_range
 end
 
-function M.post_attack_enemy_hero()
-  return not M.pre_attack_enemy_hero()
+function M.pre_attack_enemy_hero_safe()
+  return M.pre_attack_enemy_hero_unsafe()
+         and env.ENEMY_HERO_DISTANCE <= env.BOT_DATA.attack_range
 end
 
 function M.attack_enemy_hero()

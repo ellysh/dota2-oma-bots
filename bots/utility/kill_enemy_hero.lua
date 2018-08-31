@@ -45,11 +45,11 @@ end
 ---------------------------------
 
 function M.pre_attack_enemy_hero()
-  return moves.pre_attack_enemy_hero()
+  return moves.pre_attack_enemy_hero_unsafe()
 end
 
 function M.post_attack_enemy_hero()
-  return moves.post_attack_enemy_hero()
+  return not M.pre_attack_enemy_hero()
 end
 
 function M.attack_enemy_hero()
