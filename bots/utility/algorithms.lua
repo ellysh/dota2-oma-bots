@@ -507,7 +507,7 @@ local function GetCreepWith(bot_data, side, validate_function)
 end
 
 local function GetPreLastHitMultiplier(bot_data)
-  return functions.ternary(bot_data.attack_damage < 100, 2.0, 1.5)
+  return functions.ternary(bot_data.attack_damage < 75, 2.0, 1.5)
 end
 
 function M.GetPreLastHitCreep(bot_data, side)
