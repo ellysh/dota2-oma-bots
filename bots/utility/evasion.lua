@@ -51,6 +51,7 @@ end
 
 function M.pre_use_silence()
   return moves.pre_use_silence()
+         and not env.BOT_DATA.is_flask_healing
          and DoesPowerEnemyHeroPursuit()
 end
 
@@ -68,6 +69,7 @@ function M.pre_attack_enemy_hero()
   local ability = env.BOT:GetAbilityByName("drow_ranger_frost_arrows")
 
   return moves.pre_attack_enemy_hero_safe()
+         and not env.BOT_DATA.is_flask_healing
          and DoesPowerEnemyHeroPursuit()
          and not env.BOT_DATA.is_silenced
          and ability:IsFullyCastable()
