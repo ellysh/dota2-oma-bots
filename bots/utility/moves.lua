@@ -107,7 +107,6 @@ end
 function M.pre_attack_enemy_hero()
   return env.ENEMY_HERO_DATA ~= nil
          and not env.DOES_TOWER_PROTECT_ENEMY
-         and env.ENEMY_HERO_DISTANCE <= env.BOT_DATA.attack_range
 end
 
 function M.post_attack_enemy_hero()
