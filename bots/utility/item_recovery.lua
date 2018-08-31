@@ -92,7 +92,8 @@ function M.pre_heal_tango()
                and not algorithms.IsItemCastable(
                          env.BOT_DATA,
                          "item_flask"))
-              or 200 < (env.BOT_DATA.max_health - env.BOT_DATA.health))
+              or (200 < (env.BOT_DATA.max_health - env.BOT_DATA.health)
+                  and not algorithms.IsUnitLowHp(env.BOT_DATA)))
          and not env.IS_FOCUSED_BY_ENEMY_HERO
          and not env.IS_FOCUSED_BY_UNKNOWN_UNIT
          and constants.MAX_HERO_ATTACK_RANGE < env.ENEMY_HERO_DISTANCE
