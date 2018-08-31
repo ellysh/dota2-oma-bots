@@ -106,10 +106,11 @@ function M.pre_decrease_creeps_distance()
   local last_hit_creep = GetPreLastHitCreep()
 
   return ((last_hit_creep ~= nil
-          and constants.LASTHIT_CREEP_DISTANCE
-              < functions.GetUnitDistance(
-                  env.BOT_DATA,
-                  last_hit_creep))
+           and not map.IsUnitInEnemyTowerAttackRange(last_hit_creep)
+           and constants.LASTHIT_CREEP_DISTANCE
+               < functions.GetUnitDistance(
+                   env.BOT_DATA,
+                   last_hit_creep))
 
           or not (algorithms.AreEnemyCreepsInRadius(
                     env.BOT_DATA,
