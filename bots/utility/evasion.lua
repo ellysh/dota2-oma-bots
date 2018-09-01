@@ -30,8 +30,7 @@ function M.pre_evasion()
   return algorithms.IsBotAlive()
          and (M.pre_move_safe_evasion()
               or M.pre_move_safe_recovery()
-              or M.pre_use_silence()
-              or M.pre_attack_enemy_hero())
+              or M.pre_use_silence())
 end
 
 function M.post_evasion()
@@ -63,33 +62,6 @@ end
 
 function M.use_silence()
   moves.use_silence()
-end
-
----------------------------------
-
-function M.pre_attack_enemy_hero()
-  local ability = env.BOT:GetAbilityByName("drow_ranger_frost_arrows")
-
-  return moves.pre_attack_enemy_hero_safe()
-         and not algorithms.IsUnitCriticalHp(env.BOT_DATA)
-         and not env.BOT_DATA.is_flask_healing
-         and DoesPowerEnemyHeroPursuit()
-         and not env.BOT_DATA.is_silenced
-         and ability:IsFullyCastable()
-         and not all_units.GetUnit(env.ENEMY_HERO_DATA):HasModifier(
-                   "modifier_drow_ranger_frost_arrows_slow")
-end
-
-function M.post_attack_enemy_hero()
-  return not M.pre_attack_enemy_hero()
-end
-
-function M.attack_enemy_hero()
-  moves.attack_enemy_hero()
-end
-
-function M.stop_attack()
-  moves.stop_attack()
 end
 
 ---------------------------------

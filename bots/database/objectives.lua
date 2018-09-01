@@ -213,14 +213,6 @@ M.OBJECTIVES = {
         }
       },
       {
-        move = "attack_enemy_hero",
-        is_interruptible = false,
-        actions = {
-          {action = "attack_enemy_hero"},
-          {action = "stop_attack"},
-        }
-      },
-      {
         move = "move_safe_recovery",
         is_interruptible = false,
         actions = {
