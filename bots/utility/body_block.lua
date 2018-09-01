@@ -194,7 +194,7 @@ function M.stop_attack_and_move()
 
   env.BOT:Action_ClearActions(true)
 
-  local multiplier = functions.ternary(IsFirstWave(), 0.2, 0.3)
+  local multiplier = functions.ternary(IsFirstWave(), 0.2, 0.35)
 
   action_timing.SetNextActionDelay(
     (distance/creep_data.speed) * multiplier)
