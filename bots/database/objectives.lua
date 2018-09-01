@@ -330,6 +330,30 @@ M.OBJECTIVES = {
   },
 
   {
+    objective = "defend_tower",
+    module = require(GetScriptDirectory() .."/utility/defend_tower"),
+    is_interruptible = true,
+    moves = {
+      {
+        move = "attack_enemy_creep",
+        is_interruptible = false,
+        actions = {
+          {action = "attack_enemy_creep"},
+          {action = "stop_attack"},
+        }
+      },
+      {
+        move = "attack_enemy_hero",
+        is_interruptible = false,
+        actions = {
+          {action = "attack_enemy_hero"},
+          {action = "stop_attack"},
+        }
+      },
+    }
+  },
+
+  {
     objective = "kite",
     module = require(GetScriptDirectory() .."/utility/kite"),
     is_interruptible = false,
