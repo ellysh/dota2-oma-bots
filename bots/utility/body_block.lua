@@ -93,7 +93,10 @@ function M.pre_turn_enemy_fountain()
                    30)
 
          and (env.ENEMY_HERO_DATA == nil
-              or constants.MAX_HERO_ATTACK_RANGE
+              or algorithms.GetAttackRange(
+                   env.ENEMY_HERO_DATA,
+                   env.BOT_DATA,
+                   true)
                  < env.ENEMY_HERO_DISTANCE)
 end
 

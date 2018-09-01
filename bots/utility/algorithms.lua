@@ -326,7 +326,7 @@ local function IsEnemyUnitNearSpot(unit_data, enemy_hero_data, spot)
 
   return (enemy_hero_data ~= nil
           and (functions.GetDistance(enemy_hero_data.location, spot)
-                 <= constants.MAX_HERO_ATTACK_RANGE
+               <= M.GetAttackRange(enemy_hero_data, unit_data, true)
                or map.IsUnitNearSpot(enemy_hero_data, spot)))
          or creep ~= nil
 end
