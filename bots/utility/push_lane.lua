@@ -19,7 +19,7 @@ local M = {}
 
 function M.pre_push_lane()
   return algorithms.IsBotAlive()
-         and not algorithms.IsUnitLowHp(env.BOT_DATA)
+         and not env.IS_BOT_LOW_HP
          and env.ENEMY_HERO_DATA == nil
          and 6 <= env.BOT_DATA.level
          and (M.pre_attack_enemy_creep()

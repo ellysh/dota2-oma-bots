@@ -45,7 +45,7 @@ end
 
 function M.pre_heal_flask()
   return algorithms.IsItemCastable(env.BOT_DATA, "item_flask")
-         and (algorithms.IsUnitLowHp(env.BOT_DATA)
+         and (env.IS_BOT_LOW_HP
               or (420 < (env.BOT_DATA.max_health - env.BOT_DATA.health)
                   and functions.GetRate(
                         env.BOT_DATA.health,
@@ -96,12 +96,12 @@ function M.pre_heal_tango()
                  < functions.GetDistance(
                      GetTreeLocation(tree),
                      tower_data.location))
-         and ((algorithms.IsUnitLowHp(env.BOT_DATA)
+         and ((env.IS_BOT_LOW_HP
                and not algorithms.IsItemCastable(
                          env.BOT_DATA,
                          "item_flask"))
               or (200 < (env.BOT_DATA.max_health - env.BOT_DATA.health)
-                  and not algorithms.IsUnitLowHp(env.BOT_DATA)))
+                  and not env.IS_BOT_LOW_HP))
          and not env.IS_FOCUSED_BY_ENEMY_HERO
          and not env.IS_FOCUSED_BY_UNKNOWN_UNIT
          and (env.ENEMY_HERO_DATA ~= nil
@@ -132,7 +132,7 @@ end
 function M.pre_tp_base()
   return algorithms.IsItemCastable(env.BOT_DATA, "item_tpscroll")
          and env.BOT_DATA.gold < constants.RESERVED_GOLD
-         and algorithms.IsUnitLowHp(env.BOT_DATA)
+         and env.IS_BOT_LOW_HP
          and constants.MIN_TP_BASE_RADIUS
              < functions.GetDistance(env.FOUNTAIN_SPOT, env.BOT_DATA.location)
          and (env.ENEMY_HERO_DATA == nil

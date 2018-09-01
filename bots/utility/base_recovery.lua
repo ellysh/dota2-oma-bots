@@ -29,7 +29,7 @@ local M = {}
 function M.pre_base_recovery()
   return algorithms.IsBotAlive()
 
-         and (algorithms.IsUnitLowHp(env.BOT_DATA)
+         and (env.IS_BOT_LOW_HP
               and not env.BOT_DATA.is_healing)
 
          and (M.pre_restore_hp_on_base()

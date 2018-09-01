@@ -13,6 +13,7 @@ local constants = require(
 local M = {}
 
 M.BOT_DATA = {}
+M.IS_BOT_LOW_HP = false
 M.ENEMY_CREEP_DATA = {}
 M.ENEMY_HERO_DATA = {}
 M.ENEMY_HERO_DISTANCE = 0
@@ -62,6 +63,8 @@ function M.UpdateVariables()
   M.BOT = GetBot()
 
   M.BOT_DATA = algorithms.GetBotData()
+
+  M.IS_BOT_LOW_HP = algorithms.IsUnitLowHp(M.BOT_DATA)
 
   M.ENEMY_HERO_DATA = algorithms.GetEnemyHero(
                         M.BOT_DATA,

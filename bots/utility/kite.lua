@@ -25,7 +25,7 @@ local M = {}
 
 function M.pre_kite()
   return algorithms.IsBotAlive()
-         and not algorithms.IsUnitLowHp(env.BOT_DATA)
+         and not env.IS_BOT_LOW_HP
 
          and (M.pre_attack_enemy_hero()
               or M.pre_move_safe()

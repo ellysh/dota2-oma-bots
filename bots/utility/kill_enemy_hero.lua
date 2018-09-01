@@ -28,7 +28,7 @@ function M.pre_kill_enemy_hero()
          and algorithms.IsBotAlive()
          and algorithms.IsUnitLowHp(env.ENEMY_HERO_DATA)
 
-         and not algorithms.IsUnitLowHp(env.BOT_DATA)
+         and not env.IS_BOT_LOW_HP
 
          and (not env.IS_FOCUSED_BY_TOWER
               or 6 < env.BOT_DATA.level)

@@ -22,7 +22,7 @@ local M = {}
 
 function M.pre_defend_tower()
   return algorithms.IsBotAlive()
-         and not algorithms.IsUnitLowHp(env.BOT_DATA)
+         and not env.IS_BOT_LOW_HP
 
          and (M.pre_attack_enemy_creep()
               or M.pre_attack_enemy_hero())

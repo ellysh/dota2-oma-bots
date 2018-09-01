@@ -42,7 +42,7 @@ end
 local function DoesPowerEnemyHeroPursuit()
   return env.ENEMY_HERO_DATA ~= nil
 
-         and algorithms.IsUnitLowHp(env.BOT_DATA)
+         and env.IS_BOT_LOW_HP
 
          and env.ENEMY_HERO_DISTANCE
              <= algorithms.GetAttackRange(
