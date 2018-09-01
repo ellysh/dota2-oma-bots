@@ -265,7 +265,7 @@ function M.DoesTowerProtectUnit(unit_data)
 
   local bot_tower_distance = M.GetEnemyTowerDistance(bot_data)
 
-  return bot_tower_distance < constants.CREEP_AGRO_RADIUS
+  return bot_tower_distance <= constants.CREEP_AGRO_RADIUS
          or bot_tower_distance
             < functions.GetUnitDistance(bot_data, unit_data)
 end

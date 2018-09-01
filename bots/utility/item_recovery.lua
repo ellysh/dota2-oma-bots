@@ -59,8 +59,8 @@ function M.pre_heal_flask()
                  env.BOT_DATA.location)
          and not env.IS_FOCUSED_BY_ENEMY_HERO
          and not env.IS_FOCUSED_BY_UNKNOWN_UNIT
-         and (env.ENEMY_HERO_DATA ~= nil
-              and algorithms.GetAttackRange(
+         and (env.ENEMY_HERO_DATA == nil
+              or algorithms.GetAttackRange(
                     env.ENEMY_HERO_DATA,
                     env.BOT_DATA,
                     true)
