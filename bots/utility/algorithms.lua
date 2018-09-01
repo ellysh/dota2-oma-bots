@@ -535,6 +535,18 @@ function M.GetLastHitCreep(bot_data, side)
            end)
 end
 
+function M.GetAttackRange(unit_data, target_data, use_buffer_range)
+  local buffer_range = functions.ternary(
+                         use_buffer_range,
+                         constants.MOTION_BUFFER_RANGE,
+                         0)
+
+  return unit_data.attack_range
+         + unit_data.collision_size
+         + target_data.collision_size
+         + buffer_range
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_GetNormalizedRadius = GetNormalizedRadius
 M.test_UpdateUnitList = all_units.UpdateUnitList

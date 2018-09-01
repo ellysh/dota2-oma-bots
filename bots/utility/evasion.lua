@@ -46,7 +46,10 @@ local function DoesPowerEnemyHeroPursuit()
          and algorithms.IsUnitLowHp(env.BOT_DATA)
 
          and env.ENEMY_HERO_DISTANCE
-               <= env.ENEMY_HERO_DATA.attack_range
+             <= algorithms.GetAttackRange(
+                  env.ENEMY_HERO_DATA,
+                  env.BOT_DATA,
+                  true)
 end
 
 function M.pre_use_silence()

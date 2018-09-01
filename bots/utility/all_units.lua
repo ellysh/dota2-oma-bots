@@ -197,7 +197,7 @@ function M.IsUnitAttackTarget(unit_data, target_data)
                  target_data.location,
                  constants.TURN_TARGET_MAX_DEGREE)
            and functions.GetUnitDistance(unit_data, target_data)
-               <= unit_data.attack_range
+               <= unit_data.attack_range + constants.MOTION_BUFFER_RANGE
            and not M.IsAttackDone(unit_data)
   else
     return M.IsUnitShootTarget(

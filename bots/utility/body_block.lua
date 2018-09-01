@@ -58,7 +58,11 @@ function M.pre_move_start_position()
                    GetBodyBlockSpot())
 
          and (env.ENEMY_HERO_DATA == nil
-              or env.BOT_DATA.attack_range < env.ENEMY_HERO_DISTANCE)
+              or algorithms.GetAttackRange(
+                   env.BOT_DATA,
+                   env.ENEMY_HERO_DATA,
+                   true)
+                 < env.ENEMY_HERO_DISTANCE)
 end
 
 function M.post_move_start_position()
@@ -126,14 +130,6 @@ local function GetFirstMovingCreep()
 end
 
 function M.pre_move_and_block()
-  local creep_distance = 0
-
-  if env.ALLY_CREEP_BACK_DATA ~= nil then
-    creep_distance = functions.GetUnitDistance(
-                       env.BOT_DATA,
-                       env.ALLY_CREEP_BACK_DATA)
-  end
-
   return algorithms.AreAllyCreepsInRadius(
            env.BOT_DATA,
            constants.MAX_MELEE_ATTACK_RANGE,
@@ -141,13 +137,16 @@ function M.pre_move_and_block()
 
          and not algorithms.AreEnemyCreepsInRadius(
                    env.BOT_DATA,
-                   env.BOT_DATA.attack_range + creep_distance)
+                   env.BOT_DATA.attack_range)
 
          and not map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
 
          and (env.ENEMY_HERO_DATA == nil
-              or env.BOT_DATA.attack_range + creep_distance
-                 < env.ENEMY_HERO_DISTANCE)
+              or algorithms.GetAttackRange(
+                   env.ENEMY_HERO_DATA,
+                   env.BOT_DATA,
+                   true)
+                 <= env.ENEMY_HERO_DISTANCE)
 end
 
 function M.post_move_and_block()

@@ -111,7 +111,11 @@ end
 
 function M.pre_attack_enemy_hero_safe()
   return M.pre_attack_enemy_hero_unsafe()
-         and env.ENEMY_HERO_DISTANCE <= env.BOT_DATA.attack_range
+         and env.ENEMY_HERO_DISTANCE
+             <= algorithms.GetAttackRange(
+                  env.BOT_DATA,
+                  env.ENEMY_HERO_DATA,
+                  false)
 end
 
 function M.attack_enemy_hero()
