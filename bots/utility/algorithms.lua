@@ -512,19 +512,14 @@ local function GetCreepWith(bot_data, side, validate_function)
     end)
 end
 
-local function GetPreLastHitMultiplier(bot_data)
-  return functions.ternary(bot_data.attack_damage < 75, 2.0, 1.5)
-end
-
 function M.GetPreLastHitCreep(bot_data, side)
   return GetCreepWith(
            bot_data,
            side,
            function(unit_data)
              local incoming_damage = M.GetTotalIncomingDamage(unit_data)
-             local total_damage = (GetPreLastHitMultiplier(bot_data)
-                                   * bot_data.attack_damage)
-                                  + incoming_damage
+             local total_damage = bot_data.attack_damage
+                                  + (incoming_damage * 2)
 
              return 0 < incoming_damage
                     and unit_data.health < total_damage
