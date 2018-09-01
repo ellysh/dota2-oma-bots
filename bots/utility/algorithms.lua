@@ -206,6 +206,10 @@ function M.GetTotalIncomingDamage(unit_data)
          + unit_data.incoming_damage_from_towers
 end
 
+function M.IsUnitCriticalHp(unit_data)
+  return unit_data.health <= constants.UNIT_CRITICAL_HEALTH
+end
+
 function M.IsUnitLowHp(unit_data)
   local unit_health = unit_data.health
                       - M.GetTotalIncomingDamage(unit_data)

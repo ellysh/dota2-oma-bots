@@ -494,7 +494,7 @@ M.OBJECTIVES = {
   {
     objective = "body_block",
     module = require(GetScriptDirectory() .."/utility/body_block"),
-    is_interruptible = false,
+    is_interruptible = true,
     moves = {
       {
         move = "move_and_block",
