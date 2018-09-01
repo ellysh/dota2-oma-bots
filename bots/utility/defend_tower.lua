@@ -25,7 +25,7 @@ function M.pre_defend_tower()
          and not algorithms.IsUnitLowHp(env.BOT_DATA)
 
          and (M.pre_attack_enemy_creep()
-              or M.attack_enemy_hero())
+              or M.pre_attack_enemy_hero())
 end
 
 function M.post_defend_tower()
@@ -35,6 +35,9 @@ end
 ---------------------------------
 
 local function GetCreepAttackingTower()
+  if env.ALLY_TOWER_DATA == nil then
+    return nil end
+
   local creeps = algorithms.GetEnemyCreeps(
                    env.BOT_DATA,
                    constants.MAX_UNIT_TARGET_RADIUS)
@@ -69,6 +72,7 @@ end
 
 function M.pre_attack_enemy_hero()
   return env.ENEMY_HERO_DATA ~= nil
+         and env.ALLY_TOWER_DATA ~= nil
          and all_units.IsUnitAttackTarget(
                env.ENEMY_HERO_DATA,
                env.ALLY_TOWER_DATA)
@@ -78,7 +82,7 @@ function M.post_attack_enemy_hero()
   return not M.pre_attack_enemy_hero()
 end
 
-function M.pre_attack_enemy_hero()
+function M.attack_enemy_hero()
   moves.pre_attack_enemy_hero()
 end
 
