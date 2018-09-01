@@ -297,7 +297,7 @@ end
 function M.IsFocusedByCreeps(unit_data)
   local creeps = M.GetEnemyCreeps(
                    unit_data,
-                   constants.MAX_CREEP_ATTACK_RANGE)
+                   constants.MAX_UNIT_TARGET_RADIUS)
 
   return nil ~= functions.GetElementWith(
                   creeps,

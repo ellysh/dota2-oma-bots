@@ -88,7 +88,10 @@ function M.pre_heal_tango()
   return algorithms.IsItemCastable(env.BOT_DATA, "item_tango")
          and tree ~= nil
          and (tower_data == nil
-              or constants.MAX_TOWER_ATTACK_RANGE
+              or algorithms.GetAttackRange(
+                   tower_data,
+                   env.BOT_DATA,
+                   true)
                  < functions.GetDistance(
                      GetTreeLocation(tree),
                      tower_data.location))
