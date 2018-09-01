@@ -65,7 +65,9 @@ function M.post_attack_enemy_creep()
 end
 
 function M.attack_enemy_creep()
-  moves.attack_enemy_creep()
+  local creep = GetCreepAttackingTower()
+
+  algorithms.AttackUnit(env.BOT_DATA, creep, false)
 end
 
 --------------------------------
