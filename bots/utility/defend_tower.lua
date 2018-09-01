@@ -61,7 +61,7 @@ function M.pre_attack_enemy_creep()
 end
 
 function M.post_attack_enemy_creep()
-  return not pre_attack_enemy_creep()
+  return not M.pre_attack_enemy_creep()
 end
 
 function M.attack_enemy_creep()
@@ -83,7 +83,7 @@ function M.post_attack_enemy_hero()
 end
 
 function M.attack_enemy_hero()
-  moves.pre_attack_enemy_hero()
+  moves.attack_enemy_hero()
 end
 
 --------------------------------
