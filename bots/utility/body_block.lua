@@ -59,8 +59,8 @@ function M.pre_move_start_position()
 
          and (env.ENEMY_HERO_DATA == nil
               or algorithms.GetAttackRange(
-                   env.BOT_DATA,
                    env.ENEMY_HERO_DATA,
+                   env.BOT_DATA,
                    true)
                  < env.ENEMY_HERO_DISTANCE)
 end
