@@ -81,11 +81,10 @@ function M.pre_attack_enemy_tower()
                     env.BOT_DATA,
                     false)
                   < env.ENEMY_HERO_DISTANCE)
-                  and functions.GetRate(
-                        env.BOT_DATA.health,
-                        env.BOT_DATA.max_health)
-                      < constants.UNIT_HALF_HEALTH_LEVEL)
-
+              or constants.UNIT_HALF_HEALTH_LEVEL
+                 <= functions.GetRate(
+                      env.BOT_DATA.health,
+                      env.BOT_DATA.max_health))
 end
 
 function M.post_attack_enemy_tower()
