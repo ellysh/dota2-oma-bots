@@ -10,6 +10,9 @@ local algorithms = require(
 local env = require(
   GetScriptDirectory() .."/utility/environment")
 
+local all_units = require(
+  GetScriptDirectory() .."/utility/all_units")
+
 local moves = require(
   GetScriptDirectory() .."/utility/moves")
 
@@ -17,38 +20,45 @@ local M = {}
 
 ---------------------------------
 
-function M.pre_keep_equilibrium()
+function M.pre_defend_tower()
   return algorithms.IsBotAlive()
          and not algorithms.IsUnitLowHp(env.BOT_DATA)
 
-         and env.PRE_LAST_HIT_ENEMY_CREEP == nil
-         and env.PRE_LAST_HIT_ALLY_CREEP == nil
-
          and (M.pre_attack_enemy_creep()
-              or M.pre_attack_ally_creep())
-
-         and (env.ENEMY_HERO_DATA == nil
-              or algorithms.GetAttackRange(
-                   env.ENEMY_HERO_DATA,
-                   env.BOT_DATA,
-                   true)
-                 < env.ENEMY_HERO_DISTANCE)
+              or M.attack_enemy_hero())
 end
 
-function M.post_keep_equilibrium()
-  return not M.pre_keep_equilibrium()
+function M.post_defend_tower()
+  return not M.pre_defend_tower()
 end
 
 ---------------------------------
 
+local function GetCreepAttackingTower()
+  local creeps = algorithms.GetEnemyCreeps(
+                   env.BOT_DATA,
+                   constants.MAX_UNIT_TARGET_RADIUS)
+
+  return functions.GetElementWith(
+    creeps,
+    algorithms.CompareMaxDamage,
+    function(unit_data)
+      return all_units.IsUnitAttackTarget(
+               unit_data,
+               env.ALLY_TOWER_DATA)
+    end)
+end
+
 function M.pre_attack_enemy_creep()
-  return constants.MAX_CREEPS_HP_DELTA
-           < (env.ENEMY_CREEPS_HP - env.ALLY_CREEPS_HP)
-         and moves.pre_attack_enemy_creep()
+  local creep = GetCreepAttackingTower()
+
+  return creep ~= nil
+         and not env.IS_FOCUSED_BY_ENEMY_HERO
+         and not env.IS_FOCUSED_BY_UNKNOWN_UNIT
 end
 
 function M.post_attack_enemy_creep()
-  return moves.post_attack_enemy_creep()
+  return not pre_attack_enemy_creep()
 end
 
 function M.attack_enemy_creep()
@@ -57,16 +67,19 @@ end
 
 --------------------------------
 
-function M.pre_attack_ally_creep()
-  return moves.pre_attack_ally_creep()
+function M.pre_attack_enemy_hero()
+  return env.ENEMY_HERO_DATA ~= nil
+         and all_units.IsUnitAttackTarget(
+               env.ENEMY_HERO_DATA,
+               env.ALLY_TOWER_DATA)
 end
 
-function M.post_attack_ally_creep()
-  return moves.post_attack_ally_creep()
+function M.post_attack_enemy_hero()
+  return not M.pre_attack_enemy_hero()
 end
 
-function M.attack_ally_creep()
-  moves.attack_ally_creep()
+function M.pre_attack_enemy_hero()
+  moves.pre_attack_enemy_hero()
 end
 
 --------------------------------

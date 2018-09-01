@@ -59,6 +59,10 @@ function M.CompareMaxHealth(t, a, b)
   return t[b].health < t[a].health
 end
 
+function M.CompareMaxDamage(t, a, b)
+  return t[b].attack_damage < t[a].attack_damage
+end
+
 function M.CompareMinDistance(t, a, b)
   local bot_data = M.GetBotData()
 
