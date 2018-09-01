@@ -36,9 +36,13 @@ end
 
 ---------------------------------
 
+local function IsFirstWave()
+  return DotaTime() < 22
+end
+
 local function GetBodyBlockSpot()
   return functions.ternary(
-           DotaTime() < 20,
+           IsFirstWave(),
            map.GetAllySpot("first_body_block"),
            map.GetAllySpot("second_body_block"))
 end
@@ -167,9 +171,10 @@ function M.move_and_block()
                      target_location)
                    - (env.BOT_DATA.collision_size / 2)
 
-  local multiplier = functions.ternary(DotaTime() < 20, 0.8, 0.6)
+  local multiplier = functions.ternary(IsFirstWave(), 0.8, 0.7)
 
-  action_timing.SetNextActionDelay((distance/env.BOT_DATA.speed) * 0.8)
+  action_timing.SetNextActionDelay(
+    (distance/env.BOT_DATA.speed) * multiplier)
 end
 
 function M.stop_attack_and_move()
@@ -186,7 +191,7 @@ function M.stop_attack_and_move()
 
   env.BOT:Action_ClearActions(true)
 
-  local multiplier = functions.ternary(DotaTime() < 20, 0.18, 0.3)
+  local multiplier = functions.ternary(IsFirstWave(), 0.2, 0.3)
 
   action_timing.SetNextActionDelay(
     (distance/creep_data.speed) * multiplier)
