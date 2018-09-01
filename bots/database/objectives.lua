@@ -201,9 +201,33 @@ M.OBJECTIVES = {
   },
 
   {
+    objective = "defend_tower",
+    module = require(GetScriptDirectory() .."/utility/defend_tower"),
+    is_interruptible = true,
+    moves = {
+      {
+        move = "attack_enemy_creep",
+        is_interruptible = false,
+        actions = {
+          {action = "attack_enemy_creep"},
+          {action = "stop_attack"},
+        }
+      },
+      {
+        move = "attack_enemy_hero",
+        is_interruptible = false,
+        actions = {
+          {action = "attack_enemy_hero"},
+          {action = "stop_attack"},
+        }
+      },
+    }
+  },
+
+  {
     objective = "evasion",
     module = require(GetScriptDirectory() .."/utility/evasion"),
-    is_interruptible = false,
+    is_interruptible = true,
     moves = {
       {
         move = "use_silence",
@@ -214,14 +238,14 @@ M.OBJECTIVES = {
       },
       {
         move = "move_safe_recovery",
-        is_interruptible = false,
+        is_interruptible = true,
         actions = {
           {action = "move_safe_recovery"},
         }
       },
       {
         move = "move_safe_evasion",
-        is_interruptible = false,
+        is_interruptible = true,
         actions = {
           {action = "move_safe_evasion"},
         }
@@ -315,30 +339,6 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "deny_ally_creep"},
-          {action = "stop_attack"},
-        }
-      },
-    }
-  },
-
-  {
-    objective = "defend_tower",
-    module = require(GetScriptDirectory() .."/utility/defend_tower"),
-    is_interruptible = true,
-    moves = {
-      {
-        move = "attack_enemy_creep",
-        is_interruptible = false,
-        actions = {
-          {action = "attack_enemy_creep"},
-          {action = "stop_attack"},
-        }
-      },
-      {
-        move = "attack_enemy_hero",
-        is_interruptible = false,
-        actions = {
-          {action = "attack_enemy_hero"},
           {action = "stop_attack"},
         }
       },
