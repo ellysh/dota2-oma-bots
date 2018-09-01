@@ -96,6 +96,8 @@ end
 function M.pre_move_safe_evasion()
   return env.IS_FOCUSED_BY_CREEPS
 
+         or env.IS_BOT_LOW_HP
+
          or DoesPowerEnemyHeroPursuit()
 
          or env.IS_FOCUSED_BY_TOWER
