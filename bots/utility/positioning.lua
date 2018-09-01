@@ -157,6 +157,7 @@ function M.pre_turn()
                    env.BOT_DATA,
                    target_data.location,
                    constants.TURN_TARGET_MAX_DEGREE)
+         and not map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
 end
 
 function M.post_turn()
