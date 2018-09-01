@@ -416,6 +416,19 @@ function M.GetSafeSpot(unit_data, enemy_hero_data)
   if forest_back_spot ~= nil then
     return forest_back_spot end
 
+  local forest_deep_spot = GetClosestSafeSpot(
+                            map.GetUnitAllySpot(
+                              unit_data,
+                              "forest_deep_top"),
+                            map.GetUnitAllySpot(
+                              unit_data,
+                              "forest_deep_bot"),
+                            unit_data,
+                            enemy_hero_data)
+
+  if forest_deep_spot ~= nil then
+    return forest_deep_spot end
+
   return map.GetUnitAllySpot(unit_data, "fountain")
 end
 
