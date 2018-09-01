@@ -1,3 +1,11 @@
+* version 1.1
+  - Implement aggro control.
+  - Implement moves to defend an allied tower.
+  - Improve the body block mechanism.
+  - Improve last hitting.
+  - Consider collision size when an attack range calculating and body blocking.
+  - Consider the motion buffer range when an attack range calculating.
+
 * version 1.0
   - Implement the glyph usage.
   - Implement the buyback usage.
