@@ -168,7 +168,7 @@ function M.move_and_block()
   local distance = functions.GetDistance(
                      env.BOT_DATA.location,
                      target_location)
-                   - (env.BOT_DATA.collision_size / 2)
+                   - env.BOT_DATA.collision_size
 
   local multiplier = functions.ternary(IsFirstWave(), 0.8, 0.7)
 
@@ -179,9 +179,8 @@ end
 function M.stop_attack_and_move()
   local creep_data = GetFirstMovingCreep()
 
-  local collision_size = (env.BOT_DATA.collision_size
-                          + creep_data.collision_size)
-                         / 2
+  local collision_size = env.BOT_DATA.collision_size
+                         + creep_data.collision_size
 
   local distance = functions.GetDistance(
                      env.BOT_DATA.location,
