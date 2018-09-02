@@ -555,6 +555,14 @@ function M.GetAttackRange(unit_data, target_data, use_buffer_range)
          + buffer_range
 end
 
+function M.IsTargetInAttackRange(unit_data, target_data, use_buffer_range)
+  if unit_data == nil or target_data == nil then
+    return false end
+
+  return functions.GetUnitDistance(unit_data, target_data)
+         <= M.GetAttackRange(unit_data, target_data, use_buffer_range)
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_GetNormalizedRadius = GetNormalizedRadius
 M.test_UpdateUnitList = all_units.UpdateUnitList

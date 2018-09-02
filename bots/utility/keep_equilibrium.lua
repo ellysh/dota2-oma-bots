@@ -27,12 +27,10 @@ function M.pre_keep_equilibrium()
          and (M.pre_attack_enemy_creep()
               or M.pre_attack_ally_creep())
 
-         and (env.ENEMY_HERO_DATA == nil
-              or algorithms.GetAttackRange(
+         and not algorithms.IsTargetInAttackRange(
                    env.ENEMY_HERO_DATA,
                    env.BOT_DATA,
                    true)
-                 < env.ENEMY_HERO_DISTANCE)
 end
 
 function M.post_keep_equilibrium()

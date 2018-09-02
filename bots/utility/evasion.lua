@@ -44,11 +44,10 @@ local function DoesPowerEnemyHeroPursuit()
 
          and env.IS_BOT_LOW_HP
 
-         and env.ENEMY_HERO_DISTANCE
-             <= algorithms.GetAttackRange(
-                  env.ENEMY_HERO_DATA,
-                  env.BOT_DATA,
-                  true)
+         and algorithms.IsTargetInAttackRange(
+               env.ENEMY_HERO_DATA,
+               env.BOT_DATA,
+               true)
 end
 
 function M.pre_use_silence()

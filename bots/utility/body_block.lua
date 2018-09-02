@@ -57,12 +57,10 @@ function M.pre_move_start_position()
                    env.BOT_DATA,
                    GetBodyBlockSpot())
 
-         and (env.ENEMY_HERO_DATA == nil
-              or algorithms.GetAttackRange(
+         and not algorithms.IsTargetInAttackRange(
                    env.ENEMY_HERO_DATA,
                    env.BOT_DATA,
-                   true)
-                 < env.ENEMY_HERO_DISTANCE))
+                   true))
 
          or map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
 end
@@ -94,12 +92,10 @@ function M.pre_turn_enemy_fountain()
                    map.GetEnemySpot("high_ground"),
                    30)
 
-         and (env.ENEMY_HERO_DATA == nil
-              or algorithms.GetAttackRange(
+         and not algorithms.IsTargetInAttackRange(
                    env.ENEMY_HERO_DATA,
                    env.BOT_DATA,
                    true)
-                 < env.ENEMY_HERO_DISTANCE)
 end
 
 function M.post_turn_enemy_fountain()
@@ -146,12 +142,10 @@ function M.pre_move_and_block()
 
          and not map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
 
-         and (env.ENEMY_HERO_DATA == nil
-              or algorithms.GetAttackRange(
+         and not algorithms.IsTargetInAttackRange(
                    env.ENEMY_HERO_DATA,
                    env.BOT_DATA,
                    true)
-                 <= env.ENEMY_HERO_DISTANCE)
 end
 
 function M.post_move_and_block()
