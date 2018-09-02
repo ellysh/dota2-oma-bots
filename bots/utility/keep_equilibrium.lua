@@ -46,7 +46,7 @@ function M.pre_attack_enemy_creep()
 end
 
 function M.post_attack_enemy_creep()
-  return moves.post_attack_enemy_creep()
+  return not M.pre_attack_enemy_creep()
 end
 
 function M.attack_enemy_creep()
@@ -60,7 +60,7 @@ function M.pre_attack_ally_creep()
 end
 
 function M.post_attack_ally_creep()
-  return moves.post_attack_ally_creep()
+  return not M.pre_attack_ally_creep()
 end
 
 function M.attack_ally_creep()

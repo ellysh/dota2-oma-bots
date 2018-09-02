@@ -58,10 +58,6 @@ function M.pre_attack_enemy_creep()
          and not env.IS_FOCUSED_BY_TOWER
 end
 
-function M.post_attack_enemy_creep()
-  return not M.pre_attack_enemy_creep()
-end
-
 function M.attack_enemy_creep()
   local creep = GetMaxHealthCreep(constants.SIDE["ENEMY"])
 
@@ -80,10 +76,6 @@ function M.pre_attack_ally_creep()
          and not env.IS_FOCUSED_BY_ENEMY_HERO
          and not env.IS_FOCUSED_BY_CREEPS
          and not env.IS_FOCUSED_BY_TOWER
-end
-
-function M.post_attack_ally_creep()
-  return not M.pre_attack_ally_creep()
 end
 
 function M.attack_ally_creep()
@@ -135,10 +127,6 @@ function M.pre_use_silence()
          and not env.DOES_TOWER_PROTECT_ENEMY
 end
 
-function M.post_use_silence()
-  return not M.pre_use_silence()
-end
-
 function M.use_silence()
   local ability = env.BOT:GetAbilityByName("drow_ranger_wave_of_silence")
 
@@ -154,10 +142,6 @@ function M.pre_deliver_items()
          and map.IsUnitInSpot(
                courier_data,
                map.GetAllySpot("fountain"))
-end
-
-function M.post_deliver_items()
-  return not M.pre_deliver_items()
 end
 
 function M.deliver_items()

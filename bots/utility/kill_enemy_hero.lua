@@ -83,7 +83,7 @@ function M.pre_use_silence()
 end
 
 function M.post_use_silence()
-  return moves.post_use_silence()
+  return not M.pre_use_silence()
 end
 
 function M.use_silence()

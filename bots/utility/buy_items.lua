@@ -272,7 +272,7 @@ function M.pre_deliver_items()
 end
 
 function M.post_deliver_items()
-  return moves.post_deliver_items()
+  return not M.pre_deliver_items()
 end
 
 function M.deliver_items()
