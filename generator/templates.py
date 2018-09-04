@@ -18,25 +18,21 @@ OBJECTIVE = """
     module = require(GetScriptDirectory() .."/utility/<0>"),
     is_interruptible = <1>,
     moves = {
-        <MOVE>
+<MOVES>
     },
   },
 """
 
 #---------------------------------------------
 
-MOVE = """
-    {
-      move = "<2>",
-      is_interruptible = <3>,
-      actions = {
-        <ACTION>
-      },
-    },
-"""
+MOVE = """      {
+        move = "<2>",
+        is_interruptible = <3>,
+        actions = {
+<ACTIONS>
+        },
+      },"""
 
 #---------------------------------------------
 
-ACTION = """
-        {action = "<4>"},
-"""
+ACTION = """          {action = "<4>"},"""

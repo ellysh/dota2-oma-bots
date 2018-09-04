@@ -1,13 +1,4 @@
 Objective;Interruptable;Move;Interruptable;Actions
-prepare_for_match;FALSE;buy_starting_items;FALSE;buy_starting_items
-;;;;
-buyback;FALSE;do_buyback;FALSE;do_buyback
-;;;;
-glyph;FALSE;do_glyph;FALSE;do_glyph
-;;;;
-swap_items;FALSE;swap_flask_tp;FALSE;swap_flask_tp
-;;put_item_in_inventory;FALSE;put_item_in_inventory
-;;;;
-item_recovery;FALSE;heal_tango;FALSE;heal_tango
-;;heal_flask;FALSE;heal_flask
-;;tp_base;FALSE;tp_base
+prepare_for_match;FALSE;;;
+;;buy_starting_items;FALSE;
+;;;;buy_starting_items

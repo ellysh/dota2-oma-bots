@@ -3,10 +3,10 @@
 set -e
 
 CSV_DIR="database/csv"
-RESULT_DIR="../bots/database"
+RESULT_DIR="database/lua"
 
 ./ods2csv.sh
 
-./generator.py OBJECTIVES 4 $CSV_DIR/objectives.csv > $RESULT_DIR/objectives.lua
+./generator.py $CSV_DIR/objectives.csv > $RESULT_DIR/objectives.lua
 
 ./check.sh
