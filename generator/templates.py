@@ -1,5 +1,7 @@
 HEADER = """
 local M = {}
+
+M.OBJECTIVES = {
 """
 
 FOOTER = """
@@ -7,36 +9,34 @@ FOOTER = """
 
 return M
 """
+
 #---------------------------------------------
 
-OBJECTIVES_HEADER = """
-M.OBJECTIVES = {
-"""
-
-OBJECTIVES = """
-  <0> = {
-    move = "<1>",
-    dependency = "<2>",
-    timeout = <3>,
+OBJECTIVE = """
+  {
+    objective = "<0>",
+    module = require(GetScriptDirectory() .."/utility/<0>"),
+    is_interruptible = <1>,
+    moves = {
+        <MOVE>
+    },
   },
 """
 
 #---------------------------------------------
 
-MOVES_HEADER = """
-M.MOVES = {
-"""
-
-MOVES = """
-  <0> = "<1>",
+MOVE = """
+    {
+      move = "<2>",
+      is_interruptible = <3>,
+      actions = {
+        <ACTION>
+      },
+    },
 """
 
 #---------------------------------------------
 
-CODE_SNIPPETS_HEADER = """
-M.CODE_SNIPPETS = {
-"""
-
-CODE_SNIPPETS = """
-  <0> = "<1>",
+ACTION = """
+        {action = "<4>"},
 """
