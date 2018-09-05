@@ -26,8 +26,13 @@ def print_header():
 def print_footer():
   sys.stdout.write(t.FOOTER)
 
+def is_comment(string):
+  return string[:2] == "--"
+
 def get_value(line, index):
   value = line[index].strip().replace("\n"," ")
+  value = value.replace('FALSE', 'false')
+  value = value.replace('TRUE', 'true')
   return value if value else 'nil'
 
 def print_objective(line):
@@ -57,7 +62,7 @@ def print_element(line):
   global IS_FIRST_OBJECTIVE
   global IS_FIRST_MOVE
 
-  if line[0]:
+  if line[0] and not is_comment(line[0]):
     if not IS_FIRST_OBJECTIVE:
       sys.stdout.write(t.MOVE_FOOTER)
       sys.stdout.write(t.OBJECTIVE_FOOTER)
@@ -67,7 +72,7 @@ def print_element(line):
     print_objective(line)
     return
 
-  if line[2]:
+  if line[2] and not is_comment(line[2]):
     if not IS_FIRST_MOVE:
       sys.stdout.write(t.MOVE_FOOTER)
 
@@ -75,7 +80,7 @@ def print_element(line):
     print_move(line)
     return
 
-  if line[4]:
+  if line[4] and not is_comment(line[4]):
     print_action(line)
 
 def parse_lines(reader):
