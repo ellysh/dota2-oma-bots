@@ -1,6 +1,8 @@
+
 local M = {}
 
 M.OBJECTIVES = {
+
   {
     objective = "prepare_for_match",
     module = require(GetScriptDirectory() .."/utility/prepare_for_match"),
@@ -11,7 +13,8 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "buy_starting_items"},
-       }
+
+        },
       },
     },
   },
@@ -26,6 +29,7 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "do_buyback"},
+
         },
       },
     },
@@ -41,6 +45,7 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "do_glyph"},
+
         },
       },
     },
@@ -56,6 +61,7 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "swap_flask_tp"},
+
         },
       },
       {
@@ -63,7 +69,8 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "put_item_in_inventory"},
-        }
+
+        },
       },
     },
   },
@@ -78,21 +85,24 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "heal_tango"},
-        }
+
+        },
       },
       {
         move = "heal_flask",
         is_interruptible = false,
         actions = {
           {action = "heal_flask"},
-        }
+
+        },
       },
       {
         move = "tp_base",
         is_interruptible = false,
         actions = {
           {action = "tp_base"},
-        }
+
+        },
       },
     },
   },
@@ -107,21 +117,23 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "buy_flask"},
-        }
+
+        },
       },
       {
         move = "buy_tpscroll",
         is_interruptible = false,
         actions = {
           {action = "buy_tpscroll"},
+
         },
       },
-      -- Ring of Aquila
       {
         move = "buy_ring_of_protection",
         is_interruptible = false,
         actions = {
           {action = "buy_ring_of_protection"},
+
         },
       },
       {
@@ -129,14 +141,15 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "buy_sobi_mask"},
+
         },
       },
-      -- Power Treads
       {
         move = "buy_boots",
         is_interruptible = false,
         actions = {
           {action = "buy_boots"},
+
         },
       },
       {
@@ -144,6 +157,7 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "buy_gloves"},
+
         },
       },
       {
@@ -151,14 +165,15 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "buy_boots_of_elves"},
+
         },
       },
-      -- Dragon Lance
       {
         move = "buy_two_boots_of_elves",
         is_interruptible = false,
         actions = {
           {action = "buy_two_boots_of_elves"},
+
         },
       },
       {
@@ -166,14 +181,15 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "buy_ogre_axe"},
+
         },
       },
-      -- Crystalys
       {
         move = "buy_blades_of_attack",
         is_interruptible = false,
         actions = {
           {action = "buy_blades_of_attack"},
+
         },
       },
       {
@@ -181,6 +197,7 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "buy_broadsword"},
+
         },
       },
       {
@@ -188,6 +205,7 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "buy_recipe_lesser_crit"},
+
         },
       },
       {
@@ -195,7 +213,8 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "deliver_items"},
-        }
+
+        },
       },
     },
   },
@@ -211,7 +230,8 @@ M.OBJECTIVES = {
         actions = {
           {action = "attack_enemy_creep"},
           {action = "stop_attack"},
-        }
+
+        },
       },
       {
         move = "attack_enemy_hero",
@@ -219,9 +239,10 @@ M.OBJECTIVES = {
         actions = {
           {action = "attack_enemy_hero"},
           {action = "stop_attack"},
-        }
+
+        },
       },
-    }
+    },
   },
 
   {
@@ -234,21 +255,24 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "use_silence"},
-        }
+
+        },
       },
       {
         move = "move_safe_recovery",
         is_interruptible = true,
         actions = {
           {action = "move_safe_recovery"},
-        }
+
+        },
       },
       {
         move = "move_safe_evasion",
         is_interruptible = true,
         actions = {
           {action = "move_safe_evasion"},
-        }
+
+        },
       },
     },
   },
@@ -263,7 +287,8 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "deliver_items"},
-        }
+
+        },
       },
       {
         move = "move_base",
@@ -271,7 +296,8 @@ M.OBJECTIVES = {
         actions = {
           {action = "move_base"},
           {action = "restore_hp_on_base"},
-        }
+
+        },
       },
     },
   },
@@ -286,9 +312,10 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "upgrade"},
-        }
+
+        },
       },
-    }
+    },
   },
 
   {
@@ -301,7 +328,8 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "use_silence"},
-        }
+
+        },
       },
       {
         move = "attack_enemy_hero",
@@ -309,16 +337,18 @@ M.OBJECTIVES = {
         actions = {
           {action = "attack_enemy_hero"},
           {action = "stop_attack"},
-        }
+
+        },
       },
       {
         move = "move_enemy_hero",
         is_interruptible = true,
         actions = {
           {action = "move_enemy_hero"},
-        }
+
+        },
       },
-    }
+    },
   },
 
   {
@@ -332,7 +362,8 @@ M.OBJECTIVES = {
         actions = {
           {action = "lasthit_enemy_creep"},
           {action = "stop_attack"},
-        }
+
+        },
       },
       {
         move = "deny_ally_creep",
@@ -340,9 +371,10 @@ M.OBJECTIVES = {
         actions = {
           {action = "deny_ally_creep"},
           {action = "stop_attack"},
-        }
+
+        },
       },
-    }
+    },
   },
 
   {
@@ -356,7 +388,8 @@ M.OBJECTIVES = {
         actions = {
           {action = "attack_enemy_hero"},
           {action = "stop_attack"},
-        }
+
+        },
       },
       {
         move = "attack_enemy_tower",
@@ -364,16 +397,18 @@ M.OBJECTIVES = {
         actions = {
           {action = "attack_enemy_tower"},
           {action = "stop_attack"},
-        }
+
+        },
       },
       {
         move = "move_safe",
         is_interruptible = false,
         actions = {
           {action = "move_safe"},
-        }
+
+        },
       },
-    }
+    },
   },
 
   {
@@ -386,7 +421,8 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "use_trueshot"},
-        }
+
+        },
       },
       {
         move = "attack_enemy_creep",
@@ -394,16 +430,18 @@ M.OBJECTIVES = {
         actions = {
           {action = "attack_enemy_creep"},
           {action = "stop_attack"},
-        }
+
+        },
       },
       {
         move = "attack_enemy_tower",
         is_interruptible = true,
         actions = {
           {action = "attack_enemy_tower"},
-        }
+
+        },
       },
-    }
+    },
   },
 
   {
@@ -417,9 +455,10 @@ M.OBJECTIVES = {
         actions = {
           {action = "aggro_last_hit"},
           {action = "stop_attack"},
-        }
+
+        },
       },
-    }
+    },
   },
 
   {
@@ -432,21 +471,24 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "tp_mid_tower"},
-        }
+
+        },
       },
       {
         move = "increase_creeps_distance",
         is_interruptible = true,
         actions = {
           {action = "increase_creeps_distance"},
-        }
+
+        },
       },
       {
         move = "decrease_creeps_distance",
         is_interruptible = true,
         actions = {
           {action = "decrease_creeps_distance"},
-        }
+
+        },
       },
       {
         move = "turn",
@@ -454,9 +496,10 @@ M.OBJECTIVES = {
         actions = {
           {action = "turn"},
           {action = "stop_attack_and_move"},
-        }
+
+        },
       },
-    }
+    },
   },
 
   {
@@ -470,7 +513,8 @@ M.OBJECTIVES = {
         actions = {
           {action = "attack_enemy_creep"},
           {action = "stop_attack"},
-        }
+
+        },
       },
       {
         move = "attack_ally_creep",
@@ -478,9 +522,10 @@ M.OBJECTIVES = {
         actions = {
           {action = "attack_ally_creep"},
           {action = "stop_attack"},
-        }
+
+        },
       },
-    }
+    },
   },
 
   {
@@ -494,6 +539,7 @@ M.OBJECTIVES = {
         actions = {
           {action = "move_and_block"},
           {action = "stop_attack_and_move"},
+
         },
       },
       {
@@ -501,6 +547,7 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "move_start_position"},
+
         },
       },
       {
@@ -509,6 +556,7 @@ M.OBJECTIVES = {
         actions = {
           {action = "turn_enemy_fountain"},
           {action = "stop_turn"},
+
         },
       },
     },
@@ -524,6 +572,7 @@ M.OBJECTIVES = {
         is_interruptible = true,
         actions = {
           {action = "stop_attack_and_move"},
+
         },
       },
     },
