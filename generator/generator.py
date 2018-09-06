@@ -70,7 +70,6 @@ def print_element(line):
     IS_FIRST_OBJECTIVE = False
     IS_FIRST_MOVE = True
     print_objective(line)
-    return
 
   if line[2] and not is_comment(line[2]):
     if not IS_FIRST_MOVE:
@@ -78,7 +77,6 @@ def print_element(line):
 
     IS_FIRST_MOVE = False
     print_move(line)
-    return
 
   if line[4] and not is_comment(line[4]):
     print_action(line)
