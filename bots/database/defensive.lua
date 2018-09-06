@@ -4,15 +4,15 @@ local M = {}
 M.OBJECTIVES = {
 
   {
-    objective = "prepare_for_match",
-    module = require(GetScriptDirectory() .."/utility/prepare_for_match"),
+    objective = "glyph",
+    module = require(GetScriptDirectory() .."/utility/glyph"),
     is_interruptible = false,
     moves = {
       {
-        move = "buy_starting_items",
+        move = "do_glyph",
         is_interruptible = false,
         actions = {
-          {action = "buy_starting_items"},
+          {action = "do_glyph"},
 
         },
       },
@@ -156,6 +156,32 @@ M.OBJECTIVES = {
   },
 
   {
+    objective = "defend_tower",
+    module = require(GetScriptDirectory() .."/utility/defend_tower"),
+    is_interruptible = true,
+    moves = {
+      {
+        move = "attack_enemy_creep",
+        is_interruptible = false,
+        actions = {
+          {action = "attack_enemy_creep"},
+          {action = "stop_attack"},
+
+        },
+      },
+      {
+        move = "attack_enemy_hero",
+        is_interruptible = false,
+        actions = {
+          {action = "attack_enemy_hero"},
+          {action = "stop_attack"},
+
+        },
+      },
+    },
+  },
+
+  {
     objective = "evasion",
     module = require(GetScriptDirectory() .."/utility/evasion"),
     is_interruptible = true,
@@ -290,6 +316,39 @@ M.OBJECTIVES = {
         is_interruptible = false,
         actions = {
           {action = "move_safe"},
+
+        },
+      },
+    },
+  },
+
+  {
+    objective = "push_lane",
+    module = require(GetScriptDirectory() .."/utility/push_lane"),
+    is_interruptible = true,
+    moves = {
+      {
+        move = "use_trueshot",
+        is_interruptible = false,
+        actions = {
+          {action = "use_trueshot"},
+
+        },
+      },
+      {
+        move = "attack_enemy_creep",
+        is_interruptible = false,
+        actions = {
+          {action = "attack_enemy_creep"},
+          {action = "stop_attack"},
+
+        },
+      },
+      {
+        move = "attack_enemy_tower",
+        is_interruptible = true,
+        actions = {
+          {action = "attack_enemy_tower"},
 
         },
       },

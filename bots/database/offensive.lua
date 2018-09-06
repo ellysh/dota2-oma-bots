@@ -4,22 +4,6 @@ local M = {}
 M.OBJECTIVES = {
 
   {
-    objective = "prepare_for_match",
-    module = require(GetScriptDirectory() .."/utility/prepare_for_match"),
-    is_interruptible = false,
-    moves = {
-      {
-        move = "buy_starting_items",
-        is_interruptible = false,
-        actions = {
-          {action = "buy_starting_items"},
-
-        },
-      },
-    },
-  },
-
-  {
     objective = "swap_items",
     module = require(GetScriptDirectory() .."/utility/swap_items"),
     is_interruptible = false,
@@ -297,6 +281,39 @@ M.OBJECTIVES = {
   },
 
   {
+    objective = "push_lane",
+    module = require(GetScriptDirectory() .."/utility/push_lane"),
+    is_interruptible = true,
+    moves = {
+      {
+        move = "use_trueshot",
+        is_interruptible = false,
+        actions = {
+          {action = "use_trueshot"},
+
+        },
+      },
+      {
+        move = "attack_enemy_creep",
+        is_interruptible = false,
+        actions = {
+          {action = "attack_enemy_creep"},
+          {action = "stop_attack"},
+
+        },
+      },
+      {
+        move = "attack_enemy_tower",
+        is_interruptible = true,
+        actions = {
+          {action = "attack_enemy_tower"},
+
+        },
+      },
+    },
+  },
+
+  {
     objective = "aggro_control",
     module = require(GetScriptDirectory() .."/utility/aggro_control"),
     is_interruptible = false,
@@ -348,66 +365,6 @@ M.OBJECTIVES = {
         actions = {
           {action = "turn"},
           {action = "stop_attack_and_move"},
-
-        },
-      },
-    },
-  },
-
-  {
-    objective = "keep_equilibrium",
-    module = require(GetScriptDirectory() .."/utility/keep_equilibrium"),
-    is_interruptible = true,
-    moves = {
-      {
-        move = "attack_enemy_creep",
-        is_interruptible = false,
-        actions = {
-          {action = "attack_enemy_creep"},
-          {action = "stop_attack"},
-
-        },
-      },
-      {
-        move = "attack_ally_creep",
-        is_interruptible = false,
-        actions = {
-          {action = "attack_ally_creep"},
-          {action = "stop_attack"},
-
-        },
-      },
-    },
-  },
-
-  {
-    objective = "body_block",
-    module = require(GetScriptDirectory() .."/utility/body_block"),
-    is_interruptible = true,
-    moves = {
-      {
-        move = "move_and_block",
-        is_interruptible = false,
-        actions = {
-          {action = "move_and_block"},
-          {action = "stop_attack_and_move"},
-
-        },
-      },
-      {
-        move = "move_start_position",
-        is_interruptible = false,
-        actions = {
-          {action = "move_start_position"},
-
-        },
-      },
-      {
-        move = "turn_enemy_fountain",
-        is_interruptible = false,
-        actions = {
-          {action = "turn_enemy_fountain"},
-          {action = "stop_turn"},
 
         },
       },
