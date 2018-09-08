@@ -70,8 +70,9 @@ end
 local function ExecuteAction()
   local current_action = GetCurrentAction()
 
-  logger.Print("team = " .. GetTeam() .. " current_objective = " ..
-    CURRENT_OBJECTIVE.objective)
+  logger.Print("team = " .. GetTeam() ..
+   " current_strategy = " .. CURRENT_STRATEGY.strategy ..
+   " current_objective = " .. CURRENT_OBJECTIVE.objective)
 
   logger.Print("\tcurrent_move = " .. CURRENT_MOVE.move)
 
