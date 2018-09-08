@@ -21,13 +21,24 @@ local action_timing = require(
 
 local M = {}
 
+local CURRENT_STRATEGY = nil
 local CURRENT_OBJECTIVE = nil
 local CURRENT_MOVE = nil
 local ACTION_INDEX = 1
 
-local function FindObjectiveToExecute()
+local function ChooseStrategy()
   return functions.GetElementWith(
            objectives.OBJECTIVES,
+           nil,
+           function(strategy)
+             return strategies[
+                      "pre_" .. strategy.strategy]()
+           end)
+end
+
+local function FindObjectiveToExecute()
+  return functions.GetElementWith(
+           CURRENT_STRATEGY.objectives,
            nil,
            function(objective)
              return objective.module[
@@ -105,6 +116,10 @@ function M.Process()
     return end
 
   environment.UpdateVariables()
+
+  if CURRENT_STRATEGY == nil then
+    CURRENT_STRATEGY = ChooseStrategy()
+  end
 
   if CURRENT_OBJECTIVE == nil
      or (CURRENT_OBJECTIVE.is_interruptible
