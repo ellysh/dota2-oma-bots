@@ -323,13 +323,17 @@ local function GetAngle(sin, cos, circle_quarter)
   return angle
 end
 
+function M.GetDelta(a, b)
+  return math.abs(a - b)
+end
+
 function M.IsFacingLocation(unit_data, location, degrees)
   local sin = GetSin(unit_data.location, location)
   local cos = GetCos(unit_data.location, location)
   local circle_quarter = GetCircleQuarter(sin, cos)
   local angle = GetAngle(sin, cos, circle_quarter)
 
-  return math.abs(unit_data.facing - angle) <= degrees
+  return M.GetDelta(unit_data.facing, angle) <= degrees
 end
 
 -- Provide an access to local functions for unit tests only
