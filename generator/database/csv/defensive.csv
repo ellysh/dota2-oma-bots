@@ -4,6 +4,9 @@ glyph;FALSE;do_glyph;FALSE;do_glyph
 swap_items;FALSE;swap_flask_tp;FALSE;swap_flask_tp
 ;;put_item_in_inventory;FALSE;put_item_in_inventory
 ;;;;
+item_recovery;FALSE;heal_tango;FALSE;heal_tango
+;;;;
+;;;;
 buy_items;FALSE;buy_flask;FALSE;buy_flask
 ;;buy_tpscroll;FALSE;buy_tpscroll
 ;;"-- Ring of Aquila";;

@@ -44,6 +44,22 @@ M.OBJECTIVES = {
   },
 
   {
+    objective = "item_recovery",
+    module = require(GetScriptDirectory() .."/utility/item_recovery"),
+    is_interruptible = false,
+    moves = {
+      {
+        move = "heal_tango",
+        is_interruptible = false,
+        actions = {
+          {action = "heal_tango"},
+
+        },
+      },
+    },
+  },
+
+  {
     objective = "buy_items",
     module = require(GetScriptDirectory() .."/utility/buy_items"),
     is_interruptible = false,
