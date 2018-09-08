@@ -118,9 +118,7 @@ function M.Process()
 
   environment.UpdateVariables()
 
-  if CURRENT_STRATEGY == nil then
-    CURRENT_STRATEGY = ChooseStrategy()
-  end
+  CURRENT_STRATEGY = ChooseStrategy()
 
   if CURRENT_OBJECTIVE == nil
      or (CURRENT_OBJECTIVE.is_interruptible
