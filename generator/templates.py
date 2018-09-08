@@ -12,6 +12,20 @@ return M
 
 #---------------------------------------------
 
+STRATEGY_HEADER = """
+  {
+    strategy = "<0>",
+    is_interruptible = false,
+    objectives = {
+"""
+
+STRATEGY_FOOTER = """
+    },
+  },
+"""
+
+#---------------------------------------------
+
 OBJECTIVE_HEADER = """
   {
     objective = "<0>",
