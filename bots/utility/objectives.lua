@@ -1,6 +1,9 @@
 local objectives = require(
   GetScriptDirectory() .."/database/objectives")
 
+local strategies = require(
+  GetScriptDirectory() .."/utility/strategies")
+
 local functions = require(
   GetScriptDirectory() .."/utility/functions")
 
