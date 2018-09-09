@@ -21,11 +21,6 @@ local action_timing = require(
 
 local M = {}
 
-local CURRENT_STRATEGY = nil
-local CURRENT_OBJECTIVE = nil
-local CURRENT_MOVE = nil
-local ACTION_INDEX = 1
-
 local function ChooseStrategy()
   return functions.GetElementWith(
            objectives.OBJECTIVES,
@@ -36,63 +31,63 @@ local function ChooseStrategy()
            end)
 end
 
-local function FindMoveToExecute()
+local function FindMoveToExecute(objective)
   return functions.GetElementWith(
-           CURRENT_OBJECTIVE.moves,
+           objective.moves,
            nil,
            function(move)
-             return CURRENT_OBJECTIVE.module["pre_" .. move.move]()
+             return objective.module["pre_" .. move.move]()
            end)
 end
 
-local function FindObjectiveAndMoveToExecute()
-  return functions.GetElementWith(
-           CURRENT_STRATEGY.objectives,
+local function FindObjectiveAndMoveToExecute(strategy)
+  local result_objective = nil
+  local result_move = nil
+
+  result_objective = functions.GetElementWith(
+           strategy.objectives,
            nil,
            function(objective)
              if not objective.module["pre_" .. objective.objective]() then
                return false
              end
 
-             CURRENT_OBJECTIVE = objective
-             CURRENT_MOVE = FindMoveToExecute()
+             result_move = FindMoveToExecute(objective)
 
-             return CURRENT_MOVE ~= nil
+             return result_move ~= nil
            end)
+
+  return result_objective, result_move
 end
 
-local function GetCurrentAction()
-  return CURRENT_MOVE.actions[ACTION_INDEX]
+local function GetCurrentAction(move, action_index)
+  return move.actions[action_index]
 end
 
-local function FindNextAction()
-  ACTION_INDEX = ACTION_INDEX + 1
-  if #CURRENT_MOVE.actions < ACTION_INDEX then
-    ACTION_INDEX = 1
-    CURRENT_MOVE = nil
+local function FindNextAction(move, action_index)
+  action_index = action_index + 1
+
+  if #move.actions < action_index then
+    action_index = 1
+    move = nil
   end
+
+  return move, action_index
 end
 
-local function ExecuteAction()
-  local current_action = GetCurrentAction()
-
-  logger.Print("team = " .. GetTeam() ..
-   " current_strategy = " .. CURRENT_STRATEGY.strategy ..
-   " current_objective = " .. CURRENT_OBJECTIVE.objective)
-
-  logger.Print("\tcurrent_move = " .. CURRENT_MOVE.move)
+local function ExecuteAction(objective, move, action_index)
+  local current_action = GetCurrentAction(move, action_index)
 
   if current_action == nil then
-    FindNextAction()
-    return
+    return FindNextAction(move, action_index)
   end
 
   logger.Print("\tcurrent_action = " ..
-    current_action.action .. " ACTION_INDEX = " .. ACTION_INDEX)
+    current_action.action .. " ACTION_INDEX = " .. action_index)
 
-  CURRENT_OBJECTIVE.module[current_action.action]()
+  objective.module[current_action.action]()
 
-  FindNextAction()
+  return FindNextAction(move, action_index)
 end
 
 local function IsActionTimingDelay()
@@ -100,6 +95,19 @@ local function IsActionTimingDelay()
 
   return action_time ~= 0 and GameTime() < action_time
 end
+
+local function IsObjectiveActual(objective)
+  if not objective.module["pre_" .. objective.objective]() then
+    return false
+  end
+
+  return FindMoveToExecute(objective) ~= nil
+end
+
+local CURRENT_STRATEGY = nil
+local CURRENT_OBJECTIVE = nil
+local CURRENT_MOVE = nil
+local ACTION_INDEX = 1
 
 function M.Process()
   if IsActionTimingDelay()
@@ -114,16 +122,27 @@ function M.Process()
 
      or (CURRENT_OBJECTIVE.is_interruptible
          and (CURRENT_MOVE == nil
-              or CURRENT_MOVE.is_interruptible)) then
+              or CURRENT_MOVE.is_interruptible))
+
+     or not IsObjectiveActual(CURRENT_OBJECTIVE) then
 
     CURRENT_STRATEGY = ChooseStrategy()
-    FindObjectiveAndMoveToExecute()
+    CURRENT_OBJECTIVE, CURRENT_MOVE = FindObjectiveAndMoveToExecute(
+                                        CURRENT_STRATEGY)
   end
 
   if CURRENT_OBJECTIVE ~= nil
      and CURRENT_MOVE ~= nil then
 
-    ExecuteAction()
+    logger.Print("team = " .. GetTeam() ..
+      " current_strategy = " .. CURRENT_STRATEGY.strategy ..
+      " current_objective = " .. CURRENT_OBJECTIVE.objective ..
+      " current_move = " .. CURRENT_MOVE.move)
+
+    CURRENT_MOVE, ACTION_INDEX = ExecuteAction(
+                                   CURRENT_OBJECTIVE,
+                                   CURRENT_MOVE,
+                                   ACTION_INDEX)
   end
 end
 
