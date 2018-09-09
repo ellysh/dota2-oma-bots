@@ -118,16 +118,19 @@ function M.Process()
 
   environment.UpdateVariables()
 
-  CURRENT_STRATEGY = ChooseStrategy()
+  if CURRENT_STRATEGY == nil
+     or CURRENT_OBJECTIVE == nil
 
-  if CURRENT_OBJECTIVE == nil
      or (CURRENT_OBJECTIVE.is_interruptible
          and (CURRENT_MOVE == nil
               or CURRENT_MOVE.is_interruptible))
+
      or (not CURRENT_OBJECTIVE.is_interruptible
          and (CURRENT_MOVE == nil
               or not CURRENT_MOVE.is_interruptible)
          and CURRENT_OBJECTIVE.module["post_" .. CURRENT_OBJECTIVE.objective]()) then
+
+    CURRENT_STRATEGY = ChooseStrategy()
     CURRENT_OBJECTIVE = FindObjectiveToExecute()
     CURRENT_MOVE = nil
   end
