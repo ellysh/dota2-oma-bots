@@ -25,13 +25,6 @@ local M = {}
 
 function M.pre_body_block()
   return algorithms.IsBotAlive()
-         and (M.pre_move_and_block()
-              or M.pre_move_start_position()
-              or M.pre_turn_enemy_fountain())
-end
-
-function M.post_body_block()
-  return not M.pre_body_block()
 end
 
 ---------------------------------
@@ -65,10 +58,6 @@ function M.pre_move_start_position()
          or map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
 end
 
-function M.post_move_start_position()
-  return not M.pre_move_start_position()
-end
-
 function M.move_start_position()
   env.BOT:Action_MoveDirectly(GetBodyBlockSpot())
 
@@ -96,10 +85,6 @@ function M.pre_turn_enemy_fountain()
                    env.ENEMY_HERO_DATA,
                    env.BOT_DATA,
                    true)
-end
-
-function M.post_turn_enemy_fountain()
-  return not M.pre_turn_enemy_fountain()
 end
 
 function M.turn_enemy_fountain()
