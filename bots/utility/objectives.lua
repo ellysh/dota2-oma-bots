@@ -36,22 +36,28 @@ local function ChooseStrategy()
            end)
 end
 
-local function FindObjectiveToExecute()
-  return functions.GetElementWith(
-           CURRENT_STRATEGY.objectives,
-           nil,
-           function(objective)
-             return objective.module[
-                      "pre_" .. objective.objective]()
-           end)
-end
-
 local function FindMoveToExecute()
   return functions.GetElementWith(
            CURRENT_OBJECTIVE.moves,
            nil,
            function(move)
              return CURRENT_OBJECTIVE.module["pre_" .. move.move]()
+           end)
+end
+
+local function FindObjectiveAndMoveToExecute()
+  return functions.GetElementWith(
+           CURRENT_STRATEGY.objectives,
+           nil,
+           function(objective)
+             if not objective.module["pre_" .. objective.objective]() then
+               return false
+             end
+
+             CURRENT_OBJECTIVE = objective
+             CURRENT_MOVE = FindMoveToExecute()
+
+             return CURRENT_MOVE ~= nil
            end)
 end
 
@@ -89,21 +95,6 @@ local function ExecuteAction()
   FindNextAction()
 end
 
-local function ExecuteMove()
-  if CURRENT_MOVE == nil
-     or CURRENT_MOVE.is_interruptible
-     or (not CURRENT_MOVE.is_interruptible
-         and CURRENT_OBJECTIVE.module["post_" .. CURRENT_MOVE.move]()
-         and ACTION_INDEX == #CURRENT_MOVE.actions) then
-    CURRENT_MOVE = FindMoveToExecute()
-    ACTION_INDEX = 1
-  end
-
-  if CURRENT_MOVE ~= nil then
-    ExecuteAction()
-  end
-end
-
 local function IsActionTimingDelay()
   local action_time = action_timing.GetNextActionTime()
 
@@ -123,20 +114,16 @@ function M.Process()
 
      or (CURRENT_OBJECTIVE.is_interruptible
          and (CURRENT_MOVE == nil
-              or CURRENT_MOVE.is_interruptible))
-
-     or (not CURRENT_OBJECTIVE.is_interruptible
-         and (CURRENT_MOVE == nil
-              or not CURRENT_MOVE.is_interruptible)
-         and CURRENT_OBJECTIVE.module["post_" .. CURRENT_OBJECTIVE.objective]()) then
+              or CURRENT_MOVE.is_interruptible)) then
 
     CURRENT_STRATEGY = ChooseStrategy()
-    CURRENT_OBJECTIVE = FindObjectiveToExecute()
-    CURRENT_MOVE = nil
+    FindObjectiveAndMoveToExecute()
   end
 
-  if CURRENT_OBJECTIVE ~= nil then
-    ExecuteMove()
+  if CURRENT_OBJECTIVE ~= nil
+     and CURRENT_MOVE ~= nil then
+
+    ExecuteAction()
   end
 end
 
