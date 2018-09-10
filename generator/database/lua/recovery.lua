@@ -112,6 +112,14 @@ M.OBJECTIVES = {
 
         },
       },
+      {
+        move = "deliver_items",
+        is_interruptible = false,
+        actions = {
+          {action = "deliver_items"},
+
+        },
+      },
     },
   },
 

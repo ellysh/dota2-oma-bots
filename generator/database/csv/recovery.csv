@@ -12,6 +12,7 @@ item_recovery;FALSE;heal_tango;FALSE;heal_tango
 ;;;;
 buy_items;FALSE;buy_flask;FALSE;buy_flask
 ;;buy_tpscroll;FALSE;buy_tpscroll
+;;deliver_items;FALSE;deliver_items
 ;;;;
 evasion;TRUE;use_silence;FALSE;use_silence
 ;;move_safe_recovery;TRUE;move_safe_recovery
