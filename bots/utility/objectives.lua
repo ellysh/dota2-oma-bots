@@ -119,11 +119,7 @@ function M.Process()
 
   if CURRENT_STRATEGY == nil
      or CURRENT_OBJECTIVE == nil
-
-     or (CURRENT_OBJECTIVE.is_interruptible
-         and (CURRENT_MOVE == nil
-              or CURRENT_MOVE.is_interruptible))
-
+     or CURRENT_MOVE == nil
      or not IsObjectiveActual(CURRENT_OBJECTIVE) then
 
     CURRENT_STRATEGY = ChooseStrategy()
