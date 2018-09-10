@@ -133,10 +133,6 @@ function M.pre_move_and_block()
                    true)
 end
 
-function M.post_move_and_block()
-  return not M.pre_move_and_block()
-end
-
 function M.move_and_block()
   local creep = all_units.GetUnit(GetFirstMovingCreep())
   local target_location = creep:GetExtrapolatedLocation(1.0)

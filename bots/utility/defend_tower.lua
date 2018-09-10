@@ -23,13 +23,6 @@ local M = {}
 function M.pre_defend_tower()
   return algorithms.IsBotAlive()
          and not env.IS_BOT_LOW_HP
-
-         and (M.pre_attack_enemy_creep()
-              or M.pre_attack_enemy_hero())
-end
-
-function M.post_defend_tower()
-  return not M.pre_defend_tower()
 end
 
 ---------------------------------
@@ -60,10 +53,6 @@ function M.pre_attack_enemy_creep()
          and not env.IS_FOCUSED_BY_UNKNOWN_UNIT
 end
 
-function M.post_attack_enemy_creep()
-  return not M.pre_attack_enemy_creep()
-end
-
 function M.attack_enemy_creep()
   local creep = GetCreepAttackingTower()
 
@@ -78,10 +67,6 @@ function M.pre_attack_enemy_hero()
          and all_units.IsUnitAttackTarget(
                env.ENEMY_HERO_DATA,
                env.ALLY_TOWER_DATA)
-end
-
-function M.post_attack_enemy_hero()
-  return not M.pre_attack_enemy_hero()
 end
 
 function M.attack_enemy_hero()

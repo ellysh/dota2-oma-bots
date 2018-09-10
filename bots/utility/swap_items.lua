@@ -13,12 +13,6 @@ local M = {}
 
 function M.pre_swap_items()
   return algorithms.IsBotAlive()
-         and (M.pre_swap_flask_tp()
-              or M.pre_put_item_in_inventory())
-end
-
-function M.post_swap_items()
-  return not M.pre_swap_items()
 end
 
 ---------------------------------
@@ -29,10 +23,6 @@ function M.pre_swap_flask_tp()
 
   return env.BOT:GetItemSlotType(flask_slot) == ITEM_SLOT_TYPE_BACKPACK
          and env.BOT:GetItemSlotType(tp_slot) == ITEM_SLOT_TYPE_MAIN
-end
-
-function M.post_swap_flask_tp()
-  return not M.pre_swap_flask_tp()
 end
 
 function M.swap_flask_tp()
@@ -69,10 +59,6 @@ end
 function M.pre_put_item_in_inventory()
   return ((nil ~= GetFullSlotInBackpack(env.BOT_DATA))
           and (nil ~= GetEmptySlotInInventory(env.BOT_DATA)))
-end
-
-function M.post_put_item_in_inventory()
-  return not M.pre_put_item_in_inventory()
 end
 
 function M.put_item_in_inventory()

@@ -27,17 +27,9 @@ function M.pre_kite()
   return algorithms.IsBotAlive()
          and not env.IS_BOT_LOW_HP
 
-         and (M.pre_attack_enemy_hero()
-              or M.pre_move_safe()
-              or M.pre_attack_enemy_tower())
-
          and not map.IsUnitInSpot(
                    env.BOT_DATA,
                    map.GetEnemySpot("tower_tier_1_rear"))
-end
-
-function M.post_kite()
-  return not M.pre_kite()
 end
 
 ---------------------------------
@@ -52,10 +44,6 @@ function M.pre_attack_enemy_hero()
          and not algorithms.AreEnemyCreepsInRadius(
                    env.BOT_DATA,
                    constants.CREEP_AGRO_RADIUS)
-end
-
-function M.post_attack_enemy_hero()
-  return not M.pre_attack_enemy_hero()
 end
 
 function M.attack_enemy_hero()
@@ -88,10 +76,6 @@ function M.pre_attack_enemy_tower()
                       env.BOT_DATA.max_health))
 end
 
-function M.post_attack_enemy_tower()
-  return not M.pre_attack_enemy_tower()
-end
-
 function M.attack_enemy_tower()
   algorithms.AttackUnit(env.BOT_DATA, env.ENEMY_TOWER_DATA, false)
 end
@@ -108,10 +92,6 @@ function M.pre_move_safe()
   return env.ENEMY_HERO_DATA ~= nil
          and env.BOT_DATA.attack_target == env.ENEMY_HERO_DATA
          and not algorithms.IsUnitMoving(env.BOT_DATA)
-end
-
-function M.post_move_safe()
-  return not M.pre_move_safe()
 end
 
 function M.move_safe()

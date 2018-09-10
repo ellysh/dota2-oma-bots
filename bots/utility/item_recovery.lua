@@ -27,24 +27,17 @@ function M.pre_item_recovery()
   return algorithms.IsBotAlive()
          and not env.BOT_DATA.is_healing
 
-         and (M.pre_heal_tango()
-              or M.pre_heal_flask()
-              or M.pre_tp_base())
-
          and constants.BASE_RADIUS
               < functions.GetDistance(
                   env.FOUNTAIN_SPOT,
                   env.BOT_DATA.location)
 end
 
-function M.post_item_recovery()
-  return not M.pre_item_recovery()
-end
-
 ---------------------------------
 
 function M.pre_heal_flask()
   return algorithms.IsItemCastable(env.BOT_DATA, "item_flask")
+         and not env.BOT:HasModifier("modifier_flask_healing")
          and (env.IS_BOT_LOW_HP
               or (420 < (env.BOT_DATA.max_health - env.BOT_DATA.health)
                   and functions.GetRate(
@@ -66,10 +59,6 @@ function M.pre_heal_flask()
                    true)
 end
 
-function M.post_heal_flask()
-  return env.BOT:HasModifier("modifier_flask_healing")
-end
-
 function M.heal_flask()
   env.BOT:Action_UseAbilityOnEntity(
     algorithms.GetItem(env.BOT_DATA, "item_flask"),
@@ -86,6 +75,7 @@ function M.pre_heal_tango()
   local tree = env.BOT_DATA.nearby_trees[1]
 
   return algorithms.IsItemCastable(env.BOT_DATA, "item_tango")
+         and not env.BOT:HasModifier("modifier_tango_heal")
          and tree ~= nil
          and (tower_data == nil
               or algorithms.GetAttackRange(
@@ -115,10 +105,6 @@ function M.pre_heal_tango()
                  env.BOT_DATA.location)
 end
 
-function M.post_heal_tango()
-  return env.BOT:HasModifier("modifier_tango_heal")
-end
-
 function M.heal_tango()
   env.BOT:Action_UseAbilityOnTree(
     algorithms.GetItem(env.BOT_DATA, "item_tango"),
@@ -143,10 +129,6 @@ function M.pre_tp_base()
                    "item_flask")
          and not algorithms.DoesBotOrCourierHaveItem(
                    "item_tango")
-end
-
-function M.post_tp_base()
-  return not M.pre_tp_base()
 end
 
 function M.tp_base()

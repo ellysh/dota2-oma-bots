@@ -38,18 +38,10 @@ function M.pre_kill_enemy_hero()
                    map.GetEnemySpot("tower_tier_1_rear"))
 end
 
-function M.post_kill_enemy_hero()
-  return not M.pre_kill_enemy_hero()
-end
-
 ---------------------------------
 
 function M.pre_attack_enemy_hero()
   return moves.pre_attack_enemy_hero_unsafe()
-end
-
-function M.post_attack_enemy_hero()
-  return not M.pre_attack_enemy_hero()
 end
 
 function M.attack_enemy_hero()
@@ -68,10 +60,6 @@ function M.pre_move_enemy_hero()
          and not algorithms.IsUnitMoving(env.BOT_DATA)
 end
 
-function M.post_move_enemy_hero()
-  return not M.pre_move_enemy_hero()
-end
-
 function M.move_enemy_hero()
   env.BOT:Action_MoveDirectly(env.ENEMY_HERO_DATA.location)
 end
@@ -80,10 +68,6 @@ end
 
 function M.pre_use_silence()
   return moves.pre_use_silence()
-end
-
-function M.post_use_silence()
-  return not M.pre_use_silence()
 end
 
 function M.use_silence()

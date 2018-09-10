@@ -28,13 +28,6 @@ local M = {}
 
 function M.pre_evasion()
   return algorithms.IsBotAlive()
-         and (M.pre_move_safe_evasion()
-              or M.pre_move_safe_recovery()
-              or M.pre_use_silence())
-end
-
-function M.post_evasion()
-  return not M.pre_evasion()
 end
 
 ---------------------------------
@@ -53,10 +46,6 @@ end
 function M.pre_use_silence()
   return moves.pre_use_silence()
          and DoesPowerEnemyHeroPursuit()
-end
-
-function M.post_use_silence()
-  return not M.pre_use_silence()
 end
 
 function M.use_silence()
@@ -78,10 +67,6 @@ function M.pre_move_safe_recovery()
          and not map.IsUnitInSpot(env.BOT_DATA, env.SAFE_SPOT)
 
          and not env.BOT:HasModifier("modifier_fountain_aura_buff")
-end
-
-function M.post_move_safe_recovery()
-  return not M.pre_move_safe_recovery()
 end
 
 function M.move_safe_recovery()
@@ -114,10 +99,6 @@ function M.pre_move_safe_evasion()
 
          or (map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
              and env.BOT_DATA.level < 4)
-end
-
-function M.post_move_safe_evasion()
-  return not M.pre_move_safe_evasion()
 end
 
 function M.move_safe_evasion()

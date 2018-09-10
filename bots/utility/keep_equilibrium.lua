@@ -24,17 +24,10 @@ function M.pre_keep_equilibrium()
          and env.PRE_LAST_HIT_ENEMY_CREEP == nil
          and env.PRE_LAST_HIT_ALLY_CREEP == nil
 
-         and (M.pre_attack_enemy_creep()
-              or M.pre_attack_ally_creep())
-
          and not algorithms.IsTargetInAttackRange(
                    env.ENEMY_HERO_DATA,
                    env.BOT_DATA,
                    true)
-end
-
-function M.post_keep_equilibrium()
-  return not M.pre_keep_equilibrium()
 end
 
 ---------------------------------
@@ -45,10 +38,6 @@ function M.pre_attack_enemy_creep()
          and moves.pre_attack_enemy_creep()
 end
 
-function M.post_attack_enemy_creep()
-  return not M.pre_attack_enemy_creep()
-end
-
 function M.attack_enemy_creep()
   moves.attack_enemy_creep()
 end
@@ -57,10 +46,6 @@ end
 
 function M.pre_attack_ally_creep()
   return moves.pre_attack_ally_creep()
-end
-
-function M.post_attack_ally_creep()
-  return not M.pre_attack_ally_creep()
 end
 
 function M.attack_ally_creep()

@@ -25,11 +25,6 @@ local M = {}
 
 function M.pre_aggro_control()
   return algorithms.IsBotAlive()
-         and M.pre_aggro_last_hit()
-end
-
-function M.post_aggro_control()
-  return not M.pre_aggro_control()
 end
 
 ---------------------------------
@@ -68,10 +63,6 @@ function M.pre_aggro_last_hit()
 
          and (creep_distance <= constants.CREEP_AGRO_RADIUS
               and constants.MIN_CREEP_DISTANCE < creep_distance)
-end
-
-function M.post_aggro_last_hit()
-  return not M.pre_aggro_last_hit()
 end
 
 function M.aggro_last_hit()

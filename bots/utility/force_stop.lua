@@ -12,18 +12,10 @@ function M.pre_force_stop()
   return algorithms.IsBotAlive()
 end
 
-function M.post_force_stop()
-  return not M.pre_force_stop()
-end
-
 ---------------------------------
 
 function M.pre_stop()
   return true
-end
-
-function M.post_stop()
-  return not M.pre_stop()
 end
 
 function M.stop_attack_and_move()

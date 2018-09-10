@@ -14,20 +14,12 @@ function M.pre_buyback()
   return M.pre_do_buyback()
 end
 
-function M.post_buyback()
-  return not M.pre_buyback()
-end
-
 ---------------------------------
 
 function M.pre_do_buyback()
   return not algorithms.IsBotAlive()
          and env.BOT:HasBuyback()
          and 10 < env.BOT:GetRespawnTime()
-end
-
-function M.post_do_buyback()
-  return not M.pre_do_buyback()
 end
 
 function M.do_buyback()

@@ -23,10 +23,6 @@ function M.pre_glyph()
   return M.pre_do_glyph()
 end
 
-function M.post_glyph()
-  return not M.pre_glyph()
-end
-
 ---------------------------------
 
 local function GetAllyTower()
@@ -54,10 +50,6 @@ function M.pre_do_glyph()
               or (algorithms.IsUnitLowHp(tower_data)
                   and constants.MIN_INCOMING_TOWER_DAMAGE
                       < tower_incoming_damage))
-end
-
-function M.post_do_glyph()
-  return not M.pre_do_glyph()
 end
 
 function M.do_glyph()

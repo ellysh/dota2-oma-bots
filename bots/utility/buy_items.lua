@@ -26,23 +26,6 @@ local M = {}
 function M.pre_buy_items()
   return IsCourierAvailable()
          and algorithms.IsBotAlive()
-         and (M.pre_buy_flask()
-              or M.pre_buy_ring_of_protection()
-              or M.pre_buy_sobi_mask()
-              or M.pre_buy_boots()
-              or M.pre_buy_gloves()
-              or M.pre_buy_boots_of_elves()
-              or M.pre_buy_tpscroll()
-              or M.pre_deliver_items()
-              or M.pre_buy_two_boots_of_elves()
-              or M.pre_buy_ogre_axe()
-              or M.pre_buy_blades_of_attack()
-              or M.pre_buy_broadsword()
-              or M.pre_buy_recipe_lesser_crit())
-end
-
-function M.post_buy_items()
-  return not M.pre_buy_items()
 end
 
 ---------------------------------
@@ -67,10 +50,6 @@ function M.pre_buy_flask()
          and GetItemCost("item_flask") <= env.BOT_DATA.gold
 end
 
-function M.post_buy_flask()
-  return not M.pre_buy_flask()
-end
-
 function M.buy_flask()
   algorithms.BuyItem("item_flask")
 end
@@ -80,10 +59,6 @@ end
 function M.pre_buy_tpscroll()
   return not algorithms.DoesBotOrCourierHaveItem("item_tpscroll")
          and GetItemCost("item_tpscroll") <= env.BOT_DATA.gold
-end
-
-function M.post_buy_tpscroll()
-  return not M.pre_buy_tpscroll()
 end
 
 function M.buy_tpscroll()
@@ -100,10 +75,6 @@ function M.pre_buy_ring_of_protection()
                    "item_ring_of_aquila")
 end
 
-function M.post_buy_ring_of_protection()
-  return not M.pre_buy_ring_of_protection()
-end
-
 function M.buy_ring_of_protection()
   algorithms.BuyItem("item_ring_of_protection")
 end
@@ -118,10 +89,6 @@ function M.pre_buy_sobi_mask()
                    "item_ring_of_aquila")
 end
 
-function M.post_buy_sobi_mask()
-  return not M.pre_buy_sobi_mask()
-end
-
 function M.buy_sobi_mask()
   algorithms.BuyItem("item_sobi_mask")
 end
@@ -132,10 +99,6 @@ function M.pre_buy_boots()
   return pre_buy_item("item_boots")
          and not algorithms.DoesBotOrCourierHaveItem(
                    "item_power_treads")
-end
-
-function M.post_buy_boots()
-  return not M.pre_buy_boots()
 end
 
 function M.buy_boots()
@@ -150,10 +113,6 @@ function M.pre_buy_gloves()
                    "item_power_treads")
 end
 
-function M.post_buy_gloves()
-  return not M.pre_buy_gloves()
-end
-
 function M.buy_gloves()
   algorithms.BuyItem("item_gloves")
 end
@@ -165,10 +124,6 @@ function M.pre_buy_boots_of_elves()
          and algorithms.DoesBotOrCourierHaveItem("item_boots")
          and not algorithms.DoesBotOrCourierHaveItem(
                    "item_power_treads")
-end
-
-function M.post_buy_boots_of_elves()
-  return not M.pre_buy_boots_of_elves()
 end
 
 function M.buy_boots_of_elves()
@@ -186,10 +141,6 @@ function M.pre_buy_two_boots_of_elves()
                    "item_dragon_lance")
 end
 
-function M.post_buy_two_boots_of_elves()
-  return not M.pre_buy_two_boots_of_elves()
-end
-
 function M.buy_two_boots_of_elves()
   algorithms.BuyItem("item_boots_of_elves")
   algorithms.BuyItem("item_boots_of_elves")
@@ -201,10 +152,6 @@ function M.pre_buy_ogre_axe()
   return pre_buy_item("item_ogre_axe")
          and not algorithms.DoesBotOrCourierHaveItem(
                    "item_dragon_lance")
-end
-
-function M.post_buy_ogre_axe()
-  return not M.pre_buy_ogre_axe()
 end
 
 function M.buy_ogre_axe()
@@ -221,10 +168,6 @@ function M.pre_buy_blades_of_attack()
                "item_dragon_lance")
 end
 
-function M.post_buy_blades_of_attack()
-  return not M.pre_buy_blades_of_attack()
-end
-
 function M.buy_blades_of_attack()
   algorithms.BuyItem("item_blades_of_attack")
 end
@@ -237,10 +180,6 @@ function M.pre_buy_broadsword()
                    "item_lesser_crit")
          and algorithms.DoesBotOrCourierHaveItem(
                "item_dragon_lance")
-end
-
-function M.post_buy_broadsword()
-  return not M.pre_buy_broadsword()
 end
 
 function M.buy_broadsword()
@@ -257,10 +196,6 @@ function M.pre_buy_recipe_lesser_crit()
                "item_dragon_lance")
 end
 
-function M.post_buy_recipe_lesser_crit()
-  return not M.pre_buy_recipe_lesser_crit()
-end
-
 function M.buy_recipe_lesser_crit()
   algorithms.BuyItem("item_recipe_lesser_crit")
 end
@@ -269,10 +204,6 @@ end
 
 function M.pre_deliver_items()
   return moves.pre_deliver_items()
-end
-
-function M.post_deliver_items()
-  return not M.pre_deliver_items()
 end
 
 function M.deliver_items()

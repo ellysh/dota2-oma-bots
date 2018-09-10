@@ -22,12 +22,6 @@ function M.pre_push_lane()
          and not env.IS_BOT_LOW_HP
          and env.ENEMY_HERO_DATA == nil
          and 6 <= env.BOT_DATA.level
-         and (M.pre_attack_enemy_creep()
-              or M.pre_attack_enemy_tower())
-end
-
-function M.post_push_lane()
-  return not M.pre_push_lane()
 end
 
 ---------------------------------
@@ -54,10 +48,6 @@ function M.pre_use_trueshot()
          and IsRangedAllyCreep()
 end
 
-function M.post_use_trueshot()
-  return not M.pre_use_trueshot()
-end
-
 function M.use_trueshot()
   local ability = env.BOT:GetAbilityByName("drow_ranger_trueshot")
 
@@ -68,10 +58,6 @@ end
 
 function M.pre_attack_enemy_creep()
   return moves.pre_attack_enemy_creep()
-end
-
-function M.post_attack_enemy_creep()
-  return not M.pre_attack_enemy_creep()
 end
 
 function M.attack_enemy_creep()
@@ -89,10 +75,6 @@ function M.pre_attack_enemy_tower()
          and not env.IS_FOCUSED_BY_ENEMY_HERO
          and not env.IS_FOCUSED_BY_CREEPS
          and not env.IS_FOCUSED_BY_TOWER
-end
-
-function M.post_attack_enemy_tower()
-  return not M.pre_attack_enemy_tower()
 end
 
 function M.attack_enemy_tower()

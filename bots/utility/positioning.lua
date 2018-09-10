@@ -26,14 +26,6 @@ local M = {}
 function M.pre_positioning()
   return 20 < DotaTime()
          and algorithms.IsBotAlive()
-         and (M.pre_tp_mid_tower()
-              or M.pre_increase_creeps_distance()
-              or M.pre_decrease_creeps_distance()
-              or M.pre_turn())
-end
-
-function M.post_positioning()
-  return not M.pre_positioning()
 end
 
 ---------------------------------
@@ -46,10 +38,6 @@ function M.pre_tp_mid_tower()
 
          and algorithms.IsItemCastable(env.BOT_DATA, "item_tpscroll")
          and not env.IS_BASE_RECOVERY
-end
-
-function M.post_tp_mid_tower()
-  return not M.pre_tp_mid_tower()
 end
 
 function M.tp_mid_tower()
@@ -83,10 +71,6 @@ function M.pre_increase_creeps_distance()
                     env.BOT_DATA,
                     env.ENEMY_CREEP_DATA)
                   < constants.BASE_CREEP_DISTANCE)
-end
-
-function M.post_increase_creeps_distance()
-  return not M.pre_increase_creeps_distance()
 end
 
 function M.increase_creeps_distance()
@@ -126,10 +110,6 @@ function M.pre_decrease_creeps_distance()
          and env.ALLY_CREEP_FRONT_DATA ~= nil
 end
 
-function M.post_decrease_creeps_distance()
-  return not M.pre_decrease_creeps_distance()
-end
-
 function M.decrease_creeps_distance()
   local last_hit_creep = GetPreLastHitCreep()
   local closest_creep = GetClosestCreep()
@@ -158,10 +138,6 @@ function M.pre_turn()
                    target_data.location,
                    constants.TURN_TARGET_MAX_DEGREE)
          and not map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
-end
-
-function M.post_turn()
-  return not M.pre_turn()
 end
 
 function M.turn()

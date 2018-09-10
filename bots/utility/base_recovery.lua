@@ -29,15 +29,9 @@ local M = {}
 function M.pre_base_recovery()
   return algorithms.IsBotAlive()
 
-         and (env.IS_BOT_LOW_HP
-              and not env.BOT_DATA.is_healing)
-
-         and (M.pre_restore_hp_on_base()
+         and ((env.IS_BOT_LOW_HP
+               and not env.BOT_DATA.is_healing)
               or env.IS_BASE_RECOVERY)
-end
-
-function M.post_base_recovery()
-  return not M.pre_base_recovery()
 end
 
 ---------------------------------
@@ -48,10 +42,6 @@ function M.pre_restore_hp_on_base()
               < constants.UNIT_FOUNTAIN_MAX_HEALTH
               or functions.GetRate(env.BOT_DATA.mana, env.BOT_DATA.max_mana)
                  < constants.UNIT_FOUNTAIN_MAX_MANA)
-end
-
-function M.post_restore_hp_on_base()
-  return not M.pre_restore_hp_on_base()
 end
 
 function M.restore_hp_on_base()
@@ -67,10 +57,6 @@ function M.pre_move_base()
                     env.FOUNTAIN_SPOT,
                     30)))
           or env.IS_BASE_RECOVERY
-end
-
-function M.post_move_base()
-  return not M.pre_move_base()
 end
 
 function M.move_base()
@@ -90,10 +76,6 @@ end
 
 function M.pre_deliver_items()
   return moves.pre_deliver_items()
-end
-
-function M.post_deliver_items()
-  return not M.pre_deliver_items()
 end
 
 function M.deliver_items()
