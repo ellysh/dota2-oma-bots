@@ -44,6 +44,10 @@ local function DoesUnitHasAdvantage(unit_data, target_data)
                    target_data.speed,
                    40)
               or IsBiggerThan(
+                   unit_data.attack_speed,
+                   target_data.attack_speed,
+                   20)
+              or IsBiggerThan(
                    unit_data.attack_range,
                    target_data.attack_range,
                    100))
