@@ -69,9 +69,7 @@ end
 function M.pre_attack_ally_creep()
   local creep = GetMaxHealthCreep(constants.SIDE["ALLY"])
 
-  return constants.MAX_CREEPS_HP_DELTA
-           < (env.ALLY_CREEPS_HP - env.ENEMY_CREEPS_HP)
-         and creep ~= nil
+  return creep ~= nil
          and not algorithms.DoesTowerProtectUnit(creep)
          and not env.IS_FOCUSED_BY_ENEMY_HERO
          and not env.IS_FOCUSED_BY_CREEPS

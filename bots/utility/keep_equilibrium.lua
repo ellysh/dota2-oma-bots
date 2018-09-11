@@ -45,7 +45,9 @@ end
 --------------------------------
 
 function M.pre_attack_ally_creep()
-  return moves.pre_attack_ally_creep()
+  return constants.MAX_CREEPS_HP_DELTA
+           < (env.ALLY_CREEPS_HP - env.ENEMY_CREEPS_HP)
+         and moves.pre_attack_ally_creep()
 end
 
 function M.attack_ally_creep()
