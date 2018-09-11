@@ -341,6 +341,36 @@ M.OBJECTIVES = {
   },
 
   {
+    objective = "body_block",
+    module = require(GetScriptDirectory() .."/utility/body_block"),
+    moves = {
+      {
+        move = "move_and_block",
+        actions = {
+          {action = "move_and_block"},
+          {action = "stop_attack_and_move"},
+
+        },
+      },
+      {
+        move = "move_start_position",
+        actions = {
+          {action = "move_start_position"},
+
+        },
+      },
+      {
+        move = "turn_enemy_fountain",
+        actions = {
+          {action = "turn_enemy_fountain"},
+          {action = "stop_turn"},
+
+        },
+      },
+    },
+  },
+
+  {
     objective = "force_stop",
     module = require(GetScriptDirectory() .."/utility/force_stop"),
     moves = {

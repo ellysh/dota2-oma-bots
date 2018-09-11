@@ -59,4 +59,10 @@ positioning;tp_mid_tower;tp_mid_tower
 ;turn;turn
 ;;stop_attack_and_move
 ;;
+body_block;move_and_block;move_and_block
+;;stop_attack_and_move
+;move_start_position;move_start_position
+;turn_enemy_fountain;turn_enemy_fountain
+;;stop_turn
+;;
 force_stop;stop;stop_attack_and_move
