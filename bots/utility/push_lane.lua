@@ -21,7 +21,7 @@ function M.pre_push_lane()
   return algorithms.IsBotAlive()
          and not env.IS_BOT_LOW_HP
          and env.ENEMY_HERO_DATA == nil
-         and 6 <= env.BOT_DATA.level
+         and 4 <= env.BOT_DATA.level
 end
 
 ---------------------------------

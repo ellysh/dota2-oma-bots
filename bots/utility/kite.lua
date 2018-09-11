@@ -54,7 +54,7 @@ end
 
 function M.pre_attack_enemy_tower()
   return env.ENEMY_TOWER_DATA ~= nil
-         and 6 <= env.BOT_DATA.level
+         and 4 < env.BOT_DATA.level
          and algorithms.DoesEnemyTowerAttackAllyCreep(
                env.BOT_DATA,
                env.ENEMY_TOWER_DATA)
