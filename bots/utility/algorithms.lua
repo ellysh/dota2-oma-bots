@@ -500,7 +500,12 @@ function M.IsBotAlive()
   return GetBot():IsAlive()
 end
 
-local function GetCreepWith(bot_data, side, validate_function)
+function M.GetCreepWith(
+  bot_data,
+  side,
+  compare_function,
+  validate_function)
+
   local creeps = functions.ternary(
     side == constants.SIDE["ENEMY"],
     M.GetEnemyCreeps(
@@ -512,18 +517,20 @@ local function GetCreepWith(bot_data, side, validate_function)
 
   return functions.GetElementWith(
     creeps,
-    M.CompareMinHealth,
+    compare_function,
     function(unit_data)
       return M.IsAttackTargetable(unit_data)
              and not M.IsCourierUnit(unit_data)
-             and validate_function(unit_data)
+             and (validate_function == nil
+                  or validate_function(unit_data))
     end)
 end
 
 function M.GetPreLastHitCreep(bot_data, side)
-  return GetCreepWith(
+  return M.GetCreepWith(
            bot_data,
            side,
+           M.CompareMinHealth,
            function(unit_data)
              local incoming_damage = M.GetTotalIncomingDamage(unit_data)
              local total_damage = bot_data.attack_damage
@@ -535,9 +542,10 @@ function M.GetPreLastHitCreep(bot_data, side)
 end
 
 function M.GetLastHitCreep(bot_data, side)
-  return GetCreepWith(
+  return M.GetCreepWith(
            bot_data,
            side,
+           M.CompareMinHealth,
            function(unit_data)
              return M.IsLastHitTarget(bot_data, unit_data)
            end)

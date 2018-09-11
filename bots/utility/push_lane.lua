@@ -65,6 +65,15 @@ end
 
 --------------------------------
 
+function M.pre_kill_enemy_creep()
+  return moves.pre_attack_enemy_creep()
+end
+
+function M.kill_enemy_creep()
+  moves.attack_enemy_creep()
+end
+
+--------------------------------
 function M.pre_attack_enemy_tower()
   return env.ENEMY_TOWER_DATA ~= nil
          and algorithms.IsFocusedByCreeps(env.ENEMY_TOWER_DATA)

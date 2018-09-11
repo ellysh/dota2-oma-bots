@@ -23,31 +23,12 @@ local M = {}
 
 --------------------------------
 
-local function GetMaxHealthCreep(side)
-  local creeps = functions.ternary(
-    side == constants.SIDE["ENEMY"],
-    algorithms.GetEnemyCreeps(
-      env.BOT_DATA,
-      env.BOT_DATA.attack_range),
-    algorithms.GetAllyCreeps(
-      env.BOT_DATA,
-      env.BOT_DATA.attack_range))
-
-  return functions.GetElementWith(
-    creeps,
-    algorithms.CompareMaxHealth,
-    function(unit_data)
-      return (side == constants.SIDE["ENEMY"])
-             or (side == constants.SIDE["ALLY"]
-                 and functions.GetRate(
-                       unit_data.health,
-                       unit_data.max_health)
-                     < constants.UNIT_HALF_HEALTH_LEVEL)
-    end)
-end
-
 function M.pre_attack_enemy_creep()
-  local creep = GetMaxHealthCreep(constants.SIDE["ENEMY"])
+  local creep = algorithms.GetCreepWith(
+                  env.BOT_DATA,
+                  constants.SIDE["ENEMY"],
+                  algorithms.CompareMaxHealth,
+                  nil)
 
   return creep ~= nil
          and constants.UNIT_HALF_HEALTH_LEVEL
@@ -59,7 +40,11 @@ function M.pre_attack_enemy_creep()
 end
 
 function M.attack_enemy_creep()
-  local creep = GetMaxHealthCreep(constants.SIDE["ENEMY"])
+  local creep = algorithms.GetCreepWith(
+                  env.BOT_DATA,
+                  constants.SIDE["ENEMY"],
+                  algorithms.CompareMaxHealth,
+                  nil)
 
   algorithms.AttackUnit(env.BOT_DATA, creep, false)
 end
@@ -67,7 +52,11 @@ end
 --------------------------------
 
 function M.pre_attack_ally_creep()
-  local creep = GetMaxHealthCreep(constants.SIDE["ALLY"])
+  local creep = algorithms.GetCreepWith(
+                  env.BOT_DATA,
+                  constants.SIDE["ALLY"],
+                  algorithms.CompareMaxHealth,
+                  nil)
 
   return creep ~= nil
          and not algorithms.DoesTowerProtectUnit(creep)
@@ -77,7 +66,11 @@ function M.pre_attack_ally_creep()
 end
 
 function M.attack_ally_creep()
-  local creep = GetMaxHealthCreep(constants.SIDE["ALLY"])
+  local creep = algorithms.GetCreepWith(
+                  env.BOT_DATA,
+                  constants.SIDE["ALLY"],
+                  algorithms.CompareMaxHealth,
+                  nil)
 
   algorithms.AttackUnit(env.BOT_DATA, creep, false)
 end
