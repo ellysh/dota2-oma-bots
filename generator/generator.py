@@ -31,27 +31,23 @@ def is_comment(string):
 
 def get_value(line, index):
   value = line[index].strip().replace("\n"," ")
-  value = value.replace('FALSE', 'false')
-  value = value.replace('TRUE', 'true')
   return value if value else 'nil'
 
 def print_objective(line):
   objective = t.OBJECTIVE_HEADER
   objective = objective.replace('<' + str(0) + '>', get_value(line, 0))
-  objective = objective.replace('<' + str(1) + '>', get_value(line, 1))
   sys.stdout.write(objective)
   return
 
 def print_move(line):
   move = t.MOVE_HEADER
-  move = move.replace('<' + str(2) + '>', get_value(line, 2))
-  move = move.replace('<' + str(3) + '>', get_value(line, 3))
+  move = move.replace('<' + str(1) + '>', get_value(line, 1))
   sys.stdout.write(move)
   return
 
 def print_action(line):
   action = t.ACTION
-  action = action.replace('<' + str(4) + '>', get_value(line, 4))
+  action = action.replace('<' + str(2) + '>', get_value(line, 2))
   sys.stdout.write(action)
   return
 
@@ -71,14 +67,14 @@ def print_element(line):
     IS_FIRST_MOVE = True
     print_objective(line)
 
-  if line[2] and not is_comment(line[2]):
+  if line[1] and not is_comment(line[1]):
     if not IS_FIRST_MOVE:
       sys.stdout.write(t.MOVE_FOOTER)
 
     IS_FIRST_MOVE = False
     print_move(line)
 
-  if line[4] and not is_comment(line[4]):
+  if line[2] and not is_comment(line[2]):
     print_action(line)
 
 def parse_lines(reader):

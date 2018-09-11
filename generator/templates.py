@@ -15,7 +15,6 @@ return M
 STRATEGY_HEADER = """
   {
     strategy = "<0>",
-    is_interruptible = false,
     objectives = {
 """
 
@@ -30,7 +29,6 @@ OBJECTIVE_HEADER = """
   {
     objective = "<0>",
     module = require(GetScriptDirectory() .."/utility/<0>"),
-    is_interruptible = <1>,
     moves = {"""
 
 OBJECTIVE_FOOTER = """
@@ -42,8 +40,7 @@ OBJECTIVE_FOOTER = """
 
 MOVE_HEADER = """
       {
-        move = "<2>",
-        is_interruptible = <3>,
+        move = "<1>",
         actions = {
 """
 
@@ -53,5 +50,5 @@ MOVE_FOOTER = """
 
 #---------------------------------------------
 
-ACTION = """          {action = "<4>"},
+ACTION = """          {action = "<2>"},
 """
