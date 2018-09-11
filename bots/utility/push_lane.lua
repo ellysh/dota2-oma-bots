@@ -57,6 +57,7 @@ end
 
 function M.pre_attack_enemy_creep()
   return moves.pre_attack_enemy_creep()
+         and env.ENEMY_HERO_DATA ~= nil
 end
 
 function M.attack_enemy_creep()
@@ -66,11 +67,29 @@ end
 --------------------------------
 
 function M.pre_kill_enemy_creep()
-  return moves.pre_attack_enemy_creep()
+  local creep = algorithms.GetCreepWith(
+                  env.BOT_DATA,
+                  constants.SIDE["ENEMY"],
+                  algorithms.CompareMinHealth,
+                  nil)
+
+  return creep ~= nil
+         and env.ENEMY_HERO_DATA == nil
+         and creep.incoming_damage_from_creeps == 0
+         and not algorithms.DoesTowerProtectUnit(creep)
+         and not env.IS_FOCUSED_BY_ENEMY_HERO
+         and not env.IS_FOCUSED_BY_CREEPS
+         and not env.IS_FOCUSED_BY_TOWER
 end
 
 function M.kill_enemy_creep()
-  moves.attack_enemy_creep()
+  local creep = algorithms.GetCreepWith(
+                  env.BOT_DATA,
+                  constants.SIDE["ENEMY"],
+                  algorithms.CompareMinHealth,
+                  nil)
+
+  algorithms.AttackUnit(env.BOT_DATA, creep, false)
 end
 
 --------------------------------

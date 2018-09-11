@@ -55,6 +55,8 @@ kite;attack_enemy_hero;attack_enemy_hero
 push_lane;use_trueshot;use_trueshot
 ;attack_enemy_creep;attack_enemy_creep
 ;;stop_attack
+;kill_enemy_creep;kill_enemy_creep
+;;stop_attack
 ;attack_enemy_tower;attack_enemy_tower
 ;;
 aggro_control;aggro_last_hit;aggro_last_hit
