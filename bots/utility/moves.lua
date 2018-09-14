@@ -51,12 +51,21 @@ end
 
 --------------------------------
 
+local function GetTargetableAllyCreep()
+  return algorithms.GetCreepWith(
+           env.BOT_DATA,
+           constants.SIDE["ALLY"],
+           algorithms.CompareMaxHealth,
+           function(unit_data)
+             return functions.GetRate(
+                      unit_data.health,
+                      unit_data.max_health)
+                    < constants.UNIT_HALF_HEALTH_LEVEL
+           end)
+end
+
 function M.pre_attack_ally_creep()
-  local creep = algorithms.GetCreepWith(
-                  env.BOT_DATA,
-                  constants.SIDE["ALLY"],
-                  algorithms.CompareMaxHealth,
-                  nil)
+  local creep = GetTargetableAllyCreep()
 
   return creep ~= nil
          and not algorithms.DoesTowerProtectUnit(creep)
@@ -66,11 +75,7 @@ function M.pre_attack_ally_creep()
 end
 
 function M.attack_ally_creep()
-  local creep = algorithms.GetCreepWith(
-                  env.BOT_DATA,
-                  constants.SIDE["ALLY"],
-                  algorithms.CompareMaxHealth,
-                  nil)
+  local creep = GetTargetableAllyCreep()
 
   algorithms.AttackUnit(env.BOT_DATA, creep, false)
 end
