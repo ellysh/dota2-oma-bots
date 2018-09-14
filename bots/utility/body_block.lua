@@ -41,7 +41,7 @@ local function GetBodyBlockSpot()
 end
 
 function M.pre_move_start_position()
-  return (not algorithms.AreAllyCreepsInRadius(
+  return not algorithms.AreAllyCreepsInRadius(
                env.BOT_DATA,
                constants.MAX_UNIT_SEARCH_RADIUS,
                constants.DIRECTION["FRONT"])
@@ -49,13 +49,6 @@ function M.pre_move_start_position()
          and not map.IsUnitInSpot(
                    env.BOT_DATA,
                    GetBodyBlockSpot())
-
-         and not algorithms.IsTargetInAttackRange(
-                   env.ENEMY_HERO_DATA,
-                   env.BOT_DATA,
-                   true))
-
-         or map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
 end
 
 function M.move_start_position()
