@@ -75,7 +75,7 @@ function M.pre_kill_enemy_creep()
 
   return creep ~= nil
          and env.ENEMY_HERO_DATA == nil
-         and creep.incoming_damage_from_creeps == 0
+         and env.ALLY_CREEP_FRONT_DATA ~= nil
          and not algorithms.DoesTowerProtectUnit(creep)
          and not env.IS_FOCUSED_BY_ENEMY_HERO
          and not env.IS_FOCUSED_BY_CREEPS

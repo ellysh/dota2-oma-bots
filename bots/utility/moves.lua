@@ -33,6 +33,7 @@ function M.pre_attack_enemy_creep()
   return creep ~= nil
          and constants.UNIT_HALF_HEALTH_LEVEL
              < functions.GetRate(creep.health, creep.max_health)
+         and env.ALLY_CREEP_FRONT_DATA ~= nil
          and not algorithms.DoesTowerProtectUnit(creep)
          and not env.IS_FOCUSED_BY_ENEMY_HERO
          and not env.IS_FOCUSED_BY_CREEPS
