@@ -92,7 +92,7 @@ function M.pre_move_safe_evasion()
          or (env.IS_FOCUSED_BY_ENEMY_HERO
              and algorithms.AreEnemyCreepsInRadius(
                    env.BOT_DATA,
-                   constants.CREEP_AGRO_RADIUS))
+                   constants.CREEP_MAX_AGRO_RADIUS))
 
          or env.IS_FOCUSED_BY_UNKNOWN_UNIT
 

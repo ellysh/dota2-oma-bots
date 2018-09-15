@@ -50,7 +50,7 @@ function M.pre_aggro_last_hit()
   return env.ENEMY_HERO_DATA ~= nil
 
          and (env.ENEMY_TOWER_DATA == nil
-              or constants.CREEP_AGRO_RADIUS
+              or constants.CREEP_MAX_AGRO_RADIUS
                  < functions.GetUnitDistance(
                      env.BOT_DATA,
                      env.ENEMY_TOWER_DATA))
@@ -61,8 +61,8 @@ function M.pre_aggro_last_hit()
 
          and not algorithms.IsUnitMoving(last_hit_creep)
 
-         and (creep_distance <= constants.CREEP_AGRO_RADIUS
-              and constants.MIN_CREEP_DISTANCE < creep_distance)
+         and (creep_distance <= constants.CREEP_MAX_AGRO_RADIUS
+              and constants.CREEP_MIN_AGRO_RADIUS < creep_distance)
 end
 
 function M.aggro_last_hit()
