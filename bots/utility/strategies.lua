@@ -10,6 +10,9 @@ local algorithms = require(
 local map = require(
   GetScriptDirectory() .."/utility/map")
 
+local base_recovery = require(
+  GetScriptDirectory() .."/utility/base_recovery")
+
 local env = require(
   GetScriptDirectory() .."/utility/environment")
 
@@ -25,7 +28,8 @@ function M.pre_recovery()
   return DoesCreepMeet()
          and (not algorithms.IsBotAlive()
               or env.IS_BOT_LOW_HP
-              or env.IS_BASE_RECOVERY)
+              or env.IS_BASE_RECOVERY
+              or base_recovery.pre_restore_hp_on_base())
 end
 
 local function IsBiggerThan(a, b, delta)

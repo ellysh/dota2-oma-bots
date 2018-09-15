@@ -112,6 +112,28 @@ M.OBJECTIVES = {
   },
 
   {
+    objective = "base_recovery",
+    module = require(GetScriptDirectory() .."/utility/base_recovery"),
+    moves = {
+      {
+        move = "deliver_items",
+        actions = {
+          {action = "deliver_items"},
+
+        },
+      },
+      {
+        move = "move_base",
+        actions = {
+          {action = "move_base"},
+          {action = "restore_hp_on_base"},
+
+        },
+      },
+    },
+  },
+
+  {
     objective = "evasion",
     module = require(GetScriptDirectory() .."/utility/evasion"),
     moves = {
@@ -133,28 +155,6 @@ M.OBJECTIVES = {
         move = "move_safe_evasion",
         actions = {
           {action = "move_safe_evasion"},
-
-        },
-      },
-    },
-  },
-
-  {
-    objective = "base_recovery",
-    module = require(GetScriptDirectory() .."/utility/base_recovery"),
-    moves = {
-      {
-        move = "deliver_items",
-        actions = {
-          {action = "deliver_items"},
-
-        },
-      },
-      {
-        move = "move_base",
-        actions = {
-          {action = "move_base"},
-          {action = "restore_hp_on_base"},
 
         },
       },
