@@ -78,7 +78,10 @@ end
 ---------------------------------
 
 function M.pre_move_safe_evasion()
-  return env.IS_FOCUSED_BY_CREEPS
+  return (env.IS_FOCUSED_BY_CREEPS
+          and not map.IsUnitInSpot(
+                    env.BOT_DATA,
+                    map.GetAllySpot("tower_tier_1_rear_safe")))
 
          or env.IS_BOT_LOW_HP
 

@@ -63,7 +63,6 @@ function M.pre_increase_creeps_distance()
   local last_hit_creep = GetPreLastHitCreep()
 
   return (last_hit_creep == nil
-
           or (env.ALLY_CREEPS_HP * 3) < env.ENEMY_CREEPS_HP)
 
          and (env.ENEMY_CREEP_DATA ~= nil
@@ -71,6 +70,10 @@ function M.pre_increase_creeps_distance()
                     env.BOT_DATA,
                     env.ENEMY_CREEP_DATA)
                   < constants.BASE_CREEP_DISTANCE)
+
+         and not map.IsUnitInSpot(
+                   env.BOT_DATA,
+                   map.GetAllySpot("tower_tier_1_rear_safe"))
 end
 
 function M.increase_creeps_distance()
