@@ -1,8 +1,14 @@
+local constants = require(
+  GetScriptDirectory() .."/utility/constants")
+
 local functions = require(
   GetScriptDirectory() .."/utility/functions")
 
 local algorithms = require(
   GetScriptDirectory() .."/utility/algorithms")
+
+local map = require(
+  GetScriptDirectory() .."/utility/map")
 
 local env = require(
   GetScriptDirectory() .."/utility/environment")
@@ -53,9 +59,21 @@ local function DoesUnitHasAdvantage(unit_data, target_data)
                    100))
 end
 
+local function IsEnemyUnitOnHighGround()
+  return (env.ENEMY_HERO_DATA ~= nil
+          and map.IsUnitInEnemyTowerAttackRange(env.ENEMY_HERO_DATA))
+
+         or nil ~= algorithms.GetCreepWith(
+                     env.BOT_DATA,
+                     constants.SIDE["ENEMY"],
+                     nil,
+                     map.IsUnitInEnemyTowerAttackRange)
+end
+
 function M.pre_defensive()
   return DoesCreepMeet()
-         and DoesUnitHasAdvantage(env.ENEMY_HERO_DATA, env.BOT_DATA)
+         and (DoesUnitHasAdvantage(env.ENEMY_HERO_DATA, env.BOT_DATA)
+              or IsEnemyUnitOnHighGround())
 end
 
 function M.pre_offensive()
