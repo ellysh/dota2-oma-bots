@@ -35,7 +35,7 @@ end
 ---------------------------------
 
 function M.pre_attack_enemy_hero()
-  return moves.pre_attack_enemy_hero_safe()
+  return moves.pre_attack_enemy_hero()
          and env.BOT_DATA.attack_target ~= env.ENEMY_HERO_DATA
          and env.ALLY_CREEP_FRONT_DATA ~= nil
          and not algorithms.AreEnemyCreepsInRadius(

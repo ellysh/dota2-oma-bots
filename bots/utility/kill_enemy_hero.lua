@@ -41,7 +41,7 @@ end
 ---------------------------------
 
 function M.pre_attack_enemy_hero()
-  return moves.pre_attack_enemy_hero_unsafe()
+  return moves.pre_attack_enemy_hero()
 end
 
 function M.attack_enemy_hero()

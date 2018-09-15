@@ -87,18 +87,9 @@ end
 
 ---------------------------------
 
-function M.pre_attack_enemy_hero_unsafe()
+function M.pre_attack_enemy_hero()
   return env.ENEMY_HERO_DATA ~= nil
          and not env.DOES_TOWER_PROTECT_ENEMY
-end
-
-function M.pre_attack_enemy_hero_safe()
-  return M.pre_attack_enemy_hero_unsafe()
-         and env.ENEMY_HERO_DATA ~= nil
-         and algorithms.IsTargetInAttackRange(
-               env.BOT_DATA,
-               env.ENEMY_HERO_DATA,
-               false)
 end
 
 function M.attack_enemy_hero()
