@@ -25,7 +25,8 @@ buy_items;buy_flask;buy_flask
 ;buy_recipe_lesser_crit;buy_recipe_lesser_crit
 ;deliver_items;deliver_items
 ;;
-defend_tower;attack_enemy_creep;attack_enemy_creep
+defend_tower;use_silence;use_silence
+;attack_enemy_creep;attack_enemy_creep
 ;;stop_attack
 ;attack_enemy_hero;attack_enemy_hero
 ;;stop_attack

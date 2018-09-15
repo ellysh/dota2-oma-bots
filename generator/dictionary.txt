@@ -39,6 +39,7 @@ heal_tango
 increase_creeps_distance
 item_recovery
 keep_equilibrium
+kill_enemy_creep
 kill_enemy_hero
 kite
 lasthit_enemy_creep

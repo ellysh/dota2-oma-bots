@@ -155,6 +155,13 @@ M.OBJECTIVES = {
     module = require(GetScriptDirectory() .."/utility/defend_tower"),
     moves = {
       {
+        move = "use_silence",
+        actions = {
+          {action = "use_silence"},
+
+        },
+      },
+      {
         move = "attack_enemy_creep",
         actions = {
           {action = "attack_enemy_creep"},

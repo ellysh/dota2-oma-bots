@@ -59,6 +59,20 @@ function M.attack_enemy_creep()
   algorithms.AttackUnit(env.BOT_DATA, creep, false)
 end
 
+---------------------------------
+
+function M.pre_use_silence()
+  return moves.pre_use_silence()
+         and env.ALLY_TOWER_DATA ~= nil
+         and all_units.IsUnitAttackTarget(
+               env.ENEMY_HERO_DATA,
+               env.ALLY_TOWER_DATA)
+end
+
+function M.use_silence()
+  moves.use_silence()
+end
+
 --------------------------------
 
 function M.pre_attack_enemy_hero()
