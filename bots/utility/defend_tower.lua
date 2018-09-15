@@ -79,7 +79,12 @@ local function GetEnemyUnitInTowerAttackRange()
 end
 
 function M.pre_kill_enemy_creep()
-  return GetEnemyUnitInTowerAttackRange() ~= nil
+  return constants.MAX_CREEPS_HP_DELTA
+         < (env.ENEMY_CREEPS_HP - env.ALLY_CREEPS_HP)
+
+         and map.IsUnitInEnemyTowerAttackRange(env.ENEMY_HERO_DATA)
+
+         and GetEnemyUnitInTowerAttackRange() ~= nil
 end
 
 function M.kill_enemy_creep()
