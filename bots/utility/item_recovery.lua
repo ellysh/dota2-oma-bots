@@ -76,7 +76,16 @@ function M.pre_heal_tango()
 
   return algorithms.IsItemCastable(env.BOT_DATA, "item_tango")
          and not env.BOT:HasModifier("modifier_tango_heal")
+
+         and not (env.IS_BOT_LOW_HP
+                  and algorithms.IsItemCastable(
+                        env.BOT_DATA,
+                        "item_flask"))
+
+         and 200 < (env.BOT_DATA.max_health - env.BOT_DATA.health)
+
          and tree ~= nil
+
          and (tower_data == nil
               or algorithms.GetAttackRange(
                    tower_data,
@@ -85,19 +94,6 @@ function M.pre_heal_tango()
                  < functions.GetDistance(
                      GetTreeLocation(tree),
                      tower_data.location))
-         and ((env.IS_BOT_LOW_HP
-               and not algorithms.IsItemCastable(
-                         env.BOT_DATA,
-                         "item_flask"))
-              or (200 < (env.BOT_DATA.max_health - env.BOT_DATA.health)
-                  and not env.IS_BOT_LOW_HP))
-         and not env.IS_FOCUSED_BY_ENEMY_HERO
-         and not env.IS_FOCUSED_BY_UNKNOWN_UNIT
-
-         and not algorithms.IsTargetInAttackRange(
-                   env.ENEMY_HERO_DATA,
-                   env.BOT_DATA,
-                   true)
 
          and constants.TANGO_USAGE_FROM_HG_DISTANCE
              < functions.GetDistance(
