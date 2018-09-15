@@ -41,10 +41,7 @@ local function GetBodyBlockSpot()
 end
 
 function M.pre_move_start_position()
-  return not algorithms.AreAllyCreepsInRadius(
-               env.BOT_DATA,
-               constants.MAX_UNIT_SEARCH_RADIUS,
-               constants.DIRECTION["FRONT"])
+  return env.ALLY_CREEP_FRONT_DATA == nil
 
          and not map.IsUnitInSpot(
                    env.BOT_DATA,
@@ -60,10 +57,7 @@ end
 ---------------------------------
 
 function M.pre_turn_enemy_fountain()
-  return not algorithms.AreAllyCreepsInRadius(
-               env.BOT_DATA,
-               constants.MAX_UNIT_SEARCH_RADIUS,
-               constants.DIRECTION["FRONT"])
+  return env.ALLY_CREEP_FRONT_DATA == nil
 
          and map.IsUnitInSpot(
                env.BOT_DATA,
