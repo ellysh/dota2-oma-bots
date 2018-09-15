@@ -77,9 +77,6 @@ function M.pre_kill_enemy_creep()
          and env.ENEMY_HERO_DATA == nil
          and env.ALLY_CREEP_FRONT_DATA ~= nil
          and not algorithms.DoesTowerProtectUnit(creep)
-         and not env.IS_FOCUSED_BY_ENEMY_HERO
-         and not env.IS_FOCUSED_BY_CREEPS
-         and not env.IS_FOCUSED_BY_TOWER
 end
 
 function M.kill_enemy_creep()
@@ -99,8 +96,6 @@ function M.pre_attack_enemy_tower()
          and algorithms.DoesEnemyTowerAttackAllyCreep(
                env.BOT_DATA,
                env.ENEMY_TOWER_DATA)
-         and not env.IS_FOCUSED_BY_ENEMY_HERO
-         and not env.IS_FOCUSED_BY_CREEPS
          and not env.IS_FOCUSED_BY_TOWER
 end
 

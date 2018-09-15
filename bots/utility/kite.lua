@@ -36,8 +36,6 @@ end
 
 function M.pre_attack_enemy_hero()
   return moves.pre_attack_enemy_hero_safe()
-         and not env.IS_FOCUSED_BY_CREEPS
-         and not env.IS_FOCUSED_BY_TOWER
          and env.BOT_DATA.attack_target ~= env.ENEMY_HERO_DATA
          and env.PRE_LAST_HIT_ENEMY_CREEP == nil
          and env.PRE_LAST_HIT_ALLY_CREEP == nil
@@ -59,8 +57,6 @@ function M.pre_attack_enemy_tower()
                env.BOT_DATA,
                env.ENEMY_TOWER_DATA)
 
-         and not env.IS_FOCUSED_BY_ENEMY_HERO
-         and not env.IS_FOCUSED_BY_CREEPS
          and not env.IS_FOCUSED_BY_TOWER
 
          and (env.ENEMY_HERO_DATA == nil
