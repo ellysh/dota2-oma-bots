@@ -291,13 +291,10 @@ function M.IsFocusedByUnknownUnit(unit_data)
 end
 
 function M.IsLastHitTarget(unit_data, target_data)
-  local incoming_damage = unit_data.attack_damage
-                            + M.GetTotalIncomingDamage(target_data)
-
-  if (100 < unit_data.attack_damage or 2 < target_data.armor) then
-    incoming_damage = incoming_damage
-                      * functions.GetDamageMultiplier(target_data.armor)
-  end
+  local incoming_damage =
+    (unit_data.attack_damage
+     + (M.GetTotalIncomingDamage(target_data) * 0.3))
+    * functions.GetDamageMultiplier(target_data.armor)
 
   return target_data.health < incoming_damage
 end
