@@ -61,6 +61,26 @@ end
 
 ---------------------------------
 
+local function GetEnemyUnitInTowerAttackRange()
+  return algorithms.GetCreepWith(
+           env.BOT_DATA,
+           constants.SIDE["ENEMY"],
+           algorithms.CompareMinHealth,
+           map.IsUnitInEnemyTowerAttackRange)
+end
+
+function M.pre_kill_enemy_creep()
+  return GetEnemyUnitInTowerAttackRange() ~= nil
+end
+
+function M.kill_enemy_creep()
+  local creep = GetEnemyUnitInTowerAttackRange()
+
+  algorithms.AttackUnit(env.BOT_DATA, creep, false)
+end
+
+---------------------------------
+
 function M.pre_use_silence()
   return moves.pre_use_silence()
          and env.ALLY_TOWER_DATA ~= nil
