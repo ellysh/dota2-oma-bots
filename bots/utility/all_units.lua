@@ -259,6 +259,13 @@ local function UpdateUnitAttackTarget(_, unit_data)
                UNIT_LIST[opposing_team][UNIT_TYPE["BUILDING"]])
   end
 
+  if target == nil then
+    local api_target = unit_data.handle:GetAttackTarget()
+    if api_target ~= nil then
+      target = M.GetUnitData(api_target)
+    end
+  end
+
   local prev_target = functions.ternary(
                         unit_data.attack_target ~= nil
                         and unit_data.last_attack_time ~= nil,
