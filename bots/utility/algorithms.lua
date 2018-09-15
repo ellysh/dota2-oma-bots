@@ -388,22 +388,27 @@ local function GetClosestSafeSpot(
 end
 
 function M.GetSafeSpot(unit_data, enemy_units)
-  local hg_spot = map.GetUnitAllySpot(unit_data, "high_ground")
+  if M.IsItemCastable(unit_data, "item_flask")
+     or M.IsItemCastable(unit_data, "item_tango")
+     or unit_data.is_healing then
 
-  local forest_spot = GetClosestSafeSpot(
-                        map.GetUnitAllySpot(unit_data, "forest_top"),
-                        map.GetUnitAllySpot(unit_data, "forest_bot"),
-                        unit_data,
-                        enemy_units)
+    local hg_spot = map.GetUnitAllySpot(unit_data, "high_ground")
 
-  if IsSpotSafe(hg_spot, unit_data, enemy_units)
-     and forest_spot ~= nil then
+    local forest_spot = GetClosestSafeSpot(
+                          map.GetUnitAllySpot(unit_data, "forest_top"),
+                          map.GetUnitAllySpot(unit_data, "forest_bot"),
+                          unit_data,
+                          enemy_units)
 
-    return hg_spot
+    if IsSpotSafe(hg_spot, unit_data, enemy_units)
+       and forest_spot ~= nil then
+
+      return hg_spot
+    end
+
+    if forest_spot ~= nil then
+      return forest_spot end
   end
-
-  if forest_spot ~= nil then
-    return forest_spot end
 
   local forest_back_spot = GetClosestSafeSpot(
                             map.GetUnitAllySpot(
