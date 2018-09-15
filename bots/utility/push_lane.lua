@@ -92,6 +92,7 @@ end
 --------------------------------
 function M.pre_attack_enemy_tower()
   return env.ENEMY_TOWER_DATA ~= nil
+         and env.ALLY_CREEP_FRONT_DATA ~= nil
          and algorithms.IsFocusedByCreeps(env.ENEMY_TOWER_DATA)
          and algorithms.DoesEnemyTowerAttackAllyCreep(
                env.BOT_DATA,
