@@ -121,7 +121,9 @@ function M.UpdateVariables()
                           M.BOT_DATA,
                           constants.MAX_UNIT_SEARCH_RADIUS))
 
-  M.SAFE_SPOT = algorithms.GetSafeSpot(M.BOT_DATA, ENEMY_HERO_DATA)
+  M.SAFE_SPOT = algorithms.GetSafeSpot(M.BOT_DATA,
+                                       {M.ENEMY_HERO_DATA,
+                                        M.ENEMY_CREEP_DATA})
 
   M.FOUNTAIN_SPOT = map.GetAllySpot("fountain")
 

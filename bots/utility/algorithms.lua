@@ -320,12 +320,24 @@ function M.IsFocusedByTower(unit_data)
   return 0 < unit_data.incoming_damage_from_towers
 end
 
-local function IsTargetNearSpot(unit_data, target_data, spot)
-  return target_data ~= nil
-         and (functions.GetDistance(target_data.location, spot)
-              <= M.GetAttackRange(target_data, unit_data, true)
+local function IsTargetNearSpot(unit_data, enemy_units, spot)
+  local enemy_unit = functions.GetElementWith(
+                       enemy_units,
+                       nil,
+                       function(target_data)
+                       return functions.GetDistance(
+                                target_data.location,
+                                spot)
+                              <= M.GetAttackRange(
+                                   target_data,
+                                   unit_data,
+                                   true)
 
-              or map.IsUnitNearSpot(target_data, spot))
+                              or map.IsUnitInSpot(target_data, spot)
+                       end)
+
+
+  return enemy_unit ~= nil
 end
 
 function M.GetUnitDistanceFromFountain(unit_data)
@@ -346,26 +358,23 @@ function M.IsFrontUnit(bot_data, unit_data)
          < M.GetUnitDistanceFromFountain(unit_data)
 end
 
-local function IsSpotSafe(spot, unit_data, enemy_hero_data)
-  return not IsTargetNearSpot(unit_data, enemy_hero_data, spot)
+local function IsSpotSafe(spot, unit_data, enemy_units)
+  return not IsTargetNearSpot(unit_data, enemy_units, spot)
 
-         and (M.GetDistanceFromFountain(unit_data, spot)
-              - M.GetUnitDistanceFromFountain(unit_data) < 20)
-
-         and (map.IsUnitInSpot(unit_data, spot)
-              and not M.IsFocusedByEnemyHero(unit_data)
-              and not M.IsFocusedByUnknownUnit(unit_data)
-              and not M.IsFocusedByCreeps(unit_data))
+         and not (map.IsUnitInSpot(unit_data, spot)
+                  and (M.IsFocusedByEnemyHero(unit_data)
+                       or M.IsFocusedByUnknownUnit(unit_data)
+                       or M.IsFocusedByCreeps(unit_data)))
 end
 
 local function GetClosestSafeSpot(
   spot1,
   spot2,
   unit_data,
-  enemy_hero_data)
+  enemy_units)
 
-  local is_spot1_safe = IsSpotSafe(spot1, unit_data, enemy_hero_data)
-  local is_spot2_safe = IsSpotSafe(spot2, unit_data, enemy_hero_data)
+  local is_spot1_safe = IsSpotSafe(spot1, unit_data, enemy_units)
+  local is_spot2_safe = IsSpotSafe(spot2, unit_data, enemy_units)
 
   if is_spot1_safe and is_spot2_safe then
     return functions.ternary(
@@ -378,16 +387,16 @@ local function GetClosestSafeSpot(
   end
 end
 
-function M.GetSafeSpot(unit_data, enemy_hero_data)
+function M.GetSafeSpot(unit_data, enemy_units)
   local hg_spot = map.GetUnitAllySpot(unit_data, "high_ground")
 
   local forest_spot = GetClosestSafeSpot(
                         map.GetUnitAllySpot(unit_data, "forest_top"),
                         map.GetUnitAllySpot(unit_data, "forest_bot"),
                         unit_data,
-                        enemy_hero_data)
+                        enemy_units)
 
-  if IsSpotSafe(hg_spot, unit_data, enemy_hero_data)
+  if IsSpotSafe(hg_spot, unit_data, enemy_units)
      and forest_spot ~= nil then
 
     return hg_spot
@@ -404,7 +413,7 @@ function M.GetSafeSpot(unit_data, enemy_hero_data)
                               unit_data,
                               "forest_back_bot"),
                             unit_data,
-                            enemy_hero_data)
+                            enemy_units)
 
   if forest_back_spot ~= nil then
     return forest_back_spot end
@@ -417,7 +426,7 @@ function M.GetSafeSpot(unit_data, enemy_hero_data)
                               unit_data,
                               "forest_deep_bot"),
                             unit_data,
-                            enemy_hero_data)
+                            enemy_units)
 
   if forest_deep_spot ~= nil then
     return forest_deep_spot end
