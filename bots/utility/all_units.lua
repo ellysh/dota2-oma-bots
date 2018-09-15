@@ -245,7 +245,8 @@ local function UpdateUnitAttackTarget(_, unit_data)
   if not unit_data.is_visible
      or (unit_data.last_attack_time ~= nil
          and (CURRENT_GAME_TIME - unit_data.last_attack_time)
-              < unit_data.seconds_per_attack) then
+              < (unit_data.seconds_per_attack
+                 + constants.LAST_ATTACK_TIME_CORRECTION)) then
 
     return
   end
