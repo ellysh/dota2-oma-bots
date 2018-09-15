@@ -16,6 +16,9 @@ local all_units = require(
 local moves = require(
   GetScriptDirectory() .."/utility/moves")
 
+local map = require(
+  GetScriptDirectory() .."/utility/map")
+
 local M = {}
 
 ---------------------------------
@@ -62,6 +65,12 @@ end
 ---------------------------------
 
 local function GetEnemyUnitInTowerAttackRange()
+  local creep = algorithms.GetCreepWith(
+           env.BOT_DATA,
+           constants.SIDE["ENEMY"],
+           algorithms.CompareMinHealth,
+           map.IsUnitInEnemyTowerAttackRange)
+
   return algorithms.GetCreepWith(
            env.BOT_DATA,
            constants.SIDE["ENEMY"],

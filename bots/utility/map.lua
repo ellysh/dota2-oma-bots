@@ -17,8 +17,16 @@ function M.GetAllySpot(spot_name)
   return map.MAP[GetTeam()][spot_name]
 end
 
+function M.GetUnitAllySpot(unit_data, spot_name)
+  return map.MAP[unit_data.team][spot_name]
+end
+
 function M.GetEnemySpot(spot_name)
   return map.MAP[GetOpposingTeam()][spot_name]
+end
+
+function M.GetUnitEnemySpot(unit_data, spot_name)
+  return map.MAP[functions.GetOpposingTeam(unit_data.team)][spot_name]
 end
 
 function M.IsUnitInSpot(unit_data, spot)
@@ -33,7 +41,7 @@ end
 function M.IsUnitInEnemyTowerAttackRange(unit_data)
   return M.IsUnitInSpot(
            unit_data,
-           M.GetEnemySpot("tower_tier_1_attack"))
+           M.GetUnitEnemySpot(unit_data, "tower_tier_1_attack"))
 end
 
 -- Provide an access to local functions for unit tests only

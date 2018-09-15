@@ -205,15 +205,6 @@ function M.IsUnitAttackTarget(unit_data, target_data)
   end
 end
 
-function M.GetOpposingTeam(team)
-  local OPPOSING_TEAM = {
-    [TEAM_RADIANT] = TEAM_DIRE,
-    [TEAM_DIRE] = TEAM_RADIANT,
-  }
-
-  return OPPOSING_TEAM[team]
-end
-
 local function FindTargetInTable(unit_data, table)
   return functions.GetElementWith(
            table,
@@ -251,7 +242,7 @@ local function UpdateUnitAttackTarget(_, unit_data)
     return
   end
 
-  local opposing_team = M.GetOpposingTeam(unit_data.team)
+  local opposing_team = functions.GetOpposingTeam(unit_data.team)
   local target = FindTargetInTable(
                    unit_data,
                    UNIT_LIST[opposing_team][UNIT_TYPE["CREEP"]])

@@ -336,6 +336,15 @@ function M.IsFacingLocation(unit_data, location, degrees)
   return M.GetDelta(unit_data.facing, angle) <= degrees
 end
 
+function M.GetOpposingTeam(team)
+  local OPPOSING_TEAM = {
+    [TEAM_RADIANT] = TEAM_DIRE,
+    [TEAM_DIRE] = TEAM_RADIANT,
+  }
+
+  return OPPOSING_TEAM[team]
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_IsFlagSet = IsFlagSet
 
