@@ -320,23 +320,12 @@ function M.IsFocusedByTower(unit_data)
   return 0 < unit_data.incoming_damage_from_towers
 end
 
-local function IsEnemyUnitNearSpot(unit_data, enemy_hero_data, spot)
-  local creeps = M.GetEnemyCreeps(
-                   unit_data,
-                   constants.MAX_UNIT_TARGET_RADIUS)
+local function IsTargetNearSpot(unit_data, target_data, spot)
+  return target_data ~= nil
+         and (functions.GetDistance(target_data.location, spot)
+              <= M.GetAttackRange(target_data, unit_data, true)
 
-  local creep = functions.GetElementWith(
-                  creeps,
-                  M.CompareMinDistance,
-                  function(unit_data)
-                    return map.IsUnitNearSpot(unit_data, spot)
-                  end)
-
-  return (enemy_hero_data ~= nil
-          and (functions.GetDistance(enemy_hero_data.location, spot)
-               <= M.GetAttackRange(enemy_hero_data, unit_data, true)
-               or map.IsUnitNearSpot(enemy_hero_data, spot)))
-         or creep ~= nil
+              or map.IsUnitNearSpot(target_data, spot))
 end
 
 function M.GetUnitDistanceFromFountain(unit_data)
@@ -358,16 +347,15 @@ function M.IsFrontUnit(bot_data, unit_data)
 end
 
 local function IsSpotSafe(spot, unit_data, enemy_hero_data)
-  return not (
-         IsEnemyUnitNearSpot(unit_data, enemy_hero_data, spot)
+  return not IsTargetNearSpot(unit_data, enemy_hero_data, spot)
 
-         or 20 < (M.GetDistanceFromFountain(unit_data, spot)
-                  - M.GetUnitDistanceFromFountain(unit_data))
+         and (M.GetDistanceFromFountain(unit_data, spot)
+              - M.GetUnitDistanceFromFountain(unit_data) < 20)
 
-         or (map.IsUnitInSpot(unit_data, spot)
-             and (M.IsFocusedByEnemyHero(unit_data)
-                  or M.IsFocusedByUnknownUnit(unit_data)
-                  or M.IsFocusedByCreeps(unit_data))))
+         and (map.IsUnitInSpot(unit_data, spot)
+              and not M.IsFocusedByEnemyHero(unit_data)
+              and not M.IsFocusedByUnknownUnit(unit_data)
+              and not M.IsFocusedByCreeps(unit_data))
 end
 
 local function GetClosestSafeSpot(
