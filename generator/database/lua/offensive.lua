@@ -323,6 +323,14 @@ M.OBJECTIVES = {
 
         },
       },
+      {
+        move = "aggro_hg",
+        actions = {
+          {action = "aggro_hg"},
+          {action = "stop_attack"},
+
+        },
+      },
     },
   },
 

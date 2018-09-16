@@ -517,6 +517,14 @@ M.OBJECTIVES = {
 
         },
       },
+      {
+        move = "aggro_hg",
+        actions = {
+          {action = "aggro_hg"},
+          {action = "stop_attack"},
+
+        },
+      },
     },
   },
 
@@ -957,6 +965,14 @@ M.OBJECTIVES = {
 
         },
       },
+      {
+        move = "aggro_hg",
+        actions = {
+          {action = "aggro_hg"},
+          {action = "stop_attack"},
+
+        },
+      },
     },
   },
 
@@ -1347,6 +1363,14 @@ M.OBJECTIVES = {
         move = "aggro_last_hit",
         actions = {
           {action = "aggro_last_hit"},
+          {action = "stop_attack"},
+
+        },
+      },
+      {
+        move = "aggro_hg",
+        actions = {
+          {action = "aggro_hg"},
           {action = "stop_attack"},
 
         },

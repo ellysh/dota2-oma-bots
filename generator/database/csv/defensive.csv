@@ -60,6 +60,8 @@ kite;attack_enemy_hero;attack_enemy_hero
 ;;
 aggro_control;aggro_last_hit;aggro_last_hit
 ;;stop_attack
+;aggro_hg;aggro_hg
+;;stop_attack
 ;;
 positioning;tp_mid_tower;tp_mid_tower
 ;decrease_creeps_distance_aggro;decrease_creeps_distance_aggro

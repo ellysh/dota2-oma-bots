@@ -9,6 +9,10 @@ local constants = require(
 
 local M = {}
 
+function M.GetNeutralSpot(spot_name)
+  return map.MAP[TEAM_NEUTRAL][spot_name]
+end
+
 function M.GetUnitAllySpot(unit_data, spot_name)
   return map.MAP[unit_data.team][spot_name]
 end

@@ -70,8 +70,30 @@ function M.pre_aggro_last_hit()
 end
 
 function M.aggro_last_hit()
-  local last_hit_creep = GetPreLastHitCreep()
+  env.BOT:Action_AttackUnit(all_units.GetUnit(env.ENEMY_HERO_DATA), true)
 
+  LAST_AGGRO_CONTROL = GameTime()
+end
+
+---------------------------------
+
+function M.pre_aggro_hg()
+  return env.ENEMY_HERO_DATA ~= nil
+         and env.ENEMY_CREEP_DATA ~= nil
+
+         and 2 <= functions.GetDelta(LAST_AGGRO_CONTROL, GameTime())
+
+         and map.IsUnitInSpot(
+                   env.BOT_DATA,
+                   map.GetNeutralSpot("river"))
+
+         and functions.GetUnitDistance(
+               env.BOT_DATA,
+               env.ENEMY_CREEP_DATA)
+             <= constants.CREEP_MAX_AGRO_RADIUS
+end
+
+function M.aggro_hg()
   env.BOT:Action_AttackUnit(all_units.GetUnit(env.ENEMY_HERO_DATA), true)
 
   LAST_AGGRO_CONTROL = GameTime()

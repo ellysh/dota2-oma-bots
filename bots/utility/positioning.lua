@@ -24,7 +24,7 @@ local M = {}
 ---------------------------------
 
 function M.pre_positioning()
-  return 20 < DotaTime()
+  return 22 < DotaTime()
          and algorithms.IsBotAlive()
 end
 

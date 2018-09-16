@@ -1,4 +1,5 @@
 aggro_control
+aggro_hg
 aggro_last_hit
 attack_ally_creep
 attack_enemy_creep
