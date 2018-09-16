@@ -1,3 +1,10 @@
+* version 1.2
+  - Choose a strategy depending on the advantage.
+  - Aggro control enemy creeps when they are on the enemy hg.
+  - Change the item build.
+  - Kite enemy hero more aggressively.
+  - Implement the generator script for preparing strategies.
+
 * version 1.1
   - Implement aggro control.
   - Implement moves to defend an allied tower.
