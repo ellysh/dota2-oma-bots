@@ -23,7 +23,8 @@ buy_starting_items
 buy_tpscroll
 buy_two_boots_of_elves
 -- Crystalys
-decrease_creeps_distance
+decrease_creeps_distance_aggro
+decrease_creeps_distance_base
 defend_tower
 deliver_items
 deny_ally_creep

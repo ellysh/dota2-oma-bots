@@ -77,6 +77,8 @@ function M.aggro_last_hit()
   LAST_AGGRO_CONTROL = GameTime()
 end
 
+---------------------------------
+
 function M.stop_attack()
   moves.stop_attack()
 end

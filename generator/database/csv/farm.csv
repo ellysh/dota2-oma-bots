@@ -54,8 +54,9 @@ aggro_control;aggro_last_hit;aggro_last_hit
 ;;
 ;;
 positioning;tp_mid_tower;tp_mid_tower
+;decrease_creeps_distance_aggro;decrease_creeps_distance_aggro
 ;increase_creeps_distance;increase_creeps_distance
-;decrease_creeps_distance;decrease_creeps_distance
+;decrease_creeps_distance_base;decrease_creeps_distance_base
 ;turn;turn
 ;;stop_attack_and_move
 ;;

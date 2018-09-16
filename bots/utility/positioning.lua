@@ -60,21 +60,17 @@ local function GetPreLastHitCreep()
 end
 
 function M.pre_increase_creeps_distance()
-  local last_hit_creep = GetPreLastHitCreep()
+  return ((env.ENEMY_HERO_DATA ~= nil
+           and functions.GetUnitDistance(
+                 env.BOT_DATA,
+                 env.ENEMY_HERO_DATA)
+               < constants.MIN_HERO_DISTANCE)
 
-  return last_hit_creep == nil
-
-         and ((env.ENEMY_HERO_DATA ~= nil
-               and functions.GetUnitDistance(
-                     env.BOT_DATA,
-                     env.ENEMY_HERO_DATA)
-                   < constants.MIN_HERO_DISTANCE)
-
-               or (env.ENEMY_CREEP_DATA ~= nil
-                   and functions.GetUnitDistance(
-                         env.BOT_DATA,
-                         env.ENEMY_CREEP_DATA)
-                       < constants.BASE_CREEP_DISTANCE))
+          or (env.ENEMY_CREEP_DATA ~= nil
+              and functions.GetUnitDistance(
+                    env.BOT_DATA,
+                    env.ENEMY_CREEP_DATA)
+                  < constants.BASE_CREEP_DISTANCE))
 
          and not map.IsUnitInSpot(
                    env.BOT_DATA,
@@ -94,22 +90,14 @@ local function GetClosestCreep()
           env.ALLY_CREEP_FRONT_DATA)
 end
 
-function M.pre_decrease_creeps_distance()
-  local last_hit_creep = GetPreLastHitCreep()
+function M.pre_decrease_creeps_distance_base()
+  return not algorithms.AreEnemyCreepsInRadius(
+                env.BOT_DATA,
+                constants.BASE_CREEP_DISTANCE)
 
-  return ((last_hit_creep ~= nil
-           and not map.IsUnitInEnemyTowerAttackRange(last_hit_creep)
-           and constants.LASTHIT_CREEP_DISTANCE
-               < functions.GetUnitDistance(
-                   env.BOT_DATA,
-                   last_hit_creep))
-
-          or not (algorithms.AreEnemyCreepsInRadius(
-                    env.BOT_DATA,
-                    constants.BASE_CREEP_DISTANCE)
-                  or algorithms.AreAllyCreepsInRadius(
-                       env.BOT_DATA,
-                       constants.BASE_CREEP_DISTANCE)))
+         and not algorithms.AreAllyCreepsInRadius(
+                  env.BOT_DATA,
+                  constants.BASE_CREEP_DISTANCE)
 
          and not env.IS_FOCUSED_BY_CREEPS
 
@@ -118,13 +106,33 @@ function M.pre_decrease_creeps_distance()
          and env.ALLY_CREEP_FRONT_DATA ~= nil
 end
 
-function M.decrease_creeps_distance()
+function M.decrease_creeps_distance_base()
+  local target_data = GetClosestCreep()
+
+  env.BOT:Action_MoveDirectly(target_data.location)
+end
+
+---------------------------------
+
+function M.pre_decrease_creeps_distance_aggro()
   local last_hit_creep = GetPreLastHitCreep()
-  local closest_creep = GetClosestCreep()
-  local target_data = functions.ternary(
-                        last_hit_creep ~= nil,
-                        last_hit_creep,
-                        closest_creep)
+
+  return env.ENEMY_HERO_DATA ~= nil
+         and env.ALLY_CREEP_FRONT_DATA ~= nil
+         and last_hit_creep ~= nil
+
+         and constants.LASTHIT_CREEP_DISTANCE
+               < functions.GetUnitDistance(
+                   env.BOT_DATA,
+               last_hit_creep)
+
+         and not env.IS_FOCUSED_BY_CREEPS
+
+         and not map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
+end
+
+function M.decrease_creeps_distance_aggro()
+  local target_data = GetPreLastHitCreep()
 
   env.BOT:Action_MoveDirectly(target_data.location)
 end
