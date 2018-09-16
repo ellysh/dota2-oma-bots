@@ -21,6 +21,8 @@ local env = require(
 
 local M = {}
 
+local LAST_AGGRO_CONTROL = 0
+
 ---------------------------------
 
 function M.pre_aggro_control()
@@ -49,6 +51,8 @@ function M.pre_aggro_last_hit()
 
   return env.ENEMY_HERO_DATA ~= nil
 
+         and 2 <= functions.GetDelta(LAST_AGGRO_CONTROL, GameTime())
+
          and (env.ENEMY_TOWER_DATA == nil
               or constants.CREEP_MAX_AGRO_RADIUS
                  < functions.GetUnitDistance(
@@ -69,6 +73,8 @@ function M.aggro_last_hit()
   local last_hit_creep = GetPreLastHitCreep()
 
   env.BOT:Action_AttackUnit(all_units.GetUnit(env.ENEMY_HERO_DATA), true)
+
+  LAST_AGGRO_CONTROL = GameTime()
 end
 
 function M.stop_attack()
