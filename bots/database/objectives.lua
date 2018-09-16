@@ -285,6 +285,13 @@ M.OBJECTIVES = {
         },
       },
       {
+        move = "buy_lifesteal",
+        actions = {
+          {action = "buy_lifesteal"},
+
+        },
+      },
+      {
         move = "buy_two_boots_of_elves",
         actions = {
           {action = "buy_two_boots_of_elves"},

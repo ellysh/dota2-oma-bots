@@ -16,6 +16,8 @@ buy_items;buy_flask;buy_flask
 ;buy_boots;buy_boots
 ;buy_gloves;buy_gloves
 ;buy_boots_of_elves;buy_boots_of_elves
+;"-- Morbid Mask";
+;buy_lifesteal;buy_lifesteal
 ;"-- Dragon Lance";
 ;buy_two_boots_of_elves;buy_two_boots_of_elves
 ;buy_ogre_axe;buy_ogre_axe

@@ -133,8 +133,19 @@ end
 
 ---------------------------------
 
+function M.pre_buy_lifesteal()
+  return pre_buy_item("item_lifesteal")
+         and algorithms.DoesBotOrCourierHaveItem("item_power_treads")
+end
+
+function M.buy_lifesteal()
+  algorithms.BuyItem("item_lifesteal")
+end
+
+---------------------------------
+
 function M.pre_buy_two_boots_of_elves()
-  return algorithms.DoesBotOrCourierHaveItem("item_power_treads")
+  return algorithms.DoesBotOrCourierHaveItem("item_lifesteal")
          and (2 * GetItemCost("item_boots_of_elves")) <= env.BOT_DATA.gold
          and not algorithms.DoesBotOrCourierHaveItem(
                    "item_boots_of_elves")
@@ -150,7 +161,8 @@ end
 ---------------------------------
 
 function M.pre_buy_ogre_axe()
-  return pre_buy_item("item_ogre_axe")
+  return algorithms.DoesBotOrCourierHaveItem("item_lifesteal")
+         and pre_buy_item("item_ogre_axe")
          and not algorithms.DoesBotOrCourierHaveItem(
                    "item_dragon_lance")
 end

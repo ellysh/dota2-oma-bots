@@ -14,6 +14,7 @@ buy_broadsword
 buy_flask
 buy_gloves
 buy_items
+buy_lifesteal
 buy_ogre_axe
 buy_recipe_lesser_crit
 buy_ring_of_protection
@@ -43,6 +44,7 @@ kill_enemy_creep
 kill_enemy_hero
 kite
 lasthit_enemy_creep
+-- Morbid Mask
 move_and_block
 move_base
 move_enemy_hero
