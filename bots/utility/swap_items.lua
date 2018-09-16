@@ -36,6 +36,26 @@ end
 
 ---------------------------------
 
+function M.pre_swap_lesser_crit_tp()
+  local lesser_crit_slot = env.BOT:FindItemSlot("item_lesser_crit")
+  local tp_slot = env.BOT:FindItemSlot("item_tpscroll")
+
+  return env.BOT:GetItemSlotType(lesser_crit_slot)
+           == ITEM_SLOT_TYPE_BACKPACK
+         and env.BOT:GetItemSlotType(tp_slot) == ITEM_SLOT_TYPE_MAIN
+end
+
+function M.swap_lesser_crit_tp()
+  local lesser_crit_slot = env.BOT:FindItemSlot("item_lesser_crit")
+  local tp_slot = env.BOT:FindItemSlot("item_tpscroll")
+
+  env.BOT:ActionImmediate_SwapItems(lesser_crit_slot, tp_slot)
+
+  action_timing.SetNextActionDelay(0.05)
+end
+
+---------------------------------
+
 local function GetFullSlotInBackpack(unit_data)
   for i = 6, 8 do
     if nil ~= env.BOT:GetItemInSlot(i) then

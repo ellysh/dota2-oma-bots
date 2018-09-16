@@ -1,5 +1,6 @@
 Objective;Move;Actions
 swap_items;swap_flask_tp;swap_flask_tp
+;swap_lesser_crit_tp;swap_lesser_crit_tp
 ;put_item_in_inventory;put_item_in_inventory
 ;;
 item_recovery;heal_tango;heal_tango
@@ -13,6 +14,8 @@ buy_items;buy_flask;buy_flask
 ;buy_boots;buy_boots
 ;buy_gloves;buy_gloves
 ;buy_boots_of_elves;buy_boots_of_elves
+;"-- Morbid Mask";
+;buy_lifesteal;buy_lifesteal
 ;"-- Dragon Lance";
 ;buy_two_boots_of_elves;buy_two_boots_of_elves
 ;buy_ogre_axe;buy_ogre_axe

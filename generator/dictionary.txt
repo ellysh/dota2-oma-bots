@@ -65,6 +65,7 @@ stop_attack_and_move
 stop_turn
 swap_flask_tp
 swap_items
+swap_lesser_crit_tp
 tp_base
 tp_mid_tower
 TRUE

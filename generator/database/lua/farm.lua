@@ -29,6 +29,13 @@ M.OBJECTIVES = {
         },
       },
       {
+        move = "swap_lesser_crit_tp",
+        actions = {
+          {action = "swap_lesser_crit_tp"},
+
+        },
+      },
+      {
         move = "put_item_in_inventory",
         actions = {
           {action = "put_item_in_inventory"},
@@ -102,6 +109,13 @@ M.OBJECTIVES = {
         move = "buy_boots_of_elves",
         actions = {
           {action = "buy_boots_of_elves"},
+
+        },
+      },
+      {
+        move = "buy_lifesteal",
+        actions = {
+          {action = "buy_lifesteal"},
 
         },
       },
