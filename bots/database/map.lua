@@ -19,6 +19,7 @@ M.MAP = {
     second_body_block = Vector(-1478, -1274, 100),
     tower_tier_1_rear = Vector(-2056, -1782, 800),
     tower_tier_1_rear_safe = Vector(-2056, -1782, 450),
+    river = Vector(-598, -472, 260),
   },
   [TEAM_DIRE] = {
     tower_tier_1_attack = Vector(524, 652, 800),
@@ -37,6 +38,7 @@ M.MAP = {
     second_body_block = Vector(573, 463, 100),
     tower_tier_1_rear = Vector(984, 1163, 830),
     tower_tier_1_rear_safe = Vector(1273, 1029, 600),
+    river = Vector(-437, -313, 250),
   },
   [TEAM_NEUTRAL] = {
     river = Vector(-521, -375, 280),

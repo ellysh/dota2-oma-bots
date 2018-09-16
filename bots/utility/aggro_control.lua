@@ -85,7 +85,7 @@ function M.pre_aggro_hg()
 
          and map.IsUnitInSpot(
                    env.BOT_DATA,
-                   map.GetNeutralSpot("river"))
+                   map.GetEnemySpot("river"))
 
          and functions.GetUnitDistance(
                env.BOT_DATA,
