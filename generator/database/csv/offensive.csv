@@ -7,6 +7,7 @@ item_recovery;heal_tango;heal_tango
 ;;
 buy_items;buy_flask;buy_flask
 ;buy_tpscroll;buy_tpscroll
+;buy_recipe_wraith_band;buy_recipe_wraith_band
 ;"-- Ring of Aquila";
 ;buy_ring_of_protection;buy_ring_of_protection
 ;"-- Power Treads";

@@ -257,6 +257,13 @@ M.OBJECTIVES = {
         },
       },
       {
+        move = "buy_recipe_wraith_band",
+        actions = {
+          {action = "buy_recipe_wraith_band"},
+
+        },
+      },
+      {
         move = "buy_ring_of_protection",
         actions = {
           {action = "buy_ring_of_protection"},
@@ -706,6 +713,13 @@ M.OBJECTIVES = {
         },
       },
       {
+        move = "buy_recipe_wraith_band",
+        actions = {
+          {action = "buy_recipe_wraith_band"},
+
+        },
+      },
+      {
         move = "buy_ring_of_protection",
         actions = {
           {action = "buy_ring_of_protection"},
@@ -1141,6 +1155,13 @@ M.OBJECTIVES = {
         move = "buy_tpscroll",
         actions = {
           {action = "buy_tpscroll"},
+
+        },
+      },
+      {
+        move = "buy_recipe_wraith_band",
+        actions = {
+          {action = "buy_recipe_wraith_band"},
 
         },
       },
