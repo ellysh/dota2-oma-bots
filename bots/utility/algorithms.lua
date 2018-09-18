@@ -570,6 +570,10 @@ function M.IsTargetInAttackRange(unit_data, target_data, use_buffer_range)
          <= M.GetAttackRange(unit_data, target_data, use_buffer_range)
 end
 
+function M.IsFirstWave()
+  return DotaTime() < constants.TIME_FIRST_WAVE_MEET
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_GetNormalizedRadius = GetNormalizedRadius
 M.test_UpdateUnitList = all_units.UpdateUnitList

@@ -24,7 +24,9 @@ local M = {}
 ---------------------------------
 
 function M.pre_positioning()
-  return 22 < DotaTime()
+  return (not algorithms.IsFirstWave()
+          or env.ALLY_CREEP_BACK_DATA == nil)
+
          and algorithms.IsBotAlive()
 end
 
