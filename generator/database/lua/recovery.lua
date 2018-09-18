@@ -71,6 +71,13 @@ M.OBJECTIVES = {
         },
       },
       {
+        move = "heal_faerie_fire",
+        actions = {
+          {action = "heal_faerie_fire"},
+
+        },
+      },
+      {
         move = "tp_base",
         actions = {
           {action = "tp_base"},

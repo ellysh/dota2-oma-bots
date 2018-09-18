@@ -38,6 +38,7 @@ FALSE
 farm
 force_stop
 glyph
+heal_faerie_fire
 heal_flask
 heal_tango
 increase_creeps_distance

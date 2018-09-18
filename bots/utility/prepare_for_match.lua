@@ -32,7 +32,6 @@ function M.buy_starting_items()
   algorithms.BuyItem("item_tango")
   algorithms.BuyItem("item_slippers")
   algorithms.BuyItem("item_circlet")
-  algorithms.BuyItem("item_circlet")
   algorithms.BuyItem("item_faerie_fire")
 
   action_timing.SetNextActionDelay(0.5)
