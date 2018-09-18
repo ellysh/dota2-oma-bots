@@ -70,7 +70,12 @@ end
 function M.pre_buy_recipe_wraith_band()
   return not algorithms.DoesBotOrCourierHaveItem(
                "item_recipe_wraith_band")
+
          and not algorithms.DoesBotOrCourierHaveItem("item_wraith_band")
+
+         and not algorithms.DoesBotOrCourierHaveItem(
+                   "item_ring_of_aquila")
+
          and GetItemCost("item_recipe_wraith_band") <= env.BOT_DATA.gold
 end
 
