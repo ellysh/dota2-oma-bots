@@ -71,6 +71,7 @@ function M.pre_heal_faerie_fire()
   return env.IS_BOT_LOW_HP
          and algorithms.IsItemCastable(env.BOT_DATA, "item_faerie_fire")
          and not algorithms.IsItemCastable(env.BOT_DATA, "item_tango")
+         and not algorithms.IsItemCastable(env.BOT_DATA, "item_flask")
 end
 
 function M.heal_faerie_fire()
