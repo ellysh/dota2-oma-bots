@@ -200,6 +200,8 @@ function M.IsUnitAttackTarget(unit_data, target_data)
   end
 end
 
+-- TODO: Remove this function and use the GetAttackTarget API instead
+
 local function FindTargetInTable(unit_data, table)
   return functions.GetElementWith(
            table,
@@ -237,10 +239,20 @@ local function UpdateUnitAttackTarget(_, unit_data)
     return
   end
 
+  local target = nil
+  local api_target = unit_data.handle:GetAttackTarget()
+
+  if api_target ~= nil then
+    target = M.GetUnitData(api_target)
+  end
+
   local opposing_team = functions.GetOpposingTeam(unit_data.team)
-  local target = FindTargetInTable(
-                   unit_data,
-                   UNIT_LIST[opposing_team][UNIT_TYPE["CREEP"]])
+
+  if target == nil then
+    target = FindTargetInTable(
+                     unit_data,
+                     UNIT_LIST[opposing_team][UNIT_TYPE["CREEP"]])
+  end
 
   if target == nil then
     target = FindTargetInTable(
@@ -252,13 +264,6 @@ local function UpdateUnitAttackTarget(_, unit_data)
     target = FindTargetInTable(
                unit_data,
                UNIT_LIST[opposing_team][UNIT_TYPE["BUILDING"]])
-  end
-
-  if target == nil then
-    local api_target = unit_data.handle:GetAttackTarget()
-    if api_target ~= nil then
-      target = M.GetUnitData(api_target)
-    end
   end
 
   local prev_target = functions.ternary(
