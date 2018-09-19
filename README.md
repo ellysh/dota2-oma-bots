@@ -34,7 +34,8 @@ You should follow the following limitations when playing with the bot:
 5. No bottle.
 6. No scan.
 7. No runes.
-8. Bot difficulty is Hard or above.
+8. No pulling the creeps.
+9. Bot difficulty is Hard or above.
 
 ## Update
 
