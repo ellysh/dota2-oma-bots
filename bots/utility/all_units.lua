@@ -168,10 +168,6 @@ function M.IsUnitAttack(unit_data)
 end
 
 function M.IsAttackDone(unit_data)
-  if not M.IsUnitAttack(unit_data) then
-    return true
-  end
-
   return unit_data.anim_attack_point <= unit_data.anim_cycle
 end
 

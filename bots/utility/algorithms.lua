@@ -146,36 +146,6 @@ function M.GetTotalHealth(unit_list)
   return total_health
 end
 
-local function IsProjectileClose(unit_data, target_data, bot_data)
-  if bot_data == nil then
-    return true
-  end
-
-  local unit_projectile = functions.GetElementWith(
-    target_data.incoming_projectiles,
-    nil,
-    function(projectile)
-      if projectile.caster ~= unit_data.handler then
-        return false
-      end
-
-      local time_unit_projectile = functions.GetDistance(
-                                     projectile.location,
-                                     target_data.location)
-                                   / unit_data.projectile_speed
-
-      local time_bot_projectile = (functions.GetDistance(
-                                      bot_data.location,
-                                      target_data.location)
-                                   / bot_data.projectile_speed)
-                                  + bot_data.seconds_per_attack
-
-      return time_unit_projectile < time_bot_projectile
-    end)
-
-  return unit_projectile ~= nil
-end
-
 function M.GetEnemyHero(unit_data, radius)
   local heroes = M.GetEnemyHeroes(
     unit_data,
@@ -290,13 +260,87 @@ function M.IsFocusedByUnknownUnit(unit_data)
            unit_data)
 end
 
-function M.IsLastHitTarget(unit_data, target_data)
-  local incoming_damage =
-    (unit_data.attack_damage
-     + (M.GetTotalIncomingDamage(target_data) * 0.3))
-    * functions.GetDamageMultiplier(target_data.armor)
+local function GetRangedIncomingDamage(target_data, time_limit)
+  local incoming_damage = 0
 
-  return target_data.health < incoming_damage
+  functions.DoWithKeysAndElements(
+    target_data.incoming_projectiles,
+    function(_, projectile)
+      if projectile.caster == nil then
+        return end
+
+      local unit_data = all_units.GetUnitData(projectile.caster)
+
+      local time_to_projectile = functions.GetDistance(
+                                   projectile.location,
+                                   target_data.location)
+                                 / unit_data.projectile_speed
+
+      if time_to_projectile < time_limit then
+        incoming_damage = incoming_damage + unit_data.attack_damage
+      end
+    end)
+
+  return incoming_damage
+end
+
+local function GetMeleeIncomingDamage(target_data, time_limit)
+  local unit_list = GetUnitsInRadius(
+                      target_data,
+                      constants.MELEE_ATTACK_RANGE,
+                      all_units.GetEnemyCreepsData)
+
+  local incoming_damage = 0
+
+  functions.DoWithKeysAndElements(
+    unit_list,
+    function(_, unit_data)
+      if not all_units.IsUnitAttack(unit_data)
+         or not functions.IsFacingLocation(
+               unit_data,
+               target_data.location,
+               constants.TURN_TARGET_MAX_DEGREE) then
+        return
+      end
+
+      local time_to_damage = 0
+
+      if all_units.IsAttackDone(unit_data) then
+        time_to_damage = ((1 - unit_data.anim_cycle)
+          + unit_data.anim_attack_point) * unit_data.seconds_per_attack
+      else
+        time_to_damage = (unit_data.anim_attack_point
+          - unit_data.anim_cycle) * unit_data.seconds_per_attack
+      end
+
+      if time_to_damage < time_limit then
+        incoming_damage = incoming_damage + unit_data.attack_damage
+      end
+    end)
+
+  return incoming_damage
+end
+
+local function GetIncomingDamage(target_data, time_limit)
+  return GetRangedIncomingDamage(target_data, time_limit)
+         + GetMeleeIncomingDamage(target_data, time_limit)
+end
+
+function M.IsLastHitTarget(unit_data, target_data)
+  local time_to_attack = (functions.GetUnitDistance(
+                            unit_data,
+                            target_data)
+                          / unit_data.projectile_speed)
+                          + unit_data.seconds_per_attack
+
+  local incoming_damage = GetIncomingDamage(target_data, time_to_attack)
+
+  local health_when_attack = target_data.health - (incoming_damage
+    * functions.GetDamageMultiplier(target_data.armor))
+
+  return health_when_attack
+         <= (unit_data.attack_damage
+             * functions.GetDamageMultiplier(target_data.armor))
 end
 
 function M.IsFocusedByCreeps(unit_data)
