@@ -200,22 +200,6 @@ function M.IsUnitAttackTarget(unit_data, target_data)
   end
 end
 
--- TODO: Remove this function and use the GetAttackTarget API instead
-
-local function FindTargetInTable(unit_data, table)
-  return functions.GetElementWith(
-           table,
-           nil,
-           function(target_data)
-             return target_data.is_visible
-                    and functions.GetUnitDistance(unit_data, target_data)
-                        < constants.MAX_UNIT_TARGET_RADIUS
-                    and M.IsUnitAttackTarget(
-                         unit_data,
-                         target_data)
-           end)
-end
-
 local function AddTargetIncomingDamage(unit_data, target_data)
   if unit_data.type == UNIT_TYPE["CREEP"] then
     target_data.incoming_damage_from_creeps =
@@ -244,26 +228,6 @@ local function UpdateUnitAttackTarget(_, unit_data)
 
   if api_target ~= nil then
     target = M.GetUnitData(api_target)
-  end
-
-  local opposing_team = functions.GetOpposingTeam(unit_data.team)
-
-  if target == nil then
-    target = FindTargetInTable(
-                     unit_data,
-                     UNIT_LIST[opposing_team][UNIT_TYPE["CREEP"]])
-  end
-
-  if target == nil then
-    target = FindTargetInTable(
-               unit_data,
-               UNIT_LIST[opposing_team][UNIT_TYPE["HERO"]])
-  end
-
-  if target == nil then
-    target = FindTargetInTable(
-               unit_data,
-               UNIT_LIST[opposing_team][UNIT_TYPE["BUILDING"]])
   end
 
   local prev_target = functions.ternary(
