@@ -255,7 +255,7 @@ function M.IsFocusedByEnemyHero(unit_data)
 end
 
 function M.IsFocusedByUnknownUnit(unit_data)
-  return all_units.IsUnitShootTarget(
+  return M.IsUnitShootTarget(
            nil,
            unit_data)
 end
@@ -295,7 +295,7 @@ local function GetMeleeIncomingDamage(target_data, time_limit)
   functions.DoWithKeysAndElements(
     unit_list,
     function(_, unit_data)
-      if not all_units.IsUnitAttack(unit_data)
+      if not M.IsUnitAttack(unit_data)
          or not functions.IsFacingLocation(
                unit_data,
                target_data.location,
@@ -305,7 +305,7 @@ local function GetMeleeIncomingDamage(target_data, time_limit)
 
       local time_to_damage = 0
 
-      if all_units.IsAttackDone(unit_data) then
+      if M.IsAttackDone(unit_data) then
         time_to_damage = ((1 - unit_data.anim_cycle)
           + unit_data.anim_attack_point) * unit_data.seconds_per_attack
       else
@@ -616,6 +616,44 @@ end
 
 function M.IsFirstWave()
   return DotaTime() < constants.TIME_FIRST_WAVE_MEET
+end
+
+function M.IsUnitAttack(unit_data)
+  return unit_data.anim_activity == ACTIVITY_ATTACK
+         or unit_data.anim_activity == ACTIVITY_ATTACK2
+end
+
+function M.IsAttackDone(unit_data)
+  return unit_data.anim_attack_point <= unit_data.anim_cycle
+end
+
+-- We should pass unit handle to this function for detecting a "nil" caster
+function M.IsUnitShootTarget(unit, target_data)
+  local unit_projectile = functions.GetElementWith(
+    target_data.incoming_projectiles,
+    nil,
+    function(projectile)
+      return projectile.caster == unit
+    end)
+
+  return unit_projectile ~= nil
+end
+
+function M.IsUnitAttackTarget(unit_data, target_data)
+  if unit_data.attack_range <= constants.MAX_MELEE_ATTACK_RANGE then
+
+    return M.IsUnitAttack(unit_data)
+           and functions.IsFacingLocation(
+                 unit_data,
+                 target_data.location,
+                 constants.TURN_TARGET_MAX_DEGREE)
+           and functions.GetUnitDistance(unit_data, target_data)
+               <= unit_data.attack_range + constants.MOTION_BUFFER_RANGE
+  else
+    return M.IsUnitShootTarget(
+             all_units.GetUnit(unit_data),
+             target_data)
+  end
 end
 
 -- Provide an access to local functions for unit tests only

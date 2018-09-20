@@ -4,9 +4,6 @@ local map = require(
 local functions = require(
   GetScriptDirectory() .."/utility/functions")
 
-local all_units = require(
-  GetScriptDirectory() .."/utility/all_units")
-
 local algorithms = require(
   GetScriptDirectory() .."/utility/algorithms")
 
@@ -78,8 +75,8 @@ end
 --------------------------------
 
 function M.stop_attack()
-  if not all_units.IsUnitAttack(env.BOT_DATA)
-     or not all_units.IsAttackDone(env.BOT_DATA) then
+  if not algorithms.IsUnitAttack(env.BOT_DATA)
+     or not algorithms.IsAttackDone(env.BOT_DATA) then
     return end
 
   env.BOT:Action_ClearActions(true)

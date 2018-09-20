@@ -10,9 +10,6 @@ local algorithms = require(
 local env = require(
   GetScriptDirectory() .."/utility/environment")
 
-local all_units = require(
-  GetScriptDirectory() .."/utility/all_units")
-
 local moves = require(
   GetScriptDirectory() .."/utility/moves")
 
@@ -42,7 +39,7 @@ local function GetCreepAttackingTower()
     creeps,
     algorithms.CompareMaxDamage,
     function(unit_data)
-      return all_units.IsUnitAttackTarget(
+      return algorithms.IsUnitAttackTarget(
                unit_data,
                env.ALLY_TOWER_DATA)
     end)
@@ -99,7 +96,7 @@ end
 function M.pre_use_silence()
   return moves.pre_use_silence()
          and env.ALLY_TOWER_DATA ~= nil
-         and all_units.IsUnitAttackTarget(
+         and algorithms.IsUnitAttackTarget(
                env.ENEMY_HERO_DATA,
                env.ALLY_TOWER_DATA)
 end
@@ -113,7 +110,7 @@ end
 function M.pre_attack_enemy_hero()
   return env.ENEMY_HERO_DATA ~= nil
          and env.ALLY_TOWER_DATA ~= nil
-         and all_units.IsUnitAttackTarget(
+         and algorithms.IsUnitAttackTarget(
                env.ENEMY_HERO_DATA,
                env.ALLY_TOWER_DATA)
 end
