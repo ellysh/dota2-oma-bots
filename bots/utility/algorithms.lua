@@ -656,6 +656,13 @@ function M.IsUnitAttackTarget(unit_data, target_data)
   end
 end
 
+function M.IsBiggerThan(a, b, delta)
+  if a < b then
+    return false end
+
+  return delta <= functions.GetDelta(a, b)
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_GetNormalizedRadius = GetNormalizedRadius
 M.test_UpdateUnitList = all_units.UpdateUnitList

@@ -32,33 +32,26 @@ function M.pre_recovery()
               or base_recovery.pre_restore_hp_on_base())
 end
 
-local function IsBiggerThan(a, b, delta)
-  if a < b then
-    return false end
-
-  return delta <= functions.GetDelta(a, b)
-end
-
 local function DoesUnitHasAdvantage(unit_data, target_data)
   return unit_data ~= nil
          and target_data ~= nil
-         and (IsBiggerThan(
+         and (algorithms.IsBiggerThan(
                 unit_data.attack_damage,
                 target_data.attack_damage,
                 50)
-              or IsBiggerThan(
+              or algorithms.IsBiggerThan(
                    unit_data.health,
                    target_data.health,
                    300)
-              or IsBiggerThan(
+              or algorithms.IsBiggerThan(
                    unit_data.speed,
                    target_data.speed,
                    40)
-              or IsBiggerThan(
+              or algorithms.IsBiggerThan(
                    unit_data.attack_speed,
                    target_data.attack_speed,
                    20)
-              or IsBiggerThan(
+              or algorithms.IsBiggerThan(
                    unit_data.attack_range,
                    target_data.attack_range,
                    100))
