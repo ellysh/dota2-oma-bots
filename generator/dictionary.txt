@@ -45,7 +45,6 @@ increase_creeps_distance
 item_recovery
 keep_equilibrium
 kill_enemy_creep
-kill_enemy_hero
 kite
 lasthit_enemy_creep
 -- Morbid Mask
@@ -59,6 +58,7 @@ move_start_position
 positioning
 -- Power Treads
 prepare_for_match
+pursuit_enemy_hero
 push_lane
 put_item_in_inventory
 restore_hp_on_base

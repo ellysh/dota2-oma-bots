@@ -23,7 +23,7 @@ local M = {}
 
 ---------------------------------
 
-function M.pre_kill_enemy_hero()
+function M.pre_pursuit_enemy_hero()
   return env.ENEMY_HERO_DATA ~= nil
          and algorithms.IsBotAlive()
          and algorithms.IsUnitLowHp(env.ENEMY_HERO_DATA)

@@ -827,8 +827,8 @@ M.OBJECTIVES = {
   },
 
   {
-    objective = "kill_enemy_hero",
-    module = require(GetScriptDirectory() .."/utility/kill_enemy_hero"),
+    objective = "pursuit_enemy_hero",
+    module = require(GetScriptDirectory() .."/utility/pursuit_enemy_hero"),
     moves = {
       {
         move = "use_silence",
