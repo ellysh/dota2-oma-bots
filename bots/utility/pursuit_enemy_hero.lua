@@ -23,14 +23,28 @@ local M = {}
 
 ---------------------------------
 
+local LAST_SEEN_ENEMY_HERO_DATA = nil
+
+local function GetEnemyHero()
+  return functions.ternary(
+           env.ENEMY_HERO_DATA ~= nil,
+           env.ENEMY_HERO_DATA,
+           LAST_SEEN_ENEMY_HERO_DATA)
+end
+
 function M.pre_pursuit_enemy_hero()
-  return env.ENEMY_HERO_DATA ~= nil
+  LAST_SEEN_ENEMY_HERO_DATA = algorithms.GetLastSeenEnemyHero()
+
+  local enemy_hero_data = GetEnemyHero()
+
+  return enemy_hero_data ~= nil
+
          and algorithms.IsBotAlive()
-         and (algorithms.IsUnitLowHp(env.ENEMY_HERO_DATA)
-              or (env.ENEMY_HERO_DATA.is_flask_healing
+         and (algorithms.IsUnitLowHp(enemy_hero_data)
+              or (enemy_hero_data.is_flask_healing
                   and algorithms.IsBiggerThan(
                         env.BOT_DATA.health,
-                        env.ENEMY_HERO_DATA.health,
+                        enemy_hero_data.health,
                         100)))
 
          and not env.IS_BOT_LOW_HP
@@ -60,13 +74,25 @@ end
 ---------------------------------
 
 function M.pre_move_enemy_hero()
-  return env.ENEMY_HERO_DATA ~= nil
+  local enemy_hero_data = GetEnemyHero()
+
+  return enemy_hero_data ~= nil
+
+         and functions.GetUnitDistance(
+                env.BOT_DATA,
+                enemy_hero_data)
+              <= algorithms.GetAttackRange(
+                   env.BOT_DATA,
+                   enemy_hero_data,
+                   true)
+                 + constants.MAX_PURSUIT_INC_DISTANCE
+
          and not env.DOES_TOWER_PROTECT_ENEMY
          and not algorithms.IsUnitMoving(env.BOT_DATA)
 end
 
 function M.move_enemy_hero()
-  env.BOT:Action_MoveDirectly(env.ENEMY_HERO_DATA.location)
+  env.BOT:Action_MoveDirectly(GetEnemyHero().location)
 end
 
 ---------------------------------

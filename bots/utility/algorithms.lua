@@ -159,6 +159,12 @@ function M.GetEnemyHero(unit_data, radius)
     end)
 end
 
+function M.GetLastSeenEnemyHero(unit_data, radius)
+  local heroes = all_units.GetEnemyHeroesData(unit_data)
+
+  return functions.GetElementWith(heroes, M.CompareMinHealth)
+end
+
 function M.AreUnitsInRadius(unit_data, radius, get_function)
   local units = get_function(unit_data, radius)
 
