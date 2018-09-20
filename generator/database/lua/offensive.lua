@@ -158,34 +158,6 @@ M.OBJECTIVES = {
   },
 
   {
-    objective = "evasion",
-    module = require(GetScriptDirectory() .."/utility/evasion"),
-    moves = {
-      {
-        move = "use_silence",
-        actions = {
-          {action = "use_silence"},
-
-        },
-      },
-      {
-        move = "move_safe_recovery",
-        actions = {
-          {action = "move_safe_recovery"},
-
-        },
-      },
-      {
-        move = "move_safe_evasion",
-        actions = {
-          {action = "move_safe_evasion"},
-
-        },
-      },
-    },
-  },
-
-  {
     objective = "upgrade_skills",
     module = require(GetScriptDirectory() .."/utility/upgrade_skills"),
     moves = {
@@ -222,6 +194,34 @@ M.OBJECTIVES = {
         move = "move_enemy_hero",
         actions = {
           {action = "move_enemy_hero"},
+
+        },
+      },
+    },
+  },
+
+  {
+    objective = "evasion",
+    module = require(GetScriptDirectory() .."/utility/evasion"),
+    moves = {
+      {
+        move = "use_silence",
+        actions = {
+          {action = "use_silence"},
+
+        },
+      },
+      {
+        move = "move_safe_recovery",
+        actions = {
+          {action = "move_safe_recovery"},
+
+        },
+      },
+      {
+        move = "move_safe_evasion",
+        actions = {
+          {action = "move_safe_evasion"},
 
         },
       },
