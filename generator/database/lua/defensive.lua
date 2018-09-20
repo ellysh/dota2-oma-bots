@@ -252,35 +252,6 @@ M.OBJECTIVES = {
   },
 
   {
-    objective = "kill_enemy_hero",
-    module = require(GetScriptDirectory() .."/utility/kill_enemy_hero"),
-    moves = {
-      {
-        move = "use_silence",
-        actions = {
-          {action = "use_silence"},
-
-        },
-      },
-      {
-        move = "attack_enemy_hero",
-        actions = {
-          {action = "attack_enemy_hero"},
-          {action = "stop_attack"},
-
-        },
-      },
-      {
-        move = "move_enemy_hero",
-        actions = {
-          {action = "move_enemy_hero"},
-
-        },
-      },
-    },
-  },
-
-  {
     objective = "farm",
     module = require(GetScriptDirectory() .."/utility/farm"),
     moves = {

@@ -43,11 +43,6 @@ evasion;use_silence;use_silence
 ;;
 upgrade_skills;upgrade;upgrade
 ;;
-kill_enemy_hero;use_silence;use_silence
-;attack_enemy_hero;attack_enemy_hero
-;;stop_attack
-;move_enemy_hero;move_enemy_hero
-;;
 farm;lasthit_enemy_creep;lasthit_enemy_creep
 ;;stop_attack
 ;deny_ally_creep;deny_ally_creep
