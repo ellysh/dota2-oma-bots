@@ -51,6 +51,10 @@ function M.IsAttackTargetable(unit_data)
          and unit_data.is_visible
 end
 
+function M.CompareMaxTimestamp(t, a, b)
+  return t[b].timestamp < t[a].timestamp
+end
+
 function M.CompareMinHealth(t, a, b)
   return t[a].health < t[b].health
 end
@@ -162,7 +166,7 @@ end
 function M.GetLastSeenEnemyHero(unit_data)
   local heroes = all_units.GetEnemyHeroesData(unit_data)
 
-  return functions.GetElementWith(heroes, M.CompareMinHealth)
+  return functions.GetElementWith(heroes, M.CompareMaxTimestamp)
 end
 
 function M.AreUnitsInRadius(unit_data, radius, get_function)
