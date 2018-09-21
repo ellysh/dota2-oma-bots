@@ -86,6 +86,7 @@ end
 
 function M.pre_attack_enemy_hero()
   return env.ENEMY_HERO_DATA ~= nil
+         and env.ENEMY_HERO_DATA.is_visible
          and not env.DOES_TOWER_PROTECT_ENEMY
 end
 
@@ -99,6 +100,7 @@ function M.pre_use_silence()
   local ability = env.BOT:GetAbilityByName("drow_ranger_wave_of_silence")
 
   return env.ENEMY_HERO_DATA ~= nil
+         and env.ENEMY_HERO_DATA.is_visible
          and not env.ENEMY_HERO_DATA.is_silenced
          and not env.BOT_DATA.is_silenced
          and ability:IsFullyCastable()

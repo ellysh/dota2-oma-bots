@@ -23,29 +23,15 @@ local M = {}
 
 ---------------------------------
 
-local LAST_SEEN_ENEMY_HERO_DATA = nil
-
-local function GetEnemyHero()
-  return functions.ternary(
-           env.ENEMY_HERO_DATA ~= nil,
-           env.ENEMY_HERO_DATA,
-           LAST_SEEN_ENEMY_HERO_DATA)
-end
-
 function M.pre_pursuit_enemy_hero()
-  LAST_SEEN_ENEMY_HERO_DATA = algorithms.GetLastSeenEnemyHero(
-                                env.BOT_DATA)
-
-  local enemy_hero_data = GetEnemyHero()
-
-  return enemy_hero_data ~= nil
+  return env.ENEMY_HERO_DATA ~= nil
 
          and algorithms.IsBotAlive()
-         and (algorithms.IsUnitLowHp(enemy_hero_data)
-              or (enemy_hero_data.is_flask_healing
+         and (algorithms.IsUnitLowHp(env.ENEMY_HERO_DATA)
+              or (env.ENEMY_HERO_DATA.is_flask_healing
                   and algorithms.IsBiggerThan(
                         env.BOT_DATA.health,
-                        enemy_hero_data.health,
+                        env.ENEMY_HERO_DATA.health,
                         100)))
 
          and not env.IS_BOT_LOW_HP
@@ -75,26 +61,24 @@ end
 ---------------------------------
 
 function M.pre_move_enemy_hero()
-  local enemy_hero_data = GetEnemyHero()
-
-  return enemy_hero_data ~= nil
+  return env.ENEMY_HERO_DATA ~= nil
 
          and functions.GetUnitDistance(
                 env.BOT_DATA,
-                enemy_hero_data)
+                env.ENEMY_HERO_DATA)
               <= algorithms.GetAttackRange(
                    env.BOT_DATA,
-                   enemy_hero_data,
+                   env.ENEMY_HERO_DATA,
                    true)
                  + constants.MAX_PURSUIT_INC_DISTANCE
 
          and not env.DOES_TOWER_PROTECT_ENEMY
          -- TODO: Here we should understand that reach the last seen location and there is no enemy hero here.
-         and env.BOT_DATA.location ~= enemy_hero_data.location
+         --and env.BOT_DATA.location ~= env.ENEMY_HERO_DATA.location
 end
 
 function M.move_enemy_hero()
-  env.BOT:Action_MoveDirectly(GetEnemyHero().location)
+  env.BOT:Action_MoveDirectly(env.ENEMY_HERO_DATA.location)
 end
 
 ---------------------------------

@@ -108,7 +108,7 @@ end
 --------------------------------
 
 function M.pre_attack_enemy_hero()
-  return env.ENEMY_HERO_DATA ~= nil
+  return moves.pre_attack_enemy_hero()
          and env.ALLY_TOWER_DATA ~= nil
          and algorithms.IsUnitAttackTarget(
                env.ENEMY_HERO_DATA,

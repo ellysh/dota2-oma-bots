@@ -50,6 +50,7 @@ function M.pre_aggro_last_hit()
                            last_hit_creep)
 
   return env.ENEMY_HERO_DATA ~= nil
+         and env.ENEMY_HERO_DATA.is_visible
 
          and 2 <= functions.GetDelta(LAST_AGGRO_CONTROL, GameTime())
 
@@ -80,6 +81,7 @@ end
 function M.pre_aggro_hg()
   return env.ENEMY_HERO_DATA ~= nil
          and env.ENEMY_CREEP_DATA ~= nil
+         and env.ENEMY_HERO_DATA.is_visible
 
          and 2 <= functions.GetDelta(LAST_AGGRO_CONTROL, GameTime())
 

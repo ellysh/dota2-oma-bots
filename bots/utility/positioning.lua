@@ -120,6 +120,7 @@ function M.pre_decrease_creeps_distance_aggro()
   local last_hit_creep = GetPreLastHitCreep()
 
   return env.ENEMY_HERO_DATA ~= nil
+         and env.ENEMY_HERO_DATA.is_visible
          and env.ALLY_CREEP_FRONT_DATA ~= nil
          and last_hit_creep ~= nil
 
