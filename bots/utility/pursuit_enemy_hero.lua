@@ -33,7 +33,8 @@ local function GetEnemyHero()
 end
 
 function M.pre_pursuit_enemy_hero()
-  LAST_SEEN_ENEMY_HERO_DATA = algorithms.GetLastSeenEnemyHero()
+  LAST_SEEN_ENEMY_HERO_DATA = algorithms.GetLastSeenEnemyHero(
+                                env.BOT_DATA)
 
   local enemy_hero_data = GetEnemyHero()
 
@@ -88,7 +89,8 @@ function M.pre_move_enemy_hero()
                  + constants.MAX_PURSUIT_INC_DISTANCE
 
          and not env.DOES_TOWER_PROTECT_ENEMY
-         and not algorithms.IsUnitMoving(env.BOT_DATA)
+         -- TODO: Here we should understand that reach the last seen location and there is no enemy hero here.
+         and env.BOT_DATA.location ~= enemy_hero_data.location
 end
 
 function M.move_enemy_hero()

@@ -159,7 +159,7 @@ function M.GetEnemyHero(unit_data, radius)
     end)
 end
 
-function M.GetLastSeenEnemyHero(unit_data, radius)
+function M.GetLastSeenEnemyHero(unit_data)
   local heroes = all_units.GetEnemyHeroesData(unit_data)
 
   return functions.GetElementWith(heroes, M.CompareMinHealth)
