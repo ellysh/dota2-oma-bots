@@ -73,8 +73,6 @@ function M.pre_move_enemy_hero()
                  + constants.MAX_PURSUIT_INC_DISTANCE
 
          and not env.DOES_TOWER_PROTECT_ENEMY
-         -- TODO: Here we should understand that reach the last seen location and there is no enemy hero here.
-         --and env.BOT_DATA.location ~= env.ENEMY_HERO_DATA.location
 end
 
 function M.move_enemy_hero()
