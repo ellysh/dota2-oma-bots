@@ -673,6 +673,11 @@ function M.IsBiggerThan(a, b, delta)
   return delta <= functions.GetDelta(a, b)
 end
 
+function M.IsTowerDiveReasonable(unit_data, target_data)
+  return M.IsLastHitTarget(unit_data, target_data)
+         and constants.UNIT_MIN_TOWER_DIVE_HEALTH <= unit_data.health
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_GetNormalizedRadius = GetNormalizedRadius
 M.test_UpdateUnitList = all_units.UpdateUnitList

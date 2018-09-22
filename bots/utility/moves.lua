@@ -87,7 +87,10 @@ end
 function M.pre_attack_enemy_hero()
   return env.ENEMY_HERO_DATA ~= nil
          and env.ENEMY_HERO_DATA.is_visible
-         and not env.DOES_TOWER_PROTECT_ENEMY
+         and (not env.DOES_TOWER_PROTECT_ENEMY
+              or algorithms.IsTowerDiveReasonable(
+                   env.BOT_DATA,
+                   env.ENEMY_HERO_DATA))
 end
 
 function M.attack_enemy_hero()

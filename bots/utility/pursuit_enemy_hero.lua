@@ -72,7 +72,10 @@ function M.pre_move_enemy_hero()
                    true)
                  + constants.MAX_PURSUIT_INC_DISTANCE
 
-         and not env.DOES_TOWER_PROTECT_ENEMY
+         and (not env.DOES_TOWER_PROTECT_ENEMY
+              or algorithms.IsTowerDiveReasonable(
+                   env.BOT_DATA,
+                   env.ENEMY_HERO_DATA))
 end
 
 function M.move_enemy_hero()
