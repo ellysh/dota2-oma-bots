@@ -144,28 +144,31 @@ end
 
 function M.pre_turn()
   local last_hit_creep = GetPreLastHitCreep()
-  local closest_creep = GetClosestCreep()
+  local enemy_hero = env.ENEMY_HERO_DATA
   local target_data = functions.ternary(
                         last_hit_creep ~= nil,
                         last_hit_creep,
-                        closest_creep)
+                        enemy_hero)
 
   return target_data ~= nil
+
+         and env.ALLY_CREEP_FRONT_DATA ~= nil
 
          and not functions.IsFacingLocation(
                    env.BOT_DATA,
                    target_data.location,
                    constants.TURN_TARGET_MAX_DEGREE)
+
          and not map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
 end
 
 function M.turn()
   local last_hit_creep = GetPreLastHitCreep()
-  local closest_creep = GetClosestCreep()
+  local enemy_hero = env.ENEMY_HERO_DATA
   local target_data = functions.ternary(
                         last_hit_creep ~= nil,
                         last_hit_creep,
-                        closest_creep)
+                        enemy_hero)
 
   env.BOT:Action_AttackUnit(all_units.GetUnit(target_data), true)
 
