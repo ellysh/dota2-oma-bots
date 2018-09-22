@@ -45,8 +45,7 @@ function M.IsItemInInventory(unit_data, item_name)
 end
 
 function M.IsAttackTargetable(unit_data)
-  return unit_data.is_alive
-         and not unit_data.is_invulnerable
+  return not unit_data.is_invulnerable
          and not unit_data.is_illusion
          and unit_data.is_visible
 end
@@ -142,9 +141,7 @@ function M.GetTotalHealth(unit_list)
   functions.DoWithKeysAndElements(
     unit_list,
     function(_, unit_data)
-      if unit_data.is_alive then
-        total_health = total_health + unit_data.health
-      end
+      total_health = total_health + unit_data.health
     end)
 
   return total_health

@@ -60,8 +60,13 @@ end
 
 ---------------------------------
 
+local function IsLastSeenLocationValid(unit_data)
+  return unit_data.is_visible == IsLocationVisible(unit_data.location)
+end
+
 function M.pre_move_enemy_hero()
   return env.ENEMY_HERO_DATA ~= nil
+         and IsLastSeenLocationValid(env.ENEMY_HERO_DATA)
 
          and functions.GetUnitDistance(
                 env.BOT_DATA,

@@ -65,7 +65,9 @@ local function AddUnit(unit, unit_type, team)
     mana = unit:GetMana(),
     max_mana = unit:GetMaxMana(),
     armor = unit:GetArmor(),
-    is_alive = unit:IsAlive(),
+    -- This field is always true because AddUnit works for
+    -- GetUnitList returned units.
+    -- is_alive = unit:IsAlive(),
     is_invulnerable = unit:IsInvulnerable(),
     is_illusion = unit:IsIllusion(),
     attack_damage = unit:GetAttackDamage(),
