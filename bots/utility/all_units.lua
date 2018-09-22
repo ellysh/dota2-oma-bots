@@ -143,10 +143,6 @@ local function InvalidateDeprecatedUnits()
     InvalidateUnit)
 
   functions.DoWithKeysAndElements(
-    UNIT_LIST[GetTeam()][UNIT_TYPE["HERO"]],
-    InvalidateUnit)
-
-  functions.DoWithKeysAndElements(
     UNIT_LIST[GetTeam()][UNIT_TYPE["BUILDING"]],
     InvalidateUnit)
 
