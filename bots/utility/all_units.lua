@@ -130,12 +130,12 @@ end
 local function InvalidateUnit(_, unit_data)
   local age = CURRENT_GAME_TIME - unit_data.timestamp
 
-  if 0 < age and age < 5 then
-    unit_data.is_visible = false
-  elseif 5 <= age then
+  if 6 <= age then
     functions.ClearTable(
       UNIT_LIST[unit_data.team][unit_data.type][tostring(unit_data.handle)])
       UNIT_LIST[unit_data.team][unit_data.type][tostring(unit_data.handle)] = nil
+  elseif 0 < age then
+    unit_data.is_visible = false
   end
 end
 
