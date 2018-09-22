@@ -98,11 +98,23 @@ local function GetFirstMovingCreep()
            CompareMinHgDistance)
 end
 
+local function IsAllowableFountainDistance()
+  local max_distance = functions.ternary(
+                         GetTeam() == TEAM_RADIANT,
+                         constants.BODY_BLOCK_FOUNTAIN_RADIANT_DISTANCE,
+                         constants.BODY_BLOCK_FOUNTAIN_DIRE_DISTANCE)
+
+  return functions.GetDistance(env.FOUNTAIN_SPOT, env.BOT_DATA.location)
+         <= max_distance
+end
+
 function M.pre_move_and_block()
   return algorithms.AreAllyCreepsInRadius(
            env.BOT_DATA,
            constants.MAX_MELEE_ATTACK_RANGE,
            constants.DIRECTION["BACK"])
+
+         and IsAllowableFountainDistance()
 
          and not algorithms.AreEnemyCreepsInRadius(
                    env.BOT_DATA,
