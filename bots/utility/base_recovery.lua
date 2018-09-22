@@ -51,7 +51,7 @@ end
 ---------------------------------
 
 function M.pre_move_base()
-  return env.IS_BASE_RECOVERY
+  return true
 end
 
 function M.move_base()
