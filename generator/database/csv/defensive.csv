@@ -48,6 +48,12 @@ farm;lasthit_enemy_creep;lasthit_enemy_creep
 ;deny_ally_creep;deny_ally_creep
 ;;stop_attack
 ;;
+push_lane;use_trueshot;use_trueshot
+;attack_enemy_creep;attack_enemy_creep
+;;stop_attack
+;kill_enemy_creep;kill_enemy_creep
+;;stop_attack
+;;
 kite;attack_enemy_hero;attack_enemy_hero
 ;;stop_attack
 ;attack_enemy_tower;attack_enemy_tower
