@@ -440,7 +440,7 @@ function M.GetSafeSpot(unit_data, enemy_units)
      or M.IsItemCastable(unit_data, "item_tango")
      or unit_data.is_healing then
 
-    local hg_spot = map.GetUnitAllySpot(unit_data, "high_ground")
+    local hg_spot = map.GetUnitAllySpot(unit_data, "high_ground_safe")
 
     local forest_spot = GetClosestSafeSpot(
                           map.GetUnitAllySpot(unit_data, "forest_top"),
