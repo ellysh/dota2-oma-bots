@@ -80,7 +80,7 @@ end
 
 function M.pre_aggro_hg()
   return env.ENEMY_HERO_DATA ~= nil
-         and env.ENEMY_CREEP_DATA ~= nil
+         and env.ENEMY_CREEP_FRONT_DATA ~= nil
          and env.ENEMY_HERO_DATA.is_visible
 
          and 2 <= functions.GetDelta(LAST_AGGRO_CONTROL, GameTime())
@@ -91,7 +91,7 @@ function M.pre_aggro_hg()
 
          and functions.GetUnitDistance(
                env.BOT_DATA,
-               env.ENEMY_CREEP_DATA)
+               env.ENEMY_CREEP_FRONT_DATA)
              <= constants.CREEP_MAX_AGRO_RADIUS
 end
 

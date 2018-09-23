@@ -14,7 +14,8 @@ local M = {}
 
 M.BOT_DATA = {}
 M.IS_BOT_LOW_HP = false
-M.ENEMY_CREEP_DATA = {}
+M.ENEMY_CREEP_FRONT_DATA = {}
+M.ENEMY_CREEP_BACK_DATA = {}
 M.ENEMY_HERO_DATA = {}
 M.ENEMY_HERO_DISTANCE = 0
 M.ALLY_CREEP_FRONT_DATA = {}
@@ -81,10 +82,15 @@ function M.UpdateVariables()
 
   M.IS_BOT_LOW_HP = IsBotLowHp()
 
-  M.ENEMY_CREEP_DATA = GetClosestCreep(
-                         constants.MAX_UNIT_SEARCH_RADIUS,
-                         algorithms.GetEnemyCreeps,
-                         constants.DIRECTION["ANY"])
+  M.ENEMY_CREEP_FRONT_DATA = GetClosestCreep(
+                               constants.MAX_UNIT_SEARCH_RADIUS,
+                               algorithms.GetEnemyCreeps,
+                               constants.DIRECTION["FRONT"])
+
+  M.ENEMY_CREEP_BACK_DATA = GetClosestCreep(
+                               constants.MAX_UNIT_SEARCH_RADIUS,
+                               algorithms.GetEnemyCreeps,
+                               constants.DIRECTION["BACK"])
 
   M.ALLY_CREEP_FRONT_DATA = GetClosestCreep(
                               constants.MAX_UNIT_SEARCH_RADIUS,
@@ -134,7 +140,8 @@ function M.UpdateVariables()
 
   M.SAFE_SPOT = algorithms.GetSafeSpot(M.BOT_DATA,
                                        {M.ENEMY_HERO_DATA,
-                                        M.ENEMY_CREEP_DATA})
+                                        M.ENEMY_CREEP_FRONT_DATA,
+                                        M.ENEMY_CREEP_BACK_DATA})
 
   M.FOUNTAIN_SPOT = map.GetAllySpot("fountain")
 
