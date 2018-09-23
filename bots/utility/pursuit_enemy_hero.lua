@@ -25,18 +25,16 @@ local M = {}
 
 function M.pre_pursuit_enemy_hero()
   return env.ENEMY_HERO_DATA ~= nil
-
          and algorithms.IsBotAlive()
-         and (algorithms.IsUnitLowHp(env.ENEMY_HERO_DATA)
+
+         and (env.IS_ENEMY_HERO_LOW_HP
+
               or (env.ENEMY_HERO_DATA.is_flask_healing
+
                   and algorithms.IsBiggerThan(
                         env.BOT_DATA.health,
                         env.ENEMY_HERO_DATA.health,
-                        100))
-              or algorithms.IsBiggerThan(
-                   env.BOT_DATA.attack_damage * 3,
-                   env.ENEMY_HERO_DATA.health,
-                   0))
+                        100)))
 
          and not env.IS_BOT_LOW_HP
 

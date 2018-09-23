@@ -14,6 +14,7 @@ local M = {}
 
 M.BOT_DATA = {}
 M.IS_BOT_LOW_HP = false
+M.IS_ENEMY_HERO_LOW_HP = false
 M.ENEMY_CREEP_FRONT_DATA = {}
 M.ENEMY_CREEP_BACK_DATA = {}
 M.ENEMY_HERO_DATA = {}
@@ -60,17 +61,19 @@ local function GetClosestCreep(radius, get_function, direction)
     end)
 end
 
-local function IsBotLowHp()
-  return algorithms.IsUnitLowHp(M.BOT_DATA)
-         or (M.ENEMY_HERO_DATA ~= nil
-             and (algorithms.IsBiggerThan(
-                    M.ENEMY_HERO_DATA.health,
-                    M.BOT_DATA.health,
-                    M.BOT_DATA.max_health / 2)
-                  or algorithms.IsBiggerThan(
-                       M.ENEMY_HERO_DATA.attack_damage * 3,
-                       M.BOT_DATA.health,
-                       0)))
+local function IsUnitRelativeLowHp(unit_data, enemy_hero_data)
+  return unit_data ~= nil
+         and (algorithms.IsUnitLowHp(unit_data)
+
+              or (enemy_hero_data ~= nil
+                  and (algorithms.IsBiggerThan(
+                         enemy_hero_data.health,
+                         unit_data.health,
+                         unit_data.max_health / 2)
+                       or algorithms.IsBiggerThan(
+                         enemy_hero_data.attack_damage * 3,
+                         unit_data.health,
+                         0))))
 end
 
 function M.UpdateVariables()
@@ -80,7 +83,11 @@ function M.UpdateVariables()
 
   M.ENEMY_HERO_DATA = algorithms.GetLastSeenEnemyHero(M.BOT_DATA)
 
-  M.IS_BOT_LOW_HP = IsBotLowHp()
+  M.IS_BOT_LOW_HP = IsUnitRelativeLowHp(M.BOT_DATA, M.ENEMY_HERO_DATA)
+
+  M.IS_ENEMY_HERO_LOW_HP = IsUnitRelativeLowHp(
+                             M.ENEMY_HERO_DATA,
+                             M.BOT_DATA)
 
   M.ENEMY_CREEP_FRONT_DATA = GetClosestCreep(
                                constants.MAX_UNIT_SEARCH_RADIUS,
