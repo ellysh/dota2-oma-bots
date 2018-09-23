@@ -127,8 +127,23 @@ local function AddEnemyBuilding(_, unit)
   AddUnit(unit, UNIT_TYPE["BUILDING"], GetOpposingTeam())
 end
 
+local function GetBotData()
+  local heroes = UNIT_LIST[GetTeam()][UNIT_TYPE["HERO"]]
+
+  return functions.GetElementWith(
+           heroes,
+           nil,
+           function(unit_data)
+             return unit_data.name ~= "npc_dota_hero_shadow_shaman"
+           end)
+end
+
 local function IsLastSeenLocationValid(unit_data)
-  return unit_data.is_visible == IsLocationVisible(unit_data.location)
+  local bot_data = GetBotData()
+
+  return unit_data.is_visible
+         or constants.LAST_SEEN_LOCATION_MIN_DISTANCE
+            < functions.GetUnitDistance(unit_data, bot_data)
 end
 
 local function InvalidateUnit(_, unit_data)
