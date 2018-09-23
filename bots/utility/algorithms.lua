@@ -278,6 +278,9 @@ local function GetRangedIncomingDamage(target_data, time_limit)
 
       local unit_data = all_units.GetUnitData(projectile.caster)
 
+      if unit_data == nil then
+        return end
+
       local time_to_projectile = functions.GetDistance(
                                    projectile.location,
                                    target_data.location)
