@@ -64,9 +64,14 @@ function M.UpdateVariables()
 
   M.BOT_DATA = algorithms.GetBotData()
 
-  M.IS_BOT_LOW_HP = algorithms.IsUnitLowHp(M.BOT_DATA)
-
   M.ENEMY_HERO_DATA = algorithms.GetLastSeenEnemyHero(M.BOT_DATA)
+
+  M.IS_BOT_LOW_HP = algorithms.IsUnitLowHp(M.BOT_DATA)
+                    or (M.ENEMY_HERO_DATA ~= nil
+                        and algorithms.IsBiggerThan(
+                              M.ENEMY_HERO_DATA.health,
+                              M.BOT_DATA.health,
+                              M.BOT_DATA.max_health / 2))
 
   M.ENEMY_CREEP_DATA = GetClosestCreep(
                          constants.MAX_UNIT_SEARCH_RADIUS,

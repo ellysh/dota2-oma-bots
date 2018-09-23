@@ -38,12 +38,14 @@ end
 function M.pre_heal_flask()
   return algorithms.IsItemCastable(env.BOT_DATA, "item_flask")
          and not env.BOT:HasModifier("modifier_flask_healing")
+
          and (env.IS_BOT_LOW_HP
               or (420 < (env.BOT_DATA.max_health - env.BOT_DATA.health)
                   and functions.GetRate(
                         env.BOT_DATA.health,
                         env.BOT_DATA.max_health)
                       <= constants.UNIT_HALF_HEALTH_LEVEL))
+
          and not env.BOT:HasModifier(
                    "modifier_drow_ranger_frost_arrows_slow")
          and constants.BASE_RADIUS
