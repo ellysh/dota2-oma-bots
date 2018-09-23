@@ -127,10 +127,16 @@ local function AddEnemyBuilding(_, unit)
   AddUnit(unit, UNIT_TYPE["BUILDING"], GetOpposingTeam())
 end
 
+local function IsLastSeenLocationValid(unit_data)
+  return unit_data.is_visible == IsLocationVisible(unit_data.location)
+end
+
 local function InvalidateUnit(_, unit_data)
   local age = CURRENT_GAME_TIME - unit_data.timestamp
 
-  if 6 <= age then
+  if 6 <= age
+     or not IsLastSeenLocationValid(unit_data) then
+
     functions.ClearTable(
       UNIT_LIST[unit_data.team][unit_data.type][tostring(unit_data.handle)])
       UNIT_LIST[unit_data.team][unit_data.type][tostring(unit_data.handle)] = nil

@@ -322,3 +322,7 @@ end
 function GetHeightLevel(location)
   return 1
 end
+
+function IsLocationVisible(location)
+  return true
+end
