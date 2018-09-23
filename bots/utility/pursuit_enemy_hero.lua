@@ -32,7 +32,11 @@ function M.pre_pursuit_enemy_hero()
                   and algorithms.IsBiggerThan(
                         env.BOT_DATA.health,
                         env.ENEMY_HERO_DATA.health,
-                        100)))
+                        100))
+              or algorithms.IsBiggerThan(
+                   env.BOT_DATA.attack_damage * 3,
+                   env.ENEMY_HERO_DATA.health,
+                   0))
 
          and not env.IS_BOT_LOW_HP
 
