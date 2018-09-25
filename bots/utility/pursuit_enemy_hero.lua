@@ -38,9 +38,6 @@ function M.pre_pursuit_enemy_hero()
 
          and not env.IS_BOT_LOW_HP
 
-         and (not env.IS_FOCUSED_BY_TOWER
-              or 6 < env.BOT_DATA.level)
-
          and not map.IsUnitInSpot(
                    env.BOT_DATA,
                    map.GetEnemySpot("tower_tier_1_rear"))
