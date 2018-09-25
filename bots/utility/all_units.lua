@@ -98,6 +98,7 @@ local function AddUnit(unit, unit_type, team)
     incoming_damage_from_creeps = 0,
     incoming_damage_from_heroes = 0,
     incoming_damage_from_towers = 0,
+    player_id = unit:GetPlayerID(),
     -- attack_target
     -- last_attack_time
   }
@@ -138,6 +139,22 @@ local function GetBotData()
            end)
 end
 
+local LAST_ENEMY_HERO_DEATHS = 0
+
+local function IsHeroDiedRecently(unit_data)
+  if unit_data.type ~= UNIT_TYPE["HERO"] then
+    return false end
+
+  local deaths = GetHeroDeaths(unit_data.player_id)
+
+  if LAST_ENEMY_HERO_DEATHS < deaths then
+    LAST_ENEMY_HERO_DEATHS = deaths
+    return true
+  else
+    return false
+  end
+end
+
 local function IsLastSeenLocationValid(unit_data)
   local bot_data = GetBotData()
 
@@ -150,11 +167,20 @@ local function InvalidateUnit(_, unit_data)
   local age = CURRENT_GAME_TIME - unit_data.timestamp
 
   if 6 <= age
-     or not IsLastSeenLocationValid(unit_data) then
+     or not IsLastSeenLocationValid(unit_data)
+     or IsHeroDiedRecently(unit_data) then
+
+    -- We should store the unit details because they will be cleared by
+    -- the functions.ClearTable call
+
+    local invalid_team = unit_data.team
+    local invalid_type = unit_data.type
+    local invalid_handle = tostring(unit_data.handle)
 
     functions.ClearTable(
-      UNIT_LIST[unit_data.team][unit_data.type][tostring(unit_data.handle)])
-      UNIT_LIST[unit_data.team][unit_data.type][tostring(unit_data.handle)] = nil
+      UNIT_LIST[invalid_team][invalid_type][invalid_handle])
+
+    UNIT_LIST[invalid_team][invalid_type][invalid_handle] = nil
   elseif 0 < age then
     unit_data.is_visible = false
   end
@@ -312,7 +338,11 @@ local function GetUnitType(unit)
 end
 
 function M.GetUnitData(unit)
-  return UNIT_LIST[unit:GetTeam()][GetUnitType(unit)][tostring(unit)]
+  if unit:IsNull() then
+    return nil
+  else
+    return UNIT_LIST[unit:GetTeam()][GetUnitType(unit)][tostring(unit)]
+  end
 end
 
 function M.GetUnit(unit_data)
