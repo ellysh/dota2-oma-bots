@@ -81,6 +81,7 @@ end
 function M.pre_aggro_hg()
   return env.ENEMY_HERO_DATA ~= nil
          and env.ENEMY_CREEP_FRONT_DATA ~= nil
+         and env.ENEMY_CREEP_BACK_DATA == nil
          and env.ENEMY_HERO_DATA.is_visible
 
          and 2 <= functions.GetDelta(LAST_AGGRO_CONTROL, GameTime())
