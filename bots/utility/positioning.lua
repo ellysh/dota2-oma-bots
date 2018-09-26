@@ -62,6 +62,8 @@ local function GetPreLastHitCreep()
 end
 
 function M.pre_increase_creeps_distance()
+  local last_hit_creep = GetPreLastHitCreep()
+
   return ((env.ENEMY_HERO_DATA ~= nil
            and functions.GetUnitDistance(
                  env.BOT_DATA,
@@ -73,6 +75,8 @@ function M.pre_increase_creeps_distance()
                     env.BOT_DATA,
                     env.ENEMY_CREEP_FRONT_DATA)
                   < constants.BASE_CREEP_DISTANCE))
+
+         and last_hit_creep == nil
 
          and not map.IsUnitInSpot(
                    env.BOT_DATA,
