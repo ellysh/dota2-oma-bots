@@ -25,6 +25,7 @@ local M = {}
 
 function M.pre_pursuit_enemy_hero()
   return env.ENEMY_HERO_DATA ~= nil
+         and not env.IS_BOT_LOW_HP
          and algorithms.IsBotAlive()
 
          and (env.IS_ENEMY_HERO_LOW_HP
@@ -36,7 +37,10 @@ function M.pre_pursuit_enemy_hero()
                         env.ENEMY_HERO_DATA.health,
                         100)))
 
-         and not env.IS_BOT_LOW_HP
+         and (not env.DOES_TOWER_PROTECT_ENEMY
+              or algorithms.IsTowerDiveReasonable(
+                   env.BOT_DATA,
+                   env.ENEMY_HERO_DATA))
 
          and not map.IsUnitInSpot(
                    env.BOT_DATA,
@@ -70,11 +74,6 @@ function M.pre_move_enemy_hero()
                    env.ENEMY_HERO_DATA,
                    true)
                  + constants.MAX_PURSUIT_INC_DISTANCE
-
-         and (not env.DOES_TOWER_PROTECT_ENEMY
-              or algorithms.IsTowerDiveReasonable(
-                   env.BOT_DATA,
-                   env.ENEMY_HERO_DATA))
 end
 
 function M.move_enemy_hero()
