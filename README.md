@@ -1,4 +1,4 @@
-# Dota 2 OMA Bots 1.2 version
+# Dota 2 OMA Bots 1.3 version
 
 *This project is still in a developing stage.*
 

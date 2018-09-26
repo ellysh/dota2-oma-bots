@@ -1,3 +1,10 @@
+* version 1.3
+  - Rework the pursuit algorithm.
+  - Implement the new algorithm of the last hit calculation.
+  - Move recovery spots closer to the tower.
+  - Buy the item_faerie_fire for beginning instead of the item_recipe_wraith_band.
+  - Fix a bug with stucking when the body block move fails.
+
 * version 1.2
   - Choose a strategy depending on the advantage.
   - Aggro control enemy creeps when they are on the enemy hg.
