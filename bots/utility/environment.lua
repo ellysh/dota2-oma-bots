@@ -37,6 +37,7 @@ M.IS_FOCUSED_BY_ENEMY_HERO = false
 M.IS_FOCUSED_BY_UNKNOWN_UNIT = false
 M.IS_FOCUSED_BY_TOWER = false
 M.IS_BASE_RECOVERY = false
+M.LAST_AGGRO_CONTROL = 0
 
 local function GetClosestCreep(radius, get_function, direction)
   local creeps = get_function(

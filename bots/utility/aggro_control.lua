@@ -21,8 +21,6 @@ local env = require(
 
 local M = {}
 
-local LAST_AGGRO_CONTROL = 0
-
 ---------------------------------
 
 function M.pre_aggro_control()
@@ -52,7 +50,8 @@ function M.pre_aggro_last_hit()
   return env.ENEMY_HERO_DATA ~= nil
          and env.ENEMY_HERO_DATA.is_visible
 
-         and 2 <= functions.GetDelta(LAST_AGGRO_CONTROL, GameTime())
+         and constants.CREEPS_AGGRO_COOLDOWN
+             <= functions.GetDelta(env.LAST_AGGRO_CONTROL, GameTime())
 
          and (env.ENEMY_TOWER_DATA == nil
               or constants.CREEP_MAX_AGRO_RADIUS
@@ -73,7 +72,7 @@ end
 function M.aggro_last_hit()
   env.BOT:Action_AttackUnit(all_units.GetUnit(env.ENEMY_HERO_DATA), true)
 
-  LAST_AGGRO_CONTROL = GameTime()
+  env.LAST_AGGRO_CONTROL = GameTime()
 end
 
 ---------------------------------
@@ -84,7 +83,8 @@ function M.pre_aggro_hg()
          and env.ENEMY_CREEP_BACK_DATA == nil
          and env.ENEMY_HERO_DATA.is_visible
 
-         and 2 <= functions.GetDelta(LAST_AGGRO_CONTROL, GameTime())
+         and constants.CREEPS_AGGRO_COOLDOWN
+             <= functions.GetDelta(env.LAST_AGGRO_CONTROL, GameTime())
 
          and map.IsUnitInSpot(
                    env.BOT_DATA,
@@ -99,7 +99,7 @@ end
 function M.aggro_hg()
   env.BOT:Action_AttackUnit(all_units.GetUnit(env.ENEMY_HERO_DATA), true)
 
-  LAST_AGGRO_CONTROL = GameTime()
+  env.LAST_AGGRO_CONTROL = GameTime()
 end
 
 ---------------------------------
