@@ -43,7 +43,7 @@ function M.pre_pursuit_enemy_hero()
                    env.ENEMY_HERO_DATA))
 
          and not map.IsUnitInSpot(
-                   env.BOT_DATA,
+                   env.ENEMY_HERO_DATA,
                    map.GetEnemySpot("tower_tier_1_rear"))
 end
 

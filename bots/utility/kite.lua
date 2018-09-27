@@ -26,10 +26,6 @@ local M = {}
 function M.pre_kite()
   return algorithms.IsBotAlive()
          and not env.IS_BOT_LOW_HP
-
-         and not map.IsUnitInSpot(
-                   env.BOT_DATA,
-                   map.GetEnemySpot("tower_tier_1_rear"))
 end
 
 ---------------------------------
@@ -38,6 +34,11 @@ function M.pre_attack_enemy_hero()
   return moves.pre_attack_enemy_hero()
          and env.BOT_DATA.attack_target ~= env.ENEMY_HERO_DATA
          and env.ALLY_CREEP_FRONT_DATA ~= nil
+
+         and not map.IsUnitInSpot(
+                   env.ENEMY_HERO_DATA,
+                   map.GetEnemySpot("tower_tier_1_rear"))
+
          and (not algorithms.AreEnemyCreepsInRadius(
                    env.BOT_DATA,
                    constants.CREEP_MAX_AGRO_RADIUS)

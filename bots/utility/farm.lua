@@ -23,10 +23,6 @@ local M = {}
 function M.pre_farm()
   return algorithms.IsBotAlive()
          and not env.IS_BOT_LOW_HP
-
-         and not map.IsUnitInSpot(
-                   env.BOT_DATA,
-                   map.GetEnemySpot("tower_tier_1_rear"))
 end
 
 ---------------------------------
