@@ -461,36 +461,6 @@ M.OBJECTIVES = {
   },
 
   {
-    objective = "push_lane",
-    module = require(GetScriptDirectory() .."/utility/push_lane"),
-    moves = {
-      {
-        move = "use_trueshot",
-        actions = {
-          {action = "use_trueshot"},
-
-        },
-      },
-      {
-        move = "attack_enemy_creep",
-        actions = {
-          {action = "attack_enemy_creep"},
-          {action = "stop_attack"},
-
-        },
-      },
-      {
-        move = "kill_enemy_creep",
-        actions = {
-          {action = "kill_enemy_creep"},
-          {action = "stop_attack"},
-
-        },
-      },
-    },
-  },
-
-  {
     objective = "kite",
     module = require(GetScriptDirectory() .."/utility/kite"),
     moves = {
@@ -514,6 +484,36 @@ M.OBJECTIVES = {
         move = "move_safe",
         actions = {
           {action = "move_safe"},
+
+        },
+      },
+    },
+  },
+
+  {
+    objective = "push_lane",
+    module = require(GetScriptDirectory() .."/utility/push_lane"),
+    moves = {
+      {
+        move = "use_trueshot",
+        actions = {
+          {action = "use_trueshot"},
+
+        },
+      },
+      {
+        move = "attack_enemy_creep",
+        actions = {
+          {action = "attack_enemy_creep"},
+          {action = "stop_attack"},
+
+        },
+      },
+      {
+        move = "kill_enemy_creep",
+        actions = {
+          {action = "kill_enemy_creep"},
+          {action = "stop_attack"},
 
         },
       },
