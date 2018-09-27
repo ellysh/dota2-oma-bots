@@ -61,6 +61,17 @@ local function GetPreLastHitCreep()
           env.PRE_LAST_HIT_ALLY_CREEP)
 end
 
+local function GetBaseCreepDistance()
+  return functions.ternary(
+          env.ENEMY_HERO_DATA ~= nil
+          and functions.GetUnitDistance(
+                env.BOT_DATA,
+                env.ENEMY_HERO_DATA)
+              < constants.SAFE_HERO_DISTANCE,
+          constants.BASE_CREEP_DISTANCE,
+          constants.BASE_CREEP_DISTANCE_NO_ENEMY_HERO)
+end
+
 function M.pre_increase_creeps_distance()
   local last_hit_creep = GetPreLastHitCreep()
 
@@ -74,7 +85,7 @@ function M.pre_increase_creeps_distance()
               and functions.GetUnitDistance(
                     env.BOT_DATA,
                     env.ENEMY_CREEP_FRONT_DATA)
-                  < constants.BASE_CREEP_DISTANCE))
+                  < GetBaseCreepDistance()))
 
          and last_hit_creep == nil
 
@@ -97,13 +108,15 @@ local function GetClosestCreep()
 end
 
 function M.pre_decrease_creeps_distance_base()
+  local base_creep_distance = GetBaseCreepDistance()
+
   return not algorithms.AreEnemyCreepsInRadius(
                 env.BOT_DATA,
-                constants.BASE_CREEP_DISTANCE)
+                base_creep_distance)
 
          and not algorithms.AreAllyCreepsInRadius(
                   env.BOT_DATA,
-                  constants.BASE_CREEP_DISTANCE)
+                  base_creep_distance)
 
          and not env.IS_FOCUSED_BY_CREEPS
 
