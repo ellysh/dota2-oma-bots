@@ -127,16 +127,16 @@ M.OBJECTIVES = {
         },
       },
       {
-        move = "move_base",
+        move = "restore_hp_on_base",
         actions = {
-          {action = "move_base"},
+          {action = "restore_hp_on_base"},
 
         },
       },
       {
-        move = "restore_hp_on_base",
+        move = "move_base",
         actions = {
-          {action = "restore_hp_on_base"},
+          {action = "move_base"},
 
         },
       },
