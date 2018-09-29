@@ -133,6 +133,12 @@ M.OBJECTIVES = {
         move = "move_base",
         actions = {
           {action = "move_base"},
+
+        },
+      },
+      {
+        move = "restore_hp_on_base",
+        actions = {
           {action = "restore_hp_on_base"},
 
         },

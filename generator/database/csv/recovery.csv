@@ -17,7 +17,7 @@ buy_items;buy_flask;buy_flask
 ;;
 base_recovery;deliver_items;deliver_items
 ;move_base;move_base
-;;restore_hp_on_base
+;restore_hp_on_base;restore_hp_on_base
 ;;
 evasion;use_silence;use_silence
 ;move_safe_recovery;move_safe_recovery

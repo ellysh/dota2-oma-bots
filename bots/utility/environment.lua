@@ -12,6 +12,7 @@ local constants = require(
 
 local M = {}
 
+M.BOT = {}
 M.BOT_DATA = {}
 M.IS_BOT_LOW_HP = false
 M.IS_ENEMY_HERO_LOW_HP = false
