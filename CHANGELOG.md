@@ -1,4 +1,5 @@
 * version 1.3a
+  - Fix a critical bug with stops during moving to base for recovery.
   - Fix bugs with pursuit an enemy hero.
   - Fix bugs with aggro control creeps.
 
