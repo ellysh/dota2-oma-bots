@@ -1,3 +1,7 @@
+* version 1.3a
+  - Fix bugs with pursuit an enemy hero.
+  - Fix bugs with aggro control creeps.
+
 * version 1.3
   - Rework the pursuit algorithm.
   - Implement the new algorithm of the last hit calculation.
