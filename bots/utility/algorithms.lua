@@ -675,8 +675,12 @@ function M.IsBiggerThan(a, b, delta)
 end
 
 function M.IsTowerDiveReasonable(unit_data, target_data)
-  return M.IsLastHitTarget(unit_data, target_data)
-         and constants.UNIT_MIN_TOWER_DIVE_HEALTH <= unit_data.health
+  return target_data.is_visible
+         and M.IsLastHitTarget(unit_data, target_data)
+         and (constants.UNIT_MIN_TOWER_DIVE_HEALTH <= unit_data.health
+              or (unit_data.is_flask_healing
+                  and constants.UNIT_MIN_TOWER_DIVE_HEALTH_WITH_HEALING
+                      <= unit_data.health))
 end
 
 -- Provide an access to local functions for unit tests only
