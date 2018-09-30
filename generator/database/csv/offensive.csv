@@ -3,8 +3,6 @@ swap_items;swap_flask_tp;swap_flask_tp
 ;swap_lesser_crit_tp;swap_lesser_crit_tp
 ;put_item_in_inventory;put_item_in_inventory
 ;;
-item_recovery;heal_tango;heal_tango
-;;
 upgrade_skills;upgrade;upgrade
 ;;
 pursuit_enemy_hero;use_silence;use_silence

@@ -18,5 +18,3 @@ base_recovery;deliver_items;deliver_items
 evasion;use_silence;use_silence
 ;move_safe_recovery;move_safe_recovery
 ;move_safe_evasion;move_safe_evasion
-;;
-force_stop;stop;stop_attack_and_move

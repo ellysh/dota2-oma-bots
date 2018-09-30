@@ -32,20 +32,6 @@ M.OBJECTIVES = {
   },
 
   {
-    objective = "item_recovery",
-    module = require(GetScriptDirectory() .."/utility/item_recovery"),
-    moves = {
-      {
-        move = "heal_tango",
-        actions = {
-          {action = "heal_tango"},
-
-        },
-      },
-    },
-  },
-
-  {
     objective = "upgrade_skills",
     module = require(GetScriptDirectory() .."/utility/upgrade_skills"),
     moves = {

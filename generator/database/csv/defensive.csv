@@ -5,8 +5,6 @@ swap_items;swap_flask_tp;swap_flask_tp
 ;swap_lesser_crit_tp;swap_lesser_crit_tp
 ;put_item_in_inventory;put_item_in_inventory
 ;;
-item_recovery;heal_tango;heal_tango
-;;
 defend_tower;use_silence;use_silence
 ;attack_enemy_creep;attack_enemy_creep
 ;;stop_attack
