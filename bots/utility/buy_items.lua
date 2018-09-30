@@ -56,6 +56,17 @@ end
 
 ---------------------------------
 
+function M.pre_buy_tango()
+  return not algorithms.DoesBotOrCourierHaveItem("item_tango")
+         and env.BOT_DATA.level == 1
+end
+
+function M.buy_tango()
+  algorithms.BuyItem("item_tango")
+end
+
+---------------------------------
+
 function M.pre_buy_tpscroll()
   return not algorithms.DoesBotOrCourierHaveItem("item_tpscroll")
          and GetItemCost("item_tpscroll") <= env.BOT_DATA.gold
@@ -67,27 +78,8 @@ end
 
 ---------------------------------
 
-function M.pre_buy_recipe_wraith_band()
-  return not algorithms.DoesBotOrCourierHaveItem(
-               "item_recipe_wraith_band")
-
-         and not algorithms.DoesBotOrCourierHaveItem("item_wraith_band")
-
-         and not algorithms.DoesBotOrCourierHaveItem(
-                   "item_ring_of_aquila")
-
-         and GetItemCost("item_recipe_wraith_band") <= env.BOT_DATA.gold
-end
-
-function M.buy_recipe_wraith_band()
-  algorithms.BuyItem("item_recipe_wraith_band")
-end
-
----------------------------------
-
 function M.pre_buy_ring_of_protection()
   return pre_buy_item("item_ring_of_protection")
-         and algorithms.DoesBotOrCourierHaveItem("item_wraith_band")
 
          and not algorithms.DoesBotOrCourierHaveItem(
                    "item_ring_of_basilius")
