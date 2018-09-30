@@ -21,16 +21,6 @@ local action_timing = require(
 
 local M = {}
 
-local function ChooseStrategy()
-  return functions.GetElementWith(
-           objectives.OBJECTIVES,
-           nil,
-           function(strategy)
-             return strategies[
-                      "pre_" .. strategy.strategy]()
-           end)
-end
-
 local function FindMoveToExecute(objective)
   return functions.GetElementWith(
            objective.moves,
@@ -58,6 +48,23 @@ local function FindObjectiveAndMoveToExecute(strategy)
            end)
 
   return result_objective, result_move
+end
+
+local function ChooseStrategyObjectiveMove()
+  local objective = nil
+  local move = nil
+  local strategy = functions.GetElementWith(
+           objectives.OBJECTIVES,
+           nil,
+           function(strategy)
+             if not strategies["pre_" .. strategy.strategy]() then
+               return false end
+
+             objective, move = FindObjectiveAndMoveToExecute(strategy)
+             return objective ~= nil and move ~= nil
+           end)
+
+  return strategy, objective, move
 end
 
 local function GetCurrentAction(move, action_index)
@@ -122,9 +129,8 @@ function M.Process()
      or CURRENT_MOVE == nil
      or not IsObjectiveActual(CURRENT_OBJECTIVE) then
 
-    CURRENT_STRATEGY = ChooseStrategy()
-    CURRENT_OBJECTIVE, CURRENT_MOVE = FindObjectiveAndMoveToExecute(
-                                        CURRENT_STRATEGY)
+    CURRENT_STRATEGY, CURRENT_OBJECTIVE, CURRENT_MOVE =
+      ChooseStrategyObjectiveMove()
   end
 
   if CURRENT_OBJECTIVE ~= nil
