@@ -11,6 +11,13 @@ M.OBJECTIVES = {
     module = require(GetScriptDirectory() .."/utility/buy_items"),
     moves = {
       {
+        move = "buy_tango",
+        actions = {
+          {action = "buy_tango"},
+
+        },
+      },
+      {
         move = "buy_flask",
         actions = {
           {action = "buy_flask"},
@@ -21,13 +28,6 @@ M.OBJECTIVES = {
         move = "buy_tpscroll",
         actions = {
           {action = "buy_tpscroll"},
-
-        },
-      },
-      {
-        move = "buy_recipe_wraith_band",
-        actions = {
-          {action = "buy_recipe_wraith_band"},
 
         },
       },

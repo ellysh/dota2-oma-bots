@@ -1,7 +1,7 @@
 Objective;Move;Actions
-buy_items;buy_flask;buy_flask
+buy_items;buy_tango;buy_tango
+;buy_flask;buy_flask
 ;buy_tpscroll;buy_tpscroll
-;buy_recipe_wraith_band;buy_recipe_wraith_band
 ;"-- Ring of Aquila";
 ;buy_ring_of_protection;buy_ring_of_protection
 ;"-- Power Treads";
