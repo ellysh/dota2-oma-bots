@@ -24,6 +24,12 @@ local function DoesCreepMeet()
   return 25 < DotaTime()
 end
 
+function M.pre_buy()
+  return DoesCreepMeet()
+end
+
+---------------------------------
+
 function M.pre_recovery()
   return DoesCreepMeet()
          and (not algorithms.IsBotAlive()
@@ -75,12 +81,16 @@ function M.pre_defensive()
               or IsEnemyUnitOnHighGround())
 end
 
+---------------------------------
+
 function M.pre_offensive()
   return DoesCreepMeet()
          and (env.ENEMY_HERO_DATA == nil
               or env.IS_ENEMY_HERO_LOW_HP
               or DoesUnitHasAdvantage(env.BOT_DATA, env.ENEMY_HERO_DATA))
 end
+
+---------------------------------
 
 function M.pre_farm()
   return true

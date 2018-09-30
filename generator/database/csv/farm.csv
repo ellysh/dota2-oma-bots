@@ -7,27 +7,6 @@ swap_items;swap_flask_tp;swap_flask_tp
 ;;
 item_recovery;heal_tango;heal_tango
 ;;
-buy_items;buy_flask;buy_flask
-;buy_tpscroll;buy_tpscroll
-;buy_recipe_wraith_band;buy_recipe_wraith_band
-;"-- Ring of Aquila";
-;buy_ring_of_protection;buy_ring_of_protection
-;"-- Power Treads";
-;buy_sobi_mask;buy_sobi_mask
-;buy_boots;buy_boots
-;buy_gloves;buy_gloves
-;buy_boots_of_elves;buy_boots_of_elves
-;"-- Morbid Mask";
-;buy_lifesteal;buy_lifesteal
-;"-- Dragon Lance";
-;buy_two_boots_of_elves;buy_two_boots_of_elves
-;buy_ogre_axe;buy_ogre_axe
-;"-- Crystalys";
-;buy_blades_of_attack;buy_blades_of_attack
-;buy_broadsword;buy_broadsword
-;buy_recipe_lesser_crit;buy_recipe_lesser_crit
-;deliver_items;deliver_items
-;;
 evasion;use_silence;use_silence
 ;move_safe_recovery;move_safe_recovery
 ;move_safe_evasion;move_safe_evasion
@@ -49,7 +28,6 @@ aggro_control;aggro_last_hit;aggro_last_hit
 ;;stop_attack
 ;aggro_hg;aggro_hg
 ;;stop_attack
-;;
 ;;
 positioning;tp_mid_tower;tp_mid_tower
 ;decrease_creeps_distance_aggro;decrease_creeps_distance_aggro

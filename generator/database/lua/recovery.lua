@@ -88,34 +88,6 @@ M.OBJECTIVES = {
   },
 
   {
-    objective = "buy_items",
-    module = require(GetScriptDirectory() .."/utility/buy_items"),
-    moves = {
-      {
-        move = "buy_flask",
-        actions = {
-          {action = "buy_flask"},
-
-        },
-      },
-      {
-        move = "buy_tpscroll",
-        actions = {
-          {action = "buy_tpscroll"},
-
-        },
-      },
-      {
-        move = "deliver_items",
-        actions = {
-          {action = "deliver_items"},
-
-        },
-      },
-    },
-  },
-
-  {
     objective = "base_recovery",
     module = require(GetScriptDirectory() .."/utility/base_recovery"),
     moves = {

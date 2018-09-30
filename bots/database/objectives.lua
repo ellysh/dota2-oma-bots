@@ -4,6 +4,125 @@ local M = {}
 M.OBJECTIVES = {
 
   {
+    strategy = "buy",
+    objectives = {
+  {
+    objective = "buy_items",
+    module = require(GetScriptDirectory() .."/utility/buy_items"),
+    moves = {
+      {
+        move = "buy_flask",
+        actions = {
+          {action = "buy_flask"},
+
+        },
+      },
+      {
+        move = "buy_tpscroll",
+        actions = {
+          {action = "buy_tpscroll"},
+
+        },
+      },
+      {
+        move = "buy_recipe_wraith_band",
+        actions = {
+          {action = "buy_recipe_wraith_band"},
+
+        },
+      },
+      {
+        move = "buy_ring_of_protection",
+        actions = {
+          {action = "buy_ring_of_protection"},
+
+        },
+      },
+      {
+        move = "buy_sobi_mask",
+        actions = {
+          {action = "buy_sobi_mask"},
+
+        },
+      },
+      {
+        move = "buy_boots",
+        actions = {
+          {action = "buy_boots"},
+
+        },
+      },
+      {
+        move = "buy_gloves",
+        actions = {
+          {action = "buy_gloves"},
+
+        },
+      },
+      {
+        move = "buy_boots_of_elves",
+        actions = {
+          {action = "buy_boots_of_elves"},
+
+        },
+      },
+      {
+        move = "buy_lifesteal",
+        actions = {
+          {action = "buy_lifesteal"},
+
+        },
+      },
+      {
+        move = "buy_two_boots_of_elves",
+        actions = {
+          {action = "buy_two_boots_of_elves"},
+
+        },
+      },
+      {
+        move = "buy_ogre_axe",
+        actions = {
+          {action = "buy_ogre_axe"},
+
+        },
+      },
+      {
+        move = "buy_blades_of_attack",
+        actions = {
+          {action = "buy_blades_of_attack"},
+
+        },
+      },
+      {
+        move = "buy_broadsword",
+        actions = {
+          {action = "buy_broadsword"},
+
+        },
+      },
+      {
+        move = "buy_recipe_lesser_crit",
+        actions = {
+          {action = "buy_recipe_lesser_crit"},
+
+        },
+      },
+      {
+        move = "deliver_items",
+        actions = {
+          {action = "deliver_items"},
+
+        },
+      },
+    },
+  },
+
+
+    },
+  },
+
+  {
     strategy = "recovery",
     objectives = {
   {
@@ -84,34 +203,6 @@ M.OBJECTIVES = {
         move = "tp_base",
         actions = {
           {action = "tp_base"},
-
-        },
-      },
-    },
-  },
-
-  {
-    objective = "buy_items",
-    module = require(GetScriptDirectory() .."/utility/buy_items"),
-    moves = {
-      {
-        move = "buy_flask",
-        actions = {
-          {action = "buy_flask"},
-
-        },
-      },
-      {
-        move = "buy_tpscroll",
-        actions = {
-          {action = "buy_tpscroll"},
-
-        },
-      },
-      {
-        move = "deliver_items",
-        actions = {
-          {action = "deliver_items"},
 
         },
       },
@@ -245,118 +336,6 @@ M.OBJECTIVES = {
         move = "heal_tango",
         actions = {
           {action = "heal_tango"},
-
-        },
-      },
-    },
-  },
-
-  {
-    objective = "buy_items",
-    module = require(GetScriptDirectory() .."/utility/buy_items"),
-    moves = {
-      {
-        move = "buy_flask",
-        actions = {
-          {action = "buy_flask"},
-
-        },
-      },
-      {
-        move = "buy_tpscroll",
-        actions = {
-          {action = "buy_tpscroll"},
-
-        },
-      },
-      {
-        move = "buy_recipe_wraith_band",
-        actions = {
-          {action = "buy_recipe_wraith_band"},
-
-        },
-      },
-      {
-        move = "buy_ring_of_protection",
-        actions = {
-          {action = "buy_ring_of_protection"},
-
-        },
-      },
-      {
-        move = "buy_sobi_mask",
-        actions = {
-          {action = "buy_sobi_mask"},
-
-        },
-      },
-      {
-        move = "buy_boots",
-        actions = {
-          {action = "buy_boots"},
-
-        },
-      },
-      {
-        move = "buy_gloves",
-        actions = {
-          {action = "buy_gloves"},
-
-        },
-      },
-      {
-        move = "buy_boots_of_elves",
-        actions = {
-          {action = "buy_boots_of_elves"},
-
-        },
-      },
-      {
-        move = "buy_lifesteal",
-        actions = {
-          {action = "buy_lifesteal"},
-
-        },
-      },
-      {
-        move = "buy_two_boots_of_elves",
-        actions = {
-          {action = "buy_two_boots_of_elves"},
-
-        },
-      },
-      {
-        move = "buy_ogre_axe",
-        actions = {
-          {action = "buy_ogre_axe"},
-
-        },
-      },
-      {
-        move = "buy_blades_of_attack",
-        actions = {
-          {action = "buy_blades_of_attack"},
-
-        },
-      },
-      {
-        move = "buy_broadsword",
-        actions = {
-          {action = "buy_broadsword"},
-
-        },
-      },
-      {
-        move = "buy_recipe_lesser_crit",
-        actions = {
-          {action = "buy_recipe_lesser_crit"},
-
-        },
-      },
-      {
-        move = "deliver_items",
-        actions = {
-          {action = "deliver_items"},
 
         },
       },
@@ -709,118 +688,6 @@ M.OBJECTIVES = {
   },
 
   {
-    objective = "buy_items",
-    module = require(GetScriptDirectory() .."/utility/buy_items"),
-    moves = {
-      {
-        move = "buy_flask",
-        actions = {
-          {action = "buy_flask"},
-
-        },
-      },
-      {
-        move = "buy_tpscroll",
-        actions = {
-          {action = "buy_tpscroll"},
-
-        },
-      },
-      {
-        move = "buy_recipe_wraith_band",
-        actions = {
-          {action = "buy_recipe_wraith_band"},
-
-        },
-      },
-      {
-        move = "buy_ring_of_protection",
-        actions = {
-          {action = "buy_ring_of_protection"},
-
-        },
-      },
-      {
-        move = "buy_sobi_mask",
-        actions = {
-          {action = "buy_sobi_mask"},
-
-        },
-      },
-      {
-        move = "buy_boots",
-        actions = {
-          {action = "buy_boots"},
-
-        },
-      },
-      {
-        move = "buy_gloves",
-        actions = {
-          {action = "buy_gloves"},
-
-        },
-      },
-      {
-        move = "buy_boots_of_elves",
-        actions = {
-          {action = "buy_boots_of_elves"},
-
-        },
-      },
-      {
-        move = "buy_lifesteal",
-        actions = {
-          {action = "buy_lifesteal"},
-
-        },
-      },
-      {
-        move = "buy_two_boots_of_elves",
-        actions = {
-          {action = "buy_two_boots_of_elves"},
-
-        },
-      },
-      {
-        move = "buy_ogre_axe",
-        actions = {
-          {action = "buy_ogre_axe"},
-
-        },
-      },
-      {
-        move = "buy_blades_of_attack",
-        actions = {
-          {action = "buy_blades_of_attack"},
-
-        },
-      },
-      {
-        move = "buy_broadsword",
-        actions = {
-          {action = "buy_broadsword"},
-
-        },
-      },
-      {
-        move = "buy_recipe_lesser_crit",
-        actions = {
-          {action = "buy_recipe_lesser_crit"},
-
-        },
-      },
-      {
-        move = "deliver_items",
-        actions = {
-          {action = "deliver_items"},
-
-        },
-      },
-    },
-  },
-
-  {
     objective = "upgrade_skills",
     module = require(GetScriptDirectory() .."/utility/upgrade_skills"),
     moves = {
@@ -1148,118 +1015,6 @@ M.OBJECTIVES = {
         move = "heal_tango",
         actions = {
           {action = "heal_tango"},
-
-        },
-      },
-    },
-  },
-
-  {
-    objective = "buy_items",
-    module = require(GetScriptDirectory() .."/utility/buy_items"),
-    moves = {
-      {
-        move = "buy_flask",
-        actions = {
-          {action = "buy_flask"},
-
-        },
-      },
-      {
-        move = "buy_tpscroll",
-        actions = {
-          {action = "buy_tpscroll"},
-
-        },
-      },
-      {
-        move = "buy_recipe_wraith_band",
-        actions = {
-          {action = "buy_recipe_wraith_band"},
-
-        },
-      },
-      {
-        move = "buy_ring_of_protection",
-        actions = {
-          {action = "buy_ring_of_protection"},
-
-        },
-      },
-      {
-        move = "buy_sobi_mask",
-        actions = {
-          {action = "buy_sobi_mask"},
-
-        },
-      },
-      {
-        move = "buy_boots",
-        actions = {
-          {action = "buy_boots"},
-
-        },
-      },
-      {
-        move = "buy_gloves",
-        actions = {
-          {action = "buy_gloves"},
-
-        },
-      },
-      {
-        move = "buy_boots_of_elves",
-        actions = {
-          {action = "buy_boots_of_elves"},
-
-        },
-      },
-      {
-        move = "buy_lifesteal",
-        actions = {
-          {action = "buy_lifesteal"},
-
-        },
-      },
-      {
-        move = "buy_two_boots_of_elves",
-        actions = {
-          {action = "buy_two_boots_of_elves"},
-
-        },
-      },
-      {
-        move = "buy_ogre_axe",
-        actions = {
-          {action = "buy_ogre_axe"},
-
-        },
-      },
-      {
-        move = "buy_blades_of_attack",
-        actions = {
-          {action = "buy_blades_of_attack"},
-
-        },
-      },
-      {
-        move = "buy_broadsword",
-        actions = {
-          {action = "buy_broadsword"},
-
-        },
-      },
-      {
-        move = "buy_recipe_lesser_crit",
-        actions = {
-          {action = "buy_recipe_lesser_crit"},
-
-        },
-      },
-      {
-        move = "deliver_items",
-        actions = {
-          {action = "deliver_items"},
 
         },
       },
