@@ -361,6 +361,13 @@ M.OBJECTIVES = {
 
         },
       },
+      {
+        move = "kill_enemy_creep",
+        actions = {
+          {action = "kill_enemy_creep"},
+
+        },
+      },
     },
   },
 
@@ -718,6 +725,13 @@ M.OBJECTIVES = {
         move = "move_enemy_hero",
         actions = {
           {action = "move_enemy_hero"},
+
+        },
+      },
+      {
+        move = "kill_enemy_creep",
+        actions = {
+          {action = "kill_enemy_creep"},
 
         },
       },

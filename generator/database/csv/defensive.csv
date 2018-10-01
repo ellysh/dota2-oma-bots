@@ -11,6 +11,7 @@ attack_with_mom;use_mom;use_mom
 ;attack_enemy_hero;attack_enemy_hero
 ;;stop_attack
 ;move_enemy_hero;move_enemy_hero
+;kill_enemy_creep;kill_enemy_creep
 ;;
 defend_tower;use_silence;use_silence
 ;attack_enemy_creep;attack_enemy_creep

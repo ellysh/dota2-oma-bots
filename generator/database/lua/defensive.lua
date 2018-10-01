@@ -85,6 +85,13 @@ M.OBJECTIVES = {
 
         },
       },
+      {
+        move = "kill_enemy_creep",
+        actions = {
+          {action = "kill_enemy_creep"},
+
+        },
+      },
     },
   },
 

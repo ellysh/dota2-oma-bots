@@ -57,6 +57,11 @@ local function DoesUnitHasAdvantage(unit_data, target_data)
                    unit_data.attack_range,
                    target_data.attack_range,
                    100)
+
+              or algorithms.HasModifier(
+                   unit_data,
+                   "modifier_item_mask_of_madness_berserk")
+
               or (algorithms.IsItemPresent(
                     unit_data,
                     "item_mask_of_madness")

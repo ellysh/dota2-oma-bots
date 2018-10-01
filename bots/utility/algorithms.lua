@@ -23,6 +23,13 @@ function M.GetBotData()
   return all_units.GetUnitData(GetBot())
 end
 
+function M.HasModifier(unit_data, modifier_name)
+  local unit = all_units.GetUnit(unit_data)
+
+  return not unit:IsNull()
+         and unit:HasModifier(modifier_name)
+end
+
 function M.GetItem(unit_data, item_name)
   return functions.GetElementWith(
     unit_data.items,
