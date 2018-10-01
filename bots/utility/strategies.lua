@@ -98,10 +98,20 @@ function M.pre_offensive()
   return DoesCreepMeet()
          and (env.ENEMY_HERO_DATA == nil
               or env.IS_ENEMY_HERO_LOW_HP
+
               or (DoesUnitHasAdvantage(env.BOT_DATA, env.ENEMY_HERO_DATA)
                   and not DoesUnitHasAdvantage(
                             env.ENEMY_HERO_DATA,
-                            env.BOT_DATA)))
+                            env.BOT_DATA))
+
+              or (env.ENEMY_TOWER_DATA ~= nil
+                  and functions.GetUnitDistance(
+                        env.BOT_DATA,
+                        env.ENEMY_TOWER_DATA)
+                      <= algorithms.GetAttackRange(
+                           env.BOT_DATA,
+                           env.ENEMY_TOWER_DATA,
+                           false)))
 end
 
 ---------------------------------
