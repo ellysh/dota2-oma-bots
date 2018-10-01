@@ -5,6 +5,13 @@ swap_items;swap_flask_tp;swap_flask_tp
 ;swap_lesser_crit_tp;swap_lesser_crit_tp
 ;put_item_in_inventory;put_item_in_inventory
 ;;
+upgrade_skills;upgrade;upgrade
+;;
+attack_with_mom;use_mom;use_mom
+;attack_enemy_hero;attack_enemy_hero
+;;stop_attack
+;move_enemy_hero;move_enemy_hero
+;;
 defend_tower;use_silence;use_silence
 ;attack_enemy_creep;attack_enemy_creep
 ;;stop_attack
@@ -16,8 +23,6 @@ defend_tower;use_silence;use_silence
 evasion;use_silence;use_silence
 ;move_safe_recovery;move_safe_recovery
 ;move_safe_evasion;move_safe_evasion
-;;
-upgrade_skills;upgrade;upgrade
 ;;
 farm;lasthit_enemy_creep;lasthit_enemy_creep
 ;;stop_attack

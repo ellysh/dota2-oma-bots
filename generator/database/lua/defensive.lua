@@ -46,6 +46,49 @@ M.OBJECTIVES = {
   },
 
   {
+    objective = "upgrade_skills",
+    module = require(GetScriptDirectory() .."/utility/upgrade_skills"),
+    moves = {
+      {
+        move = "upgrade",
+        actions = {
+          {action = "upgrade"},
+
+        },
+      },
+    },
+  },
+
+  {
+    objective = "attack_with_mom",
+    module = require(GetScriptDirectory() .."/utility/attack_with_mom"),
+    moves = {
+      {
+        move = "use_mom",
+        actions = {
+          {action = "use_mom"},
+
+        },
+      },
+      {
+        move = "attack_enemy_hero",
+        actions = {
+          {action = "attack_enemy_hero"},
+          {action = "stop_attack"},
+
+        },
+      },
+      {
+        move = "move_enemy_hero",
+        actions = {
+          {action = "move_enemy_hero"},
+
+        },
+      },
+    },
+  },
+
+  {
     objective = "defend_tower",
     module = require(GetScriptDirectory() .."/utility/defend_tower"),
     moves = {
@@ -105,20 +148,6 @@ M.OBJECTIVES = {
         move = "move_safe_evasion",
         actions = {
           {action = "move_safe_evasion"},
-
-        },
-      },
-    },
-  },
-
-  {
-    objective = "upgrade_skills",
-    module = require(GetScriptDirectory() .."/utility/upgrade_skills"),
-    moves = {
-      {
-        move = "upgrade",
-        actions = {
-          {action = "upgrade"},
 
         },
       },
