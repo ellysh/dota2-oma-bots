@@ -37,7 +37,7 @@ end
 
 function M.pre_heal_flask()
   return algorithms.IsItemCastable(env.BOT_DATA, "item_flask")
-         and not env.BOT:HasModifier("modifier_flask_healing")
+         and not env.BOT_DATA.is_flask_healing
 
          and (env.IS_BOT_LOW_HP
               or (420 < (env.BOT_DATA.max_health - env.BOT_DATA.health)
@@ -46,7 +46,8 @@ function M.pre_heal_flask()
                         env.BOT_DATA.max_health)
                       <= constants.UNIT_HALF_HEALTH_LEVEL))
 
-         and not env.BOT:HasModifier(
+         and not algorithms.HasModifier(
+                   env.BOT_DATA,
                    "modifier_drow_ranger_frost_arrows_slow")
          and constants.BASE_RADIUS
              < functions.GetDistance(
@@ -91,7 +92,7 @@ function M.pre_heal_tango()
   local tree = env.BOT_DATA.nearby_trees[1]
 
   return algorithms.IsItemCastable(env.BOT_DATA, "item_tango")
-         and not env.BOT:HasModifier("modifier_tango_heal")
+         and not env.BOT_DATA.is_healing
 
          and not (env.IS_BOT_LOW_HP
                   and algorithms.IsItemCastable(

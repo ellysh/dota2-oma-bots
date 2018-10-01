@@ -37,7 +37,10 @@ end
 ---------------------------------
 
 function M.pre_restore_hp_on_base()
-  return env.BOT:HasModifier("modifier_fountain_aura_buff")
+  return algorithms.HasModifier(
+           env.BOT_DATA,
+           "modifier_fountain_aura_buff")
+
          and (functions.GetRate(env.BOT_DATA.health, env.BOT_DATA.max_health)
               < constants.UNIT_FOUNTAIN_MAX_HEALTH
               or functions.GetRate(env.BOT_DATA.mana, env.BOT_DATA.max_mana)
@@ -59,7 +62,9 @@ function M.move_base()
 
   if functions.GetDistance(env.FOUNTAIN_SPOT, env.BOT_DATA.location)
      < constants.BASE_RADIUS
-     and not env.BOT:HasModifier("modifier_fountain_aura_buff") then
+     and not algorithms.HasModifier(
+               env.BOT_DATA,
+               "modifier_fountain_aura_buff") then
 
     action_timing.SetNextActionDelay(1.5)
   else

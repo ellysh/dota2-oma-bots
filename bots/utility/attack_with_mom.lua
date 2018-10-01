@@ -41,7 +41,8 @@ end
 function M.pre_attack_enemy_hero()
   return moves.pre_attack_enemy_hero()
 
-         and env.BOT:HasModifier(
+         and algorithms.HasModifier(
+               env.BOT_DATA,
                "modifier_item_mask_of_madness_berserk")
 
          and not map.IsUnitInSpot(
@@ -66,7 +67,8 @@ function M.pre_move_enemy_hero()
 
          and env.ENEMY_HERO_DATA.is_visible
 
-         and env.BOT:HasModifier(
+         and algorithms.HasModifier(
+               env.BOT_DATA,
                "modifier_item_mask_of_madness_berserk")
 end
 
@@ -84,6 +86,11 @@ function M.pre_kill_enemy_creep()
                   nil)
 
   return creep ~= nil
+
+         and algorithms.HasModifier(
+               env.BOT_DATA,
+               "modifier_item_mask_of_madness_berserk")
+
          and not algorithms.DoesTowerProtectUnit(creep)
 end
 
