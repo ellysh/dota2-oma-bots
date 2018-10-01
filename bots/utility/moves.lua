@@ -93,8 +93,8 @@ function M.pre_attack_enemy_hero()
                    env.ENEMY_HERO_DATA))
 end
 
-function M.attack_enemy_hero()
-  algorithms.AttackUnit(env.BOT_DATA, env.ENEMY_HERO_DATA, true)
+function M.attack_enemy_hero(is_frost_arrow)
+  algorithms.AttackUnit(env.BOT_DATA, env.ENEMY_HERO_DATA, is_frost_arrow)
 end
 
 ---------------------------------

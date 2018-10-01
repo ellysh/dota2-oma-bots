@@ -116,7 +116,7 @@ function M.pre_attack_enemy_hero()
 end
 
 function M.attack_enemy_hero()
-  moves.attack_enemy_hero()
+  moves.attack_enemy_hero(true)
 end
 
 --------------------------------
