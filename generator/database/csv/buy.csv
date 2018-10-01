@@ -4,13 +4,14 @@ buy_items;buy_tango;buy_tango
 ;buy_tpscroll;buy_tpscroll
 ;"-- Ring of Aquila";
 ;buy_ring_of_protection;buy_ring_of_protection
-;"-- Power Treads";
 ;buy_sobi_mask;buy_sobi_mask
+;"-- Power Treads";
 ;buy_boots;buy_boots
 ;buy_gloves;buy_gloves
 ;buy_boots_of_elves;buy_boots_of_elves
-;"-- Morbid Mask";
+;"-- Mask of Madness";
 ;buy_lifesteal;buy_lifesteal
+;buy_quarterstaff;buy_quarterstaff
 ;"-- Dragon Lance";
 ;buy_two_boots_of_elves;buy_two_boots_of_elves
 ;buy_ogre_axe;buy_ogre_axe

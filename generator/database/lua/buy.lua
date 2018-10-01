@@ -71,6 +71,13 @@ M.OBJECTIVES = {
         },
       },
       {
+        move = "buy_quarterstaff",
+        actions = {
+          {action = "buy_quarterstaff"},
+
+        },
+      },
+      {
         move = "buy_two_boots_of_elves",
         actions = {
           {action = "buy_two_boots_of_elves"},

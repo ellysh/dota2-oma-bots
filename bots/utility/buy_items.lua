@@ -59,6 +59,7 @@ end
 function M.pre_buy_tango()
   return not algorithms.DoesBotOrCourierHaveItem("item_tango")
          and env.BOT_DATA.level == 1
+         and GetItemCost("item_tango") <= env.BOT_DATA.gold
 end
 
 function M.buy_tango()
@@ -81,6 +82,8 @@ end
 function M.pre_buy_ring_of_protection()
   return pre_buy_item("item_ring_of_protection")
 
+         and algorithms.DoesBotOrCourierHaveItem("item_power_treads")
+
          and not algorithms.DoesBotOrCourierHaveItem(
                    "item_ring_of_basilius")
 
@@ -96,8 +99,13 @@ end
 
 function M.pre_buy_sobi_mask()
   return pre_buy_item("item_sobi_mask")
+
+         and algorithms.DoesBotOrCourierHaveItem(
+               "item_ring_of_protection")
+
          and not algorithms.DoesBotOrCourierHaveItem(
                    "item_ring_of_basilius")
+
          and not algorithms.DoesBotOrCourierHaveItem(
                    "item_ring_of_aquila")
 end
@@ -122,8 +130,10 @@ end
 
 function M.pre_buy_gloves()
   return pre_buy_item("item_gloves")
-         and not algorithms.DoesBotOrCourierHaveItem(
-                   "item_power_treads")
+
+         and algorithms.DoesBotOrCourierHaveItem("item_boots")
+
+         and not algorithms.DoesBotOrCourierHaveItem("item_power_treads")
 end
 
 function M.buy_gloves()
@@ -134,10 +144,8 @@ end
 
 function M.pre_buy_boots_of_elves()
   return pre_buy_item("item_boots_of_elves")
-         and algorithms.DoesBotOrCourierHaveItem("item_boots")
-         and algorithms.DoesBotOrCourierHaveItem("item_gloves")
-         and not algorithms.DoesBotOrCourierHaveItem(
-                   "item_power_treads")
+         and algorithms.DoesBotOrCourierHaveItem("item_mask_of_madness")
+         and not algorithms.DoesBotOrCourierHaveItem("item_power_treads")
 end
 
 function M.buy_boots_of_elves()
@@ -148,7 +156,9 @@ end
 
 function M.pre_buy_lifesteal()
   return pre_buy_item("item_lifesteal")
-         and algorithms.DoesBotOrCourierHaveItem("item_power_treads")
+         and algorithms.DoesBotOrCourierHaveItem("item_gloves")
+         and not algorithms.DoesBotOrCourierHaveItem(
+                   "item_mask_of_madness")
 end
 
 function M.buy_lifesteal()
@@ -157,8 +167,21 @@ end
 
 ---------------------------------
 
+function M.pre_buy_quarterstaff()
+  return pre_buy_item("item_quarterstaff")
+         and algorithms.DoesBotOrCourierHaveItem("item_lifesteal")
+         and not algorithms.DoesBotOrCourierHaveItem(
+                   "item_mask_of_madness")
+end
+
+function M.buy_quarterstaff()
+  algorithms.BuyItem("item_quarterstaff")
+end
+
+---------------------------------
+
 function M.pre_buy_two_boots_of_elves()
-  return algorithms.DoesBotOrCourierHaveItem("item_lifesteal")
+  return algorithms.DoesBotOrCourierHaveItem("item_ring_of_aquila")
          and (2 * GetItemCost("item_boots_of_elves")) <= env.BOT_DATA.gold
          and not algorithms.DoesBotOrCourierHaveItem(
                    "item_boots_of_elves")
@@ -174,10 +197,10 @@ end
 ---------------------------------
 
 function M.pre_buy_ogre_axe()
-  return algorithms.DoesBotOrCourierHaveItem("item_lifesteal")
-         and pre_buy_item("item_ogre_axe")
-         and not algorithms.DoesBotOrCourierHaveItem(
-                   "item_dragon_lance")
+  return pre_buy_item("item_ogre_axe")
+         and algorithms.DoesBotOrCourierHaveItem("item_boots_of_elves")
+         and algorithms.DoesBotOrCourierHaveItem("item_power_treads")
+         and not algorithms.DoesBotOrCourierHaveItem("item_dragon_lance")
 end
 
 function M.buy_ogre_axe()
@@ -188,10 +211,8 @@ end
 
 function M.pre_buy_blades_of_attack()
   return pre_buy_item("item_blades_of_attack")
-         and not algorithms.DoesBotOrCourierHaveItem(
-                   "item_lesser_crit")
-         and algorithms.DoesBotOrCourierHaveItem(
-               "item_dragon_lance")
+         and algorithms.DoesBotOrCourierHaveItem("item_dragon_lance")
+         and not algorithms.DoesBotOrCourierHaveItem("item_lesser_crit")
 end
 
 function M.buy_blades_of_attack()
@@ -202,10 +223,8 @@ end
 
 function M.pre_buy_broadsword()
   return pre_buy_item("item_broadsword")
-         and not algorithms.DoesBotOrCourierHaveItem(
-                   "item_lesser_crit")
-         and algorithms.DoesBotOrCourierHaveItem(
-               "item_dragon_lance")
+         and algorithms.DoesBotOrCourierHaveItem("item_blades_of_attack")
+         and not algorithms.DoesBotOrCourierHaveItem("item_lesser_crit")
 end
 
 function M.buy_broadsword()
@@ -216,10 +235,8 @@ end
 
 function M.pre_buy_recipe_lesser_crit()
   return pre_buy_item("item_recipe_lesser_crit")
-         and not algorithms.DoesBotOrCourierHaveItem(
-                   "item_lesser_crit")
-         and algorithms.DoesBotOrCourierHaveItem(
-               "item_dragon_lance")
+         and algorithms.DoesBotOrCourierHaveItem("item_broadsword")
+         and not algorithms.DoesBotOrCourierHaveItem("item_lesser_crit")
 end
 
 function M.buy_recipe_lesser_crit()
