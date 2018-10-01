@@ -64,12 +64,39 @@ end
 function M.pre_move_enemy_hero()
   return moves.pre_move_enemy_hero()
 
+         and env.ENEMY_HERO_DATA.is_visible
+
          and env.BOT:HasModifier(
                "modifier_item_mask_of_madness_berserk")
 end
 
 function M.move_enemy_hero()
   moves.move_enemy_hero()
+end
+
+--------------------------------
+
+function M.pre_kill_enemy_creep()
+  local creep = algorithms.GetCreepWith(
+                  env.BOT_DATA,
+                  constants.SIDE["ENEMY"],
+                  algorithms.CompareMinHealth,
+                  nil)
+
+  return creep ~= nil
+         and env.ENEMY_HERO_DATA == nil
+         and env.ALLY_CREEP_FRONT_DATA ~= nil
+         and not algorithms.DoesTowerProtectUnit(creep)
+end
+
+function M.kill_enemy_creep()
+  local creep = algorithms.GetCreepWith(
+                  env.BOT_DATA,
+                  constants.SIDE["ENEMY"],
+                  algorithms.CompareMinHealth,
+                  nil)
+
+  algorithms.AttackUnit(env.BOT_DATA, creep, false)
 end
 
 ---------------------------------
