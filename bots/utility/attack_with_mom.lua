@@ -21,18 +21,14 @@ function M.pre_attack_with_mom()
   return algorithms.IsBotAlive()
          and not env.IS_BOT_LOW_HP
          and algorithms.DoesBotOrCourierHaveItem("item_mask_of_madness")
-         and (algorithms.IsItemCastable(
-                env.BOT_DATA,
-                "item_mask_of_madness")
-              or env.BOT:HasModifier(
-                   "modifier_item_mask_of_madness_berserk"))
 end
 
 ---------------------------------
 
 function M.pre_use_mom()
   return algorithms.IsItemCastable(env.BOT_DATA, "item_mask_of_madness")
-         and M.pre_attack_enemy_hero()
+         and env.ENEMY_HERO_DISTANCE
+             <= constants.MOM_USAGE_FROM_ENEMY_HERO_DISTANCE
 end
 
 function M.use_mom()
@@ -45,8 +41,8 @@ end
 function M.pre_attack_enemy_hero()
   return moves.pre_attack_enemy_hero()
 
-         and env.ENEMY_HERO_DISTANCE
-             <= constants.MOM_USAGE_FROM_ENEMY_HERO_DISTANCE
+         and env.BOT:HasModifier(
+               "modifier_item_mask_of_madness_berserk")
 
          and not map.IsUnitInSpot(
                    env.ENEMY_HERO_DATA,
@@ -54,7 +50,7 @@ function M.pre_attack_enemy_hero()
 end
 
 function M.attack_enemy_hero()
-  moves.attack_enemy_hero(false)
+  moves.attack_enemy_hero()
 end
 
 --------------------------------
@@ -67,6 +63,9 @@ end
 
 function M.pre_move_enemy_hero()
   return env.ENEMY_HERO_DATA ~= nil
+
+         and env.BOT:HasModifier(
+               "modifier_item_mask_of_madness_berserk")
 
          and env.ENEMY_HERO_DISTANCE
              <= algorithms.GetAttackRange(
