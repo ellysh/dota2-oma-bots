@@ -5,6 +5,11 @@ swap_items;swap_flask_tp;swap_flask_tp
 ;;
 upgrade_skills;upgrade;upgrade
 ;;
+attack_with_mom;use_mom;use_mom
+;attack_enemy_hero;attack_enemy_hero
+;;stop_attack
+;move_enemy_hero;move_enemy_hero
+;;
 pursuit_enemy_hero;use_silence;use_silence
 ;attack_enemy_hero;attack_enemy_hero
 ;;stop_attack

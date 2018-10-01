@@ -46,6 +46,35 @@ M.OBJECTIVES = {
   },
 
   {
+    objective = "attack_with_mom",
+    module = require(GetScriptDirectory() .."/utility/attack_with_mom"),
+    moves = {
+      {
+        move = "use_mom",
+        actions = {
+          {action = "use_mom"},
+
+        },
+      },
+      {
+        move = "attack_enemy_hero",
+        actions = {
+          {action = "attack_enemy_hero"},
+          {action = "stop_attack"},
+
+        },
+      },
+      {
+        move = "move_enemy_hero",
+        actions = {
+          {action = "move_enemy_hero"},
+
+        },
+      },
+    },
+  },
+
+  {
     objective = "pursuit_enemy_hero",
     module = require(GetScriptDirectory() .."/utility/pursuit_enemy_hero"),
     moves = {

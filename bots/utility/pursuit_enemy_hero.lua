@@ -66,14 +66,12 @@ end
 function M.pre_move_enemy_hero()
   return env.ENEMY_HERO_DATA ~= nil
 
-         and functions.GetUnitDistance(
-                env.BOT_DATA,
-                env.ENEMY_HERO_DATA)
-              <= algorithms.GetAttackRange(
-                   env.BOT_DATA,
-                   env.ENEMY_HERO_DATA,
-                   true)
-                 + constants.MAX_PURSUIT_INC_DISTANCE
+         and env.ENEMY_HERO_DISTANCE
+             <= algorithms.GetAttackRange(
+                  env.BOT_DATA,
+                  env.ENEMY_HERO_DATA,
+                  true)
+                + constants.MAX_PURSUIT_INC_DISTANCE
 end
 
 function M.move_enemy_hero()
