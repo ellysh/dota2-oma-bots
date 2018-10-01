@@ -56,7 +56,13 @@ local function DoesUnitHasAdvantage(unit_data, target_data)
               or algorithms.IsBiggerThan(
                    unit_data.attack_range,
                    target_data.attack_range,
-                   100))
+                   100)
+              or (algorithms.IsItemPresent(
+                    unit_data,
+                    "item_mask_of_madness")
+                  and not algorithms.IsItemPresent(
+                            target_data,
+                            "item_mask_of_madness")))
 end
 
 local function IsEnemyUnitOnHighGround()
