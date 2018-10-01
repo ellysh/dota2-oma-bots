@@ -79,7 +79,11 @@ end
 function M.pre_defensive()
   return DoesCreepMeet()
          and not env.IS_ENEMY_HERO_LOW_HP
-         and (DoesUnitHasAdvantage(env.ENEMY_HERO_DATA, env.BOT_DATA)
+         and ((DoesUnitHasAdvantage(env.ENEMY_HERO_DATA, env.BOT_DATA)
+              and not DoesUnitHasAdvantage(
+                        env.BOT_DATA,
+                        env.ENEMY_HERO_DATA))
+
               or IsEnemyUnitOnHighGround())
 end
 
@@ -89,7 +93,10 @@ function M.pre_offensive()
   return DoesCreepMeet()
          and (env.ENEMY_HERO_DATA == nil
               or env.IS_ENEMY_HERO_LOW_HP
-              or DoesUnitHasAdvantage(env.BOT_DATA, env.ENEMY_HERO_DATA))
+              or (DoesUnitHasAdvantage(env.BOT_DATA, env.ENEMY_HERO_DATA)
+                  and not DoesUnitHasAdvantage(
+                            env.ENEMY_HERO_DATA,
+                            env.BOT_DATA)))
 end
 
 ---------------------------------
