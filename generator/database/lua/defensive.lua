@@ -74,14 +74,6 @@ M.OBJECTIVES = {
         move = "attack_enemy_hero",
         actions = {
           {action = "attack_enemy_hero"},
-          {action = "stop_attack"},
-
-        },
-      },
-      {
-        move = "move_enemy_hero",
-        actions = {
-          {action = "move_enemy_hero"},
 
         },
       },

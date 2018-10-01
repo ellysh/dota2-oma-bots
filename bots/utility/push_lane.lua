@@ -90,6 +90,7 @@ function M.kill_enemy_creep()
 end
 
 --------------------------------
+
 function M.pre_attack_enemy_tower()
   return env.ENEMY_TOWER_DATA ~= nil
          and env.ALLY_CREEP_FRONT_DATA ~= nil

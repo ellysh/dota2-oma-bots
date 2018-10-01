@@ -44,7 +44,6 @@ function M.pre_attack_enemy_hero()
                    constants.CREEP_MAX_AGRO_RADIUS)
               or functions.GetDelta(env.LAST_AGGRO_CONTROL, GameTime())
                  < constants.CREEPS_AGGRO_COOLDOWN)
-
 end
 
 function M.attack_enemy_hero()

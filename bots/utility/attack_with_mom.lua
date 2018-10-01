@@ -1,6 +1,9 @@
 local constants = require(
   GetScriptDirectory() .."/utility/constants")
 
+local functions = require(
+  GetScriptDirectory() .."/utility/functions")
+
 local algorithms = require(
   GetScriptDirectory() .."/utility/algorithms")
 
@@ -27,8 +30,19 @@ end
 
 function M.pre_use_mom()
   return algorithms.IsItemCastable(env.BOT_DATA, "item_mask_of_madness")
-         and env.ENEMY_HERO_DISTANCE
-             <= constants.MOM_USAGE_FROM_ENEMY_HERO_DISTANCE
+         and (env.ENEMY_HERO_DATA ~= nil
+              and env.ENEMY_HERO_DATA.is_visible
+              and env.ENEMY_HERO_DISTANCE
+                  <= constants.MOM_USAGE_FROM_ENEMY_HERO_DISTANCE
+
+              or (env.ENEMY_TOWER_DATA ~= nil
+                  and functions.GetUnitDistance(
+                        env.BOT_DATA,
+                        env.ENEMY_TOWER_DATA)
+                      <= algorithms.GetAttackRange(
+                           env.BOT_DATA,
+                           env.ENEMY_TOWER_DATA,
+                           false)))
 end
 
 function M.use_mom()
@@ -56,24 +70,22 @@ end
 
 --------------------------------
 
-function M.stop_attack()
-  moves.stop_attack()
-end
-
----------------------------------
-
-function M.pre_move_enemy_hero()
-  return moves.pre_move_enemy_hero()
-
-         and env.ENEMY_HERO_DATA.is_visible
-
+function M.pre_attack_enemy_tower()
+  return env.ENEMY_TOWER_DATA ~= nil
+         and functions.GetUnitDistance(
+               env.BOT_DATA,
+               env.ENEMY_TOWER_DATA)
+             <= algorithms.GetAttackRange(
+                  env.BOT_DATA,
+                  env.ENEMY_TOWER_DATA,
+                  false)
          and algorithms.HasModifier(
                env.BOT_DATA,
                "modifier_item_mask_of_madness_berserk")
 end
 
-function M.move_enemy_hero()
-  moves.move_enemy_hero()
+function M.attack_enemy_tower()
+  algorithms.AttackUnit(env.BOT_DATA, env.ENEMY_TOWER_DATA, false)
 end
 
 --------------------------------
