@@ -62,21 +62,14 @@ end
 ---------------------------------
 
 function M.pre_move_enemy_hero()
-  return env.ENEMY_HERO_DATA ~= nil
+  return moves.pre_move_enemy_hero()
 
          and env.BOT:HasModifier(
                "modifier_item_mask_of_madness_berserk")
-
-         and env.ENEMY_HERO_DISTANCE
-             <= algorithms.GetAttackRange(
-                  env.BOT_DATA,
-                  env.ENEMY_HERO_DATA,
-                  true)
-                + constants.MAX_PURSUIT_INC_DISTANCE
 end
 
 function M.move_enemy_hero()
-  env.BOT:Action_MoveDirectly(env.ENEMY_HERO_DATA.location)
+  moves.move_enemy_hero()
 end
 
 ---------------------------------

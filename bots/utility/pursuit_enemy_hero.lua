@@ -64,18 +64,11 @@ end
 ---------------------------------
 
 function M.pre_move_enemy_hero()
-  return env.ENEMY_HERO_DATA ~= nil
-
-         and env.ENEMY_HERO_DISTANCE
-             <= algorithms.GetAttackRange(
-                  env.BOT_DATA,
-                  env.ENEMY_HERO_DATA,
-                  true)
-                + constants.MAX_PURSUIT_INC_DISTANCE
+  return moves.pre_move_enemy_hero()
 end
 
 function M.move_enemy_hero()
-  env.BOT:Action_MoveDirectly(env.ENEMY_HERO_DATA.location)
+  moves.move_enemy_hero()
 end
 
 ---------------------------------
