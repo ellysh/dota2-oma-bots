@@ -39,6 +39,8 @@ end
 function M.pre_move_start_position()
   return env.ALLY_CREEP_FRONT_DATA == nil
 
+         and env.ENEMY_CREEP_BACK_DATA == nil
+
          and not map.IsUnitInSpot(
                    env.BOT_DATA,
                    GetBodyBlockSpot())

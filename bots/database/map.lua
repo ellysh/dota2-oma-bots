@@ -18,8 +18,8 @@ M.MAP = {
     tp_tower_tier_1 = Vector(-1181, -1741, 100),
     first_body_block = Vector(-3709, -3307, 100),
     second_body_block = Vector(-1478, -1274, 100),
-    tower_tier_1_rear = Vector(-2400, -2040, 500),
-    tower_tier_1_rear_safe = Vector(-2056, -1782, 450),
+    tower_tier_1_rear_deep = Vector(-2400, -2040, 500),
+    between_tier_1_tear_2 = Vector(-2562, -2062, 1030),
     river = Vector(-598, -472, 260),
   },
   [TEAM_DIRE] = {
@@ -38,8 +38,8 @@ M.MAP = {
     tp_tower_tier_1 = Vector(530, 1138, 100),
     first_body_block = Vector(3357, 2878, 100),
     second_body_block = Vector(573, 463, 100),
-    tower_tier_1_rear = Vector(1470, 1100, 450),
-    tower_tier_1_rear_safe = Vector(1273, 1029, 600),
+    tower_tier_1_rear_deep = Vector(1470, 1100, 450),
+    between_tier_1_tear_2 = Vector(1606, 1236, 1040),
     river = Vector(-437, -313, 250),
   },
   [TEAM_NEUTRAL] = {

@@ -13,6 +13,15 @@ local env = require(
 local moves = require(
   GetScriptDirectory() .."/utility/moves")
 
+local map = require(
+  GetScriptDirectory() .."/utility/map")
+
+local action_timing = require(
+  GetScriptDirectory() .."/utility/action_timing")
+
+local all_units = require(
+  GetScriptDirectory() .."/utility/all_units")
+
 local M = {}
 
 ---------------------------------
@@ -90,7 +99,25 @@ end
 ---------------------------------
 
 function M.pre_move_safe()
-  return not algorithms.IsUnitMoving(env.BOT_DATA)
+  return env.ALLY_CREEP_FRONT_DATA == nil
+         and constants.MAX_CREEPS_HP_PULL < env.ENEMY_CREEPS_HP
+         and ((env.ENEMY_CREEP_FRONT_DATA ~= nil
+
+               and (map.IsUnitInSpot(
+                      env.ENEMY_CREEP_FRONT_DATA,
+                      map.GetAllySpot("between_tier_1_tear_2"))
+
+                    or map.IsUnitInEnemyTowerAttackRange(
+                        env.ENEMY_CREEP_FRONT_DATA)))
+
+              or (env.ENEMY_CREEP_BACK_DATA ~= nil
+
+                  and (map.IsUnitInSpot(
+                         env.ENEMY_CREEP_BACK_DATA,
+                         map.GetAllySpot("between_tier_1_tear_2"))))
+
+                    or map.IsUnitInEnemyTowerAttackRange(
+                        env.ENEMY_CREEP_BACK_DATA))
 end
 
 function M.move_safe()
@@ -101,22 +128,40 @@ end
 
 ---------------------------------
 
+local function GetCreepAttackingBot()
+  local creeps = algorithms.GetEnemyCreeps(
+                   env.BOT_DATA,
+                   constants.MAX_UNIT_TARGET_RADIUS)
+
+  return functions.GetElementWith(
+    creeps,
+    algorithms.CompareMaxDamage,
+    function(unit_data)
+      return algorithms.IsUnitAttackTarget(
+               unit_data,
+               env.BOT_DATA)
+    end)
+end
+
 function M.pre_kill_enemy_creep()
-  local creep = GetCreepAttackingTower()
+  local target = GetCreepAttackingTower()
 
-  return creep ~= nil
+  if target == nil then
+    target = GetCreepAttackingBot()
+  end
 
-         and (env.ENEMY_HERO_DATA == nil
-              or not env.ENEMY_HERO_DATA.is_visible)
-
+  return target ~= nil
          and env.ALLY_CREEP_FRONT_DATA == nil
-         and env.ENEMY_CREEPS_HP < constants.MAX_CREEPS_HP_PULL
 end
 
 function M.kill_enemy_creep()
-  local creep = GetCreepAttackingTower()
+  local target = GetCreepAttackingTower()
 
-  algorithms.AttackUnit(env.BOT_DATA, creep, false)
+  if target == nil then
+    target = GetCreepAttackingBot()
+  end
+
+  algorithms.AttackUnit(env.BOT_DATA, target, false)
 end
 
 -- Provide an access to local functions for unit tests only

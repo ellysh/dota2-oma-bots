@@ -50,7 +50,7 @@ function M.pre_use_frost_arrow()
 
          and not map.IsUnitInSpot(
                    env.ENEMY_HERO_DATA,
-                   map.GetEnemySpot("tower_tier_1_rear"))
+                   map.GetEnemySpot("tower_tier_1_rear_deep"))
 
          and required_mana <= env.BOT_DATA.mana
 end
@@ -94,7 +94,7 @@ function M.pre_attack_enemy_hero()
 
          and not map.IsUnitInSpot(
                    env.ENEMY_HERO_DATA,
-                   map.GetEnemySpot("tower_tier_1_rear"))
+                   map.GetEnemySpot("tower_tier_1_rear_deep"))
 end
 
 function M.attack_enemy_hero()

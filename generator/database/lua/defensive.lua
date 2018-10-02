@@ -113,13 +113,6 @@ M.OBJECTIVES = {
     module = require(GetScriptDirectory() .."/utility/defend_tower"),
     moves = {
       {
-        move = "kill_enemy_creep",
-        actions = {
-          {action = "kill_enemy_creep"},
-
-        },
-      },
-      {
         move = "move_enemy_creep",
         actions = {
           {action = "move_enemy_creep"},
@@ -137,6 +130,13 @@ M.OBJECTIVES = {
         move = "move_safe",
         actions = {
           {action = "move_safe"},
+
+        },
+      },
+      {
+        move = "kill_enemy_creep",
+        actions = {
+          {action = "kill_enemy_creep"},
 
         },
       },

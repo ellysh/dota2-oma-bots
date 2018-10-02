@@ -19,8 +19,8 @@ xdotool key 'Return'
 xdotool type 'dota_create_item item_greater_crit'
 xdotool key 'Return'
 
-xdotool type 'dota_hero_level 15'
-xdotool key 'Return'
+#xdotool type 'dota_hero_level 15'
+#xdotool key 'Return'
 
 xdotool type 'dota_give_gold 99999'
 xdotool key 'Return'

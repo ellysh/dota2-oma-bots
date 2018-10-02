@@ -37,7 +37,7 @@ function M.pre_attack_enemy_hero()
 
          and not map.IsUnitInSpot(
                    env.ENEMY_HERO_DATA,
-                   map.GetEnemySpot("tower_tier_1_rear"))
+                   map.GetEnemySpot("tower_tier_1_rear_deep"))
 
          and (not algorithms.AreEnemyCreepsInRadius(
                    env.BOT_DATA,
