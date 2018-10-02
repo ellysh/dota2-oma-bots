@@ -368,6 +368,13 @@ M.OBJECTIVES = {
     module = require(GetScriptDirectory() .."/utility/attack_with_mom"),
     moves = {
       {
+        move = "use_frost_arrow",
+        actions = {
+          {action = "use_frost_arrow"},
+
+        },
+      },
+      {
         move = "use_mom",
         actions = {
           {action = "use_mom"},
@@ -740,6 +747,13 @@ M.OBJECTIVES = {
     objective = "attack_with_mom",
     module = require(GetScriptDirectory() .."/utility/attack_with_mom"),
     moves = {
+      {
+        move = "use_frost_arrow",
+        actions = {
+          {action = "use_frost_arrow"},
+
+        },
+      },
       {
         move = "use_mom",
         actions = {

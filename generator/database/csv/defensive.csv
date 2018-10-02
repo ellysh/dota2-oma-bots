@@ -9,7 +9,8 @@ item_recovery;heal_tango;heal_tango
 ;;
 upgrade_skills;upgrade;upgrade
 ;;
-attack_with_mom;use_mom;use_mom
+attack_with_mom;use_frost_arrow;use_frost_arrow
+;use_mom;use_mom
 ;attack_enemy_hero;attack_enemy_hero
 ;kill_enemy_creep;kill_enemy_creep
 ;;

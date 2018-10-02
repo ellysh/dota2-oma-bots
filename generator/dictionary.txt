@@ -81,6 +81,7 @@ turn
 turn_enemy_fountain
 upgrade
 upgrade_skills
+use_frost_arrow
 use_mom
 use_silence
 use_trueshot

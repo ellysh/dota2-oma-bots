@@ -28,6 +28,34 @@ end
 
 ---------------------------------
 
+function M.pre_use_frost_arrow()
+  local required_mana =
+    env.BOT:GetAbilityByName("drow_ranger_frost_arrows"):GetManaCost()
+    + algorithms.GetItem(env.BOT_DATA, "item_mask_of_madness"):GetManaCost()
+
+  return moves.pre_attack_enemy_hero()
+
+         and not algorithms.HasModifier(
+                   env.ENEMY_HERO_DATA,
+                   "modifier_drow_ranger_frost_arrows_slow")
+
+         and not algorithms.HasModifier(
+               env.BOT_DATA,
+               "modifier_item_mask_of_madness_berserk")
+
+         and not map.IsUnitInSpot(
+                   env.ENEMY_HERO_DATA,
+                   map.GetEnemySpot("tower_tier_1_rear"))
+
+         and required_mana <= env.BOT_DATA.mana
+end
+
+function M.use_frost_arrow()
+  moves.attack_enemy_hero()
+end
+
+---------------------------------
+
 function M.pre_use_mom()
   return algorithms.IsItemCastable(env.BOT_DATA, "item_mask_of_madness")
          and ((env.ENEMY_HERO_DATA ~= nil
