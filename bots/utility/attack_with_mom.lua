@@ -30,10 +30,10 @@ end
 
 function M.pre_use_mom()
   return algorithms.IsItemCastable(env.BOT_DATA, "item_mask_of_madness")
-         and (env.ENEMY_HERO_DATA ~= nil
-              and env.ENEMY_HERO_DATA.is_visible
-              and env.ENEMY_HERO_DISTANCE
-                  <= constants.MOM_USAGE_FROM_ENEMY_HERO_DISTANCE
+         and ((env.ENEMY_HERO_DATA ~= nil
+               and env.ENEMY_HERO_DATA.is_visible
+               and env.ENEMY_HERO_DISTANCE
+                   <= constants.MOM_USAGE_FROM_ENEMY_HERO_DISTANCE)
 
               or (env.ENEMY_TOWER_DATA ~= nil
                   and functions.GetUnitDistance(
