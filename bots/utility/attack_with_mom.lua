@@ -43,6 +43,11 @@ function M.pre_use_frost_arrow()
                env.BOT_DATA,
                "modifier_item_mask_of_madness_berserk")
 
+         and (env.ENEMY_HERO_DATA ~= nil
+               and env.ENEMY_HERO_DATA.is_visible
+               and env.ENEMY_HERO_DISTANCE
+                   <= constants.MOM_USAGE_FROM_ENEMY_HERO_DISTANCE)
+
          and not map.IsUnitInSpot(
                    env.ENEMY_HERO_DATA,
                    map.GetEnemySpot("tower_tier_1_rear"))
