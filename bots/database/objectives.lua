@@ -403,33 +403,30 @@ M.OBJECTIVES = {
     module = require(GetScriptDirectory() .."/utility/defend_tower"),
     moves = {
       {
-        move = "use_silence",
-        actions = {
-          {action = "use_silence"},
-
-        },
-      },
-      {
-        move = "attack_enemy_creep",
-        actions = {
-          {action = "attack_enemy_creep"},
-          {action = "stop_attack"},
-
-        },
-      },
-      {
         move = "kill_enemy_creep",
         actions = {
           {action = "kill_enemy_creep"},
-          {action = "stop_attack"},
 
         },
       },
       {
-        move = "attack_enemy_hero",
+        move = "move_enemy_creep",
         actions = {
-          {action = "attack_enemy_hero"},
-          {action = "stop_attack"},
+          {action = "move_enemy_creep"},
+
+        },
+      },
+      {
+        move = "pull_enemy_creep",
+        actions = {
+          {action = "pull_enemy_creep"},
+
+        },
+      },
+      {
+        move = "move_safe",
+        actions = {
+          {action = "move_safe"},
 
         },
       },

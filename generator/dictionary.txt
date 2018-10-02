@@ -55,6 +55,7 @@ lasthit_enemy_creep
 -- Morbid Mask
 move_and_block
 move_base
+move_enemy_creep
 move_enemy_hero
 move_safe
 move_safe_evasion
@@ -63,6 +64,7 @@ move_start_position
 positioning
 -- Power Treads
 prepare_for_match
+pull_enemy_creep
 pursuit_enemy_hero
 push_lane
 put_item_in_inventory

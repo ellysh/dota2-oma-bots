@@ -13,9 +13,6 @@ local env = require(
 local moves = require(
   GetScriptDirectory() .."/utility/moves")
 
-local map = require(
-  GetScriptDirectory() .."/utility/map")
-
 local M = {}
 
 ---------------------------------
@@ -45,87 +42,82 @@ local function GetCreepAttackingTower()
     end)
 end
 
-function M.pre_attack_enemy_creep()
+function M.pre_pull_enemy_creep()
   local creep = GetCreepAttackingTower()
 
   return creep ~= nil
-         and not env.IS_FOCUSED_BY_ENEMY_HERO
-         and not env.IS_FOCUSED_BY_UNKNOWN_UNIT
+         and env.ENEMY_HERO_DATA ~= nil
+         and env.ENEMY_HERO_DATA.is_visible
+         and env.ALLY_CREEP_FRONT_DATA == nil
+         and constants.MAX_CREEPS_HP_PULL < env.ENEMY_CREEPS_HP
+
+         and functions.GetUnitDistance(env.BOT_DATA, creep)
+             <= constants.CREEP_MAX_AGRO_RADIUS
+
+         and constants.CREEPS_AGGRO_COOLDOWN
+             <= functions.GetDelta(env.LAST_AGGRO_CONTROL, GameTime())
 end
 
-function M.attack_enemy_creep()
+function M.pull_enemy_creep()
+  env.BOT:Action_AttackUnit(all_units.GetUnit(env.ENEMY_HERO_DATA), true)
+
+  env.LAST_AGGRO_CONTROL = GameTime()
+end
+
+---------------------------------
+
+function M.pre_move_enemy_creep()
+  local creep = GetCreepAttackingTower()
+
+  return creep ~= nil
+         and env.ENEMY_HERO_DATA ~= nil
+         and env.ENEMY_HERO_DATA.is_visible
+         and env.ALLY_CREEP_FRONT_DATA == nil
+         and constants.MAX_CREEPS_HP_PULL < env.ENEMY_CREEPS_HP
+
+         and constants.CREEP_MAX_AGRO_RADIUS
+             < functions.GetUnitDistance(env.BOT_DATA, creep)
+end
+
+function M.move_enemy_creep()
+  local creep = GetCreepAttackingTower()
+
+  env.BOT:Action_MoveDirectly(creep.location)
+
+  action_timing.SetNextActionDelay(0.4)
+end
+
+---------------------------------
+
+function M.pre_move_safe()
+  return not algorithms.IsUnitMoving(env.BOT_DATA)
+end
+
+function M.move_safe()
+  env.BOT:Action_MoveDirectly(env.FOUNTAIN_SPOT)
+
+  action_timing.SetNextActionDelay(0.8)
+end
+
+---------------------------------
+
+function M.pre_kill_enemy_creep()
+  local creep = GetCreepAttackingTower()
+
+  return creep ~= nil
+
+         and (env.ENEMY_HERO_DATA == nil
+              or not env.ENEMY_HERO_DATA.is_visible)
+
+         and env.ALLY_CREEP_FRONT_DATA == nil
+         and env.ENEMY_CREEPS_HP < constants.MAX_CREEPS_HP_PULL
+end
+
+function M.kill_enemy_creep()
   local creep = GetCreepAttackingTower()
 
   algorithms.AttackUnit(env.BOT_DATA, creep, false)
 end
-
----------------------------------
-
-local function GetEnemyUnitInTowerAttackRange()
-  local creep = algorithms.GetCreepWith(
-           env.BOT_DATA,
-           constants.SIDE["ENEMY"],
-           algorithms.CompareMinHealth,
-           map.IsUnitInEnemyTowerAttackRange)
-
-  return algorithms.GetCreepWith(
-           env.BOT_DATA,
-           constants.SIDE["ENEMY"],
-           algorithms.CompareMinHealth,
-           map.IsUnitInEnemyTowerAttackRange)
-end
-
-function M.pre_kill_enemy_creep()
-  return constants.MAX_CREEPS_HP_DELTA
-         < (env.ENEMY_CREEPS_HP - env.ALLY_CREEPS_HP)
-
-         and (env.ENEMY_HERO_DATA == nil
-              or map.IsUnitInEnemyTowerAttackRange(env.ENEMY_HERO_DATA))
-
-         and GetEnemyUnitInTowerAttackRange() ~= nil
-end
-
-function M.kill_enemy_creep()
-  local creep = GetEnemyUnitInTowerAttackRange()
-
-  algorithms.AttackUnit(env.BOT_DATA, creep, false)
-end
-
----------------------------------
-
-function M.pre_use_silence()
-  return moves.pre_use_silence()
-         and env.ALLY_TOWER_DATA ~= nil
-         and algorithms.IsUnitAttackTarget(
-               env.ENEMY_HERO_DATA,
-               env.ALLY_TOWER_DATA)
-end
-
-function M.use_silence()
-  moves.use_silence()
-end
-
---------------------------------
-
-function M.pre_attack_enemy_hero()
-  return moves.pre_attack_enemy_hero()
-         and env.ALLY_TOWER_DATA ~= nil
-         and algorithms.IsUnitAttackTarget(
-               env.ENEMY_HERO_DATA,
-               env.ALLY_TOWER_DATA)
-end
-
-function M.attack_enemy_hero()
-  moves.attack_enemy_hero()
-end
-
---------------------------------
-
-function M.stop_attack()
-  moves.stop_attack()
-end
-
----------------------------------
 
 -- Provide an access to local functions for unit tests only
 
