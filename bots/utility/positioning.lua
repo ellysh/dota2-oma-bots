@@ -88,10 +88,6 @@ function M.pre_increase_creeps_distance()
                   < GetBaseCreepDistance()))
 
          and last_hit_creep == nil
-
-         and not map.IsUnitInSpot(
-                   env.BOT_DATA,
-                   map.GetAllySpot("tower_tier_1_rear_safe"))
 end
 
 function M.increase_creeps_distance()
