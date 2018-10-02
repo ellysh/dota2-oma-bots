@@ -5,6 +5,7 @@ attack_ally_creep
 attack_enemy_creep
 attack_enemy_hero
 attack_enemy_tower
+attack_with_better_position
 attack_with_mom
 base_recovery
 body_block
