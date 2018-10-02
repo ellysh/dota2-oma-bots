@@ -34,11 +34,6 @@ end
 function M.pre_attack_enemy_hero()
   return moves.pre_attack_enemy_hero()
 
-         and not algorithms.IsBiggerThan(
-                   env.ENEMY_HERO_DATA.health,
-                   env.BOT_DATA.health,
-                   150)
-
          and ((IsUnitPositionBetter(env.BOT_DATA, env.ENEMY_HERO_DATA)
                and not IsUnitIncomingDamageMore(
                          env.BOT_DATA,
