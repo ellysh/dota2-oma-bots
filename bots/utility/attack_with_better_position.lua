@@ -19,8 +19,8 @@ end
 ---------------------------------
 
 local function IsUnitPositionBetter(unit_data, target_data)
-  return GetHeightLevel(target_data.location)
-         < GetHeightLevel(unit_data.location)
+  return GetHeightLevel(unit_data.location)
+         < GetHeightLevel(target_data.location)
 end
 
 local function IsUnitIncomingDamageMore(unit_data, target_data)

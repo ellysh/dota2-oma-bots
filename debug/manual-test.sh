@@ -49,3 +49,6 @@ xdotool key 'Return'
 
 xdotool type 'dota_bot_give_gold 1200'
 xdotool key 'Return'
+
+xdotool type 'host_timescale 0'
+xdotool key 'Return'
