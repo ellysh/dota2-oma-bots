@@ -28,6 +28,7 @@ function M.pre_pursuit_enemy_hero()
          and not env.IS_BOT_LOW_HP
          and algorithms.HasLevelForAggression(env.BOT_DATA)
          and algorithms.IsBotAlive()
+         and algorithms.IsItemCastable(env.BOT_DATA, "item_flask")
 
          and (env.IS_ENEMY_HERO_LOW_HP
 
