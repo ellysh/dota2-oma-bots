@@ -154,23 +154,17 @@ function M.GetTotalHealth(unit_list)
   return total_health
 end
 
-function M.GetEnemyHero(unit_data, radius)
-  local heroes = M.GetEnemyHeroes(
-    unit_data,
-    radius)
-
-  return functions.GetElementWith(
-    heroes,
-    M.CompareMinHealth,
-    function(hero_data)
-      return M.IsAttackTargetable(hero_data)
-    end)
-end
-
 function M.GetLastSeenEnemyHero(unit_data)
   local heroes = all_units.GetEnemyHeroesData(unit_data)
 
-  return functions.GetElementWith(heroes, M.CompareMaxTimestamp)
+  return functions.GetElementWith(
+           heroes,
+           M.CompareMaxTimestamp,
+           function(unit_data)
+             return not map.IsUnitInSpot(
+                          unit_data,
+                          map.GetUnitAllySpot(unit_data, "fountain"))
+           end)
 end
 
 function M.AreUnitsInRadius(unit_data, radius, get_function)
