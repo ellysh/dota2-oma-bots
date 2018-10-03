@@ -110,9 +110,8 @@ function M.pre_move_safe()
          and constants.MAX_CREEPS_HP_PULL < env.ENEMY_CREEPS_HP
          and (closest_enemy_creep ~= nil
 
-               and (map.IsUnitInSpot(
-                      closest_enemy_creep,
-                      map.GetAllySpot("between_tier_1_tear_2"))
+               and (map.IsUnitBetweenEnemyTowers(
+                      closest_enemy_creep)
 
                     or map.IsUnitInEnemyTowerAttackRange(
                         closest_enemy_creep)))

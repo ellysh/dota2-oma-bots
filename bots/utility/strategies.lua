@@ -76,13 +76,17 @@ end
 
 local function IsEnemyUnitOnHighGround()
   return (env.ENEMY_HERO_DATA ~= nil
-          and map.IsUnitInEnemyTowerAttackRange(env.ENEMY_HERO_DATA))
+          and (map.IsUnitInEnemyTowerAttackRange(env.ENEMY_HERO_DATA)
+               or map.IsUnitBetweenEnemyTowers(env.ENEMY_HERO_DATA)))
 
          or nil ~= algorithms.GetCreepWith(
                      env.BOT_DATA,
                      constants.SIDE["ENEMY"],
                      nil,
-                     map.IsUnitInEnemyTowerAttackRange)
+                     function(unit_data)
+                       return map.IsUnitInEnemyTowerAttackRange(unit_data)
+                              or map.IsUnitBetweenEnemyTowers(unit_data)
+                     end)
 end
 
 function M.pre_defensive()
