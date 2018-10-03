@@ -579,6 +579,8 @@ function M.GetPreLastHitCreep(bot_data, side)
 
              return 0 < incoming_damage
                     and unit_data.health < total_damage
+                    and functions.GetUnitDistance(bot_data, unit_data)
+                        <= constants.PRE_LASTHIT_CREEP_MAX_DISTANCE
            end)
 end
 
@@ -589,6 +591,11 @@ function M.GetLastHitCreep(bot_data, side)
            M.CompareMinHealth,
            function(unit_data)
              return M.IsLastHitTarget(bot_data, unit_data)
+                    and functions.GetUnitDistance(bot_data, unit_data)
+                        <= M.GetAttackRange(
+                             bot_data,
+                             unit_data,
+                             true)
            end)
 end
 
