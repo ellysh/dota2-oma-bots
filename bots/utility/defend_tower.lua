@@ -97,34 +97,31 @@ end
 ---------------------------------
 
 function M.pre_move_safe()
-  local creep = GetCreepAttackingTower()
+  local agressive_creep = GetCreepAttackingTower()
 
-  return creep == nil
+  local closest_enemy_creep = functions.ternary(
+                              env.ENEMY_CREEP_FRONT_DATA ~= nil,
+                              env.ENEMY_CREEP_FRONT_DATA,
+                              env.ENEMY_CREEP_BACK_DATA)
+
+
+  return agressive_creep == nil
          and env.ALLY_CREEP_FRONT_DATA == nil
          and constants.MAX_CREEPS_HP_PULL < env.ENEMY_CREEPS_HP
-         and ((env.ENEMY_CREEP_FRONT_DATA ~= nil
+         and (closest_enemy_creep ~= nil
 
                and (map.IsUnitInSpot(
-                      env.ENEMY_CREEP_FRONT_DATA,
+                      closest_enemy_creep,
                       map.GetAllySpot("between_tier_1_tear_2"))
 
                     or map.IsUnitInEnemyTowerAttackRange(
-                        env.ENEMY_CREEP_FRONT_DATA)))
-
-              or (env.ENEMY_CREEP_BACK_DATA ~= nil
-
-                  and (map.IsUnitInSpot(
-                         env.ENEMY_CREEP_BACK_DATA,
-                         map.GetAllySpot("between_tier_1_tear_2"))
-
-                       or map.IsUnitInEnemyTowerAttackRange(
-                            env.ENEMY_CREEP_BACK_DATA))))
+                        closest_enemy_creep)))
 end
 
 function M.move_safe()
   env.BOT:Action_MoveDirectly(env.FOUNTAIN_SPOT)
 
-  action_timing.SetNextActionDelay(0.8)
+  action_timing.SetNextActionDelay(0.4)
 end
 
 ---------------------------------
