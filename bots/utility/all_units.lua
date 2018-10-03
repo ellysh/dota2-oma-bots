@@ -84,6 +84,7 @@ local function AddUnit(unit, unit_type, team)
     is_flask_healing = unit:HasModifier("modifier_flask_healing");
     nearby_trees = unit:GetNearbyTrees(constants.TREE_SEARCH_RADIUS),
     is_casting = IsUnitCasting(unit),
+    is_channeling = unit:IsChanneling(),
     is_silenced = unit:IsSilenced(),
     gold = unit:GetGold(),
     stash_value = unit:GetStashValue(),
@@ -163,12 +164,21 @@ local function IsLastSeenLocationValid(unit_data)
             < functions.GetUnitDistance(unit_data, bot_data)
 end
 
+local function IsUnitTpOut(unit_data)
+  -- TODO: Store a name of the current casting ability in the UNIT_LIST
+  -- and check it here for TP out.
+
+  return not unit_data.is_visible
+         and unit_data.is_channeling
+end
+
 local function InvalidateUnit(_, unit_data)
   local age = CURRENT_GAME_TIME - unit_data.timestamp
 
   if 6 <= age
      or not IsLastSeenLocationValid(unit_data)
-     or IsHeroDiedRecently(unit_data) then
+     or IsHeroDiedRecently(unit_data)
+     or IsUnitTpOut(unit_data) then
 
     -- We should store the unit details because they will be cleared by
     -- the functions.ClearTable call
