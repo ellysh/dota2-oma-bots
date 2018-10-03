@@ -39,7 +39,7 @@ local function GetCreepAttackingTower()
 
   local creeps = algorithms.GetEnemyCreeps(
                    env.BOT_DATA,
-                   constants.MAX_UNIT_TARGET_RADIUS)
+                   constants.MAX_UNIT_SEARCH_RADIUS)
 
   return functions.GetElementWith(
     creeps,
@@ -97,7 +97,10 @@ end
 ---------------------------------
 
 function M.pre_move_safe()
-  return env.ALLY_CREEP_FRONT_DATA == nil
+  local creep = GetCreepAttackingTower()
+
+  return creep == nil
+         and env.ALLY_CREEP_FRONT_DATA == nil
          and constants.MAX_CREEPS_HP_PULL < env.ENEMY_CREEPS_HP
          and ((env.ENEMY_CREEP_FRONT_DATA ~= nil
 
@@ -112,10 +115,10 @@ function M.pre_move_safe()
 
                   and (map.IsUnitInSpot(
                          env.ENEMY_CREEP_BACK_DATA,
-                         map.GetAllySpot("between_tier_1_tear_2"))))
+                         map.GetAllySpot("between_tier_1_tear_2"))
 
-                    or map.IsUnitInEnemyTowerAttackRange(
-                        env.ENEMY_CREEP_BACK_DATA))
+                       or map.IsUnitInEnemyTowerAttackRange(
+                            env.ENEMY_CREEP_BACK_DATA))))
 end
 
 function M.move_safe()

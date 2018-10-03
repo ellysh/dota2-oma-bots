@@ -85,10 +85,6 @@ end
 ---------------------------------
 
 function M.pre_heal_tango()
-  local tower_data = algorithms.GetEnemyBuildings(
-                           env.BOT_DATA,
-                           constants.MAX_UNIT_SEARCH_RADIUS)[1]
-
   local tree = env.BOT_DATA.nearby_trees[1]
 
   return algorithms.IsItemCastable(env.BOT_DATA, "item_tango")
@@ -103,14 +99,14 @@ function M.pre_heal_tango()
 
          and tree ~= nil
 
-         and (tower_data == nil
+         and (env.ENEMY_TOWER_DATA == nil
               or algorithms.GetAttackRange(
-                   tower_data,
+                   env.ENEMY_TOWER_DATA,
                    env.BOT_DATA,
                    true)
                  < functions.GetDistance(
                      GetTreeLocation(tree),
-                     tower_data.location))
+                     env.ENEMY_TOWER_DATA.location))
 
          and constants.TANGO_USAGE_FROM_HG_DISTANCE
              < functions.GetDistance(

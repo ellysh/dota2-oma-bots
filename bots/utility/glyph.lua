@@ -25,29 +25,15 @@ end
 
 ---------------------------------
 
-local function GetAllyTower()
-  local buildings = all_units.GetAllyBuildingsData(env.BOT_DATA)
-
-  return functions.GetElementWith(
-           buildings,
-           nil,
-           function(unit_data)
-             return unit_data.name == "npc_dota_badguys_tower1_mid"
-                    or unit_data.name == "npc_dota_goodguys_tower1_mid"
-           end)
-end
-
 function M.pre_do_glyph()
-  local tower_data = GetAllyTower()
-
   local tower_incoming_damage = algorithms.GetTotalIncomingDamage(
-                                  tower_data)
+                                  env.ALLY_TOWER_DATA)
                                 * functions.GetDamageMultiplier(
-                                    tower_data.armor)
+                                    env.ALLY_TOWER_DATA.armor)
 
   return GetGlyphCooldown() == 0
          and (constants.MAX_INCOMING_TOWER_DAMAGE < tower_incoming_damage
-              or (algorithms.IsUnitLowHp(tower_data)
+              or (algorithms.IsUnitLowHp(env.ALLY_TOWER_DATA)
                   and constants.MIN_INCOMING_TOWER_DAMAGE
                       < tower_incoming_damage))
 end

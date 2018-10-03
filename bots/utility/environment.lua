@@ -115,15 +115,9 @@ function M.UpdateVariables()
                              algorithms.GetAllyCreeps,
                              constants.DIRECTION["BACK"])
 
-  -- TODO: Check the building name here
-  M.ENEMY_TOWER_DATA = algorithms.GetEnemyBuildings(
-                         M.BOT_DATA,
-                         constants.MAX_UNIT_SEARCH_RADIUS)[1]
+  M.ENEMY_TOWER_DATA = algorithms.GetEnemyTier1Tower(M.BOT_DATA)
 
-  -- TODO: Check the building name here
-  M.ALLY_TOWER_DATA = algorithms.GetAllyBuildings(
-                        M.BOT_DATA,
-                        constants.MAX_UNIT_SEARCH_RADIUS)[1]
+  M.ALLY_TOWER_DATA = algorithms.GetAllyTier1Tower(M.BOT_DATA)
 
   M.PRE_LAST_HIT_ENEMY_CREEP = algorithms.GetPreLastHitCreep(
                                  M.BOT_DATA,

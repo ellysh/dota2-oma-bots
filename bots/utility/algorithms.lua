@@ -125,20 +125,6 @@ function M.GetAllyCreeps(unit_data, radius)
   return GetUnitsInRadius(unit_data, radius, all_units.GetAllyCreepsData)
 end
 
-function M.GetEnemyBuildings(unit_data, radius)
-  return GetUnitsInRadius(
-    unit_data,
-    radius,
-    all_units.GetEnemyBuildingsData)
-end
-
-function M.GetAllyBuildings(unit_data, radius)
-  return GetUnitsInRadius(
-    unit_data,
-    radius,
-    all_units.GetAllyBuildingsData)
-end
-
 function M.GetTotalHealth(unit_list)
   if unit_list == nil or #unit_list == 0 then
     return 0 end
@@ -682,6 +668,37 @@ function M.IsTowerDiveReasonable(unit_data, target_data)
               or (unit_data.is_flask_healing
                   and constants.UNIT_MIN_TOWER_DIVE_HEALTH_WITH_HEALING
                       <= unit_data.health))
+end
+
+local function GetTier1TowerName(team)
+  return functions.ternary(
+           team == TEAM_RADIANT,
+           "npc_dota_goodguys_tower1_mid",
+           "npc_dota_badguys_tower1_mid")
+end
+
+function M.GetAllyTier1Tower(unit_data)
+  local buildings = all_units.GetAllyBuildingsData(unit_data)
+
+  return functions.GetElementWith(
+           buildings,
+           nil,
+           function(building_data)
+             return building_data.name == GetTier1TowerName(
+                                            unit_data.team)
+           end)
+end
+
+function M.GetEnemyTier1Tower(unit_data)
+  local buildings = all_units.GetEnemyBuildingsData(unit_data)
+
+  return functions.GetElementWith(
+           buildings,
+           nil,
+           function(building_data)
+             return building_data.name == GetTier1TowerName(
+                                            GetOpposingTeam())
+           end)
 end
 
 -- Provide an access to local functions for unit tests only
