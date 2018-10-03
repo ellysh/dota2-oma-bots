@@ -79,8 +79,6 @@ function M.pre_move_enemy_creep()
   local creep = GetCreepAttackingTower()
 
   return creep ~= nil
-         and env.ENEMY_HERO_DATA ~= nil
-         and env.ENEMY_HERO_DATA.is_visible
          and env.ALLY_CREEP_FRONT_DATA == nil
          and constants.MAX_CREEPS_HP_PULL < env.ENEMY_CREEPS_HP
 
