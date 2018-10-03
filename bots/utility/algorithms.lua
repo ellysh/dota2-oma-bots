@@ -708,6 +708,10 @@ function M.GetEnemyTier1Tower(unit_data)
            end)
 end
 
+function M.HasLevelForAggression(unit_data)
+  return constants.MIN_HERO_LEVEL_FOR_AGRESSION <= unit_data.level
+end
+
 -- Provide an access to local functions for unit tests only
 M.test_GetNormalizedRadius = GetNormalizedRadius
 M.test_UpdateUnitList = all_units.UpdateUnitList

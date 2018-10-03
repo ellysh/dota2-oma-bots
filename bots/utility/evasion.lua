@@ -96,7 +96,7 @@ function M.pre_move_safe_evasion()
          or env.IS_FOCUSED_BY_UNKNOWN_UNIT
 
          or (map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
-             and env.BOT_DATA.level < 4)
+             and not algorithms.HasLevelForAggression(env.BOT_DATA))
 end
 
 function M.move_safe_evasion()

@@ -26,6 +26,7 @@ local M = {}
 function M.pre_pursuit_enemy_hero()
   return env.ENEMY_HERO_DATA ~= nil
          and not env.IS_BOT_LOW_HP
+         and algorithms.HasLevelForAggression(env.BOT_DATA)
          and algorithms.IsBotAlive()
 
          and (env.IS_ENEMY_HERO_LOW_HP

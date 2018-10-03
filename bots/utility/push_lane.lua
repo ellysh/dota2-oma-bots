@@ -20,7 +20,7 @@ local M = {}
 function M.pre_push_lane()
   return algorithms.IsBotAlive()
          and not env.IS_BOT_LOW_HP
-         and 4 <= env.BOT_DATA.level
+         and algorithms.HasLevelForAggression(env.BOT_DATA)
 end
 
 ---------------------------------
