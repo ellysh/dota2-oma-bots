@@ -13,8 +13,7 @@ attack_with_mom;use_frost_arrow;use_frost_arrow
 ;attack_enemy_tower;attack_enemy_tower
 ;kill_enemy_creep;kill_enemy_creep
 ;;
-pursuit_enemy_hero;use_silence;use_silence
-;attack_enemy_hero;attack_enemy_hero
+pursuit_enemy_hero;attack_enemy_hero;attack_enemy_hero
 ;;stop_attack
 ;move_enemy_hero;move_enemy_hero
 ;;

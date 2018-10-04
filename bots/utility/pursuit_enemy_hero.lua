@@ -75,14 +75,4 @@ end
 
 ---------------------------------
 
-function M.pre_use_silence()
-  return moves.pre_use_silence()
-end
-
-function M.use_silence()
-  moves.use_silence()
-end
-
----------------------------------
-
 return M
