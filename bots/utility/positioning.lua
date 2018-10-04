@@ -91,7 +91,8 @@ function M.pre_increase_creeps_distance()
                     env.ENEMY_CREEP_FRONT_DATA)
                   < GetBaseCreepDistance())
 
-          or env.ALLY_CREEP_FRONT_DATA == nil)
+          or (env.ALLY_CREEP_FRONT_DATA == nil
+              and not map.IsUnitInAllyTowerAttackRange(env.BOT_DATA)))
 
          and last_hit_creep == nil
 end

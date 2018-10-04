@@ -48,6 +48,12 @@ function M.IsUnitInEnemyTowerAttackRange(unit_data)
            M.GetUnitEnemySpot(unit_data, "tower_tier_1_attack"))
 end
 
+function M.IsUnitInAllyTowerAttackRange(unit_data)
+  return M.IsUnitInSpot(
+           unit_data,
+           M.GetUnitAllySpot(unit_data, "tower_tier_1_attack"))
+end
+
 function M.IsUnitBetweenEnemyTowers(unit_data)
   return M.IsUnitInSpot(
            unit_data,
