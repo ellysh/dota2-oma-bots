@@ -56,10 +56,13 @@ function M.pre_heal_flask()
          and not env.IS_FOCUSED_BY_ENEMY_HERO
          and not env.IS_FOCUSED_BY_UNKNOWN_UNIT
 
-         and not algorithms.IsTargetInAttackRange(
-                   env.ENEMY_HERO_DATA,
-                   env.BOT_DATA,
-                   true)
+         and (env.ENEMY_HERO_DATA == nil
+              or (algorithms.GetAttackRange(
+                    env.BOT_DATA,
+                    env.ENEMY_HERO_DATA,
+                    true)
+                  + constants.MAX_PURSUIT_INC_DISTANCE)
+                  < env.ENEMY_HERO_DISTANCE)
 end
 
 function M.heal_flask()
