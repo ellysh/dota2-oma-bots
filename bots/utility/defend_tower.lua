@@ -137,6 +137,10 @@ local function GetCreepAttackingBot()
       return algorithms.IsUnitAttackTarget(
                unit_data,
                env.BOT_DATA)
+             and functions.GetUnitDistance(
+                   unit_data,
+                   env.ALLY_TOWER_DATA)
+                 <= constants.MIN_CREEP_DISTANCE
     end)
 end
 
