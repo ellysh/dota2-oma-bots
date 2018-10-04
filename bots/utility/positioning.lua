@@ -24,8 +24,10 @@ local M = {}
 ---------------------------------
 
 function M.pre_positioning()
-  return (not algorithms.IsFirstWave()
-          or env.ALLY_CREEP_BACK_DATA == nil)
+  return algorithms.IsBotAlive()
+         and (not algorithms.IsFirstWave()
+              or (env.ALLY_CREEP_BACK_DATA == nil
+                  and env.ALLY_CREEP_FRONT_DATA ~= nil))
 
          and algorithms.IsBotAlive()
 end
@@ -86,7 +88,9 @@ function M.pre_increase_creeps_distance()
               and functions.GetUnitDistance(
                     env.BOT_DATA,
                     env.ENEMY_CREEP_FRONT_DATA)
-                  < GetBaseCreepDistance()))
+                  < GetBaseCreepDistance())
+
+          or env.ALLY_CREEP_FRONT_DATA == nil)
 
          and last_hit_creep == nil
 end
