@@ -20,6 +20,7 @@ local M = {}
 function M.pre_keep_equilibrium()
   return algorithms.IsBotAlive()
          and not env.IS_BOT_LOW_HP
+         and not algorithms.HasLevelForAggression(env.BOT_DATA)
 
          and env.PRE_LAST_HIT_ENEMY_CREEP == nil
          and env.PRE_LAST_HIT_ALLY_CREEP == nil
