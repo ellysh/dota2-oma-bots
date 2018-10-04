@@ -1,3 +1,11 @@
+* version 1.4
+  - Rework the item build.
+  - Add moves for attacking the enemy hero and tower with mom.
+  - Fix bugs with comparing advantages when choosing the strategy.
+  - Add the move for attacking the enemy hero when the bot has a better position.
+  - Pull enemy creeps to tier 2 when defending the tier 1 tower.
+  - Attack the enemy hero when he comes between ally tier 1 and tier 2 towers.
+
 * version 1.3a
   - Fix a critical bug with stops during moving to base for recovery.
   - Fix bugs with pursuit an enemy hero.
