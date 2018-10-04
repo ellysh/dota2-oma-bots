@@ -63,11 +63,12 @@ end
 
 local function GetBaseCreepDistance()
   return functions.ternary(
-          env.ENEMY_HERO_DATA ~= nil
-          and functions.GetUnitDistance(
-                env.BOT_DATA,
-                env.ENEMY_HERO_DATA)
-              < constants.SAFE_HERO_DISTANCE,
+          (env.ENEMY_HERO_DATA ~= nil
+           and functions.GetUnitDistance(
+                 env.BOT_DATA,
+                 env.ENEMY_HERO_DATA)
+               < constants.SAFE_HERO_DISTANCE)
+          or algorithms.HasLevelForAggression(env.BOT_DATA),
           constants.BASE_CREEP_DISTANCE,
           constants.BASE_CREEP_DISTANCE_NO_ENEMY_HERO)
 end
