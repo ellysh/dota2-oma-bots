@@ -34,6 +34,12 @@ end
 function M.pre_attack_enemy_hero()
   return moves.pre_attack_enemy_hero()
 
+         and env.ENEMY_HERO_DISTANCE
+             <= algorithms.GetAttackRange(
+                  env.BOT_DATA,
+                  env.ENEMY_HERO_DATA,
+                  true)
+
          and ((IsUnitPositionBetter(env.BOT_DATA, env.ENEMY_HERO_DATA)
                and not IsUnitIncomingDamageMore(
                          env.BOT_DATA,
