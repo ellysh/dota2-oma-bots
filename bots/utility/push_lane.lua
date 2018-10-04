@@ -20,6 +20,7 @@ local M = {}
 function M.pre_push_lane()
   return algorithms.IsBotAlive()
          and not env.IS_BOT_LOW_HP
+         and algorithms.HasLevelForAggression(env.BOT_DATA)
 end
 
 ---------------------------------
@@ -92,7 +93,6 @@ end
 
 function M.pre_attack_enemy_tower()
   return env.ENEMY_TOWER_DATA ~= nil
-         and algorithms.HasLevelForAggression(env.BOT_DATA)
          and env.ALLY_CREEP_FRONT_DATA ~= nil
          and algorithms.IsFocusedByCreeps(env.ENEMY_TOWER_DATA)
          and algorithms.DoesEnemyTowerAttackAllyCreep(
