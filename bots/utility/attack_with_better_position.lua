@@ -33,6 +33,9 @@ end
 
 function M.pre_attack_enemy_hero()
   return moves.pre_attack_enemy_hero()
+         and (env.ALLY_CREEP_FRONT_DATA ~= nil
+              or (env.ENEMY_CREEP_FRONT_DATA == nil
+                  and env.ENEMY_CREEP_BACK_DATA == nil))
 
          and env.ENEMY_HERO_DISTANCE
              <= algorithms.GetAttackRange(
