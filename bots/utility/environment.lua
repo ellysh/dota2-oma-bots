@@ -39,6 +39,8 @@ M.IS_FOCUSED_BY_UNKNOWN_UNIT = false
 M.IS_FOCUSED_BY_TOWER = false
 M.IS_BASE_RECOVERY = false
 M.LAST_AGGRO_CONTROL = 0
+M.DOES_BOT_HAVE_ADVANTAGE = false
+M.DOES_ENEMY_HERO_HAVE_ADVANTAGE = false
 
 local function GetClosestCreep(radius, get_function, direction)
   local creeps = get_function(
@@ -80,6 +82,42 @@ local function IsUnitRelativeLowHp(unit_data, enemy_hero_data)
                          enemy_hero_data.attack_damage * 3,
                          unit_data.health,
                          0))))
+end
+
+local function DoesUnitHaveAdvantage(unit_data, target_data)
+  return unit_data ~= nil
+         and target_data ~= nil
+         and (algorithms.IsBiggerThan(
+                unit_data.attack_damage,
+                target_data.attack_damage,
+                50)
+              or algorithms.IsBiggerThan(
+                   unit_data.health,
+                   target_data.health,
+                   300)
+              or algorithms.IsBiggerThan(
+                   unit_data.speed,
+                   target_data.speed,
+                   40)
+              or algorithms.IsBiggerThan(
+                   unit_data.attack_speed,
+                   target_data.attack_speed,
+                   20)
+              or algorithms.IsBiggerThan(
+                   unit_data.attack_range,
+                   target_data.attack_range,
+                   100)
+
+              or algorithms.HasModifier(
+                   unit_data,
+                   "modifier_item_mask_of_madness_berserk")
+
+              or (algorithms.IsItemPresent(
+                    unit_data,
+                    "item_mask_of_madness")
+                  and not algorithms.IsItemPresent(
+                            target_data,
+                            "item_mask_of_madness")))
 end
 
 function M.UpdateVariables()
@@ -160,6 +198,14 @@ function M.UpdateVariables()
                               M.BOT_DATA,
                               M.ENEMY_HERO_DATA)
   end
+
+  M.DOES_BOT_HAVE_ADVANTAGE = DoesUnitHaveAdvantage(
+                                M.BOT_DATA,
+                                M.ENEMY_HERO_DATA)
+
+  M.DOES_ENEMY_HERO_HAVE_ADVANTAGE = DoesUnitHaveAdvantage(
+                                       M.ENEMY_HERO_DATA,
+                                       M.BOT_DATA)
 
   M.IS_FOCUSED_BY_CREEPS = algorithms.IsFocusedByCreeps(M.BOT_DATA)
 
