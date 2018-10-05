@@ -217,19 +217,25 @@ function M.BuyItem(item_name)
   action_timing.SetNextActionDelay(0.05)
 end
 
+function M.GetAllyTowerDistance(unit_data)
+  return functions.GetDistance(
+           unit_data.location,
+           map.GetUnitAllySpot(unit_data, "tower_tier_1_attack"))
+end
+
 function M.GetEnemyTowerDistance(unit_data)
   return functions.GetDistance(
            unit_data.location,
-           map.GetEnemySpot("tower_tier_1_attack"))
+           map.GetUnitEnemySpot(unit_data, "tower_tier_1_attack"))
 end
 
 function M.DoesTowerProtectUnit(unit_data)
   local bot_data = M.GetBotData()
-  local tower_spot = map.GetEnemySpot("tower_tier_1_attack")
-
   local bot_tower_distance = M.GetEnemyTowerDistance(bot_data)
 
   return bot_tower_distance <= constants.CREEP_MAX_AGRO_RADIUS
+         or M.GetAllyTowerDistance(unit_data)
+            <= constants.TOWER_PROTECT_DISTANCE
          or bot_tower_distance
             < functions.GetUnitDistance(bot_data, unit_data)
 end
@@ -671,10 +677,9 @@ end
 function M.IsTowerDiveReasonable(unit_data, target_data)
   return target_data.is_visible
          and M.IsLastHitTarget(unit_data, target_data)
-         and (constants.UNIT_MIN_TOWER_DIVE_HEALTH <= unit_data.health
-              or (unit_data.is_flask_healing
-                  and constants.UNIT_MIN_TOWER_DIVE_HEALTH_WITH_HEALING
-                      <= unit_data.health))
+         and constants.UNIT_MIN_TOWER_DIVE_HEALTH <= unit_data.health
+         and not target_data.is_flask_healing
+         and not unit_data.is_flask_healing
 end
 
 local function GetTier1TowerName(team)
