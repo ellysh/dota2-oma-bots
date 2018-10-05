@@ -70,7 +70,16 @@ function M.pre_move_enemy_hero()
 end
 
 function M.move_enemy_hero()
-  moves.move_enemy_hero()
+  local enemy_high_ground = map.GetEnemySpot("high_ground")
+
+  if not env.ENEMY_HERO_DATA.is_visible
+     and map.IsUnitInSpot(env.ENEMY_HERO_DATA, enemy_high_ground)
+     and not IsLocationVisible(enemy_high_ground) then
+
+    env.BOT:Action_MoveDirectly(enemy_high_ground)
+  else
+    moves.move_enemy_hero()
+  end
 end
 
 ---------------------------------
