@@ -87,7 +87,6 @@ function M.pre_increase_creeps_distance()
                < constants.MIN_HERO_DISTANCE)
 
           or (env.ENEMY_CREEP_FRONT_DATA ~= nil
-              and not algorithms.HasLevelForAggression(env.BOT_DATA)
               and functions.GetUnitDistance(
                     env.BOT_DATA,
                     env.ENEMY_CREEP_FRONT_DATA)
