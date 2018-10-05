@@ -370,7 +370,7 @@ local function IsTargetNearSpot(unit_data, enemy_units, spot)
                                    target_data,
                                    unit_data,
                                    true)
-                                 + constants.MAX_SAFE_SPOT_INC_DISTANCE
+                                 + constants.MAX_SAFE_INC_DISTANCE
 
                               or map.IsUnitInSpot(target_data, spot)
                        end)

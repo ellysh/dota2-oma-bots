@@ -61,7 +61,7 @@ function M.pre_heal_flask()
                     env.BOT_DATA,
                     env.ENEMY_HERO_DATA,
                     true)
-                  + constants.MAX_PURSUIT_INC_DISTANCE)
+                  + constants.MAX_SAFE_INC_DISTANCE)
                   < env.ENEMY_HERO_DISTANCE)
 end
 
