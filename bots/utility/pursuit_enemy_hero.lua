@@ -7,9 +7,6 @@ local algorithms = require(
 local constants = require(
   GetScriptDirectory() .."/utility/constants")
 
-local logger = require(
-  GetScriptDirectory() .."/utility/logger")
-
 local env = require(
   GetScriptDirectory() .."/utility/environment")
 

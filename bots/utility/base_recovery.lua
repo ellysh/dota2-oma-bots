@@ -7,17 +7,11 @@ local algorithms = require(
 local constants = require(
   GetScriptDirectory() .."/utility/constants")
 
-local logger = require(
-  GetScriptDirectory() .."/utility/logger")
-
 local action_timing = require(
   GetScriptDirectory() .."/utility/action_timing")
 
 local env = require(
   GetScriptDirectory() .."/utility/environment")
-
-local map = require(
-  GetScriptDirectory() .."/utility/map")
 
 local moves = require(
   GetScriptDirectory() .."/utility/moves")
@@ -41,9 +35,13 @@ function M.pre_restore_hp_on_base()
            env.BOT_DATA,
            "modifier_fountain_aura_buff")
 
-         and (functions.GetRate(env.BOT_DATA.health, env.BOT_DATA.max_health)
+         and (functions.GetRate(
+                env.BOT_DATA.health,
+                env.BOT_DATA.max_health)
               < constants.UNIT_FOUNTAIN_MAX_HEALTH
-              or functions.GetRate(env.BOT_DATA.mana, env.BOT_DATA.max_mana)
+              or functions.GetRate(
+                   env.BOT_DATA.mana,
+                   env.BOT_DATA.max_mana)
                  < constants.UNIT_FOUNTAIN_MAX_MANA)
 end
 

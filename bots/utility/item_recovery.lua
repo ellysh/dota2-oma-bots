@@ -7,9 +7,6 @@ local algorithms = require(
 local constants = require(
   GetScriptDirectory() .."/utility/constants")
 
-local logger = require(
-  GetScriptDirectory() .."/utility/logger")
-
 local action_timing = require(
   GetScriptDirectory() .."/utility/action_timing")
 
