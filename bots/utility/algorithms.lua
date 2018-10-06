@@ -196,7 +196,7 @@ function M.AttackUnit(bot_data, unit_data, is_modifier)
     bot:Action_AttackUnit(unit, true)
   end
 
-  local attack_point = (constants.DROW_RANGER_ATTACK_POINT)
+  local attack_point = constants.DROW_RANGER_ATTACK_POINT
                          * bot_data.seconds_per_attack
 
   if not functions.IsFacingLocation(

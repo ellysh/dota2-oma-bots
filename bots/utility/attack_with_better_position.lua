@@ -1,6 +1,9 @@
 local algorithms = require(
   GetScriptDirectory() .."/utility/algorithms")
 
+local constants = require(
+  GetScriptDirectory() .."/utility/constants")
+
 local env = require(
   GetScriptDirectory() .."/utility/environment")
 
@@ -42,6 +45,10 @@ function M.pre_attack_enemy_hero()
                   env.BOT_DATA,
                   env.ENEMY_HERO_DATA,
                   true)
+
+         and not algorithms.AreEnemyCreepsInRadius(
+                   env.BOT_DATA,
+                   constants.MAX_MELEE_ATTACK_RANGE)
 
          and ((IsUnitPositionBetter(env.BOT_DATA, env.ENEMY_HERO_DATA)
                and not IsUnitIncomingDamageMore(
