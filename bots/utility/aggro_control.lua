@@ -54,10 +54,7 @@ function M.pre_aggro_last_hit()
              <= functions.GetDelta(env.LAST_AGGRO_CONTROL, GameTime())
 
          and (env.ENEMY_TOWER_DATA == nil
-              or constants.CREEP_MAX_AGRO_RADIUS
-                 < functions.GetUnitDistance(
-                     env.BOT_DATA,
-                     env.ENEMY_TOWER_DATA))
+              or constants.TOWER_AGGRO_RADIUS < env.ENEMY_TOWER_DISTANCE)
 
          and not map.IsUnitInSpot(
                    env.BOT_DATA,
@@ -65,8 +62,8 @@ function M.pre_aggro_last_hit()
 
          and not algorithms.IsUnitMoving(last_hit_creep)
 
-         and (creep_distance <= constants.CREEP_MAX_AGRO_RADIUS
-              and constants.CREEP_MIN_AGRO_RADIUS < creep_distance)
+         and (creep_distance <= constants.CREEP_MAX_AGGRO_RADIUS
+              and constants.CREEP_MIN_AGGRO_RADIUS < creep_distance)
 end
 
 function M.aggro_last_hit()
@@ -93,7 +90,7 @@ function M.pre_aggro_hg()
          and functions.GetUnitDistance(
                env.BOT_DATA,
                env.ENEMY_CREEP_FRONT_DATA)
-             <= constants.CREEP_MAX_AGRO_RADIUS
+             <= constants.CREEP_MAX_AGGRO_RADIUS
 end
 
 function M.aggro_hg()

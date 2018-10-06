@@ -84,10 +84,16 @@ end
 
 ---------------------------------
 
+local function IsAttackUnderTowerSafe()
+  return env.ALLY_CREEP_FRONT_DATA ~= nil
+         and constants.TOWER_AGGRO_RADIUS < env.ENEMY_TOWER_DISTANCE
+end
+
 function M.pre_attack_enemy_hero()
   return env.ENEMY_HERO_DATA ~= nil
          and env.ENEMY_HERO_DATA.is_visible
          and (not env.DOES_TOWER_PROTECT_ENEMY
+              or IsAttackUnderTowerSafe()
               or algorithms.IsTowerDiveReasonable(
                    env.BOT_DATA,
                    env.ENEMY_HERO_DATA))

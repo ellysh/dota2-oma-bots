@@ -23,6 +23,7 @@ M.ENEMY_HERO_DISTANCE = 0
 M.ALLY_CREEP_FRONT_DATA = {}
 M.ALLY_CREEP_BACK_DATA = {}
 M.ENEMY_TOWER_DATA = {}
+M.ENEMY_TOWER_DISTANCE = 0
 M.ALLY_TOWER_DATA = {}
 M.PRE_LAST_HIT_ENEMY_CREEP = {}
 M.PRE_LAST_HIT_ALLY_CREEP = {}
@@ -154,6 +155,12 @@ function M.UpdateVariables()
                              constants.DIRECTION["BACK"])
 
   M.ENEMY_TOWER_DATA = algorithms.GetEnemyTier1Tower(M.BOT_DATA)
+
+  if M.ENEMY_TOWER_DATA ~= nil then
+    M.ENEMY_TOWER_DISTANCE = functions.GetUnitDistance(
+                               M.BOT_DATA,
+                               M.ENEMY_TOWER_DATA)
+  end
 
   M.ALLY_TOWER_DATA = algorithms.GetAllyTier1Tower(M.BOT_DATA)
 

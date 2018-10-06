@@ -61,7 +61,7 @@ function M.pre_pull_enemy_creep()
          and constants.MAX_CREEPS_HP_PULL < env.ENEMY_CREEPS_HP
 
          and functions.GetUnitDistance(env.BOT_DATA, creep)
-             <= constants.CREEP_MAX_AGRO_RADIUS
+             <= constants.CREEP_MAX_AGGRO_RADIUS
 
          and constants.CREEPS_AGGRO_COOLDOWN
              <= functions.GetDelta(env.LAST_AGGRO_CONTROL, GameTime())
@@ -82,7 +82,7 @@ function M.pre_move_enemy_creep()
          and env.ALLY_CREEP_FRONT_DATA == nil
          and constants.MAX_CREEPS_HP_PULL < env.ENEMY_CREEPS_HP
 
-         and constants.CREEP_MAX_AGRO_RADIUS
+         and constants.CREEP_MAX_AGGRO_RADIUS
              < functions.GetUnitDistance(env.BOT_DATA, creep)
 end
 

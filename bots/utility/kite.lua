@@ -42,7 +42,7 @@ function M.pre_attack_enemy_hero()
 
          and (not algorithms.AreEnemyCreepsInRadius(
                    env.BOT_DATA,
-                   constants.CREEP_MAX_AGRO_RADIUS)
+                   constants.CREEP_MAX_AGGRO_RADIUS)
               or functions.GetDelta(env.LAST_AGGRO_CONTROL, GameTime())
                  < constants.CREEPS_AGGRO_COOLDOWN)
 end
