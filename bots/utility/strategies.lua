@@ -59,7 +59,11 @@ function M.pre_defensive()
          and ((env.DOES_ENEMY_HERO_HAVE_ADVANTAGE
                and not env.DOES_BOT_HAVE_ADVANTAGE)
 
-              or IsEnemyUnitOnAllyHighGround())
+              or IsEnemyUnitOnAllyHighGround()
+
+              or (env.ALLY_TOWER_DATA ~= nil
+                  and 0 < algorithms.GetTotalIncomingDamage(
+                            env.ALLY_TOWER_DATA)))
 end
 
 ---------------------------------
