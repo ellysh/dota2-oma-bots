@@ -80,6 +80,7 @@ function M.pre_move_enemy_creep()
 
   return creep ~= nil
          and env.ALLY_CREEP_FRONT_DATA == nil
+         and algorithms.HasLevelForAggression(env.BOT_DATA)
          and constants.MAX_CREEPS_HP_PULL < env.ENEMY_CREEPS_HP
 
          and constants.CREEP_MAX_AGGRO_RADIUS
