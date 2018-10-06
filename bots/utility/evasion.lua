@@ -54,9 +54,14 @@ end
 
 ---------------------------------
 
+local function GetFlaskHealingRemainingDuration()
+  local modifier = env.BOT:GetModifierByName("modifier_flask_healing")
+  return env.BOT:GetModifierRemainingDuration(modifier)
+end
+
 function M.pre_move_safe_recovery()
   return (env.BOT_DATA.is_flask_healing
-          and env.BOT_DATA.health ~= env.BOT_DATA.max_health)
+          and 1 < GetFlaskHealingRemainingDuration())
 
          and not map.IsUnitInSpot(env.BOT_DATA, env.SAFE_SPOT)
 
