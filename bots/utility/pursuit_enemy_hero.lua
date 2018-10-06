@@ -26,10 +26,21 @@ local M = {}
 
 ---------------------------------
 
+local function IsUnitLastSeenOnStairs(unit_data)
+  local enemy_high_ground = map.GetEnemySpot("high_ground")
+
+  return not env.ENEMY_HERO_DATA.is_visible
+         and map.IsUnitInSpot(env.ENEMY_HERO_DATA, enemy_high_ground)
+         and not IsLocationVisible(enemy_high_ground)
+end
+
 local function IsLastSeenLocationValid(unit_data)
   return unit_data.is_visible
+
          or constants.LAST_SEEN_LOCATION_MIN_DISTANCE
-            < functions.GetUnitDistance(unit_data, env.BOT_DATA)
+             < functions.GetUnitDistance(unit_data, env.BOT_DATA)
+
+         or IsUnitLastSeenOnStairs(unit_data)
 end
 
 local LAST_ENEMY_HERO_DEATHS = 0
@@ -113,13 +124,8 @@ function M.pre_move_enemy_hero()
 end
 
 function M.move_enemy_hero()
-  local enemy_high_ground = map.GetEnemySpot("high_ground")
-
-  if not env.ENEMY_HERO_DATA.is_visible
-     and map.IsUnitInSpot(env.ENEMY_HERO_DATA, enemy_high_ground)
-     and not IsLocationVisible(enemy_high_ground) then
-
-    env.BOT:Action_MoveDirectly(enemy_high_ground)
+  if IsUnitLastSeenOnStairs(env.ENEMY_HERO_DATA) then
+    env.BOT:Action_MoveDirectly(map.GetEnemySpot("high_ground"))
   else
     moves.move_enemy_hero()
   end
