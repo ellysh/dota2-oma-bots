@@ -678,7 +678,6 @@ function M.IsTowerDiveReasonable(unit_data, target_data)
   return target_data.is_visible
          and M.IsLastHitTarget(unit_data, target_data)
          and constants.UNIT_MIN_TOWER_DIVE_HEALTH <= unit_data.health
-         and not target_data.is_flask_healing
          and not unit_data.is_flask_healing
 end
 
