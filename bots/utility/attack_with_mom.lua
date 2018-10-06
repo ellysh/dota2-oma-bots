@@ -69,9 +69,7 @@ function M.pre_use_mom()
                    <= constants.MOM_USAGE_FROM_ENEMY_HERO_DISTANCE)
 
               or (env.ENEMY_TOWER_DATA ~= nil
-                  and functions.GetUnitDistance(
-                        env.BOT_DATA,
-                        env.ENEMY_TOWER_DATA)
+                  and env.ENEMY_TOWER_DISTANCE
                       <= algorithms.GetAttackRange(
                            env.BOT_DATA,
                            env.ENEMY_TOWER_DATA,
@@ -105,9 +103,7 @@ end
 
 function M.pre_attack_enemy_tower()
   return env.ENEMY_TOWER_DATA ~= nil
-         and functions.GetUnitDistance(
-               env.BOT_DATA,
-               env.ENEMY_TOWER_DATA)
+         and env.ENEMY_TOWER_DISTANCE
              <= algorithms.GetAttackRange(
                   env.BOT_DATA,
                   env.ENEMY_TOWER_DATA,

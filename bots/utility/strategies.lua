@@ -73,9 +73,7 @@ function M.pre_offensive()
                   and not env.DOES_ENEMY_HERO_HAVE_ADVANTAGE)
 
               or (env.ENEMY_TOWER_DATA ~= nil
-                  and functions.GetUnitDistance(
-                        env.BOT_DATA,
-                        env.ENEMY_TOWER_DATA)
+                  and env.ENEMY_TOWER_DISTANCE
                       <= algorithms.GetAttackRange(
                            env.BOT_DATA,
                            env.ENEMY_TOWER_DATA,
