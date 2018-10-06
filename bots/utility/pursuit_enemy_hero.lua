@@ -19,11 +19,54 @@ local map = require(
 local moves = require(
   GetScriptDirectory() .."/utility/moves")
 
+local all_units = require(
+  GetScriptDirectory() .."/utility/all_units")
+
 local M = {}
 
 ---------------------------------
 
+local function IsLastSeenLocationValid(unit_data)
+  return unit_data.is_visible
+         or constants.LAST_SEEN_LOCATION_MIN_DISTANCE
+            < functions.GetUnitDistance(unit_data, env.BOT_DATA)
+end
+
+local LAST_ENEMY_HERO_DEATHS = 0
+
+local function IsHeroDiedRecently(unit_data)
+  local deaths = GetHeroDeaths(unit_data.player_id)
+
+  if LAST_ENEMY_HERO_DEATHS < deaths then
+    LAST_ENEMY_HERO_DEATHS = deaths
+    return true
+  else
+    return false
+  end
+end
+
+local function IsUnitTpOut(unit_data)
+  -- TODO: Store a name of the current casting ability in the UNIT_LIST
+  -- and check it here for TP out.
+
+  return not unit_data.is_visible
+         and unit_data.is_channeling
+end
+
+local function InvalidateEnemyHero()
+  if not IsLastSeenLocationValid(env.ENEMY_HERO_DATA)
+     or IsHeroDiedRecently(env.ENEMY_HERO_DATA)
+     or IsUnitTpOut(env.ENEMY_HERO_DATA) then
+
+    all_units.InvalidateUnit(env.ENEMY_HERO_DATA)
+  end
+end
+
 function M.pre_pursuit_enemy_hero()
+  if env.ENEMY_HERO_DATA ~= nil then
+    InvalidateEnemyHero()
+  end
+
   return env.ENEMY_HERO_DATA ~= nil
          and not env.IS_BOT_LOW_HP
          and algorithms.HasLevelForAggression(env.BOT_DATA)

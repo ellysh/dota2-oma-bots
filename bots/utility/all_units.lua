@@ -140,57 +140,11 @@ local function GetBotData()
            end)
 end
 
-local LAST_ENEMY_HERO_DEATHS = 0
-
-local function IsHeroDiedRecently(unit_data)
-  if unit_data.type ~= UNIT_TYPE["HERO"] then
-    return false end
-
-  local deaths = GetHeroDeaths(unit_data.player_id)
-
-  if LAST_ENEMY_HERO_DEATHS < deaths then
-    LAST_ENEMY_HERO_DEATHS = deaths
-    return true
-  else
-    return false
-  end
-end
-
-local function IsLastSeenLocationValid(unit_data)
-  local bot_data = GetBotData()
-
-  return unit_data.is_visible
-         or constants.LAST_SEEN_LOCATION_MIN_DISTANCE
-            < functions.GetUnitDistance(unit_data, bot_data)
-end
-
-local function IsUnitTpOut(unit_data)
-  -- TODO: Store a name of the current casting ability in the UNIT_LIST
-  -- and check it here for TP out.
-
-  return not unit_data.is_visible
-         and unit_data.is_channeling
-end
-
 local function InvalidateUnit(_, unit_data)
   local age = CURRENT_GAME_TIME - unit_data.timestamp
 
-  if 6 <= age
-     or not IsLastSeenLocationValid(unit_data)
-     or IsHeroDiedRecently(unit_data)
-     or IsUnitTpOut(unit_data) then
-
-    -- We should store the unit details because they will be cleared by
-    -- the functions.ClearTable call
-
-    local invalid_team = unit_data.team
-    local invalid_type = unit_data.type
-    local invalid_handle = tostring(unit_data.handle)
-
-    functions.ClearTable(
-      UNIT_LIST[invalid_team][invalid_type][invalid_handle])
-
-    UNIT_LIST[invalid_team][invalid_type][invalid_handle] = nil
+  if 6 <= age then
+    M.InvalidateUnit(unit_data)
   elseif 0 < age then
     unit_data.is_visible = false
   end
@@ -381,6 +335,20 @@ end
 
 function M.GetAllyBuildingsData(unit_data)
   return UNIT_LIST[unit_data.team][UNIT_TYPE["BUILDING"]]
+end
+
+function M.InvalidateUnit(unit_data)
+  -- We should store the unit details because they will be cleared by
+  -- the functions.ClearTable call
+
+  local invalid_team = unit_data.team
+  local invalid_type = unit_data.type
+  local invalid_handle = tostring(unit_data.handle)
+
+  functions.ClearTable(
+    UNIT_LIST[invalid_team][invalid_type][invalid_handle])
+
+  UNIT_LIST[invalid_team][invalid_type][invalid_handle] = nil
 end
 
 -- Provide an access to local functions for unit tests only
