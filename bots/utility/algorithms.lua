@@ -230,14 +230,8 @@ function M.GetEnemyTowerDistance(unit_data)
 end
 
 function M.DoesTowerProtectUnit(unit_data)
-  local bot_data = M.GetBotData()
-  local bot_tower_distance = M.GetEnemyTowerDistance(bot_data)
-
-  return bot_tower_distance <= constants.CREEP_MAX_AGRO_RADIUS
-         or M.GetAllyTowerDistance(unit_data)
-            <= constants.TOWER_PROTECT_DISTANCE
-         or bot_tower_distance
-            < functions.GetUnitDistance(bot_data, unit_data)
+  return M.GetAllyTowerDistance(unit_data)
+         <= constants.TOWER_PROTECT_DISTANCE
 end
 
 function M.DoesBotOrCourierHaveItem(item_name)
