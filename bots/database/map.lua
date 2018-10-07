@@ -22,6 +22,10 @@ M.MAP = {
     tower_tier_1_rear_deep = Vector(-2400, -2040, 500),
     between_tier_1_tear_2 = Vector(-2562, -2062, 1030),
     river = Vector(-598, -472, 260),
+    high_ground_farm_bot = Vector(-600, -1150, 100),
+    high_ground_farm_top = Vector(-1300, -450, 100),
+    forest_farm_bot = Vector(-1055, -1327, 100),
+    forest_farm_top = Vector(-1664, -1000, 100),
   },
   [TEAM_DIRE] = {
     tower_tier_1_attack = Vector(524, 652, 800),
@@ -43,9 +47,15 @@ M.MAP = {
     tower_tier_1_rear_deep = Vector(1470, 1100, 450),
     between_tier_1_tear_2 = Vector(1606, 1236, 1040),
     river = Vector(-437, -313, 250),
+    high_ground_farm_bot = Vector(350, -220, 100),
+    high_ground_farm_top = Vector(-400, 470, 100),
+    forest_farm_bot = Vector(814, 217, 100),
+    forest_farm_top = Vector(218, 928, 100),
   },
   [TEAM_NEUTRAL] = {
     river = Vector(-521, -375, 280),
+    river_farm_bot = Vector(-249, -623, 100),
+    river_farm_top = Vector(-834, -93, 100),
   },
 }
 

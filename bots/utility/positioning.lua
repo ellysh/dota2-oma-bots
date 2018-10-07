@@ -102,7 +102,7 @@ function M.pre_increase_creeps_distance()
 end
 
 function M.increase_creeps_distance()
-  env.BOT:Action_MoveDirectly(env.SAFE_SPOT)
+  env.BOT:Action_MoveDirectly(env.FARM_SPOT)
 end
 
 ---------------------------------

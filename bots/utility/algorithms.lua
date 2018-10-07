@@ -430,6 +430,31 @@ function M.GetSafeSpot(unit_data, enemy_units)
            end)
 end
 
+local FARM_SPOTS = {
+  map.GetEnemySpot("high_ground_farm_bot"),
+  map.GetEnemySpot("high_ground_farm_top"),
+  map.GetNeutralSpot("river_farm_bot"),
+  map.GetNeutralSpot("river_farm_top"),
+  map.GetAllySpot("high_ground_farm_bot"),
+  map.GetAllySpot("high_ground_farm_top"),
+  map.GetAllySpot("forest_farm_bot"),
+  map.GetAllySpot("forest_farm_top"),
+  map.GetAllySpot("high_ground_safe"),
+  map.GetAllySpot("forest_bot"),
+  map.GetAllySpot("forest_top"),
+  map.GetAllySpot("forest_back_bot"),
+  map.GetAllySpot("forest_back_top"),
+}
+
+function M.GetFarmSpot(unit_data, enemy_units)
+  return functions.GetElementWith(
+           FARM_SPOTS,
+           M.CompareMinDistance,
+           function(spot)
+             return IsSpotSafe(spot, unit_data, enemy_units)
+           end)
+end
+
 function M.IsItemCastable(unit_data, item_name)
   return M.IsItemPresent(unit_data, item_name)
          and M.IsItemInInventory(unit_data, item_name)

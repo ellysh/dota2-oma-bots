@@ -32,6 +32,7 @@ M.LAST_HIT_ALLY_CREEP = {}
 M.ALLY_CREEPS_HP = 0
 M.ENEMY_CREEPS_HP = 0
 M.SAFE_SPOT = {}
+M.FARM_SPOT = {}
 M.FOUNTAIN_SPOT = {}
 M.DOES_TOWER_PROTECT_ENEMY = false
 M.IS_FOCUSED_BY_CREEPS = false
@@ -191,6 +192,11 @@ function M.UpdateVariables()
                           constants.MAX_UNIT_SEARCH_RADIUS))
 
   M.SAFE_SPOT = algorithms.GetSafeSpot(M.BOT_DATA,
+                                       {M.ENEMY_HERO_DATA,
+                                        M.ENEMY_CREEP_FRONT_DATA,
+                                        M.ENEMY_CREEP_BACK_DATA})
+
+  M.FARM_SPOT = algorithms.GetFarmSpot(M.BOT_DATA,
                                        {M.ENEMY_HERO_DATA,
                                         M.ENEMY_CREEP_FRONT_DATA,
                                         M.ENEMY_CREEP_BACK_DATA})
