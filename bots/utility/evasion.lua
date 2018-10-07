@@ -61,7 +61,11 @@ end
 
 function M.pre_move_safe_recovery()
   return (env.BOT_DATA.is_flask_healing
-          and 1 < GetFlaskHealingRemainingDuration())
+          and 1 < GetFlaskHealingRemainingDuration()
+          and constants.FLASK_HEALING_PER_SECOND
+              < functions.GetDelta(
+                env.BOT_DATA.max_health,
+                env.BOT_DATA.health))
 
          and not map.IsUnitInSpot(env.BOT_DATA, env.SAFE_SPOT)
 
