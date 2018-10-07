@@ -80,12 +80,16 @@ function M.pre_increase_creeps_distance()
 
   return (last_hit_creep == nil
           and ((env.ENEMY_HERO_DATA ~= nil
-                and env.DOES_ENEMY_HERO_HAVE_ADVANTAGE
-                and not env.DOES_BOT_HAVE_ADVANTAGE
-                and functions.GetUnitDistance(
-                      env.BOT_DATA,
-                      env.ENEMY_HERO_DATA)
-                    < constants.MIN_HERO_DISTANCE)
+                and ((env.DOES_ENEMY_HERO_HAVE_ADVANTAGE
+                      and not env.DOES_BOT_HAVE_ADVANTAGE
+                      and functions.GetUnitDistance(
+                            env.BOT_DATA,
+                            env.ENEMY_HERO_DATA)
+                          < constants.MIN_HERO_DISTANCE)
+
+                     or algorithms.IsUnitPositionBetter(
+                          env.ENEMY_HERO_DATA,
+                          env.BOT_DATA)))
 
                or (env.ENEMY_CREEP_FRONT_DATA ~= nil
                    and functions.GetUnitDistance(

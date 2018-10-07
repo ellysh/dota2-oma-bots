@@ -433,8 +433,6 @@ end
 local FARM_SPOTS = {
   map.GetEnemySpot("high_ground_farm_bot"),
   map.GetEnemySpot("high_ground_farm_top"),
-  map.GetNeutralSpot("river_farm_bot"),
-  map.GetNeutralSpot("river_farm_top"),
   map.GetAllySpot("high_ground_farm_bot"),
   map.GetAllySpot("high_ground_farm_top"),
   map.GetAllySpot("forest_farm_bot"),
@@ -685,6 +683,11 @@ end
 
 function M.HasLevelForAggression(unit_data)
   return constants.MIN_HERO_LEVEL_FOR_AGRESSION <= unit_data.level
+end
+
+function M.IsUnitPositionBetter(unit_data, target_data)
+  return GetHeightLevel(unit_data.location)
+         < GetHeightLevel(target_data.location)
 end
 
 -- Provide an access to local functions for unit tests only

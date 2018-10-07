@@ -21,11 +21,6 @@ end
 
 ---------------------------------
 
-local function IsUnitPositionBetter(unit_data, target_data)
-  return GetHeightLevel(unit_data.location)
-         < GetHeightLevel(target_data.location)
-end
-
 local function IsUnitIncomingDamageMore(unit_data, target_data)
   return (target_data.incoming_damage_from_creeps
           + target_data.incoming_damage_from_towers)
@@ -50,7 +45,9 @@ function M.pre_attack_enemy_hero()
                    env.BOT_DATA,
                    constants.MAX_MELEE_ATTACK_RANGE)
 
-         and ((IsUnitPositionBetter(env.BOT_DATA, env.ENEMY_HERO_DATA)
+         and ((algorithms.IsUnitPositionBetter(
+                 env.BOT_DATA,
+                 env.ENEMY_HERO_DATA)
                and not IsUnitIncomingDamageMore(
                          env.BOT_DATA,
                          env.ENEMY_HERO_DATA))
@@ -58,7 +55,7 @@ function M.pre_attack_enemy_hero()
               or (IsUnitIncomingDamageMore(
                     env.ENEMY_HERO_DATA,
                     env.BOT_DATA)
-                  and not IsUnitPositionBetter(
+                  and not algorithms.IsUnitPositionBetter(
                             env.ENEMY_HERO_DATA,
                             env.BOT_DATA)))
 end
