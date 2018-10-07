@@ -1,3 +1,10 @@
+* version 1.5
+  - Add spots for farming.
+  - Fix bugs with pursuit the enemy hero.
+  - Fix bugs with positioning when the bot farms.
+  - Optimize timings when using the flask.
+  - Fix bugs with switching strategies.
+
 * version 1.4
   - Rework the item build.
   - Add moves for attacking the enemy hero and tower with mom.
