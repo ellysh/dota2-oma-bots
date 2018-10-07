@@ -50,7 +50,7 @@ local function GetClosestCreep(radius, get_function, direction)
 
   return functions.GetElementWith(
     creeps,
-    algorithms.CompareMinDistance,
+    algorithms.CompareMinUnitDistance,
     function(unit_data)
       return not algorithms.IsUnitLowHp(unit_data)
              and algorithms.IsAttackTargetable(unit_data)

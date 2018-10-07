@@ -73,15 +73,19 @@ function M.CompareMaxDamage(t, a, b)
   return t[b].attack_damage < t[a].attack_damage
 end
 
-function M.CompareMinDistance(t, a, b)
+function M.CompareMinUnitDistance(t, a, b)
   local bot_data = M.GetBotData()
 
   return functions.GetUnitDistance(bot_data, t[a])
          < functions.GetUnitDistance(bot_data, t[b])
 end
 
--- TODO: Remove this function because we are searching units in
--- the UNIT_LIST now.
+function M.CompareMinDistance(t, a, b)
+  local bot_data = M.GetBotData()
+
+  return functions.GetDistance(bot_data.location, t[a])
+         < functions.GetDistance(bot_data.location, t[b])
+end
 
 local function GetNormalizedRadius(radius)
   if radius == nil or radius == 0 then
@@ -406,76 +410,24 @@ local function IsSpotSafe(spot, unit_data, enemy_units)
                        or M.IsFocusedByCreeps(unit_data)))
 end
 
-local function GetClosestSafeSpot(
-  spot1,
-  spot2,
-  unit_data,
-  enemy_units)
-
-  local is_spot1_safe = IsSpotSafe(spot1, unit_data, enemy_units)
-  local is_spot2_safe = IsSpotSafe(spot2, unit_data, enemy_units)
-
-  if is_spot1_safe and is_spot2_safe then
-    return functions.ternary(
-             functions.GetDistance(unit_data.location, spot1)
-               < functions.GetDistance(unit_data.location, spot2),
-             spot1,
-             spot2)
-  else
-    return nil
-  end
-end
+local SAFE_SPOTS = {
+  map.GetAllySpot("high_ground_safe"),
+  map.GetAllySpot("forest_bot"),
+  map.GetAllySpot("forest_top"),
+  map.GetAllySpot("forest_back_bot"),
+  map.GetAllySpot("forest_back_top"),
+  map.GetAllySpot("forest_deep_bot"),
+  map.GetAllySpot("forest_deep_top"),
+  map.GetAllySpot("fountain"),
+}
 
 function M.GetSafeSpot(unit_data, enemy_units)
-  if M.IsItemCastable(unit_data, "item_flask")
-     or M.IsItemCastable(unit_data, "item_tango")
-     or unit_data.is_healing then
-
-    local hg_spot = map.GetUnitAllySpot(unit_data, "high_ground_safe")
-
-    local forest_spot = GetClosestSafeSpot(
-                          map.GetUnitAllySpot(unit_data, "forest_top"),
-                          map.GetUnitAllySpot(unit_data, "forest_bot"),
-                          unit_data,
-                          enemy_units)
-
-    if IsSpotSafe(hg_spot, unit_data, enemy_units)
-       and forest_spot ~= nil then
-
-      return hg_spot
-    end
-
-    if forest_spot ~= nil then
-      return forest_spot end
-  end
-
-  local forest_back_spot = GetClosestSafeSpot(
-                            map.GetUnitAllySpot(
-                              unit_data,
-                              "forest_back_top"),
-                            map.GetUnitAllySpot(
-                              unit_data,
-                              "forest_back_bot"),
-                            unit_data,
-                            enemy_units)
-
-  if forest_back_spot ~= nil then
-    return forest_back_spot end
-
-  local forest_deep_spot = GetClosestSafeSpot(
-                            map.GetUnitAllySpot(
-                              unit_data,
-                              "forest_deep_top"),
-                            map.GetUnitAllySpot(
-                              unit_data,
-                              "forest_deep_bot"),
-                            unit_data,
-                            enemy_units)
-
-  if forest_deep_spot ~= nil then
-    return forest_deep_spot end
-
-  return map.GetUnitAllySpot(unit_data, "fountain")
+  return functions.GetElementWith(
+           SAFE_SPOTS,
+           M.CompareMinDistance,
+           function(spot)
+             return IsSpotSafe(spot, unit_data, enemy_units)
+           end)
 end
 
 function M.IsItemCastable(unit_data, item_name)
