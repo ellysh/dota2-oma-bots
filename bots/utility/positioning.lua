@@ -92,13 +92,6 @@ function M.pre_increase_creeps_distance()
                          env.BOT_DATA,
                          env.ENEMY_CREEP_FRONT_DATA)
                        < GetBaseCreepDistance())))
-
-         or (env.ALLY_CREEP_FRONT_DATA == nil
-             and not map.IsUnitInSpot(
-                       env.BOT_DATA,
-                       map.GetUnitAllySpot(
-                         env.BOT_DATA,
-                         "second_body_block_area")))
 end
 
 function M.increase_creeps_distance()
