@@ -98,6 +98,14 @@ function M.pre_move_safe_evasion()
 
          or env.IS_FOCUSED_BY_UNKNOWN_UNIT
 
+         or (env.ENEMY_HERO_DATA ~= nil
+             and functions.GetUnitDistance(
+                   env.BOT_DATA,
+                   env.ENEMY_HERO_DATA)
+                 < constants.MIN_HERO_DISTANCE)
+
+         or env.ENEMY_TOWER_DISTANCE < constants.MIN_TOWER_DISTANCE
+
          or (map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
              and not algorithms.HasLevelForAggression(env.BOT_DATA))
 end
