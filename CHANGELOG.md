@@ -1,3 +1,8 @@
+* version 1.5a
+  - Protect the allied tower aggressively if the enemy hero attacks it.
+  - Fix a bug with stops during a retreat.
+  - Always keep a minimal distance to the enemy hero and tower.
+
 * version 1.5
   - Add spots for farming.
   - Fix bugs with pursuit the enemy hero.
