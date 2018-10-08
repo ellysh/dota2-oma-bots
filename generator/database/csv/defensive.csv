@@ -14,10 +14,14 @@ attack_with_mom;use_frost_arrow;use_frost_arrow
 ;attack_enemy_hero;attack_enemy_hero
 ;kill_enemy_creep;kill_enemy_creep
 ;;
-defend_tower;move_enemy_creep;move_enemy_creep
+defend_tower;use_silence;use_silence
+;attack_enemy_hero;attack_enemy_hero
+;;stop_attack
+;move_enemy_creep;move_enemy_creep
 ;pull_enemy_creep;pull_enemy_creep
 ;move_safe;move_safe
 ;kill_enemy_creep;kill_enemy_creep
+;;stop_attack
 ;;
 evasion;use_silence;use_silence
 ;move_safe_recovery;move_safe_recovery
