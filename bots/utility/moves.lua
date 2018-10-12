@@ -110,11 +110,8 @@ function M.pre_use_silence()
 
   return env.ENEMY_HERO_DATA ~= nil
          and env.ENEMY_HERO_DATA.is_visible
-         and not env.ENEMY_HERO_DATA.is_silenced
-         and not env.BOT_DATA.is_silenced
          and ability:IsFullyCastable()
          and env.ENEMY_HERO_DISTANCE <= ability:GetCastRange()
-         and not env.DOES_TOWER_PROTECT_ENEMY
 end
 
 function M.use_silence()

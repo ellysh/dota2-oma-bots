@@ -17,8 +17,7 @@ pursuit_enemy_hero;attack_enemy_hero;attack_enemy_hero
 ;;stop_attack
 ;move_enemy_hero;move_enemy_hero
 ;;
-evasion;use_silence;use_silence
-;move_safe_recovery;move_safe_recovery
+evasion;move_safe_recovery;move_safe_recovery
 ;move_safe_evasion;move_safe_evasion
 ;;
 farm;lasthit_enemy_creep;lasthit_enemy_creep

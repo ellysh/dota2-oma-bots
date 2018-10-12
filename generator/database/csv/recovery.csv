@@ -11,12 +11,12 @@ item_recovery;heal_tango;heal_tango
 ;heal_faerie_fire;heal_faerie_fire
 ;tp_base;tp_base
 ;;
-base_recovery;deliver_items;deliver_items
+base_recovery;use_silence;use_silence
+;deliver_items;deliver_items
 ;restore_hp_on_base;restore_hp_on_base
 ;move_base;move_base
 ;;
-evasion;use_silence;use_silence
-;move_safe_recovery;move_safe_recovery
+evasion;move_safe_recovery;move_safe_recovery
 ;move_safe_evasion;move_safe_evasion
 ;;
 force_stop;stop;stop_attack_and_move

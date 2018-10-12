@@ -32,28 +32,6 @@ end
 
 ---------------------------------
 
-local function DoesPowerEnemyHeroPursuit()
-  return env.ENEMY_HERO_DATA ~= nil
-
-         and env.IS_BOT_LOW_HP
-
-         and algorithms.IsTargetInAttackRange(
-               env.ENEMY_HERO_DATA,
-               env.BOT_DATA,
-               true)
-end
-
-function M.pre_use_silence()
-  return moves.pre_use_silence()
-         and DoesPowerEnemyHeroPursuit()
-end
-
-function M.use_silence()
-  moves.use_silence()
-end
-
----------------------------------
-
 local function GetFlaskHealingRemainingDuration()
   local modifier = env.BOT:GetModifierByName("modifier_flask_healing")
   return env.BOT:GetModifierRemainingDuration(modifier)
@@ -81,6 +59,17 @@ function M.move_safe_recovery()
 end
 
 ---------------------------------
+
+local function DoesPowerEnemyHeroPursuit()
+  return env.ENEMY_HERO_DATA ~= nil
+
+         and env.IS_BOT_LOW_HP
+
+         and algorithms.IsTargetInAttackRange(
+               env.ENEMY_HERO_DATA,
+               env.BOT_DATA,
+               true)
+end
 
 function M.pre_move_safe_evasion()
   return env.IS_FOCUSED_BY_CREEPS

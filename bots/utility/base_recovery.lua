@@ -13,6 +13,9 @@ local action_timing = require(
 local env = require(
   GetScriptDirectory() .."/utility/environment")
 
+local map = require(
+  GetScriptDirectory() .."/utility/map")
+
 local moves = require(
   GetScriptDirectory() .."/utility/moves")
 
@@ -26,6 +29,21 @@ function M.pre_base_recovery()
          and ((env.IS_BOT_LOW_HP
                and not env.BOT_DATA.is_healing)
               or env.IS_BASE_RECOVERY)
+end
+
+---------------------------------
+
+function M.pre_use_silence()
+  return moves.pre_use_silence()
+         and env.IS_BOT_LOW_HP
+         and (map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
+              or map.IsUnitInSpot(
+                   env.BOT_DATA,
+                   map.GetEnemySpot("high_ground")))
+end
+
+function M.use_silence()
+  moves.use_silence()
 end
 
 ---------------------------------

@@ -221,6 +221,13 @@ M.OBJECTIVES = {
     module = require(GetScriptDirectory() .."/utility/base_recovery"),
     moves = {
       {
+        move = "use_silence",
+        actions = {
+          {action = "use_silence"},
+
+        },
+      },
+      {
         move = "deliver_items",
         actions = {
           {action = "deliver_items"},
@@ -248,13 +255,6 @@ M.OBJECTIVES = {
     objective = "evasion",
     module = require(GetScriptDirectory() .."/utility/evasion"),
     moves = {
-      {
-        move = "use_silence",
-        actions = {
-          {action = "use_silence"},
-
-        },
-      },
       {
         move = "move_safe_recovery",
         actions = {
@@ -453,13 +453,6 @@ M.OBJECTIVES = {
     objective = "evasion",
     module = require(GetScriptDirectory() .."/utility/evasion"),
     moves = {
-      {
-        move = "use_silence",
-        actions = {
-          {action = "use_silence"},
-
-        },
-      },
       {
         move = "move_safe_recovery",
         actions = {
@@ -839,13 +832,6 @@ M.OBJECTIVES = {
     module = require(GetScriptDirectory() .."/utility/evasion"),
     moves = {
       {
-        move = "use_silence",
-        actions = {
-          {action = "use_silence"},
-
-        },
-      },
-      {
         move = "move_safe_recovery",
         actions = {
           {action = "move_safe_recovery"},
@@ -1143,13 +1129,6 @@ M.OBJECTIVES = {
     objective = "evasion",
     module = require(GetScriptDirectory() .."/utility/evasion"),
     moves = {
-      {
-        move = "use_silence",
-        actions = {
-          {action = "use_silence"},
-
-        },
-      },
       {
         move = "move_safe_recovery",
         actions = {
