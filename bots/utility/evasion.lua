@@ -32,6 +32,22 @@ end
 
 ---------------------------------
 
+function M.pre_use_silence()
+  return moves.pre_use_silence()
+
+         and algorithms.HasModifier(
+                   env.BOT_DATA,
+                   "modifier_drow_ranger_frost_arrows_slow")
+
+         and env.ENEMY_HERO_DISTANCE <= constants.MIN_HERO_DISTANCE
+end
+
+function M.use_silence()
+  moves.use_silence()
+end
+
+---------------------------------
+
 local function GetFlaskHealingRemainingDuration()
   local modifier = env.BOT:GetModifierByName("modifier_flask_healing")
   return env.BOT:GetModifierRemainingDuration(modifier)

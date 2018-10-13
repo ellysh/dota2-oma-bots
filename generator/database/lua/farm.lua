@@ -64,6 +64,13 @@ M.OBJECTIVES = {
     module = require(GetScriptDirectory() .."/utility/evasion"),
     moves = {
       {
+        move = "use_silence",
+        actions = {
+          {action = "use_silence"},
+
+        },
+      },
+      {
         move = "move_safe_recovery",
         actions = {
           {action = "move_safe_recovery"},

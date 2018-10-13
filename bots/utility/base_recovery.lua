@@ -37,9 +37,16 @@ function M.pre_use_silence()
   return moves.pre_use_silence()
          and env.IS_BOT_LOW_HP
          and (map.IsUnitInEnemyTowerAttackRange(env.BOT_DATA)
+
               or map.IsUnitInSpot(
                    env.BOT_DATA,
-                   map.GetEnemySpot("high_ground")))
+                   map.GetEnemySpot("high_ground"))
+
+              or (algorithms.HasModifier(
+                    env.BOT_DATA,
+                    "modifier_drow_ranger_frost_arrows_slow")
+
+                 and env.ENEMY_HERO_DISTANCE <= constants.MIN_HERO_DISTANCE))
 end
 
 function M.use_silence()

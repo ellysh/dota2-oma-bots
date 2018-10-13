@@ -7,7 +7,8 @@ swap_items;swap_flask_tp;swap_flask_tp
 ;;
 item_recovery;heal_tango;heal_tango
 ;;
-evasion;move_safe_recovery;move_safe_recovery
+evasion;use_silence;use_silence
+;move_safe_recovery;move_safe_recovery
 ;move_safe_evasion;move_safe_evasion
 ;;
 upgrade_skills;upgrade;upgrade
