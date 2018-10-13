@@ -1,3 +1,7 @@
+* version 1.5b
+  - Fix a bug with usage silence when retreating.
+  - Fix a bug with diving under tier 2 and tier 3 while pursuing the enemy hero.
+
 * version 1.5a
   - Protect the allied tower aggressively if the enemy hero attacks it.
   - Fix a bug with stops during a retreat.
