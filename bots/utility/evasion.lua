@@ -88,10 +88,8 @@ function M.pre_move_safe_evasion()
          or env.IS_FOCUSED_BY_UNKNOWN_UNIT
 
          or (env.ENEMY_HERO_DATA ~= nil
-             and functions.GetUnitDistance(
-                   env.BOT_DATA,
-                   env.ENEMY_HERO_DATA)
-                 < constants.MIN_HERO_DISTANCE)
+             and env.ENEMY_HERO_DISTANCE
+                 < constants.BASE_HERO_DISTANCE)
 
          or env.ENEMY_TOWER_DISTANCE < constants.MIN_TOWER_DISTANCE
 

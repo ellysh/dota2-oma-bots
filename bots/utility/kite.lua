@@ -65,15 +65,12 @@ function M.pre_attack_enemy_tower()
 
          and (env.ENEMY_HERO_DATA == nil
 
-              or not algorithms.IsTargetInAttackRange(
-                       env.ENEMY_HERO_DATA,
-                       env.BOT_DATA,
-                       false)
+              or (constants.MIN_HERO_DISTANCE < env.ENEMY_HERO_DISTANCE
 
-              or constants.UNIT_HALF_HEALTH_LEVEL
-                 <= functions.GetRate(
-                      env.BOT_DATA.health,
-                      env.BOT_DATA.max_health))
+                  and constants.UNIT_HALF_HEALTH_LEVEL
+                      <= functions.GetRate(
+                           env.BOT_DATA.health,
+                           env.BOT_DATA.max_health)))
 end
 
 function M.attack_enemy_tower()
