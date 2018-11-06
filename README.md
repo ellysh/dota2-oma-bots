@@ -1,7 +1,5 @@
 # Dota 2 OMA Bots 1.5b version
 
-*This project is still in a developing stage.*
-
 These are Objective-Moves-Actions (OMA) bots for Dota 2.
 
 A current development state is available in the [`CHANGELOG.md`](CHANGELOG.md) file.
