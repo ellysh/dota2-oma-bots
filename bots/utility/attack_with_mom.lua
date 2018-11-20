@@ -23,7 +23,9 @@ local M = {}
 function M.pre_attack_with_mom()
   return algorithms.IsBotAlive()
          and not env.IS_BOT_LOW_HP
-         and algorithms.DoesBotOrCourierHaveItem("item_mask_of_madness")
+         and algorithms.IsItemPresent(
+               env.BOT_DATA,
+               "item_mask_of_madness")
 end
 
 ---------------------------------
