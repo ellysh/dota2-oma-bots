@@ -218,7 +218,7 @@ function M.GetUnitDistance(unit1_data, unit2_data)
 end
 
 function M.GetDamageMultiplier(armor)
-  local result = 1 - (0.05 * armor / (1 + 0.05 * math.abs(armor)))
+  local result = 1 - (0.052 * armor / (0.9 + 0.048 * math.abs(armor)))
 
   if result < 0 then
     return 0 end
