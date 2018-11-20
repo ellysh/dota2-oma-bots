@@ -1,3 +1,8 @@
+* version 1.6
+  - Adapt the bot for the 7.20 patch.
+  - Fix a bug when the bot uses mom, attacks the enemy tower and dies.
+  - Change an item build according to the 7.20 patch.
+
 * version 1.5b
   - Fix a bug with usage silence when retreating.
   - Fix a bug with diving under tier 2 and tier 3 while pursuing the enemy hero.

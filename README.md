@@ -1,4 +1,4 @@
-# Dota 2 OMA Bots 1.5b version
+# Dota 2 OMA Bots 1.6 version
 
 These are Objective-Moves-Actions (OMA) bots for Dota 2.
 
