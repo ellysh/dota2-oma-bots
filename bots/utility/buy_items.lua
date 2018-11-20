@@ -79,43 +79,6 @@ end
 
 ---------------------------------
 
-function M.pre_buy_ring_of_protection()
-  return pre_buy_item("item_ring_of_protection")
-
-         and algorithms.DoesBotOrCourierHaveItem("item_power_treads")
-
-         and not algorithms.DoesBotOrCourierHaveItem(
-                   "item_ring_of_basilius")
-
-         and not algorithms.DoesBotOrCourierHaveItem(
-                   "item_ring_of_aquila")
-end
-
-function M.buy_ring_of_protection()
-  algorithms.BuyItem("item_ring_of_protection")
-end
-
----------------------------------
-
-function M.pre_buy_sobi_mask()
-  return pre_buy_item("item_sobi_mask")
-
-         and algorithms.DoesBotOrCourierHaveItem(
-               "item_ring_of_protection")
-
-         and not algorithms.DoesBotOrCourierHaveItem(
-                   "item_ring_of_basilius")
-
-         and not algorithms.DoesBotOrCourierHaveItem(
-                   "item_ring_of_aquila")
-end
-
-function M.buy_sobi_mask()
-  algorithms.BuyItem("item_sobi_mask")
-end
-
----------------------------------
-
 function M.pre_buy_boots()
   return pre_buy_item("item_boots")
          and not algorithms.DoesBotOrCourierHaveItem(
@@ -181,8 +144,7 @@ end
 ---------------------------------
 
 function M.pre_buy_two_boots_of_elves()
-  return algorithms.DoesBotOrCourierHaveItem("item_ring_of_aquila")
-         and (2 * GetItemCost("item_boots_of_elves")) <= env.BOT_DATA.gold
+  return (2 * GetItemCost("item_boots_of_elves")) <= env.BOT_DATA.gold
          and not algorithms.DoesBotOrCourierHaveItem(
                    "item_boots_of_elves")
          and not algorithms.DoesBotOrCourierHaveItem(

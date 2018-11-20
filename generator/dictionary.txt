@@ -22,8 +22,6 @@ buy_ogre_axe
 buy_quarterstaff
 buy_recipe_lesser_crit
 buy_recipe_wraith_band
-buy_ring_of_protection
-buy_sobi_mask
 buy_starting_items
 buy_tango
 buy_tpscroll
