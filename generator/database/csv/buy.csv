@@ -4,7 +4,7 @@ buy_items;buy_tango;buy_tango
 ;buy_tpscroll;buy_tpscroll
 ;"-- Power Treads";
 ;buy_boots;buy_boots
-;buy_gloves;buy_gloves
+;buy_blades_of_attack_for_pt;buy_blades_of_attack_for_pt
 ;buy_boots_of_elves;buy_boots_of_elves
 ;"-- Mask of Madness";
 ;buy_lifesteal;buy_lifesteal
@@ -13,7 +13,7 @@ buy_items;buy_tango;buy_tango
 ;buy_two_boots_of_elves;buy_two_boots_of_elves
 ;buy_ogre_axe;buy_ogre_axe
 ;"-- Crystalys";
-;buy_blades_of_attack;buy_blades_of_attack
+;buy_blades_of_attack_for_crit;buy_blades_of_attack_for_crit
 ;buy_broadsword;buy_broadsword
 ;buy_recipe_lesser_crit;buy_recipe_lesser_crit
 ;deliver_items;deliver_items

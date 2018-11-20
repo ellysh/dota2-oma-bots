@@ -39,9 +39,9 @@ M.OBJECTIVES = {
         },
       },
       {
-        move = "buy_gloves",
+        move = "buy_blades_of_attack_for_pt",
         actions = {
-          {action = "buy_gloves"},
+          {action = "buy_blades_of_attack_for_pt"},
 
         },
       },
@@ -81,9 +81,9 @@ M.OBJECTIVES = {
         },
       },
       {
-        move = "buy_blades_of_attack",
+        move = "buy_blades_of_attack_for_crit",
         actions = {
-          {action = "buy_blades_of_attack"},
+          {action = "buy_blades_of_attack_for_crit"},
 
         },
       },

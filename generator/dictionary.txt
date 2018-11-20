@@ -10,12 +10,12 @@ attack_with_mom
 base_recovery
 body_block
 buyback
-buy_blades_of_attack
+buy_blades_of_attack_for_crit
+buy_blades_of_attack_for_pt
 buy_boots
 buy_boots_of_elves
 buy_broadsword
 buy_flask
-buy_gloves
 buy_items
 buy_lifesteal
 buy_ogre_axe

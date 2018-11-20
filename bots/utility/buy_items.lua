@@ -91,16 +91,16 @@ end
 
 ---------------------------------
 
-function M.pre_buy_gloves()
-  return pre_buy_item("item_gloves")
+function M.pre_buy_blades_of_attack_for_pt()
+  return pre_buy_item("item_blades_of_attack")
 
          and algorithms.DoesBotOrCourierHaveItem("item_boots")
 
          and not algorithms.DoesBotOrCourierHaveItem("item_power_treads")
 end
 
-function M.buy_gloves()
-  algorithms.BuyItem("item_gloves")
+function M.buy_blades_of_attack_for_pt()
+  algorithms.BuyItem("item_blades_of_attack")
 end
 
 ---------------------------------
@@ -171,13 +171,13 @@ end
 
 ---------------------------------
 
-function M.pre_buy_blades_of_attack()
+function M.pre_buy_blades_of_attack_for_crit()
   return pre_buy_item("item_blades_of_attack")
          and algorithms.DoesBotOrCourierHaveItem("item_dragon_lance")
          and not algorithms.DoesBotOrCourierHaveItem("item_lesser_crit")
 end
 
-function M.buy_blades_of_attack()
+function M.buy_blades_of_attack_for_crit()
   algorithms.BuyItem("item_blades_of_attack")
 end
 
