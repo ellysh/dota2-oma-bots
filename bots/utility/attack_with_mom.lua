@@ -103,11 +103,16 @@ end
 
 function M.pre_attack_enemy_tower()
   return env.ENEMY_TOWER_DATA ~= nil
+
+         and not env.IS_FOCUSED_BY_ENEMY_HERO
+         and not env.IS_FOCUSED_BY_UNKNOWN_UNIT
+
          and env.ENEMY_TOWER_DISTANCE
              <= algorithms.GetAttackRange(
                   env.BOT_DATA,
                   env.ENEMY_TOWER_DATA,
                   false)
+
          and algorithms.HasModifier(
                env.BOT_DATA,
                "modifier_item_mask_of_madness_berserk")
@@ -127,6 +132,9 @@ function M.pre_kill_enemy_creep()
                   nil)
 
   return creep ~= nil
+
+         and not env.IS_FOCUSED_BY_ENEMY_HERO
+         and not env.IS_FOCUSED_BY_UNKNOWN_UNIT
 
          and algorithms.HasModifier(
                env.BOT_DATA,
