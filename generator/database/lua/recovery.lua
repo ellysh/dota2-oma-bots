@@ -36,13 +36,6 @@ M.OBJECTIVES = {
     module = require(GetScriptDirectory() .."/utility/swap_items"),
     moves = {
       {
-        move = "swap_flask_tp",
-        actions = {
-          {action = "swap_flask_tp"},
-
-        },
-      },
-      {
         move = "put_item_in_inventory",
         actions = {
           {action = "put_item_in_inventory"},

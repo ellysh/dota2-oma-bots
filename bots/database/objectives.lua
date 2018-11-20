@@ -151,13 +151,6 @@ M.OBJECTIVES = {
     module = require(GetScriptDirectory() .."/utility/swap_items"),
     moves = {
       {
-        move = "swap_flask_tp",
-        actions = {
-          {action = "swap_flask_tp"},
-
-        },
-      },
-      {
         move = "put_item_in_inventory",
         actions = {
           {action = "put_item_in_inventory"},
@@ -297,20 +290,6 @@ M.OBJECTIVES = {
     objective = "swap_items",
     module = require(GetScriptDirectory() .."/utility/swap_items"),
     moves = {
-      {
-        move = "swap_flask_tp",
-        actions = {
-          {action = "swap_flask_tp"},
-
-        },
-      },
-      {
-        move = "swap_lesser_crit_tp",
-        actions = {
-          {action = "swap_lesser_crit_tp"},
-
-        },
-      },
       {
         move = "put_item_in_inventory",
         actions = {
@@ -705,20 +684,6 @@ M.OBJECTIVES = {
     module = require(GetScriptDirectory() .."/utility/swap_items"),
     moves = {
       {
-        move = "swap_flask_tp",
-        actions = {
-          {action = "swap_flask_tp"},
-
-        },
-      },
-      {
-        move = "swap_lesser_crit_tp",
-        actions = {
-          {action = "swap_lesser_crit_tp"},
-
-        },
-      },
-      {
         move = "put_item_in_inventory",
         actions = {
           {action = "put_item_in_inventory"},
@@ -1087,20 +1052,6 @@ M.OBJECTIVES = {
     objective = "swap_items",
     module = require(GetScriptDirectory() .."/utility/swap_items"),
     moves = {
-      {
-        move = "swap_flask_tp",
-        actions = {
-          {action = "swap_flask_tp"},
-
-        },
-      },
-      {
-        move = "swap_lesser_crit_tp",
-        actions = {
-          {action = "swap_lesser_crit_tp"},
-
-        },
-      },
       {
         move = "put_item_in_inventory",
         actions = {

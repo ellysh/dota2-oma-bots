@@ -1,7 +1,5 @@
 Objective;Move;Actions
-swap_items;swap_flask_tp;swap_flask_tp
-;swap_lesser_crit_tp;swap_lesser_crit_tp
-;put_item_in_inventory;put_item_in_inventory
+swap_items;put_item_in_inventory;put_item_in_inventory
 ;;
 item_recovery;heal_tango;heal_tango
 ;;
