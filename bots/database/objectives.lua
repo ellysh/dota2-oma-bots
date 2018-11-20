@@ -157,6 +157,13 @@ M.OBJECTIVES = {
 
         },
       },
+      {
+        move = "swap_flask_wraith_band",
+        actions = {
+          {action = "swap_flask_wraith_band"},
+
+        },
+      },
     },
   },
 
@@ -294,6 +301,13 @@ M.OBJECTIVES = {
         move = "put_item_in_inventory",
         actions = {
           {action = "put_item_in_inventory"},
+
+        },
+      },
+      {
+        move = "swap_flask_wraith_band",
+        actions = {
+          {action = "swap_flask_wraith_band"},
 
         },
       },
@@ -690,6 +704,13 @@ M.OBJECTIVES = {
 
         },
       },
+      {
+        move = "swap_flask_wraith_band",
+        actions = {
+          {action = "swap_flask_wraith_band"},
+
+        },
+      },
     },
   },
 
@@ -1056,6 +1077,13 @@ M.OBJECTIVES = {
         move = "put_item_in_inventory",
         actions = {
           {action = "put_item_in_inventory"},
+
+        },
+      },
+      {
+        move = "swap_flask_wraith_band",
+        actions = {
+          {action = "swap_flask_wraith_band"},
 
         },
       },

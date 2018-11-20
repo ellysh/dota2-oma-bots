@@ -17,6 +17,25 @@ end
 
 ---------------------------------
 
+function M.pre_swap_flask_wraith_band()
+  local flask_slot = env.BOT:FindItemSlot("item_flask")
+  local wb_slot = env.BOT:FindItemSlot("item_wraith_band")
+
+  return env.BOT:GetItemSlotType(flask_slot) == ITEM_SLOT_TYPE_BACKPACK
+         and env.BOT:GetItemSlotType(wb_slot) == ITEM_SLOT_TYPE_MAIN
+end
+
+function M.swap_flask_wraith_band()
+  local flask_slot = env.BOT:FindItemSlot("item_flask")
+  local wb_slot = env.BOT:FindItemSlot("item_wraith_band")
+
+  env.BOT:ActionImmediate_SwapItems(flask_slot, wb_slot)
+
+  action_timing.SetNextActionDelay(0.05)
+end
+
+----------------------------------
+
 local function GetFullSlotInBackpack(unit_data)
   for i = 6, 8 do
     if nil ~= env.BOT:GetItemInSlot(i) then

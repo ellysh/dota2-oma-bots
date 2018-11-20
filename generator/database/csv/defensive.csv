@@ -2,6 +2,7 @@ Objective;Move;Actions
 glyph;do_glyph;do_glyph
 ;;
 swap_items;put_item_in_inventory;put_item_in_inventory
+;swap_flask_wraith_band;swap_flask_wraith_band
 ;;
 item_recovery;heal_tango;heal_tango
 ;;

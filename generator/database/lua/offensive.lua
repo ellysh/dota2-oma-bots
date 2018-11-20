@@ -14,6 +14,13 @@ M.OBJECTIVES = {
 
         },
       },
+      {
+        move = "swap_flask_wraith_band",
+        actions = {
+          {action = "swap_flask_wraith_band"},
+
+        },
+      },
     },
   },
 

@@ -72,6 +72,7 @@ stop
 stop_attack
 stop_attack_and_move
 stop_turn
+swap_flask_wraith_band
 swap_items
 tp_base
 tp_mid_tower
