@@ -106,8 +106,12 @@ end
 function M.pre_attack_enemy_tower()
   return env.ENEMY_TOWER_DATA ~= nil
 
-         and not env.IS_FOCUSED_BY_ENEMY_HERO
-         and not env.IS_FOCUSED_BY_UNKNOWN_UNIT
+         and (env.ENEMY_HERO_DATA == nil
+              or algorithms.GetAttackRange(
+                    env.BOT_DATA,
+                    env.ENEMY_HERO_DATA,
+                    true)
+                  < env.ENEMY_HERO_DISTANCE)
 
          and env.ENEMY_TOWER_DISTANCE
              <= algorithms.GetAttackRange(
@@ -135,8 +139,12 @@ function M.pre_kill_enemy_creep()
 
   return creep ~= nil
 
-         and not env.IS_FOCUSED_BY_ENEMY_HERO
-         and not env.IS_FOCUSED_BY_UNKNOWN_UNIT
+         and (env.ENEMY_HERO_DATA == nil
+              or algorithms.GetAttackRange(
+                    env.BOT_DATA,
+                    env.ENEMY_HERO_DATA,
+                    true)
+                  < env.ENEMY_HERO_DISTANCE)
 
          and algorithms.HasModifier(
                env.BOT_DATA,

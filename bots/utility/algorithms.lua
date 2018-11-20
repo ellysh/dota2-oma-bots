@@ -49,6 +49,7 @@ function M.IsItemInInventory(unit_data, item_name)
   local slot = unit:FindItemSlot(item_name)
 
   return unit:GetItemSlotType(slot) == ITEM_SLOT_TYPE_MAIN
+         or unit:GetItemSlotType(slot) == ITEM_SLOT_TYPE_INVALID
 end
 
 function M.IsAttackTargetable(unit_data)
