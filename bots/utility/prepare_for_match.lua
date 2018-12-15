@@ -26,13 +26,14 @@ end
 function M.pre_buy_starting_items()
   return not IsGameStart()
          and not algorithms.IsItemPresent(
-                   env.BOT_DATA, "item_wraith_band")
+                   env.BOT_DATA, "item_faerie_fire")
 end
 
 function M.buy_starting_items()
   algorithms.BuyItem("item_slippers")
   algorithms.BuyItem("item_circlet")
   algorithms.BuyItem("item_recipe_wraith_band")
+  algorithms.BuyItem("item_faerie_fire")
 
   action_timing.SetNextActionDelay(0.5)
 end
